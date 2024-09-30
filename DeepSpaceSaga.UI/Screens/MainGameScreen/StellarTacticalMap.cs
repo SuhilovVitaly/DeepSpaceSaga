@@ -3,7 +3,6 @@
 public partial class StellarTacticalMap : UserControl
 {
     private static readonly ILog Logger = LogManager.GetLogger(MethodBase.GetCurrentMethod()?.DeclaringType);
-    ScreenParameters screenParameters;
 
     private bool isDrawInProcess = false;
 
@@ -11,16 +10,25 @@ public partial class StellarTacticalMap : UserControl
     {
         InitializeComponent();
 
-        Rectangle resolution = Screen.PrimaryScreen.Bounds;
-
-        screenParameters = new ScreenParameters(resolution.Width, resolution.Height);
-
-        Global.Worker.OnGetDataFromServer += Worker_OnTurnRefresh;
+        Global.Worker.OnGetDataFromServer += Worker_OnTurnRefresh;        
     }
 
     public void Initialization()
     {
         Logger.Info("Initialization finished");
+
+        DrawBackgroundGrid();
+    }
+
+    Bitmap bitmapGrid;
+
+    private void DrawBackgroundGrid()
+    {
+        bitmapGrid = new Bitmap(Width * 2, Height  * 2);
+
+        var graphics = Graphics.FromImage(bitmapGrid);
+
+        DrawStaticGridBackground.Execute(graphics, Global.ScreenData);
     }
 
     private void Worker_OnTurnRefresh(GameSessionData data)
@@ -40,7 +48,7 @@ public partial class StellarTacticalMap : UserControl
 
         var graphics = Graphics.FromImage(image);
 
-        Draw.DrawTacticalMapScreen(graphics, data, screenParameters);
+        Draw.DrawTacticalMapScreen(graphics, data, Global.ScreenData, bitmapGrid);
 
         graphics.DrawString($"{DateTime.Now.Second}.{DateTime.Now.Millisecond}", new Font("Tahoma", 8), Brushes.White, new RectangleF(70, 90, 90, 50));
 

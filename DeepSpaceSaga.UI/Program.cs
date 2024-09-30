@@ -18,6 +18,9 @@ internal static class Program
         Logger.Info("Start 'Deep Space Saga' game desktop client.");
 
         ApplicationConfiguration.Initialize();
+
+        Global.GameInitialization();
+
         Application.Run(new Form1());
 
         Logger.Info("Finished 'Deep Space Saga' game desktop client.");

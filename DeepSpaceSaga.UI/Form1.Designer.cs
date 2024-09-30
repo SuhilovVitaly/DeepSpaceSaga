@@ -32,7 +32,10 @@
             crlRunButton = new Button();
             crlLabelTurns = new Label();
             panel1 = new Panel();
+            button3 = new Button();
+            button2 = new Button();
             crlTacticalMap = new Screens.MainGameScreen.StellarTacticalMap();
+            button4 = new Button();
             panel1.SuspendLayout();
             SuspendLayout();
             // 
@@ -70,6 +73,9 @@
             // panel1
             // 
             panel1.BorderStyle = BorderStyle.FixedSingle;
+            panel1.Controls.Add(button4);
+            panel1.Controls.Add(button3);
+            panel1.Controls.Add(button2);
             panel1.Controls.Add(crlLabelTurns);
             panel1.Controls.Add(crlRunButton);
             panel1.Controls.Add(crlTacticalMap);
@@ -79,6 +85,26 @@
             panel1.Size = new Size(1317, 636);
             panel1.TabIndex = 1;
             // 
+            // button3
+            // 
+            button3.Location = new Point(111, 11);
+            button3.Name = "button3";
+            button3.Size = new Size(94, 29);
+            button3.TabIndex = 6;
+            button3.Text = " Y + 100";
+            button3.UseVisualStyleBackColor = true;
+            button3.Click += button3_Click;
+            // 
+            // button2
+            // 
+            button2.Location = new Point(11, 11);
+            button2.Name = "button2";
+            button2.Size = new Size(94, 29);
+            button2.TabIndex = 5;
+            button2.Text = " X + 100";
+            button2.UseVisualStyleBackColor = true;
+            button2.Click += button2_Click;
+            // 
             // crlTacticalMap
             // 
             crlTacticalMap.BackColor = Color.DimGray;
@@ -86,6 +112,16 @@
             crlTacticalMap.Name = "crlTacticalMap";
             crlTacticalMap.Size = new Size(652, 578);
             crlTacticalMap.TabIndex = 4;
+            // 
+            // button4
+            // 
+            button4.Location = new Point(11, 46);
+            button4.Name = "button4";
+            button4.Size = new Size(94, 29);
+            button4.TabIndex = 7;
+            button4.Text = " X + 1000";
+            button4.UseVisualStyleBackColor = true;
+            button4.Click += button4_Click;
             // 
             // Form1
             // 
@@ -113,5 +149,8 @@
         private Label crlLabelTurns;
         private Panel panel1;
         private Screens.MainGameScreen.StellarTacticalMap crlTacticalMap;
+        private Button button3;
+        private Button button2;
+        private Button button4;
     }
 }

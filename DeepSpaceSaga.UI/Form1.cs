@@ -37,12 +37,12 @@ public partial class Form1 : Form
     {
         turnsCount++;
         ticksInTurn = 0;
-        CrossThreadExtensions.PerformSafely(this, RefreshControls);            
+        CrossThreadExtensions.PerformSafely(this, RefreshControls);
     }
 
     private void RefreshControls()
     {
-        crlLabelTurns.Text = $"{turnsCount}.{ticksInTurn}";            
+        crlLabelTurns.Text = $"{turnsCount}.{ticksInTurn} --- Center is ({Global.ScreenData.CenterScreenOnMap.X},{Global.ScreenData.CenterScreenOnMap.Y})";
     }
 
     private void button1_Click(object sender, EventArgs e)
@@ -55,5 +55,20 @@ public partial class Form1 : Form
         Logger.Debug("Run global worker process");
         crlTacticalMap.Initialization();
         Global.Worker.Run();
+    }
+
+    private void button2_Click(object sender, EventArgs e)
+    {
+        Global.ScreenData.CenterScreenOnMap = new PointF(Global.ScreenData.CenterScreenOnMap.X + 100, Global.ScreenData.CenterScreenOnMap.Y);
+    }
+
+    private void button3_Click(object sender, EventArgs e)
+    {
+        Global.ScreenData.CenterScreenOnMap = new PointF(Global.ScreenData.CenterScreenOnMap.X, Global.ScreenData.CenterScreenOnMap.Y + 100);
+    }
+
+    private void button4_Click(object sender, EventArgs e)
+    {
+        Global.ScreenData.CenterScreenOnMap = new PointF(Global.ScreenData.CenterScreenOnMap.X + 1000, Global.ScreenData.CenterScreenOnMap.Y);
     }
 }

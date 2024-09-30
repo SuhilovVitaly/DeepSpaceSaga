@@ -2,13 +2,13 @@
 
 internal class Draw
 {
-    public static void DrawTacticalMapScreen(Graphics graphics, GameSessionData session, ScreenParameters screenParameters)
+    public static void DrawTacticalMapScreen(Graphics graphics, GameSessionData session, ScreenParameters screenParameters, Bitmap grid)
     {
         graphics.CompositingQuality = CompositingQuality.HighQuality;
         graphics.InterpolationMode = InterpolationMode.Bicubic;
         graphics.SmoothingMode = SmoothingMode.AntiAlias;
         graphics.TextRenderingHint = TextRenderingHint.AntiAlias;
 
-        DrawGrid.Execute(graphics, screenParameters);
+        DrawGrid.Execute(graphics, screenParameters, grid);
     }
 }
