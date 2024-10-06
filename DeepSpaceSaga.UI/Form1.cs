@@ -42,7 +42,15 @@ public partial class Form1 : Form
 
     private void RefreshControls()
     {
-        crlLabelTurns.Text = $"{turnsCount}.{ticksInTurn} --- Center is ({Global.ScreenData.CenterScreenOnMap.X},{Global.ScreenData.CenterScreenOnMap.Y})";
+        var lastGridReDrawData = $" time: {Global.ScreenData.Metrics.LastGridDrawTimeinMs}";
+        var prerenderingGrids = $" time: {Global.ScreenData.Metrics.PreRenderBaseGridsTimeinMs}";
+
+
+        crlLabelTurns.Text = $" Turn is {turnsCount}.{ticksInTurn} {Environment.NewLine} " +
+            $"Center is ({Global.ScreenData.CenterScreenOnMap.X},{Global.ScreenData.CenterScreenOnMap.Y}) {Environment.NewLine}" +
+            $"Zoom is {Global.ScreenData.Zoom.Size} {Environment.NewLine}" +
+            $"Prerendering is {prerenderingGrids} {Environment.NewLine}" +
+            $"Grid Redraw info is {lastGridReDrawData} {Environment.NewLine}" ;
     }
 
     private void button1_Click(object sender, EventArgs e)
@@ -70,5 +78,17 @@ public partial class Form1 : Form
     private void button4_Click(object sender, EventArgs e)
     {
         Global.ScreenData.CenterScreenOnMap = new PointF(Global.ScreenData.CenterScreenOnMap.X + 1000, Global.ScreenData.CenterScreenOnMap.Y);
+    }
+
+    private void CrlZoomIn_Click(object sender, EventArgs e)
+    {
+        Global.ScreenData.Zoom.In();
+        //crlTacticalMap.Initialization();
+    }
+
+    private void CrlZoomOut_Click(object sender, EventArgs e)
+    {
+        Global.ScreenData.Zoom.Out();
+        //crlTacticalMap.Initialization();
     }
 }

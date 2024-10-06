@@ -2,16 +2,22 @@
 
 internal class DrawStaticGridBackground
 {
+    // TODO: Save zoom images to cache and change only location on drive event
     public static void Execute(Graphics graphics, IScreenInfo screenInfo)
     {
+        var stopwatch = Stopwatch.StartNew();
+
         graphics.CompositingQuality = CompositingQuality.HighQuality;
         graphics.InterpolationMode = InterpolationMode.Bicubic;
         graphics.SmoothingMode = SmoothingMode.AntiAlias;
         graphics.TextRenderingHint = TextRenderingHint.AntiAlias;
 
-        DrawGenericGrid(graphics, screenInfo, 10, Color.FromArgb(12, 12, 12));
-        DrawGenericGrid(graphics, screenInfo, 100, Color.FromArgb(28, 28, 28));
-        DrawGenericGrid(graphics, screenInfo, 1000, Color.FromArgb(52, 52, 52));
+        DrawGenericGrid(graphics, screenInfo, screenInfo.Zoom.Size / 100, Color.FromArgb(22, 22, 22));
+        DrawGenericGrid(graphics, screenInfo, screenInfo.Zoom.Size / 10, Color.FromArgb(32, 32, 32));       
+        DrawGenericGrid(graphics, screenInfo, screenInfo.Zoom.Size, Color.FromArgb(52, 52, 52));
+
+        screenInfo.Metrics.LastGridDraw = DateTime.Now;
+        screenInfo.Metrics.LastGridDrawTimeinMs = stopwatch.Elapsed.TotalMilliseconds;
     }
 
     private static void DrawGenericGrid(Graphics graphics, IScreenInfo screenInfo, int step, Color color)

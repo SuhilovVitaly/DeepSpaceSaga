@@ -6,6 +6,8 @@ public partial class StellarTacticalMap : UserControl
 
     private bool isDrawInProcess = false;
 
+    private GameSessionData lastGameSessionData;
+
     public StellarTacticalMap()
     {
         InitializeComponent();
@@ -15,27 +17,20 @@ public partial class StellarTacticalMap : UserControl
 
     public void Initialization()
     {
-        Logger.Info("Initialization finished");
+        Logger.Info($"Initialization finished. Zoom is {Global.ScreenData.Zoom}");
 
-        DrawBackgroundGrid();
-    }
+        if (lastGameSessionData == null) return;
 
-    Bitmap bitmapGrid;
-
-    private void DrawBackgroundGrid()
-    {
-        bitmapGrid = new Bitmap(Width * 2, Height  * 2);
-
-        var graphics = Graphics.FromImage(bitmapGrid);
-
-        DrawStaticGridBackground.Execute(graphics, Global.ScreenData);
-    }
+        RefreshControls(lastGameSessionData);
+    }    
 
     private void Worker_OnTurnRefresh(GameSessionData data)
     {
         if(isDrawInProcess) return;
 
         isDrawInProcess = true;
+
+        lastGameSessionData = data;
 
         CrossThreadExtensions.PerformSafely(this, RefreshControls, data);        
 
@@ -48,7 +43,7 @@ public partial class StellarTacticalMap : UserControl
 
         var graphics = Graphics.FromImage(image);
 
-        Draw.DrawTacticalMapScreen(graphics, data, Global.ScreenData, bitmapGrid);
+        Global.Resources.DrawTool.DrawTacticalMapScreen(graphics, data, Global.ScreenData);
 
         graphics.DrawString($"{DateTime.Now.Second}.{DateTime.Now.Millisecond}", new Font("Tahoma", 8), Brushes.White, new RectangleF(70, 90, 90, 50));
 

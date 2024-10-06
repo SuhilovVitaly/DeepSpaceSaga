@@ -2,8 +2,6 @@
 
 public class DrawGrid
 {
-    private static int GridSize = 1000;
-
     public static void Execute(Graphics graphics, IScreenInfo screenInfo, Bitmap grid)
     {
         var staticGrid = (Bitmap)grid.Clone();
@@ -15,14 +13,14 @@ public class DrawGrid
 
     private static PointF GetLeftCorner(IScreenInfo screenInfo)
     {
-        var xGridSize = (int)(screenInfo.Width / 2 / GridSize) + 1;
-        var yGridSize = (int)(screenInfo.Height / 2 / GridSize) + 1;
+        var xGridSize = (int)(screenInfo.Width / 2 / screenInfo.Zoom.Size) + 1;
+        var yGridSize = (int)(screenInfo.Height / 2 / screenInfo.Zoom.Size) + 1;
 
-        var offsetXfromCenterMap = screenInfo.CenterScreenOnMap.X % GridSize;
-        var offsetYfromCenterMap = screenInfo.CenterScreenOnMap.Y % GridSize;
+        var offsetXfromCenterMap = screenInfo.CenterScreenOnMap.X % screenInfo.Zoom.Size;
+        var offsetYfromCenterMap = screenInfo.CenterScreenOnMap.Y % screenInfo.Zoom.Size;
 
-        var offsetXfromScreenSize = xGridSize * GridSize;
-        var offsetYfromScreenSize = yGridSize * GridSize;
+        var offsetXfromScreenSize = xGridSize * screenInfo.Zoom.Size;
+        var offsetYfromScreenSize = yGridSize * screenInfo.Zoom.Size;
 
         var cornerX = screenInfo.CenterScreenOnMap.X - offsetXfromCenterMap - offsetXfromScreenSize;
         var cornerY = screenInfo.CenterScreenOnMap.Y - offsetYfromCenterMap - offsetYfromScreenSize;

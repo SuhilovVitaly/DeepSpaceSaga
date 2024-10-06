@@ -2,6 +2,7 @@
 
 public interface IScreenInfo
 {
+    ScreenMetrics Metrics { get; set; }
     PointF Center { get; }
     float Width { get; }
     float Height { get; }
@@ -11,4 +12,6 @@ public interface IScreenInfo
     Point ControlActiveCelestialObjectLocation { get; set; }
 
     int ActiveCelestialObjectId { get; set; }
+
+    Zoom Zoom { get; }
 }
