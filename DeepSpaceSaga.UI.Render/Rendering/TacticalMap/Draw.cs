@@ -1,4 +1,4 @@
-﻿using System.Collections.Concurrent;
+﻿using DeepSpaceSaga.UI.Render.Model;
 
 namespace DeepSpaceSaga.UI.Screens.MainGameScreen.Rendering.TacticalMap;
 
@@ -10,12 +10,23 @@ public class Draw
     {
         var stopwatch = Stopwatch.StartNew();
 
-        var zoomModes = new ConcurrentBag<int> {2000, 1000, 500, 250};
+        
+        //var zoomModes = new ConcurrentBag<int> { 4000 };
+
+        //foreach (var zoomMode in zoomModes)
+        //{
+        //    AddPreRenderGrid(screenParameters, zoomMode);
+        //    prerenderedGridsByZoom[zoomMode].Save(Path.Combine( Environment.CurrentDirectory, zoomMode + ".png"), ImageFormat.Png);
+        //}
+
+
+        var zoomModes = new ConcurrentBag<int> { 4000, 2000, 1000, 500, 250, 200 };
 
         Parallel.ForEach(zoomModes, zoom =>
         {
             AddPreRenderGrid(screenParameters, zoom);
-        });        
+        });
+
 
         screenParameters.Metrics.PreRenderBaseGridsTimeinMs = stopwatch.Elapsed.TotalMilliseconds;
     }
@@ -43,6 +54,7 @@ public class Draw
         graphics.InterpolationMode = InterpolationMode.Bicubic;
         graphics.SmoothingMode = SmoothingMode.AntiAlias;
         graphics.TextRenderingHint = TextRenderingHint.AntiAlias;
+        prerenderedGridsByZoom[4000].Save(Path.Combine(Environment.CurrentDirectory, "4000_1.png"), ImageFormat.Png);
 
         DrawGrid.Execute(graphics, screenParameters, prerenderedGridsByZoom[screenParameters.Zoom.Size]);
     }

@@ -1,4 +1,4 @@
-﻿namespace DeepSpaceSaga.UI.Model;
+﻿namespace DeepSpaceSaga.UI.Render.Model;
 
 public class Zoom
 {
@@ -13,6 +13,10 @@ public class Zoom
     {
         switch (Size)
         {
+            case 250:
+                Size = 200;
+                break;
+
             case 500:
                 Size = 250;
                 break;
@@ -25,6 +29,10 @@ public class Zoom
                 Size = 1000;
                 break;
 
+            case 4000:
+                Size = 2000;
+                break;
+
             default:
                 break;
         }
@@ -34,6 +42,10 @@ public class Zoom
     {
         switch (Size)
         {
+            case 200:
+                Size = 250;
+                break;
+
             case 250:
                 Size = 500;
                 break;
@@ -44,6 +56,10 @@ public class Zoom
 
             case 1000:
                 Size = 2000;
+                break;
+
+            case 2000:
+                Size = 4000;
                 break;
 
             default:

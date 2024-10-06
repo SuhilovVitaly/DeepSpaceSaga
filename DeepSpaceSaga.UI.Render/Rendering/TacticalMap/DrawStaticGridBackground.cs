@@ -1,4 +1,6 @@
-﻿namespace DeepSpaceSaga.UI.Screens.MainGameScreen.Rendering.TacticalMap;
+﻿using DeepSpaceSaga.UI.Render.Model;
+
+namespace DeepSpaceSaga.UI.Screens.MainGameScreen.Rendering.TacticalMap;
 
 internal class DrawStaticGridBackground
 {

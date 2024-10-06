@@ -1,4 +1,6 @@
-﻿namespace DeepSpaceSaga.UI.Screens.MainGameScreen.Rendering.TacticalMap;
+﻿using DeepSpaceSaga.UI.Render.Model;
+
+namespace DeepSpaceSaga.UI.Screens.MainGameScreen.Rendering.TacticalMap;
 
 public class DrawGrid
 {
@@ -11,7 +13,7 @@ public class DrawGrid
         graphics.FillEllipse(new SolidBrush(Color.Beige), screenInfo.Center.X - 2, screenInfo.Center.Y - 2, 4, 4);
     }
 
-    private static PointF GetLeftCorner(IScreenInfo screenInfo)
+    internal static PointF GetLeftCorner(IScreenInfo screenInfo)
     {
         var xGridSize = (int)(screenInfo.Width / 2 / screenInfo.Zoom.Size) + 1;
         var yGridSize = (int)(screenInfo.Height / 2 / screenInfo.Zoom.Size) + 1;

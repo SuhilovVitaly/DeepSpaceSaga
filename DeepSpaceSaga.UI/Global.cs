@@ -1,4 +1,6 @@
-﻿namespace DeepSpaceSaga.UI;
+﻿using DeepSpaceSaga.UI.Render.Model;
+
+namespace DeepSpaceSaga.UI;
 
 public class Global
 {

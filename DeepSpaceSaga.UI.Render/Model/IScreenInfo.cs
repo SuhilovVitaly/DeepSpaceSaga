@@ -1,4 +1,4 @@
-﻿namespace DeepSpaceSaga.UI.Model;
+﻿namespace DeepSpaceSaga.UI.Render.Model;
 
 public interface IScreenInfo
 {

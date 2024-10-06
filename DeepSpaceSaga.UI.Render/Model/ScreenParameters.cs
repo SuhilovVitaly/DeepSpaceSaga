@@ -1,4 +1,4 @@
-﻿namespace DeepSpaceSaga.UI.Model;
+﻿namespace DeepSpaceSaga.UI.Render.Model;
 
 public class ScreenParameters : IScreenInfo
 {
@@ -19,14 +19,14 @@ public class ScreenParameters : IScreenInfo
 
         // Start player ship coordinates in each battle (10000, 10000)
         CenterScreenOnMap = new PointF(centerScreenX, centerScreenY);
-        
+
         Width = width;
         Height = height;
 
         Zoom = new Zoom(zoomSize);
     }
 
-    public ScreenParameters(ScreenParameters preset, int zoomSize) 
+    public ScreenParameters(ScreenParameters preset, int zoomSize)
     {
         Center = preset.Center;
         CenterScreenOnMap = preset.CenterScreenOnMap;
