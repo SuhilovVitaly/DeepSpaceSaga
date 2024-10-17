@@ -1,22 +1,16 @@
-﻿using DeepSpaceSaga.UI.Render.Model;
-
-namespace DeepSpaceSaga.UI.Screens.MainGameScreen.Rendering.TacticalMap;
+﻿namespace DeepSpaceSaga.UI.Render.Rendering.TacticalMap;
 
 internal class DrawStaticGridBackground
 {
-    // TODO: Save zoom images to cache and change only location on drive event
     public static void Execute(Graphics graphics, IScreenInfo screenInfo)
     {
-        var stopwatch = Stopwatch.StartNew();
+        var stopwatch = Stopwatch.StartNew();        
 
-        graphics.CompositingQuality = CompositingQuality.HighQuality;
-        graphics.InterpolationMode = InterpolationMode.Bicubic;
-        graphics.SmoothingMode = SmoothingMode.AntiAlias;
-        graphics.TextRenderingHint = TextRenderingHint.AntiAlias;
+        var cellSize = UiTools.ZoomToCellSize(screenInfo.Zoom.Size);
 
-        DrawGenericGrid(graphics, screenInfo, screenInfo.Zoom.Size / 100, Color.FromArgb(22, 22, 22));
-        DrawGenericGrid(graphics, screenInfo, screenInfo.Zoom.Size / 10, Color.FromArgb(32, 32, 32));       
-        DrawGenericGrid(graphics, screenInfo, screenInfo.Zoom.Size, Color.FromArgb(52, 52, 52));
+        DrawGenericGrid(graphics, screenInfo, cellSize, Color.FromArgb(22, 22, 22));
+        DrawGenericGrid(graphics, screenInfo, cellSize * 5, Color.FromArgb(32, 32, 32));
+        DrawGenericGrid(graphics, screenInfo, cellSize * 25, Color.FromArgb(52, 52, 52));
 
         screenInfo.Metrics.LastGridDraw = DateTime.Now;
         screenInfo.Metrics.LastGridDrawTimeinMs = stopwatch.Elapsed.TotalMilliseconds;
@@ -26,8 +20,8 @@ internal class DrawStaticGridBackground
     {
         var smallGridPen = new Pen(color);
 
-        var stepsInScreenWidth = (screenInfo.Width * 2 / step);
-        var stepsInScreenHeight = (screenInfo.Height * 2 / step);
+        var stepsInScreenWidth = screenInfo.Width * 2 / step;
+        var stepsInScreenHeight = screenInfo.Height * 2 / step;
 
         var mapTopLeftCorner = new Point(0, 0);
 

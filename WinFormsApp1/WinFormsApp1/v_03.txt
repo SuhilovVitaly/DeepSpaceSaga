@@ -1,0 +1,324 @@
+﻿using System.Drawing.Drawing2D;
+using System.Drawing.Text;
+using Timer = System.Windows.Forms.Timer;
+
+namespace WinFormsApp1
+{
+    public partial class SolarSystemForm : Form
+    {
+        private Timer gameTimer;
+        private Point sunPosition;    // Позиция Солнца (в одной из фокусных точек)
+        private double planetAngle;   // Текущий угол для движения планеты (в радианах, тип double)
+        private double planetSpeed;   // Текущая скорость планеты
+        private double orbitAngle = 0;    // Угол наклона орбиты
+        //private const int sunRadius = 25;
+        private const int planetRadius = 4;
+        private const int crossSize = 10; // Размер перекрестий
+        private const int pointSize = 5;  // Размер точек в апогее и перигее
+        private const float maxDistance = 300f; // Апогей
+        private const float minDistance = 100f; // Перигей
+        private float semiMajorAxis;  // Большая полуось (a)
+        private float semiMinorAxis;  // Малая полуось (b)
+        private float eccentricity;   // Эксцентриситет орбиты
+        private float focalDistance;  // Фокусное расстояние (f)
+        private PointF planetPosition;  // Текущая позиция планеты
+        private PointF perigeePosition; // Позиция перигея
+        private PointF apogeePosition;  // Позиция апогея
+        //private Color colorSun = Color.FromArgb//f0de12
+
+        private Color orbitColor = ColorTranslator.FromHtml("#314c5d");
+        private Color colorSun = ColorTranslator.FromHtml("#f0de12");
+
+        private CelestialObject Sun;
+
+        public SolarSystemForm()
+        {
+            InitializeComponent();
+            InitSolarSystemObjects();
+            InitSolarSystem();
+        }
+
+        private void InitSolarSystemObjects()
+        {
+            Sun = new CelestialObject
+            {
+                Radius = 25,
+                Location = new ObjectLocation(0, 0),
+            };
+        }
+
+        private void InitSolarSystem()
+        {
+            this.DoubleBuffered = true;
+            this.BackColor = Color.Black;
+
+
+            // Рассчитываем большую и малую полуоси орбиты
+            semiMajorAxis = (maxDistance + minDistance) / 2;  // Большая полуось
+            eccentricity = (maxDistance - minDistance) / (maxDistance + minDistance);  // Эксцентриситет
+            semiMinorAxis = semiMajorAxis * (float)Math.Sqrt(1 - eccentricity * eccentricity);  // Малая полуось
+            focalDistance = semiMajorAxis * eccentricity;  // Фокусное расстояние
+
+            // Рассчитываем начальную позицию Солнца с учётом угла наклона орбиты
+            UpdateSunPosition();
+            CalculatePerigeeAndApogeePositions(); // Рассчитаем позиции перигея и апогея
+
+            planetAngle = 0.0; // Начальный угол для орбиты (в радианах)
+            planetSpeed = 0.02; // Стартовая базовая скорость планеты
+
+            // Настройка таймера
+            gameTimer = new Timer();
+            gameTimer.Interval = 16; // ~60 FPS
+            gameTimer.Tick += GameLoop;
+            gameTimer.Start();
+        }
+
+        private void UpdateSunPosition()
+        {
+            // Поворачиваем фокусное расстояние на угол наклона орбиты
+            float rotatedFocalX = 0;// (float)(focalDistance * Math.Cos(orbitAngle));
+            float rotatedFocalY = 0;// (float)(focalDistance * Math.Sin(orbitAngle));
+
+            // Устанавливаем положение Солнца с учётом смещения фокуса
+            sunPosition = new Point((int)(this.ClientSize.Width / 2 - rotatedFocalX), (int)(this.ClientSize.Height / 2 - rotatedFocalY));
+        }
+
+        private void DrawApsideLine(Graphics g)
+        {
+            // Вычисляем вектор между апогеем и перигеем
+            float dx = apogeePosition.X - perigeePosition.X;
+            float dy = apogeePosition.Y - perigeePosition.Y;
+
+            // Нормализуем вектор
+            float length = (float)Math.Sqrt(dx * dx + dy * dy);
+            float nx = dx / length;  // Нормализованный вектор по X
+            float ny = dy / length;  // Нормализованный вектор по Y
+
+            // Продлеваем линию апсид на 50 пикселей за пределы перигея и апогея
+            PointF extendedPerigee = new PointF(perigeePosition.X - nx * 50, perigeePosition.Y - ny * 50);
+            PointF extendedApogee = new PointF(apogeePosition.X + nx * 50, apogeePosition.Y + ny * 50);
+
+            // Отрисовка линии апсид
+            Pen apsidePen = new Pen(Color.DarkGray, 2);  // Белая линия
+            g.DrawLine(apsidePen, extendedPerigee, extendedApogee);
+        }
+
+
+
+        private void DrawOrbit(Graphics g)
+        {
+            // Рассчитываем центр орбиты как точку, смещённую от Солнца на фокусное расстояние
+            PointF centerOfOrbit = new PointF(sunPosition.X + focalDistance * (float)Math.Cos(orbitAngle),
+                                              sunPosition.Y + focalDistance * (float)Math.Sin(orbitAngle));
+
+            // Прямоугольник, ограничивающий эллипс орбиты, относительно центра орбиты
+            RectangleF orbitRect = new RectangleF(
+                centerOfOrbit.X - semiMajorAxis,
+                centerOfOrbit.Y - semiMinorAxis,
+                2 * semiMajorAxis,
+                2 * semiMinorAxis);
+
+            // Создаем матрицу для вращения орбиты
+            using (Matrix matrix = new Matrix())
+            {
+                // Вращаем орбиту на угол наклона относительно центра орбиты
+                matrix.RotateAt((float)(orbitAngle * 180 / Math.PI), centerOfOrbit);
+                g.Transform = matrix;
+
+                // Рисуем эллипс орбиты
+                g.DrawEllipse(new Pen(orbitColor), orbitRect);
+
+                // Сбрасываем трансформацию
+                g.ResetTransform();
+            }
+        }
+
+        private void CalculatePerigeeAndApogeePositions()
+        {
+            // Перигей — ближайшая точка к Солнцу, на большом радиусе эллипса
+            float perigeeX = semiMajorAxis * (1 - eccentricity);
+            float perigeeY = 0;  // Малая ось в перигее равна 0
+
+            // Апогей — самая удалённая точка от Солнца, на большом радиусе эллипса
+            float apogeeX = -semiMajorAxis * (1 + eccentricity);
+            float apogeeY = 0;  // Малая ось в апогее также равна 0
+
+            // Учитываем угол наклона орбиты (вращаем перигей и апогей на угол наклона орбиты)
+            perigeePosition = RotatePoint(perigeeX, perigeeY, orbitAngle);
+            apogeePosition = RotatePoint(apogeeX, apogeeY, orbitAngle);
+
+            // Смещаем позиции перигея и апогея относительно центра экрана (центр орбиты)
+            perigeePosition = new PointF(this.ClientSize.Width / 2 + perigeePosition.X, this.ClientSize.Height / 2 + perigeePosition.Y);
+            apogeePosition = new PointF(this.ClientSize.Width / 2 + apogeePosition.X, this.ClientSize.Height / 2 + apogeePosition.Y);
+        }
+
+        private PointF RotatePoint(float x, float y, double angle)
+        {
+            float rotatedX = (float)(x * Math.Cos(angle) - y * Math.Sin(angle));
+            float rotatedY = (float)(x * Math.Sin(angle) + y * Math.Cos(angle));
+            return new PointF(rotatedX, rotatedY);
+        }
+
+
+        // Игровой цикл
+        private void GameLoop(object sender, EventArgs e)
+        {
+            // Обновляем движение планеты
+            UpdatePlanetPosition();
+
+            // Перерисовываем объекты
+            Invalidate();
+        }
+
+        // Обновление положения планеты на орбите
+        private void UpdatePlanetPosition()
+        {
+            // Центр орбиты — это точка, смещённая от Солнца на фокусное расстояние
+            PointF centerOfOrbit = new PointF(sunPosition.X + focalDistance * (float)Math.Cos(orbitAngle),
+                                              sunPosition.Y + focalDistance * (float)Math.Sin(orbitAngle));
+
+            // Вычисляем положение планеты на эллиптической орбите относительно центра орбиты
+            float x = (float)(semiMajorAxis * Math.Cos(planetAngle));  // Положение по X (большая полуось)
+            float y = (float)(semiMinorAxis * Math.Sin(planetAngle));  // Положение по Y (малая полуось)
+
+            // Применяем вращение для координат орбиты относительно центра орбиты
+            float rotatedX = (float)(x * Math.Cos(orbitAngle) - y * Math.Sin(orbitAngle));
+            float rotatedY = (float)(x * Math.Sin(orbitAngle) + y * Math.Cos(orbitAngle));
+
+            // Сдвигаем планету относительно центра орбиты
+            planetPosition = new PointF(centerOfOrbit.X + rotatedX, centerOfOrbit.Y + rotatedY);
+
+            // Рассчитываем текущее расстояние планеты до Солнца
+            float currentDistance = (float)Math.Sqrt(Math.Pow(planetPosition.X - sunPosition.X, 2) +
+                                                     Math.Pow(planetPosition.Y - sunPosition.Y, 2));
+
+            // Пропорционально изменяем скорость в зависимости от расстояния до Солнца (чем ближе, тем быстрее)
+            double speedFactor = semiMajorAxis / currentDistance;  // Чем ближе к Солнцу, тем быстрее
+            planetSpeed = 0.02 * speedFactor;  // Базовая скорость умножена на этот фактор
+
+            // Увеличиваем угол для движения планеты с учётом скорости
+            planetAngle += planetSpeed;
+
+            // Убедимся, что угол находится в пределах от 0 до 2π (360 градусов)
+            if (planetAngle >= 2 * Math.PI)
+                planetAngle -= 2 * Math.PI;
+        }
+
+
+
+
+
+        // Отрисовка планеты, Солнца, орбиты, апогея и перигея
+        protected override void OnPaint(PaintEventArgs e)
+        {
+            base.OnPaint(e);
+            Graphics g = e.Graphics;
+
+            g.CompositingQuality = CompositingQuality.HighQuality;
+            g.InterpolationMode = InterpolationMode.Bicubic;
+            g.SmoothingMode = SmoothingMode.AntiAlias;
+            g.TextRenderingHint = TextRenderingHint.AntiAlias;
+
+            DrawOrbit(g);
+
+            UpdateTailPosition(g, 12);
+            // Рисуем планету
+            g.FillEllipse(Brushes.Blue, planetPosition.X - planetRadius, planetPosition.Y - planetRadius, 2 * planetRadius, 2 * planetRadius);
+
+            DrawApsideLine(g);
+
+            // Рисуем точки в апогее и перигее
+            g.FillEllipse(Brushes.White, apogeePosition.X - pointSize / 2, apogeePosition.Y - pointSize / 2, pointSize, pointSize);
+            g.FillEllipse(Brushes.White, perigeePosition.X - pointSize / 2, perigeePosition.Y - pointSize / 2, pointSize, pointSize);
+
+            // Рисуем Солнце в одной из фокусных точек эллипса
+            g.FillEllipse(new SolidBrush(colorSun), sunPosition.X - Sun.Radius, sunPosition.Y - Sun.Radius, 2 * Sun.Radius, 2 * Sun.Radius);
+
+            // Рисуем перекрестия в апогее и перигее
+            DrawCross(g, apogeePosition);
+            DrawCross(g, perigeePosition);
+            DrawCross(g, sunPosition);
+
+            // Рисуем координаты
+            DrawCoordinates(g, "Sun", sunPosition.X, sunPosition.Y, sunPosition);
+            DrawCoordinates(g, "Planet", planetPosition.X, planetPosition.Y, planetPosition);
+            DrawCoordinates(g, "Perigee", perigeePosition.X, perigeePosition.Y, perigeePosition);
+            DrawCoordinates(g, "Apogee", apogeePosition.X, apogeePosition.Y, apogeePosition);
+        }
+
+        private PointF RotatePointAround(PointF point, PointF center, double angle)
+        {
+            float cosAngle = (float)Math.Cos(angle);
+            float sinAngle = (float)Math.Sin(angle);
+
+            // Смещаем точку относительно центра
+            float dx = point.X - center.X;
+            float dy = point.Y - center.Y;
+
+            // Применяем вращение
+            float rotatedX = cosAngle * dx - sinAngle * dy;
+            float rotatedY = sinAngle * dx + cosAngle * dy;
+
+            // Возвращаем точку, смещённую обратно относительно центра
+            return new PointF(center.X + rotatedX, center.Y + rotatedY);
+        }
+
+
+        // Функция для рисования перекрестия
+        private void DrawCross(Graphics g, PointF position)
+        {
+            g.DrawLine(Pens.White, position.X - crossSize / 2, position.Y, position.X + crossSize / 2, position.Y); // Горизонтальная линия
+            g.DrawLine(Pens.White, position.X, position.Y - crossSize / 2, position.X, position.Y + crossSize / 2); // Вертикальная линия
+        }
+
+        // Функция для рисования координат
+        private void DrawCoordinates(Graphics g, string label, float x, float y, PointF position)
+        {
+            string coordinates = $"{label}: ({x:F2}, {y:F2})";
+            Font font = new Font("Arial", 8);
+            SolidBrush brush = new SolidBrush(Color.White);
+            // Рисуем координаты чуть ниже и справа от объекта
+            g.DrawString(coordinates, font, brush, position.X + 10, position.Y + 10);
+        }
+
+        private List<PointF> tailPositions = new List<PointF>(); // Хранение точек хвоста
+
+        private void UpdateTailPosition(Graphics g, float tailLengthInDegrees)
+        {
+            int tailSegments = (int)tailLengthInDegrees; // Количество сегментов хвоста
+
+            // Если у нас ещё нет достаточно сегментов хвоста, добавляем текущую позицию планеты
+            if (tailPositions.Count == 0 || tailPositions.Count < tailSegments)
+            {
+                tailPositions.Add(planetPosition);
+            }
+            else
+            {
+                // Если хвост уже максимальной длины, удаляем самый старый сегмент и добавляем новый
+                tailPositions.RemoveAt(0);
+                tailPositions.Add(planetPosition);
+            }
+
+            // Отрисовка хвоста
+            for (int i = tailPositions.Count - 1; i > 0; i--)
+            {
+                float transparencyFactor = (float)(tailPositions.Count - i) / tailPositions.Count;
+                int alpha = (int)(255 * transparencyFactor);
+                Color tailColor = Color.FromArgb(255 - alpha, Color.Orange);  // Белый цвет с прозрачностью 95, 122, 151
+                Pen tailPen = new Pen(tailColor, 2);  // Толщина линии хвоста
+
+                if (tailPositions[i - 1] != new PointF(0, 0))
+                {
+                    // Рисуем линию между последовательными точками хвоста
+                    g.DrawLine(tailPen, tailPositions[i], tailPositions[i - 1]);
+                }
+            }
+        }
+
+
+        private void SolarSystemForm_MouseMove(object sender, MouseEventArgs e)
+        {
+            crlCoordinates.Text = $"{e.Location.X}:{e.Location.Y}";
+        }
+    }
+}

@@ -1,6 +1,4 @@
-﻿using DeepSpaceSaga.UI.Render.Model;
-
-namespace DeepSpaceSaga.UI.Render.Tools;
+﻿namespace DeepSpaceSaga.UI.Render.Tools;
 
 public class UiTools
 {
@@ -16,5 +14,15 @@ public class UiTools
     internal static PointF ToScreenCoordinates(IScreenInfo screenInfo, double positionX, double positionY)
     {
         return ToScreenCoordinates(screenInfo, new PointF((float)positionX, (float)positionY));
+    }
+
+    internal static int ZoomToCellSize(int zoomSize)
+    {
+        return zoomSize switch
+        {
+            1 => 50,
+            2 => 25,
+            _ => throw new ArgumentException(),
+        };
     }
 }

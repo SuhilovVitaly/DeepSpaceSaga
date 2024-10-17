@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             button1 = new Button();
-            crlRunButton = new Button();
             crlLabelTurns = new Label();
             panel1 = new Panel();
             CrlZoomOut = new Button();
@@ -43,23 +42,16 @@
             // 
             // button1
             // 
-            button1.Location = new Point(1211, 22);
+            button1.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            button1.Cursor = Cursors.Hand;
+            button1.Font = new Font("Segoe UI", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            button1.Location = new Point(1276, 11);
             button1.Name = "button1";
-            button1.Size = new Size(94, 29);
+            button1.Size = new Size(28, 29);
             button1.TabIndex = 0;
-            button1.Text = "Exit";
+            button1.Text = "X";
             button1.UseVisualStyleBackColor = true;
             button1.Click += button1_Click;
-            // 
-            // crlRunButton
-            // 
-            crlRunButton.Location = new Point(357, 46);
-            crlRunButton.Name = "crlRunButton";
-            crlRunButton.Size = new Size(94, 29);
-            crlRunButton.TabIndex = 2;
-            crlRunButton.Text = "Run";
-            crlRunButton.UseVisualStyleBackColor = true;
-            crlRunButton.Click += crlRunButton_Click;
             // 
             // crlLabelTurns
             // 
@@ -75,13 +67,13 @@
             // panel1
             // 
             panel1.BorderStyle = BorderStyle.FixedSingle;
+            panel1.Controls.Add(button1);
             panel1.Controls.Add(CrlZoomOut);
             panel1.Controls.Add(CrlZoomIn);
             panel1.Controls.Add(button4);
             panel1.Controls.Add(button3);
             panel1.Controls.Add(button2);
             panel1.Controls.Add(crlLabelTurns);
-            panel1.Controls.Add(crlRunButton);
             panel1.Controls.Add(crlTacticalMap);
             panel1.Dock = DockStyle.Fill;
             panel1.Location = new Point(0, 0);
@@ -155,7 +147,6 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.Black;
             ClientSize = new Size(1317, 636);
-            Controls.Add(button1);
             Controls.Add(panel1);
             DoubleBuffered = true;
             FormBorderStyle = FormBorderStyle.None;
@@ -163,6 +154,7 @@
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Form1";
             WindowState = FormWindowState.Maximized;
+            Activated += Form1_Activated;
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
             ResumeLayout(false);
@@ -171,7 +163,6 @@
         #endregion
 
         private Button button1;
-        private Button crlRunButton;
         private Label crlLabelTurns;
         private Panel panel1;
         private Screens.MainGameScreen.StellarTacticalMap crlTacticalMap;

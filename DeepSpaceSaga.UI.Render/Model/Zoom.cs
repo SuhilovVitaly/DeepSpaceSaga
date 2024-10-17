@@ -7,7 +7,7 @@ public class Zoom
         Size = size;
     }
 
-    public int Size { get; private set; } = 1000;
+    public int Size { get; private set; } = 20;
 
     public void In()
     {

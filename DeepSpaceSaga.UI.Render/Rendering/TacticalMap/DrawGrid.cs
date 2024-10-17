@@ -1,6 +1,4 @@
-﻿using DeepSpaceSaga.UI.Render.Model;
-
-namespace DeepSpaceSaga.UI.Screens.MainGameScreen.Rendering.TacticalMap;
+﻿namespace DeepSpaceSaga.UI.Render.Rendering.TacticalMap;
 
 public class DrawGrid
 {

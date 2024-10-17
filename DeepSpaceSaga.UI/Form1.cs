@@ -50,7 +50,7 @@ public partial class Form1 : Form
             $"Center is ({Global.ScreenData.CenterScreenOnMap.X},{Global.ScreenData.CenterScreenOnMap.Y}) {Environment.NewLine}" +
             $"Zoom is {Global.ScreenData.Zoom.Size} {Environment.NewLine}" +
             $"Prerendering is {prerenderingGrids} {Environment.NewLine}" +
-            $"Grid Redraw info is {lastGridReDrawData} {Environment.NewLine}" ;
+            $"Grid Redraw info is {lastGridReDrawData} {Environment.NewLine}";
     }
 
     private void button1_Click(object sender, EventArgs e)
@@ -61,7 +61,7 @@ public partial class Form1 : Form
     private void crlRunButton_Click(object sender, EventArgs e)
     {
         Logger.Debug("Run global worker process");
-        crlTacticalMap.Initialization();
+        //crlTacticalMap.Initialization();
         Global.Worker.Run();
     }
 
@@ -90,5 +90,10 @@ public partial class Form1 : Form
     {
         Global.ScreenData.Zoom.Out();
         //crlTacticalMap.Initialization();
+    }
+
+    private void Form1_Activated(object sender, EventArgs e)
+    {
+        Global.Worker.Run();
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace DeepSpaceSaga.Tests.UI.Rendering.TacticalMap;
+﻿using DeepSpaceSaga.UI.Render.Rendering.TacticalMap;
+
+namespace DeepSpaceSaga.Tests.UI.Rendering.TacticalMap;
 
 public class DrawGridTests
 {
