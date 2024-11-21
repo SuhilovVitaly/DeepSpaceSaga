@@ -19,5 +19,7 @@ public class Global
         ScreenData = new ScreenParameters(resolution.Width, resolution.Height);
 
         Resources = new GlobalResources(ScreenData);
+
+        Worker.Initialize();
     }
 }

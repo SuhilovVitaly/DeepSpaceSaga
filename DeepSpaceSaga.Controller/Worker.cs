@@ -2,22 +2,32 @@
 
 public class Worker
 {
-    public event Action<GameSessionData> OnTurnRefresh;
     public event Action<GameSessionData> OnGetDataFromServer;
+    public event Action<GameSessionData> OnGameInitialize;
 
-    public void Run()
+    private IGameServer _gameServer;
+
+    public void Initialize()
     {
+        _gameServer = new LocalGameServer();
+        _gameServer.SessionInitialization();
+        OnGameInitialize?.Invoke(_gameServer.GetSession());
+
         Scheduler.Instance.ScheduleTask(1, 100, GetDataFromServer);
-        Scheduler.Instance.ScheduleTask(1, 1000, TurnRefresh);
     }
 
-    private void TurnRefresh()
+    public void Resume()
     {
-        OnTurnRefresh?.Invoke(new GameSessionData());
+        _gameServer.ResumeSession();
+    }
+
+    public void Pause()
+    {
+        _gameServer.PauseSession();
     }
 
     private void GetDataFromServer()
     {
-        OnGetDataFromServer?.Invoke(new GameSessionData());
+        OnGetDataFromServer?.Invoke(_gameServer.GetSession());
     }
 }

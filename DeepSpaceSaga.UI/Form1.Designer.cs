@@ -31,6 +31,8 @@
             button1 = new Button();
             crlLabelTurns = new Label();
             panel1 = new Panel();
+            crlGamePause = new Button();
+            crlResumeGame = new Button();
             CrlZoomOut = new Button();
             CrlZoomIn = new Button();
             button4 = new Button();
@@ -67,6 +69,8 @@
             // panel1
             // 
             panel1.BorderStyle = BorderStyle.FixedSingle;
+            panel1.Controls.Add(crlGamePause);
+            panel1.Controls.Add(crlResumeGame);
             panel1.Controls.Add(button1);
             panel1.Controls.Add(CrlZoomOut);
             panel1.Controls.Add(CrlZoomIn);
@@ -80,6 +84,26 @@
             panel1.Name = "panel1";
             panel1.Size = new Size(1317, 636);
             panel1.TabIndex = 1;
+            // 
+            // crlGamePause
+            // 
+            crlGamePause.Location = new Point(1185, 559);
+            crlGamePause.Name = "crlGamePause";
+            crlGamePause.Size = new Size(94, 29);
+            crlGamePause.TabIndex = 10;
+            crlGamePause.Text = "Pause";
+            crlGamePause.UseVisualStyleBackColor = true;
+            crlGamePause.Click += crlGamePause_Click;
+            // 
+            // crlResumeGame
+            // 
+            crlResumeGame.Location = new Point(1185, 524);
+            crlResumeGame.Name = "crlResumeGame";
+            crlResumeGame.Size = new Size(94, 29);
+            crlResumeGame.TabIndex = 10;
+            crlResumeGame.Text = "Resume";
+            crlResumeGame.UseVisualStyleBackColor = true;
+            crlResumeGame.Click += crlResumeGame_Click;
             // 
             // CrlZoomOut
             // 
@@ -154,7 +178,6 @@
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Form1";
             WindowState = FormWindowState.Maximized;
-            Activated += Form1_Activated;
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
             ResumeLayout(false);
@@ -171,5 +194,7 @@
         private Button button4;
         private Button CrlZoomIn;
         private Button CrlZoomOut;
+        private Button crlGamePause;
+        private Button crlResumeGame;
     }
 }

@@ -4,8 +4,7 @@ public partial class Form1 : Form
 {
     private static readonly ILog Logger = LogManager.GetLogger(MethodBase.GetCurrentMethod()?.DeclaringType);
 
-    private int turnsCount = 0;
-    private int ticksInTurn = 0;
+    private GameSessionData gameSessionData;
 
     public Form1()
     {
@@ -22,21 +21,12 @@ public partial class Form1 : Form
 
         crlTacticalMap.Dock = DockStyle.Fill;
 
-        Global.Worker.OnTurnRefresh += Worker_OnTurnRefresh;
         Global.Worker.OnGetDataFromServer += Worker_OnGetDataFromServer;
     }
 
     private void Worker_OnGetDataFromServer(GameSessionData obj)
     {
-        ticksInTurn++;
-        CrossThreadExtensions.PerformSafely(this, RefreshControls);
-        //Logger.Debug($"{turnsCount}.{ticksInTurn}");
-    }
-
-    private void Worker_OnTurnRefresh(GameSessionData obj)
-    {
-        turnsCount++;
-        ticksInTurn = 0;
+        gameSessionData = obj;
         CrossThreadExtensions.PerformSafely(this, RefreshControls);
     }
 
@@ -46,7 +36,7 @@ public partial class Form1 : Form
         var prerenderingGrids = $" time: {Global.ScreenData.Metrics.PreRenderBaseGridsTimeinMs}";
 
 
-        crlLabelTurns.Text = $" Turn is {turnsCount}.{ticksInTurn} {Environment.NewLine} " +
+        crlLabelTurns.Text = $" Turn is {gameSessionData.Turn}.{gameSessionData.TurnTick} {Environment.NewLine} " +
             $"Center is ({Global.ScreenData.CenterScreenOnMap.X},{Global.ScreenData.CenterScreenOnMap.Y}) {Environment.NewLine}" +
             $"Zoom is {Global.ScreenData.Zoom.Size} {Environment.NewLine}" +
             $"Prerendering is {prerenderingGrids} {Environment.NewLine}" +
@@ -56,13 +46,6 @@ public partial class Form1 : Form
     private void button1_Click(object sender, EventArgs e)
     {
         Application.Exit();
-    }
-
-    private void crlRunButton_Click(object sender, EventArgs e)
-    {
-        Logger.Debug("Run global worker process");
-        //crlTacticalMap.Initialization();
-        Global.Worker.Run();
     }
 
     private void button2_Click(object sender, EventArgs e)
@@ -89,11 +72,15 @@ public partial class Form1 : Form
     private void CrlZoomOut_Click(object sender, EventArgs e)
     {
         Global.ScreenData.Zoom.Out();
-        //crlTacticalMap.Initialization();
     }
 
-    private void Form1_Activated(object sender, EventArgs e)
+    private void crlResumeGame_Click(object sender, EventArgs e)
     {
-        Global.Worker.Run();
+        Global.Worker.Resume();
+    }
+
+    private void crlGamePause_Click(object sender, EventArgs e)
+    {
+        Global.Worker.Pause();
     }
 }

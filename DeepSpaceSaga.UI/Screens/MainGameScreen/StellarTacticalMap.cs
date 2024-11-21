@@ -15,7 +15,14 @@ public partial class StellarTacticalMap : UserControl
     {
         InitializeComponent();
 
-        Global.Worker.OnGetDataFromServer += Worker_OnTurnRefresh;        
+        Global.Worker.OnGetDataFromServer += Worker_OnTurnRefresh;
+        Global.Worker.OnGameInitialize += Worker_OnGameInitialize;
+    }
+
+    private void Worker_OnGameInitialize(GameSessionData data)
+    {
+        lastGameSessionData = data;
+        RefreshControls(data);
     }
 
     public void Initialization()
