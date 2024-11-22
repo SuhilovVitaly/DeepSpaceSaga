@@ -26,6 +26,11 @@ public class Worker
         _gameServer.PauseSession();
     }
 
+    public GameSessionData GetGameSession()
+    { 
+        return _gameServer.GetSession(); 
+    }
+
     private void GetDataFromServer()
     {
         OnGetDataFromServer?.Invoke(_gameServer.GetSession());

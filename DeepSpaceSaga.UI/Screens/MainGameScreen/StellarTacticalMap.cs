@@ -5,6 +5,8 @@ namespace DeepSpaceSaga.UI.Screens.MainGameScreen;
 
 public partial class StellarTacticalMap : UserControl
 {
+    public event Action<MouseEventArgs>? OnMouseMove;
+
     private static readonly ILog Logger = LogManager.GetLogger(MethodBase.GetCurrentMethod()?.DeclaringType);
 
     private bool isDrawInProcess = false;
@@ -17,6 +19,7 @@ public partial class StellarTacticalMap : UserControl
 
         Global.Worker.OnGetDataFromServer += Worker_OnTurnRefresh;
         Global.Worker.OnGameInitialize += Worker_OnGameInitialize;
+        lastGameSessionData = Global.Worker.GetGameSession();
     }
 
     private void Worker_OnGameInitialize(GameSessionData data)
@@ -32,17 +35,17 @@ public partial class StellarTacticalMap : UserControl
         if (lastGameSessionData == null) return;
 
         RefreshControls(lastGameSessionData);
-    }    
+    }
 
     private void Worker_OnTurnRefresh(GameSessionData data)
     {
-        if(isDrawInProcess) return;
+        if (isDrawInProcess) return;
 
         isDrawInProcess = true;
 
         lastGameSessionData = data;
 
-        CrossThreadExtensions.PerformSafely(this, RefreshControls, data);        
+        CrossThreadExtensions.PerformSafely(this, RefreshControls, data);
 
         isDrawInProcess = false;
     }
@@ -66,5 +69,10 @@ public partial class StellarTacticalMap : UserControl
         imageTacticalMap.Image = image;
 
         graphics.Dispose();
+    }
+
+    private void imageTacticalMap_MouseMove(object sender, MouseEventArgs e)
+    {
+        OnMouseMove?.Invoke(e);
     }
 }

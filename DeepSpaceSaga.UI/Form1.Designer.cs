@@ -31,15 +31,15 @@
             button1 = new Button();
             crlLabelTurns = new Label();
             panel1 = new Panel();
+            panel2 = new Panel();
+            crlMousePosition = new Label();
             crlGamePause = new Button();
             crlResumeGame = new Button();
             CrlZoomOut = new Button();
             CrlZoomIn = new Button();
-            button4 = new Button();
-            button3 = new Button();
-            button2 = new Button();
             crlTacticalMap = new Screens.MainGameScreen.StellarTacticalMap();
             panel1.SuspendLayout();
+            panel2.SuspendLayout();
             SuspendLayout();
             // 
             // button1
@@ -60,7 +60,7 @@
             crlLabelTurns.AutoSize = true;
             crlLabelTurns.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             crlLabelTurns.ForeColor = Color.WhiteSmoke;
-            crlLabelTurns.Location = new Point(175, 137);
+            crlLabelTurns.Location = new Point(15, 64);
             crlLabelTurns.Name = "crlLabelTurns";
             crlLabelTurns.Size = new Size(51, 20);
             crlLabelTurns.TabIndex = 3;
@@ -69,15 +69,10 @@
             // panel1
             // 
             panel1.BorderStyle = BorderStyle.FixedSingle;
-            panel1.Controls.Add(crlGamePause);
-            panel1.Controls.Add(crlResumeGame);
+            panel1.Controls.Add(panel2);
             panel1.Controls.Add(button1);
             panel1.Controls.Add(CrlZoomOut);
             panel1.Controls.Add(CrlZoomIn);
-            panel1.Controls.Add(button4);
-            panel1.Controls.Add(button3);
-            panel1.Controls.Add(button2);
-            panel1.Controls.Add(crlLabelTurns);
             panel1.Controls.Add(crlTacticalMap);
             panel1.Dock = DockStyle.Fill;
             panel1.Location = new Point(0, 0);
@@ -85,9 +80,32 @@
             panel1.Size = new Size(1317, 636);
             panel1.TabIndex = 1;
             // 
+            // panel2
+            // 
+            panel2.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            panel2.Controls.Add(crlMousePosition);
+            panel2.Controls.Add(crlGamePause);
+            panel2.Controls.Add(crlResumeGame);
+            panel2.Controls.Add(crlLabelTurns);
+            panel2.Location = new Point(11, 360);
+            panel2.Name = "panel2";
+            panel2.Size = new Size(250, 263);
+            panel2.TabIndex = 11;
+            // 
+            // crlMousePosition
+            // 
+            crlMousePosition.AutoSize = true;
+            crlMousePosition.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            crlMousePosition.ForeColor = Color.WhiteSmoke;
+            crlMousePosition.Location = new Point(15, 13);
+            crlMousePosition.Name = "crlMousePosition";
+            crlMousePosition.Size = new Size(51, 20);
+            crlMousePosition.TabIndex = 11;
+            crlMousePosition.Text = "label1";
+            // 
             // crlGamePause
             // 
-            crlGamePause.Location = new Point(1185, 559);
+            crlGamePause.Location = new Point(153, 231);
             crlGamePause.Name = "crlGamePause";
             crlGamePause.Size = new Size(94, 29);
             crlGamePause.TabIndex = 10;
@@ -97,7 +115,7 @@
             // 
             // crlResumeGame
             // 
-            crlResumeGame.Location = new Point(1185, 524);
+            crlResumeGame.Location = new Point(3, 231);
             crlResumeGame.Name = "crlResumeGame";
             crlResumeGame.Size = new Size(94, 29);
             crlResumeGame.TabIndex = 10;
@@ -127,40 +145,10 @@
             CrlZoomIn.UseVisualStyleBackColor = true;
             CrlZoomIn.Click += CrlZoomIn_Click;
             // 
-            // button4
-            // 
-            button4.Location = new Point(11, 595);
-            button4.Name = "button4";
-            button4.Size = new Size(94, 29);
-            button4.TabIndex = 7;
-            button4.Text = " X + 1000";
-            button4.UseVisualStyleBackColor = true;
-            button4.Click += button4_Click;
-            // 
-            // button3
-            // 
-            button3.Location = new Point(111, 560);
-            button3.Name = "button3";
-            button3.Size = new Size(94, 29);
-            button3.TabIndex = 6;
-            button3.Text = " Y + 100";
-            button3.UseVisualStyleBackColor = true;
-            button3.Click += button3_Click;
-            // 
-            // button2
-            // 
-            button2.Location = new Point(11, 560);
-            button2.Name = "button2";
-            button2.Size = new Size(94, 29);
-            button2.TabIndex = 5;
-            button2.Text = " X + 100";
-            button2.UseVisualStyleBackColor = true;
-            button2.Click += button2_Click;
-            // 
             // crlTacticalMap
             // 
             crlTacticalMap.BackColor = Color.DimGray;
-            crlTacticalMap.Location = new Point(385, 11);
+            crlTacticalMap.Location = new Point(382, 22);
             crlTacticalMap.Name = "crlTacticalMap";
             crlTacticalMap.Size = new Size(652, 578);
             crlTacticalMap.TabIndex = 4;
@@ -179,7 +167,8 @@
             Text = "Form1";
             WindowState = FormWindowState.Maximized;
             panel1.ResumeLayout(false);
-            panel1.PerformLayout();
+            panel2.ResumeLayout(false);
+            panel2.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -189,12 +178,11 @@
         private Label crlLabelTurns;
         private Panel panel1;
         private Screens.MainGameScreen.StellarTacticalMap crlTacticalMap;
-        private Button button3;
-        private Button button2;
-        private Button button4;
         private Button CrlZoomIn;
         private Button CrlZoomOut;
         private Button crlGamePause;
         private Button crlResumeGame;
+        private Panel panel2;
+        private Label crlMousePosition;
     }
 }

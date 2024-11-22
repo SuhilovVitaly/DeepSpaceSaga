@@ -10,18 +10,24 @@ public partial class Form1 : Form
     {
         InitializeComponent();
 
-        SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.UserPaint | ControlStyles.AllPaintingInWmPaint, true);
+        //SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.UserPaint | ControlStyles.AllPaintingInWmPaint, true);
 
-        UpdateStyles();
+        //UpdateStyles();
 
         Rectangle resolution = Screen.PrimaryScreen.Bounds;
 
-        this.Width = resolution.Width;
-        this.Height = resolution.Height;
+        Width = resolution.Width;
+        Height = resolution.Height;
 
         crlTacticalMap.Dock = DockStyle.Fill;
+        crlTacticalMap.OnMouseMove += CrlTacticalMap_OnMouseMove;
 
         Global.Worker.OnGetDataFromServer += Worker_OnGetDataFromServer;
+    }
+
+    private void CrlTacticalMap_OnMouseMove(MouseEventArgs e)
+    {
+        crlMousePosition.Text = $"({Width}:{Height}) - ({Width/2}:{Height/2}){Environment.NewLine}({e.X}:{e.Y})";
     }
 
     private void Worker_OnGetDataFromServer(GameSessionData obj)
@@ -66,7 +72,6 @@ public partial class Form1 : Form
     private void CrlZoomIn_Click(object sender, EventArgs e)
     {
         Global.ScreenData.Zoom.In();
-        //crlTacticalMap.Initialization();
     }
 
     private void CrlZoomOut_Click(object sender, EventArgs e)
