@@ -4,7 +4,7 @@ public partial class Form1 : Form
 {
     private static readonly ILog Logger = LogManager.GetLogger(MethodBase.GetCurrentMethod()?.DeclaringType);
 
-    private GameSessionData gameSessionData;
+    private GameSession gameSessionData;
 
     public Form1()
     {
@@ -30,7 +30,7 @@ public partial class Form1 : Form
         crlMousePosition.Text = $"({Width}:{Height}) - ({Width/2}:{Height/2}){Environment.NewLine}({e.X}:{e.Y})";
     }
 
-    private void Worker_OnGetDataFromServer(GameSessionData obj)
+    private void Worker_OnGetDataFromServer(GameSession obj)
     {
         gameSessionData = obj;
         CrossThreadExtensions.PerformSafely(this, RefreshControls);

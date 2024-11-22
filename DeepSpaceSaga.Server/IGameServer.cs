@@ -4,8 +4,8 @@ public interface IGameServer
 {
     void ResumeSession();
     void PauseSession();
-    void SessionInitialization();
-    GameSessionData GetSession();
+    void SessionInitialization(int sessionId = -1);
+    GameSession GetSession();
     void EventsCalculation();
     void LocationCalculation();
 }

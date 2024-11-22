@@ -1,3 +1,5 @@
 ﻿global using DeepSpaceSaga.Universe;
-global using Deep_Space_Navigation;
 global using DeepSpaceSaga.Tools;
+global using DeepSpaceSaga.Common.Universe.Entities.CelestialObjects;
+global using DeepSpaceSaga.Common.Universe.Entities.CelestialObjects.Spacecrafts;
+global using DeepSpaceSaga.Common.Universe;

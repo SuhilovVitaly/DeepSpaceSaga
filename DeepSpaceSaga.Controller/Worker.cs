@@ -2,14 +2,19 @@
 
 public class Worker
 {
-    public event Action<GameSessionData> OnGetDataFromServer;
-    public event Action<GameSessionData> OnGameInitialize;
+    public event Action<GameSession>? OnGetDataFromServer;
+    public event Action<GameSession>? OnGameInitialize;
 
     private IGameServer _gameServer;
 
-    public void Initialize()
+    public Worker()
     {
         _gameServer = new LocalGameServer();
+    }
+
+    public void Initialize()
+    {
+        
         _gameServer.SessionInitialization();
         OnGameInitialize?.Invoke(_gameServer.GetSession());
 
@@ -26,7 +31,7 @@ public class Worker
         _gameServer.PauseSession();
     }
 
-    public GameSessionData GetGameSession()
+    public GameSession GetGameSession()
     { 
         return _gameServer.GetSession(); 
     }

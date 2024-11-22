@@ -10,4 +10,8 @@
     <ProjectReference Include="..\DeepSpaceSaga.Common\DeepSpaceSaga.Common.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Sessions\" />
+  </ItemGroup>
+
 </Project>

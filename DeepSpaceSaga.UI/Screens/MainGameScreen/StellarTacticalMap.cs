@@ -11,18 +11,18 @@ public partial class StellarTacticalMap : UserControl
 
     private bool isDrawInProcess = false;
 
-    private GameSessionData lastGameSessionData;
+    private GameSession lastGameSessionData;
 
     public StellarTacticalMap()
     {
         InitializeComponent();
 
-        Global.Worker.OnGetDataFromServer += Worker_OnTurnRefresh;
+        Global.Worker.OnGetDataFromServer += Worker_RefreshData;
         Global.Worker.OnGameInitialize += Worker_OnGameInitialize;
         lastGameSessionData = Global.Worker.GetGameSession();
     }
 
-    private void Worker_OnGameInitialize(GameSessionData data)
+    private void Worker_OnGameInitialize(GameSession data)
     {
         lastGameSessionData = data;
         RefreshControls(data);
@@ -37,7 +37,7 @@ public partial class StellarTacticalMap : UserControl
         RefreshControls(lastGameSessionData);
     }
 
-    private void Worker_OnTurnRefresh(GameSessionData data)
+    private void Worker_RefreshData(GameSession data)
     {
         if (isDrawInProcess) return;
 
@@ -50,7 +50,7 @@ public partial class StellarTacticalMap : UserControl
         isDrawInProcess = false;
     }
 
-    private void RefreshControls(GameSessionData data)
+    private void RefreshControls(GameSession data)
     {
         var image = new Bitmap(Width, Height);
 
