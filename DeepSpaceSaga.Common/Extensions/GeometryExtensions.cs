@@ -17,4 +17,29 @@ public static class GeometryExtensions
 
         return angle;
     }
+
+    public static Vector2 ToVector2(this PointF point)
+    {
+        return new Vector2(point.X, point.Y);
+    }
+
+    public static Vector2 ToVector2(this Point point)
+    {
+        return new Vector2(point.X, point.Y);
+    }
+
+    public static Point ToPoint(this Vector2 point)
+    {
+        return new Point((int)point.X, (int)point.Y);
+    }
+
+    public static PointF ToPointF(this Vector2 point)
+    {
+        return new PointF(point.X, point.Y);
+    }
+
+    public static PointF ToPointF(this Point point)
+    {
+        return new PointF(point.X, point.Y);
+    }
 }

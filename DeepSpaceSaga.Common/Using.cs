@@ -5,3 +5,4 @@ global using DeepSpaceSaga.Common.Universe;
 global using DeepSpaceSaga.Common.Universe.Entities.CelestialObjects;
 global using System.Drawing;
 global using System.Reflection;
+global using System.Numerics;

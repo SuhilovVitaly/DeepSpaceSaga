@@ -45,6 +45,8 @@ public class Draw
     {
         DrawGrid.Execute(graphics, screenParameters, prerenderedGridsByZoom[1]);
 
-        DrawCelestialObjects.Execute(graphics, screenParameters, session);
+        DrawCelestialObjects.Execute(screenParameters, session);
+
+        DrawDirections.Execute(screenParameters, session);
     }
 }

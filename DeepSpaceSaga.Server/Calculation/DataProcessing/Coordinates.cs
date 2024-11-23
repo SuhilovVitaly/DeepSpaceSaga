@@ -17,7 +17,7 @@ internal class Coordinates
         var tickSpeed = celestialObject.Speed / 10;
 
         var position = GeometryTools.Move(
-            celestialObject.Location(),
+            celestialObject.GetLocation(),
             tickSpeed,
             celestialObject.Direction);
 

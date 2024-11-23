@@ -6,3 +6,6 @@ global using System.Collections.Concurrent;
 global using System.Drawing;
 global using DeepSpaceSaga.Universe;
 global using DeepSpaceSaga.UI.Render.Tools;
+global using DeepSpaceSaga.Common.Universe.Entities.CelestialObjects;
+global using DeepSpaceSaga.Common.Tools;
+global using DeepSpaceSaga.Common.Geometry;

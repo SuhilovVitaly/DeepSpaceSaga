@@ -14,4 +14,6 @@ public interface IScreenInfo
     int ActiveCelestialObjectId { get; set; }
 
     Zoom Zoom { get; }
+
+    Graphics GraphicSurface { get; set; }
 }

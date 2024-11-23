@@ -1,4 +1,6 @@
-﻿namespace DeepSpaceSaga.UI.Screens.MainGameScreen;
+﻿using DeepSpaceSaga.UI.Render.Model;
+
+namespace DeepSpaceSaga.UI.Screens.MainGameScreen;
 
 public partial class StellarTacticalMap : UserControl
 {
@@ -57,6 +59,12 @@ public partial class StellarTacticalMap : UserControl
         graphics.InterpolationMode = InterpolationMode.Bicubic;
         graphics.SmoothingMode = SmoothingMode.AntiAlias;
         graphics.TextRenderingHint = TextRenderingHint.AntiAlias;
+
+        Global.ScreenData =
+                new ScreenParameters(Width, Height, (int)Global.ScreenData.CenterScreenOnMap.X, (int)Global.ScreenData.CenterScreenOnMap.Y)
+                {
+                    GraphicSurface = graphics
+                };
 
         Global.Resources.DrawTool.DrawTacticalMapScreen(graphics, data, Global.ScreenData);
 
