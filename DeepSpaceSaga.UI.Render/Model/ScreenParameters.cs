@@ -10,8 +10,8 @@ public class ScreenParameters : IScreenInfo
     public PointF CenterScreenOnMap { get; set; }
     public Graphics GraphicSurface { get; set; }
     public Zoom Zoom { get; }
-    public Point ControlActiveCelestialObjectLocation { get; set; }
-    public int ActiveCelestialObjectId { get; set; }
+
+    public bool IsPlayerSpacecraftCenterScreen { get; set; } = true;
 
     public ScreenParameters(float width, float height, int centerScreenX = 10000, int centerScreenY = 10000, int zoomSize = 1000)
     {

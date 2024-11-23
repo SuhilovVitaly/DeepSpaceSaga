@@ -1,4 +1,5 @@
-﻿using DeepSpaceSaga.UI.Render.Model;
+﻿using DeepSpaceSaga.Common.Universe.Entities.CelestialObjects;
+using DeepSpaceSaga.UI.Render.Model;
 
 namespace DeepSpaceSaga.UI.Screens.MainGameScreen;
 
@@ -65,6 +66,20 @@ public partial class StellarTacticalMap : UserControl
                 {
                     GraphicSurface = graphics
                 };
+
+        if(Global.ScreenData.IsPlayerSpacecraftCenterScreen)
+        {
+            var spacecraftLocation = data.SpaceMap.GetCelestialObjects().Where(x => x.OwnerId == 1).FirstOrDefault()?.GetLocation();
+
+            if(spacecraftLocation != null)
+            {
+                Global.ScreenData =
+                new ScreenParameters(Width, Height, (int)spacecraftLocation.Value.X, (int)spacecraftLocation.Value.Y)
+                {
+                    GraphicSurface = graphics
+                };
+            }            
+        }
 
         Global.Resources.DrawTool.DrawTacticalMapScreen(graphics, data, Global.ScreenData);
 
