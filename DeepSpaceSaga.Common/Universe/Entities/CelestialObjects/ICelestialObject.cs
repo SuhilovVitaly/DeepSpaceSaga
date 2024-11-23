@@ -9,5 +9,6 @@
         double Speed { get; set; }
         double PositionX { get; set; }
         double PositionY { get; set; }
+        CelestialObjectTypes Types { get; set; }
     }
 }

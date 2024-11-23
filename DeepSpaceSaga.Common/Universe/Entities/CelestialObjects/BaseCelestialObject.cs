@@ -10,4 +10,5 @@ public class BaseCelestialObject
     public double Speed { get; set; }
     public double PositionX { get; set; }
     public double PositionY { get; set; }
+    public CelestialObjectTypes Types { get; set; } = CelestialObjectTypes.None;
 }

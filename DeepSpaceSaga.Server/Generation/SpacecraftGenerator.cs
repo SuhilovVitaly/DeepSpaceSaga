@@ -17,6 +17,7 @@ internal class SpacecraftGenerator
             PositionY = 10000,
             Speed = 1,
             MaxSpeed = 10,
+            Types = CelestialObjectTypes.SpaceshipPlayer
         };
 
         return spaceship;

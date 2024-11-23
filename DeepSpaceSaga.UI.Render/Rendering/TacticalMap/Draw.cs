@@ -14,17 +14,7 @@ public class Draw
         foreach (var zoomMode in zoomModes)
         {
             AddPreRenderGrid(screenParameters, zoomMode);
-            //prerenderedGridsByZoom[zoomMode].Save(Path.Combine(Environment.CurrentDirectory, zoomMode + ".png"), ImageFormat.Png);
         }
-
-
-        //var zoomModes = new ConcurrentBag<int> { 4000, 2000, 1000, 500, 250, 200 };
-
-        //Parallel.ForEach(zoomModes, zoom =>
-        //{
-        //    AddPreRenderGrid(screenParameters, zoom);
-        //});
-
 
         screenParameters.Metrics.PreRenderBaseGridsTimeinMs = stopwatch.Elapsed.TotalMilliseconds;
     }
@@ -53,6 +43,8 @@ public class Draw
 
     public void DrawTacticalMapScreen(Graphics graphics, GameSession session, ScreenParameters screenParameters)
     {
-        DrawGrid.Execute(graphics, screenParameters, prerenderedGridsByZoom[1]); // screenParameters.Zoom.Size
+        DrawGrid.Execute(graphics, screenParameters, prerenderedGridsByZoom[1]);
+
+        DrawCelestialObjects.Execute(graphics, screenParameters, session);
     }
 }

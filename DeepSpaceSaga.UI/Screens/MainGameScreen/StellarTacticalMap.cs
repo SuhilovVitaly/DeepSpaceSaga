@@ -1,7 +1,4 @@
-﻿using System.Drawing.Drawing2D;
-using System.Drawing.Text;
-
-namespace DeepSpaceSaga.UI.Screens.MainGameScreen;
+﻿namespace DeepSpaceSaga.UI.Screens.MainGameScreen;
 
 public partial class StellarTacticalMap : UserControl
 {
