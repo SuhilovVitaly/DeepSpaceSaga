@@ -2,8 +2,8 @@
 
 public class Worker
 {
-    public event Action<GameSession>? OnGetDataFromServer;
-    public event Action<GameSession>? OnGameInitialize;
+    public event Action<GameManager>? OnGetDataFromServer;
+    public event Action<GameManager>? OnGameInitialize;
 
     private IGameServer _gameServer;
 
@@ -16,7 +16,7 @@ public class Worker
     {
         
         _gameServer.SessionInitialization();
-        OnGameInitialize?.Invoke(_gameServer.GetSession());
+        OnGameInitialize?.Invoke(new GameManager(_gameServer.GetSession()));
 
         Scheduler.Instance.ScheduleTask(1, 100, GetDataFromServer);
     }
@@ -31,13 +31,13 @@ public class Worker
         _gameServer.PauseSession();
     }
 
-    public GameSession GetGameSession()
+    public GameManager GetGameManager()
     { 
-        return _gameServer.GetSession(); 
+        return new GameManager(_gameServer.GetSession()); 
     }
 
     private void GetDataFromServer()
     {
-        OnGetDataFromServer?.Invoke(_gameServer.GetSession());
+        OnGetDataFromServer?.Invoke(new GameManager(_gameServer.GetSession()));
     }
 }

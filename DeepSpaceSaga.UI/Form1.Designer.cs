@@ -31,6 +31,7 @@
             button1 = new Button();
             crlLabelTurns = new Label();
             panel1 = new Panel();
+            spacecraftTelemetryControl1 = new Screens.MainGameScreen.SpacecraftTelemetryControl();
             panel2 = new Panel();
             crlMousePosition = new Label();
             crlGamePause = new Button();
@@ -44,10 +45,9 @@
             // 
             // button1
             // 
-            button1.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             button1.Cursor = Cursors.Hand;
             button1.Font = new Font("Segoe UI", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            button1.Location = new Point(1276, 11);
+            button1.Location = new Point(3, 3);
             button1.Name = "button1";
             button1.Size = new Size(28, 29);
             button1.TabIndex = 0;
@@ -69,6 +69,7 @@
             // panel1
             // 
             panel1.BorderStyle = BorderStyle.FixedSingle;
+            panel1.Controls.Add(spacecraftTelemetryControl1);
             panel1.Controls.Add(panel2);
             panel1.Controls.Add(button1);
             panel1.Controls.Add(CrlZoomOut);
@@ -79,6 +80,14 @@
             panel1.Name = "panel1";
             panel1.Size = new Size(1317, 636);
             panel1.TabIndex = 1;
+            // 
+            // spacecraftTelemetryControl1
+            // 
+            spacecraftTelemetryControl1.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            spacecraftTelemetryControl1.Location = new Point(1002, 11);
+            spacecraftTelemetryControl1.Name = "spacecraftTelemetryControl1";
+            spacecraftTelemetryControl1.Size = new Size(302, 260);
+            spacecraftTelemetryControl1.TabIndex = 12;
             // 
             // panel2
             // 
@@ -126,7 +135,7 @@
             // CrlZoomOut
             // 
             CrlZoomOut.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            CrlZoomOut.Location = new Point(57, 11);
+            CrlZoomOut.Location = new Point(57, 251);
             CrlZoomOut.Name = "CrlZoomOut";
             CrlZoomOut.Size = new Size(40, 39);
             CrlZoomOut.TabIndex = 9;
@@ -137,7 +146,7 @@
             // CrlZoomIn
             // 
             CrlZoomIn.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            CrlZoomIn.Location = new Point(11, 11);
+            CrlZoomIn.Location = new Point(11, 251);
             CrlZoomIn.Name = "CrlZoomIn";
             CrlZoomIn.Size = new Size(40, 39);
             CrlZoomIn.TabIndex = 8;
@@ -184,5 +193,6 @@
         private Button crlResumeGame;
         private Panel panel2;
         private Label crlMousePosition;
+        private Screens.MainGameScreen.SpacecraftTelemetryControl spacecraftTelemetryControl1;
     }
 }

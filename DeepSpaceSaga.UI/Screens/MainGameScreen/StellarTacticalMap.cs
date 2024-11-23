@@ -11,18 +11,20 @@ public partial class StellarTacticalMap : UserControl
 
     private bool isDrawInProcess = false;
 
-    private GameSession lastGameSessionData;
+    private GameManager lastGameSessionData;
 
     public StellarTacticalMap()
     {
         InitializeComponent();
 
+        if (Global.Worker == null) return;
+
         Global.Worker.OnGetDataFromServer += Worker_RefreshData;
         Global.Worker.OnGameInitialize += Worker_OnGameInitialize;
-        lastGameSessionData = Global.Worker.GetGameSession();
+        lastGameSessionData = Global.Worker.GetGameManager();
     }
 
-    private void Worker_OnGameInitialize(GameSession data)
+    private void Worker_OnGameInitialize(GameManager data)
     {
         lastGameSessionData = data;
         RefreshControls(data);
@@ -37,7 +39,7 @@ public partial class StellarTacticalMap : UserControl
         RefreshControls(lastGameSessionData);
     }
 
-    private void Worker_RefreshData(GameSession data)
+    private void Worker_RefreshData(GameManager data)
     {
         if (isDrawInProcess) return;
 
@@ -50,7 +52,7 @@ public partial class StellarTacticalMap : UserControl
         isDrawInProcess = false;
     }
 
-    private void RefreshControls(GameSession data)
+    private void RefreshControls(GameManager data)
     {
         var image = new Bitmap(Width, Height);
 
@@ -69,7 +71,7 @@ public partial class StellarTacticalMap : UserControl
 
         if(Global.ScreenData.IsPlayerSpacecraftCenterScreen)
         {
-            var spacecraftLocation = data.SpaceMap.GetCelestialObjects().Where(x => x.OwnerId == 1).FirstOrDefault()?.GetLocation();
+            var spacecraftLocation = data.GetCelestialMap().GetCelestialObjects().Where(x => x.OwnerId == 1).FirstOrDefault()?.GetLocation();
 
             if(spacecraftLocation != null)
             {

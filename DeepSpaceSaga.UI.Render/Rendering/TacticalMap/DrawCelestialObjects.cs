@@ -2,9 +2,9 @@
 
 public class DrawCelestialObjects
 {
-    public static void Execute(IScreenInfo screenInfo, GameSession session)
+    public static void Execute(IScreenInfo screenInfo, GameManager session)
     {
-        foreach (var currentObject in session.SpaceMap.GetCelestialObjects())
+        foreach (var currentObject in session.GetCelestialMap().GetCelestialObjects())
         {
             switch (currentObject.Types)
             {
