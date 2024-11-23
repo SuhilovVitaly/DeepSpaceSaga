@@ -1,7 +1,7 @@
 ﻿namespace DeepSpaceSaga.Common.Universe.Entities.CelestialObjects;
 
 [Serializable]
-public class BaseCelestialObject
+public class BaseCelestialObject: ICelestialObject
 {
     public int Id { get; set; }
     public int OwnerId { get; set; }
