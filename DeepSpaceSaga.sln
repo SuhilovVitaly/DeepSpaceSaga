@@ -13,7 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DeepSpaceSaga.Server", "Dee
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DeepSpaceSaga.Common", "DeepSpaceSaga.Common\DeepSpaceSaga.Common.csproj", "{A9AC8740-09E0-4672-8EAA-F1B69BDF28AD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeepSpaceSaga.UI.Render", "DeepSpaceSaga.UI.Render\DeepSpaceSaga.UI.Render.csproj", "{4DB6E93A-17B7-40AC-83F1-7C1DB1E5699D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DeepSpaceSaga.UI.Render", "DeepSpaceSaga.UI.Render\DeepSpaceSaga.UI.Render.csproj", "{4DB6E93A-17B7-40AC-83F1-7C1DB1E5699D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{315137F4-4BE3-4F0D-99AC-C1E08B9B2C39}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -12,7 +12,7 @@ public class CelestialMap
 
     public List<ICelestialObject> GetCelestialObjects()
     {
-        return _celestialObjects.Copy();
+        return _celestialObjects;
     }
 
     public void Add(List<ICelestialObject> celestialObjects)

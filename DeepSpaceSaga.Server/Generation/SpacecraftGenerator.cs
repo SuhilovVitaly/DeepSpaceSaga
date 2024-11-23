@@ -12,10 +12,10 @@ internal class SpacecraftGenerator
             Id = RandomGenerator.GetId(),
             OwnerId = 1, // Player Spacecraft
             Name = "Glowworm",
-            Direction = 90,
+            Direction = 45,
             PositionX = 10000,
             PositionY = 10000,
-            Speed = 1,
+            Speed = 10,
             MaxSpeed = 10,
             Types = CelestialObjectTypes.SpaceshipPlayer
         };

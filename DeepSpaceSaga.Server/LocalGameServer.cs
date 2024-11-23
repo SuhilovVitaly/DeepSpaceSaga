@@ -1,4 +1,5 @@
 ﻿using DeepSpaceSaga.Common.Tools;
+using DeepSpaceSaga.Server.Calculation;
 using DeepSpaceSaga.Server.Generation;
 
 namespace DeepSpaceSaga.Server;
@@ -53,6 +54,8 @@ public class LocalGameServer : IGameServer
         if (_session.IsRunning == false) return;
 
         _sessionLock.EnterWriteLock();
+
+        _session = new TurnTickCalculator().Execute(_session);
 
         _session.TurnTick++;
 
