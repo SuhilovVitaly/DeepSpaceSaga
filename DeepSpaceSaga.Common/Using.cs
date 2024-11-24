@@ -8,3 +8,6 @@ global using System.Numerics;
 global using DeepSpaceSaga.Universe;
 global using DeepSpaceSaga.Common.Universe.Entities.CelestialObjects.Spacecrafts;
 global using DeepSpaceSaga.Common.Tools;
+global using log4net;
+global using Newtonsoft.Json.Linq;
+global using DeepSpaceSaga.Common.Universe.Commands;

@@ -15,6 +15,9 @@ public partial class Form1 : Form
 
         crlTacticalMap.Dock = DockStyle.Fill;
 
+        KeyPreview = true;
+        KeyDown += Window_KeyDown;
+
         if (Global.GameManager == null) return;
 
         Global.GameManager.EventController.OnTacticalMapMouseMove += CrlTacticalMap_OnMouseMove;
@@ -83,5 +86,43 @@ public partial class Form1 : Form
     private void crlGamePause_Click(object sender, EventArgs e)
     {
         Global.GameManager.EventController.Pause();
+    }
+
+    private void Window_KeyDown(object sender, KeyEventArgs e)
+    {
+        Logger.Debug($"Window_KeyDown - Handle the KeyDown event {e.KeyCode} ");
+
+        var spacecraft = Global.GameManager.GetPlayerSpacecraft();
+
+        var session = Global.GameManager.GetSession();
+
+        string commandBody;
+
+        switch (e.KeyCode)
+        {
+            case Keys.S:
+                if (session.IsRunning == false) return;
+                //commandBody = ModuleCommand.ToJson(_environment.Session, spacecraft.GetPropulsionModules()[0].Braking);
+                //Global.Game.ExecuteCommand(new EngineCore.Command(commandBody));
+                break;
+
+            case Keys.D:
+                if (session.IsRunning == false) return;
+                //commandBody = ModuleCommand.ToJson(_environment.Session, spacecraft.GetPropulsionModules()[0].TurnRight);
+                //Global.Game.ExecuteCommand(new EngineCore.Command(commandBody));
+                break;
+
+            case Keys.A:
+                if (session.IsRunning == false) return;
+                //commandBody = ModuleCommand.ToJson(_environment.Session, spacecraft.GetPropulsionModules()[0].TurnLeft);
+                //Global.Game.ExecuteCommand(new EngineCore.Command(commandBody));
+                break;
+
+            case Keys.W:
+                if (session.IsRunning == false) return;
+                //commandBody = ModuleCommand.ToJson(_environment.Session, spacecraft.GetPropulsionModules()[0].Acceleration);
+                //Global.Game.ExecuteCommand(new EngineCore.Command(commandBody));
+                break;
+        }
     }
 }

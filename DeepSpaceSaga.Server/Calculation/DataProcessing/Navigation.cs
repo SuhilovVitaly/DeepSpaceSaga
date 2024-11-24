@@ -1,6 +1,6 @@
 ﻿namespace DeepSpaceSaga.Server.Calculation.DataProcessing;
 
-internal class Coordinates
+internal class Navigation
 {
     public GameSession Recalculate(GameSession session)
     {

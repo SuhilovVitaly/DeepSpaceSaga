@@ -1,16 +1,14 @@
-﻿using DeepSpaceSaga.Common.Tools;
-
-namespace DeepSpaceSaga.Server.Generation;
+﻿namespace DeepSpaceSaga.Server.Generation;
 
 internal class SpacecraftGenerator
 {
     public static ICelestialObject GetPlayerSpacecraft()
     {
 
-        ICelestialObject spaceship = new BaseSpaceship
+        ISpacecraft spaceship = new BaseSpaceship
         {
             Id = RandomGenerator.GetId(),
-            OwnerId = 1, // Player Spacecraft
+            OwnerId = 1, 
             Name = "Glowworm",
             Direction = 45,
             PositionX = 10000,
@@ -20,6 +18,8 @@ internal class SpacecraftGenerator
             Agility = 5,
             Types = CelestialObjectTypes.SpaceshipPlayer
         };
+
+        spaceship.Modules.Add(PropulsionModulesGenerator.CreateMicroWarpDrive(spaceship.Id, "PMV5002"));
 
         return spaceship;
     }

@@ -8,7 +8,7 @@ public class TurnTickCalculator
 
         for (var i = 0; i < ticks; i++)
         {
-            processingSession = new DataProcessing.Coordinates().Recalculate(processingSession);
+            processingSession = new DataProcessing.Navigation().Recalculate(processingSession);
         }
 
         return processingSession;
