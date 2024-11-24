@@ -7,3 +7,4 @@ global using System.Reflection;
 global using System.Numerics;
 global using DeepSpaceSaga.Universe;
 global using DeepSpaceSaga.Common.Universe.Entities.CelestialObjects.Spacecrafts;
+global using DeepSpaceSaga.Common.Tools;

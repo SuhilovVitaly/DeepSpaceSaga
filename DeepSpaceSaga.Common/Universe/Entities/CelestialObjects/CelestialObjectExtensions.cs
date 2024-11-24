@@ -29,4 +29,9 @@ public static class CelestialObjectExtensions
 
         return Color.FromArgb(30, 45, 65);
     }
+
+    public static ISpacecraft ToSpaceship(this ICelestialObject celestialObject)
+    {
+        return celestialObject as ISpacecraft;
+    }
 }

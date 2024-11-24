@@ -1,7 +1,4 @@
-﻿using DeepSpaceSaga.Common.Universe.Entities.CelestialObjects;
-using DeepSpaceSaga.UI.Render.Model;
-
-namespace DeepSpaceSaga.UI.Screens.MainGameScreen;
+﻿namespace DeepSpaceSaga.UI.Screens.MainGameScreen;
 
 public partial class StellarTacticalMap : UserControl
 {
@@ -16,6 +13,9 @@ public partial class StellarTacticalMap : UserControl
     public StellarTacticalMap()
     {
         InitializeComponent();
+
+        imageTacticalMap.MouseClick += MapClick;
+        imageTacticalMap.MouseMove += MapMouseMove;
 
         if (Global.Worker == null) return;
 
@@ -93,8 +93,23 @@ public partial class StellarTacticalMap : UserControl
         graphics.Dispose();
     }
 
-    private void imageTacticalMap_MouseMove(object sender, MouseEventArgs e)
+    private void MapMouseMove(object sender, MouseEventArgs e)
     {
+        // Event to container
         OnMouseMove?.Invoke(e);
+
+        var mouseScreenCoordinates = UiTools.ToRelativeCoordinates(e.Location, Global.ScreenData.Center);
+
+        var mouseLocation = UiTools.ToTacticalMapCoordinates(mouseScreenCoordinates, Global.ScreenData.CenterScreenOnMap);
+
+        lastGameSessionData.MapEventHandler.MouseMove(mouseLocation);
+    }
+    private void MapClick(object sender, MouseEventArgs e)
+    {
+        var mouseScreenCoordinates = UiTools.ToRelativeCoordinates(e.Location, Global.ScreenData.Center);
+
+        var mouseLocation = UiTools.ToTacticalMapCoordinates(mouseScreenCoordinates, Global.ScreenData.CenterScreenOnMap);
+
+        lastGameSessionData.MapEventHandler.MouseClick(mouseLocation);
     }
 }

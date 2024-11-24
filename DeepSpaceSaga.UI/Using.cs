@@ -7,3 +7,5 @@ global using DeepSpaceSaga.Controller;
 global using System.Drawing.Drawing2D;
 global using System.Drawing.Text;
 global using DeepSpaceSaga.Common.Tools;
+global using DeepSpaceSaga.Common.Universe.Entities.CelestialObjects;
+global using DeepSpaceSaga.UI.Render.Tools;

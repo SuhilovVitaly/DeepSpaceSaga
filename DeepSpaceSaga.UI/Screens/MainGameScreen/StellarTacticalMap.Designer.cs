@@ -41,7 +41,6 @@
             imageTacticalMap.Size = new Size(522, 462);
             imageTacticalMap.TabIndex = 0;
             imageTacticalMap.TabStop = false;
-            imageTacticalMap.MouseMove += imageTacticalMap_MouseMove;
             // 
             // StellarTacticalMap
             // 
