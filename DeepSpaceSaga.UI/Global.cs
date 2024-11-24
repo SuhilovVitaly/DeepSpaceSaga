@@ -1,11 +1,8 @@
-﻿using DeepSpaceSaga.UI.Render.Model;
-
-namespace DeepSpaceSaga.UI;
+﻿namespace DeepSpaceSaga.UI;
 
 public class Global
 {
-    public static Worker Worker { get; set; } = new Worker();
-
+    public static GameManager GameManager { get; set; }
     public static ScreenParameters ScreenData { get; set; }
 
     public static GlobalResources Resources { get; set; }
@@ -20,6 +17,6 @@ public class Global
 
         Resources = new GlobalResources(ScreenData);
 
-        Worker.Initialize();
+        GameManager = new GameManager(new EventManager());
     }
 }

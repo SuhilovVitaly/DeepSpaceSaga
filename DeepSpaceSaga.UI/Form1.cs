@@ -4,15 +4,9 @@ public partial class Form1 : Form
 {
     private static readonly ILog Logger = LogManager.GetLogger(MethodBase.GetCurrentMethod()?.DeclaringType);
 
-    private GameManager gameManager;
-
     public Form1()
     {
         InitializeComponent();
-
-        //SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.UserPaint | ControlStyles.AllPaintingInWmPaint, true);
-
-        //UpdateStyles();
 
         Rectangle resolution = Screen.PrimaryScreen.Bounds;
 
@@ -20,19 +14,21 @@ public partial class Form1 : Form
         Height = resolution.Height;
 
         crlTacticalMap.Dock = DockStyle.Fill;
-        crlTacticalMap.OnMouseMove += CrlTacticalMap_OnMouseMove;
 
-        Global.Worker.OnGetDataFromServer += Worker_OnGetDataFromServer;
+        if (Global.GameManager == null) return;
+
+        Global.GameManager.EventController.OnTacticalMapMouseMove += CrlTacticalMap_OnMouseMove;
+
+        Global.GameManager.EventController.OnRefreshData += Worker_OnGetDataFromServer;
     }
 
-    private void CrlTacticalMap_OnMouseMove(MouseEventArgs e)
+    private void CrlTacticalMap_OnMouseMove(PointF e)
     {
         crlMousePosition.Text = $"({Width}:{Height}) - ({Width/2}:{Height/2}){Environment.NewLine}({e.X}:{e.Y})";
     }
 
-    private void Worker_OnGetDataFromServer(GameManager obj)
+    private void Worker_OnGetDataFromServer(GameSession obj)
     {
-        gameManager = obj;
         CrossThreadExtensions.PerformSafely(this, RefreshControls);
     }
 
@@ -42,7 +38,7 @@ public partial class Form1 : Form
         var prerenderingGrids = $" time: {Global.ScreenData.Metrics.PreRenderBaseGridsTimeinMs}";
 
 
-        crlLabelTurns.Text = $" Turn is {gameManager.GetSession().Turn}.{gameManager.GetSession().TurnTick} {Environment.NewLine} " +
+        crlLabelTurns.Text = $" Turn is {Global.GameManager.GetSession().Turn}.{Global.GameManager.GetSession().TurnTick} {Environment.NewLine} " +
             $"Center is ({Global.ScreenData.CenterScreenOnMap.X},{Global.ScreenData.CenterScreenOnMap.Y}) {Environment.NewLine}" +
             $"Zoom is {Global.ScreenData.Zoom.Size} {Environment.NewLine}" +
             $"Prerendering is {prerenderingGrids} {Environment.NewLine}" +
@@ -81,11 +77,11 @@ public partial class Form1 : Form
 
     private void crlResumeGame_Click(object sender, EventArgs e)
     {
-        Global.Worker.Resume();
+        Global.GameManager.EventController.Resume();
     }
 
     private void crlGamePause_Click(object sender, EventArgs e)
     {
-        Global.Worker.Pause();
+        Global.GameManager.EventController.Pause();
     }
 }

@@ -9,3 +9,5 @@ global using System.Drawing.Text;
 global using DeepSpaceSaga.Common.Tools;
 global using DeepSpaceSaga.Common.Universe.Entities.CelestialObjects;
 global using DeepSpaceSaga.UI.Render.Tools;
+global using DeepSpaceSaga.Common.Universe;
+global using DeepSpaceSaga.Common.Universe.Entities.CelestialObjects.Spacecrafts;

@@ -6,19 +6,19 @@ public partial class SpacecraftTelemetryControl : UserControl
     {
         InitializeComponent();
 
-        if (Global.Worker == null) return;
+        if (Global.GameManager == null) return;
 
-        Global.Worker.OnGetDataFromServer += Worker_RefreshData;
+        Global.GameManager.EventController.OnRefreshData += Worker_RefreshData;
     }
 
-    private void Worker_RefreshData(GameManager manager)
+    private void Worker_RefreshData(GameSession manager)
     {
         CrossThreadExtensions.PerformSafely(this, RefreshControls, manager);        
     }
 
-    private void RefreshControls(GameManager manager)
+    private void RefreshControls(GameSession manager)
     {
-        var spacecraftLocation = manager.GetPlayerSpacecraft();
+        var spacecraftLocation = Global.GameManager.GetPlayerSpacecraft();
 
         crlSpacecraftName.Text = spacecraftLocation?.Name;
         crlDirection.Text = spacecraftLocation?.Direction + "";

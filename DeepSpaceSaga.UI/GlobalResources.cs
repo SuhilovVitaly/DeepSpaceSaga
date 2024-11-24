@@ -1,5 +1,4 @@
-﻿using DeepSpaceSaga.UI.Render.Model;
-using DeepSpaceSaga.UI.Render.Rendering.TacticalMap;
+﻿using DeepSpaceSaga.UI.Render.Rendering.TacticalMap;
 
 namespace DeepSpaceSaga.UI;
 

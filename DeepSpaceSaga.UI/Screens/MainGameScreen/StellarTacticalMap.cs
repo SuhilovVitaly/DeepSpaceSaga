@@ -2,13 +2,9 @@
 
 public partial class StellarTacticalMap : UserControl
 {
-    public event Action<MouseEventArgs>? OnMouseMove;
-
     private static readonly ILog Logger = LogManager.GetLogger(MethodBase.GetCurrentMethod()?.DeclaringType);
 
     private bool isDrawInProcess = false;
-
-    private GameManager lastGameSessionData;
 
     public StellarTacticalMap()
     {
@@ -17,42 +13,29 @@ public partial class StellarTacticalMap : UserControl
         imageTacticalMap.MouseClick += MapClick;
         imageTacticalMap.MouseMove += MapMouseMove;
 
-        if (Global.Worker == null) return;
+        if (Global.GameManager == null) return;
 
-        Global.Worker.OnGetDataFromServer += Worker_RefreshData;
-        Global.Worker.OnGameInitialize += Worker_OnGameInitialize;
-        lastGameSessionData = Global.Worker.GetGameManager();
+        Global.GameManager.EventController.OnRefreshData += Worker_RefreshData;
+        Global.GameManager.EventController.OnInitializeData += Worker_OnGameInitialize;
     }
 
-    private void Worker_OnGameInitialize(GameManager data)
+    private void Worker_OnGameInitialize(GameSession manager)
     {
-        lastGameSessionData = data;
-        RefreshControls(data);
+        RefreshControls(manager);
     }
 
-    public void Initialization()
-    {
-        Logger.Info($"Initialization finished. Zoom is {Global.ScreenData.Zoom}");
-
-        if (lastGameSessionData == null) return;
-
-        RefreshControls(lastGameSessionData);
-    }
-
-    private void Worker_RefreshData(GameManager data)
+    private void Worker_RefreshData(GameSession manager)
     {
         if (isDrawInProcess) return;
 
         isDrawInProcess = true;
 
-        lastGameSessionData = data;
-
-        CrossThreadExtensions.PerformSafely(this, RefreshControls, data);
+        CrossThreadExtensions.PerformSafely(this, RefreshControls, manager);
 
         isDrawInProcess = false;
     }
 
-    private void RefreshControls(GameManager data)
+    private void RefreshControls(GameSession data)
     {
         var image = new Bitmap(Width, Height);
 
@@ -71,7 +54,7 @@ public partial class StellarTacticalMap : UserControl
 
         if(Global.ScreenData.IsPlayerSpacecraftCenterScreen)
         {
-            var spacecraftLocation = data.GetCelestialMap().GetCelestialObjects().Where(x => x.OwnerId == 1).FirstOrDefault()?.GetLocation();
+            var spacecraftLocation = Global.GameManager.GetCelestialMap().GetCelestialObjects().Where(x => x.OwnerId == 1).FirstOrDefault()?.GetLocation();
 
             if(spacecraftLocation != null)
             {
@@ -83,7 +66,7 @@ public partial class StellarTacticalMap : UserControl
             }            
         }
 
-        Global.Resources.DrawTool.DrawTacticalMapScreen(graphics, data, Global.ScreenData);
+        Global.Resources.DrawTool.DrawTacticalMapScreen(graphics, Global.GameManager.GetSession(), Global.ScreenData);
 
         graphics.DrawString($"{DateTime.Now.Second}.{DateTime.Now.Millisecond}", new Font("Tahoma", 8), Brushes.White, new RectangleF(70, 90, 90, 50));
 
@@ -95,14 +78,11 @@ public partial class StellarTacticalMap : UserControl
 
     private void MapMouseMove(object sender, MouseEventArgs e)
     {
-        // Event to container
-        OnMouseMove?.Invoke(e);
-
         var mouseScreenCoordinates = UiTools.ToRelativeCoordinates(e.Location, Global.ScreenData.Center);
 
         var mouseLocation = UiTools.ToTacticalMapCoordinates(mouseScreenCoordinates, Global.ScreenData.CenterScreenOnMap);
 
-        lastGameSessionData.MapEventHandler.MouseMove(mouseLocation);
+        Global.GameManager.EventController.TacticalMapMouseMove(mouseLocation);
     }
     private void MapClick(object sender, MouseEventArgs e)
     {
@@ -110,6 +90,6 @@ public partial class StellarTacticalMap : UserControl
 
         var mouseLocation = UiTools.ToTacticalMapCoordinates(mouseScreenCoordinates, Global.ScreenData.CenterScreenOnMap);
 
-        lastGameSessionData.MapEventHandler.MouseClick(mouseLocation);
+        Global.GameManager.EventController.TacticalMapMouseClick(mouseLocation);
     }
 }

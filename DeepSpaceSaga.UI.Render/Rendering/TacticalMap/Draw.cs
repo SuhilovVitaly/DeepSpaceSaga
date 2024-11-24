@@ -41,7 +41,7 @@ public class Draw
         return bitmapGrid;
     }
 
-    public void DrawTacticalMapScreen(Graphics graphics, GameManager session, ScreenParameters screenParameters)
+    public void DrawTacticalMapScreen(Graphics graphics, GameSession session, ScreenParameters screenParameters)
     {
         DrawGrid.Execute(graphics, screenParameters, prerenderedGridsByZoom[1]);
 
