@@ -1,6 +1,4 @@
-﻿using DeepSpaceSaga.Common.Tools;
-using DeepSpaceSaga.Server.Calculation;
-using DeepSpaceSaga.Server.Generation;
+﻿using DeepSpaceSaga.Common.Universe.Commands;
 
 namespace DeepSpaceSaga.Server;
 
@@ -8,6 +6,7 @@ public class LocalGameServer : IGameServer
 {
     private GameSession _session;
     private readonly ReaderWriterLockSlim _sessionLock = new ReaderWriterLockSlim();
+    private ConcurrentBag<Command> _commands = new ConcurrentBag<Command>();
 
     public LocalGameServer()
     {
@@ -47,18 +46,43 @@ public class LocalGameServer : IGameServer
         _session.TurnTick = 0;
 
         _sessionLock.ExitWriteLock();
+
+       // 
     }
+
+    private bool _isCalculationInProgress = false;
 
     public void LocationCalculation()
     {
         if (_session.IsRunning == false) return;
+        if (_isCalculationInProgress) return;
+
+        _isCalculationInProgress = true;
 
         _sessionLock.EnterWriteLock();
 
-        _session = new TurnTickCalculator().Execute(_session);
+        _session = new TurnTickCalculator().Execute(_session, new List<Command>(_commands));
 
         _session.TurnTick++;
 
+        _commands = [];
+
         _sessionLock.ExitWriteLock();
+
+        _isCalculationInProgress = false;
+    }
+
+    public async Task AddCommand(Command command)
+    {
+        try
+        {
+            _commands.Add(command);
+        }
+        catch (Exception)
+        {
+
+            throw;
+        }
+        
     }
 }

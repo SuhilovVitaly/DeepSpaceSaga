@@ -96,9 +96,9 @@
             panel2.Controls.Add(crlGamePause);
             panel2.Controls.Add(crlResumeGame);
             panel2.Controls.Add(crlLabelTurns);
-            panel2.Location = new Point(11, 360);
+            panel2.Location = new Point(11, 309);
             panel2.Name = "panel2";
-            panel2.Size = new Size(250, 263);
+            panel2.Size = new Size(250, 314);
             panel2.TabIndex = 11;
             // 
             // crlMousePosition
@@ -114,7 +114,7 @@
             // 
             // crlGamePause
             // 
-            crlGamePause.Location = new Point(153, 231);
+            crlGamePause.Location = new Point(139, 138);
             crlGamePause.Name = "crlGamePause";
             crlGamePause.Size = new Size(94, 29);
             crlGamePause.TabIndex = 10;
@@ -124,7 +124,7 @@
             // 
             // crlResumeGame
             // 
-            crlResumeGame.Location = new Point(3, 231);
+            crlResumeGame.Location = new Point(15, 138);
             crlResumeGame.Name = "crlResumeGame";
             crlResumeGame.Size = new Size(94, 29);
             crlResumeGame.TabIndex = 10;

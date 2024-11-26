@@ -1,4 +1,6 @@
-﻿namespace DeepSpaceSaga.UI;
+﻿using DeepSpaceSaga.Common.Universe.Commands;
+
+namespace DeepSpaceSaga.UI;
 
 public class GameManager(EventManager eventManager)
 {
@@ -19,5 +21,8 @@ public class GameManager(EventManager eventManager)
         return EventController.GetSession();
     }
 
-    
+    public async Task ExecuteCommandAsync(Command command)
+    {
+        await eventManager.ExecuteCommandAsync(command);
+    }
 }

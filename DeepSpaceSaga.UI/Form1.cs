@@ -88,7 +88,12 @@ public partial class Form1 : Form
         Global.GameManager.EventController.Pause();
     }
 
-    private void Window_KeyDown(object sender, KeyEventArgs e)
+    private void Window_KeyDown(object? sender, KeyEventArgs e)
+    {
+        _ = KeyDownAsync(e);
+    }
+
+    private async Task KeyDownAsync(KeyEventArgs e)
     {
         Logger.Debug($"Window_KeyDown - Handle the KeyDown event {e.KeyCode} ");
 
@@ -96,32 +101,34 @@ public partial class Form1 : Form
 
         var session = Global.GameManager.GetSession();
 
-        string commandBody;
-
         switch (e.KeyCode)
         {
             case Keys.S:
                 if (session.IsRunning == false) return;
-                //commandBody = ModuleCommand.ToJson(_environment.Session, spacecraft.GetPropulsionModules()[0].Braking);
-                //Global.Game.ExecuteCommand(new EngineCore.Command(commandBody));
                 break;
 
             case Keys.D:
                 if (session.IsRunning == false) return;
-                //commandBody = ModuleCommand.ToJson(_environment.Session, spacecraft.GetPropulsionModules()[0].TurnRight);
-                //Global.Game.ExecuteCommand(new EngineCore.Command(commandBody));
+
+                await Global.GameManager.ExecuteCommandAsync(new Common.Universe.Commands.Command
+                {
+                    Type = Common.Universe.Commands.CommandTypes.TurnRight,
+                    CelestialObjectId = spacecraft.Id,
+                    ModuleId = spacecraft.GetPropulsionModules().FirstOrDefault().Id
+                });
                 break;
 
             case Keys.A:
                 if (session.IsRunning == false) return;
-                //commandBody = ModuleCommand.ToJson(_environment.Session, spacecraft.GetPropulsionModules()[0].TurnLeft);
-                //Global.Game.ExecuteCommand(new EngineCore.Command(commandBody));
+                await Global.GameManager.ExecuteCommandAsync(new Common.Universe.Commands.Command{
+                    Type = Common.Universe.Commands.CommandTypes.TurnLeft,
+                    CelestialObjectId = spacecraft.Id,
+                    ModuleId = spacecraft.GetPropulsionModules().FirstOrDefault().Id
+                });
                 break;
 
             case Keys.W:
                 if (session.IsRunning == false) return;
-                //commandBody = ModuleCommand.ToJson(_environment.Session, spacecraft.GetPropulsionModules()[0].Acceleration);
-                //Global.Game.ExecuteCommand(new EngineCore.Command(commandBody));
                 break;
         }
     }

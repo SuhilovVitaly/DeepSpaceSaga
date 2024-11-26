@@ -1,4 +1,6 @@
-﻿namespace DeepSpaceSaga.Controller;
+﻿using DeepSpaceSaga.Common.Universe.Commands;
+
+namespace DeepSpaceSaga.Controller;
 
 public class EventManager
 {
@@ -78,5 +80,10 @@ public class EventManager
     public void Pause()
     {
         Worker.Pause();
+    }
+
+    public async Task ExecuteCommandAsync(Command command)
+    {
+        await Worker.SendCommandAsync(command);
     }
 }

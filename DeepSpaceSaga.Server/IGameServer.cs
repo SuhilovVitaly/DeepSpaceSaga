@@ -8,4 +8,5 @@ public interface IGameServer
     GameSession GetSession();
     void EventsCalculation();
     void LocationCalculation();
+    Task AddCommand(Command command);
 }

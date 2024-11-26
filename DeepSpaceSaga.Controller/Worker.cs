@@ -1,4 +1,6 @@
-﻿namespace DeepSpaceSaga.Controller;
+﻿using DeepSpaceSaga.Common.Universe.Commands;
+
+namespace DeepSpaceSaga.Controller;
 
 public class Worker
 {
@@ -44,5 +46,18 @@ public class Worker
     private void GetDataFromServer()
     {
         OnGetDataFromServer?.Invoke(_gameServer.GetSession());
+    }
+
+    public async Task SendCommandAsync(Command command)
+    {
+        try
+        {
+            await _gameServer.AddCommand(command);
+        }
+        catch (Exception)
+        {
+
+            throw;
+        }
     }
 }
