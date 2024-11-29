@@ -4,12 +4,11 @@ internal class AsteroidGenerator
 {
     public static ICelestialObject CreateAsteroid(double direction, double x, double y, double speed, string name)
     {
-
-        ICelestialObject spaceship = new BaseCelestialObject
+        ICelestialObject asteroid = new BaseCelestialObject
         {
-            Id = RandomGenerator.GetId(),
+            Id = new GenerationTool().GetId(),
             OwnerId = 0, 
-            Name = name,
+            Name = "ASR-" + name,
             Direction = direction,
             PositionX = x,
             PositionY = y,
@@ -17,6 +16,6 @@ internal class AsteroidGenerator
             Types = CelestialObjectTypes.Asteroid
         };
 
-        return spaceship;
+        return asteroid;
     }
 }

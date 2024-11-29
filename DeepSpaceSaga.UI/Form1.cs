@@ -110,20 +110,22 @@ public partial class Form1 : Form
             case Keys.D:
                 if (session.IsRunning == false) return;
 
-                await Global.GameManager.ExecuteCommandAsync(new Common.Universe.Commands.Command
+                await Global.GameManager.ExecuteCommandAsync(new Command
                 {
-                    Type = Common.Universe.Commands.CommandTypes.TurnRight,
+                    Category = CommandCategory.Navigation,
+                    Type = CommandTypes.TurnRight,
                     CelestialObjectId = spacecraft.Id,
-                    ModuleId = spacecraft.GetPropulsionModules().FirstOrDefault().Id
+                    ModuleId = spacecraft.GetModules(Common.Universe.Equipment.Category.Propulsion).FirstOrDefault().Id
                 });
                 break;
 
             case Keys.A:
                 if (session.IsRunning == false) return;
-                await Global.GameManager.ExecuteCommandAsync(new Common.Universe.Commands.Command{
-                    Type = Common.Universe.Commands.CommandTypes.TurnLeft,
+                await Global.GameManager.ExecuteCommandAsync(new Command{
+                    Category = CommandCategory.Navigation,
+                    Type = CommandTypes.TurnLeft,
                     CelestialObjectId = spacecraft.Id,
-                    ModuleId = spacecraft.GetPropulsionModules().FirstOrDefault().Id
+                    ModuleId = spacecraft.GetModules(Common.Universe.Equipment.Category.Propulsion).FirstOrDefault().Id
                 });
                 break;
 

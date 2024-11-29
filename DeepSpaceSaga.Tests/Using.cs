@@ -7,3 +7,4 @@ global using DeepSpaceSaga.Common.Universe.Entities.CelestialObjects;
 global using DeepSpaceSaga.Common.Universe;
 global using DeepSpaceSaga.Server.Generation;
 global using DeepSpaceSaga.Universe;
+global using DeepSpaceSaga.Common.Universe.Commands;

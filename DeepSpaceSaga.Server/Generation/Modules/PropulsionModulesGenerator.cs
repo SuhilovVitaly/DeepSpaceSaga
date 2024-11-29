@@ -11,7 +11,7 @@ public class PropulsionModulesGenerator
             case "PMV5002":
                 resultModule = new MicroWarpDrive
                 {
-                    Id = RandomGenerator.GetId(),
+                    Id = new GenerationTool().GetId(),
                     OwnerId = ownerId,
                     ActivationCost = 100,
                     Power = 2000,

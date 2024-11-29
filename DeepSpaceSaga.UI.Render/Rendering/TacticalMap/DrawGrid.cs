@@ -8,7 +8,7 @@ public class DrawGrid
 
         graphics.DrawImage(staticGrid, GetLeftCorner(screenInfo));
 
-        graphics.FillEllipse(new SolidBrush(Color.Beige), screenInfo.Center.X - 2, screenInfo.Center.Y - 2, 4, 4);
+        //graphics.FillEllipse(new SolidBrush(Color.Beige), screenInfo.Center.X - 2, screenInfo.Center.Y - 2, 4, 4);
     }
 
     internal static PointF GetLeftCorner(IScreenInfo screenInfo)

@@ -13,3 +13,4 @@ global using Newtonsoft.Json.Linq;
 global using DeepSpaceSaga.Common.Universe.Commands;
 global using DeepSpaceSaga.Common.Universe.Equipment;
 global using DeepSpaceSaga.Common.Universe.Equipment.Propulsion;
+global using DeepSpaceSaga.Common.Universe.Equipment.Scanner;

@@ -13,7 +13,8 @@ public enum CommandTypes
     Explosion = 800,
     ReloadWeapon = 900,
     Scanning = 1600,
-    Shot = 2001
+    Shot = 2001,
+    GenerateAsteroid = 5001
 }
 
 public static class CommandTypesExtensions

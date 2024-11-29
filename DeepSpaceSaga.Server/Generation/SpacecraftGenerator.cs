@@ -7,7 +7,7 @@ internal class SpacecraftGenerator
 
         ISpacecraft spaceship = new BaseSpaceship
         {
-            Id = RandomGenerator.GetId(),
+            Id = new GenerationTool().GetId(),
             OwnerId = 1, 
             Name = "Glowworm",
             Direction = 45,
@@ -20,6 +20,7 @@ internal class SpacecraftGenerator
         };
 
         spaceship.Modules.Add(PropulsionModulesGenerator.CreateMicroWarpDrive(spaceship.Id, "PMV5002"));
+        spaceship.Modules.Add(GeneralModuleGenerator.CreateSpaceScanner(spaceship.Id, "SCR5001"));
 
         return spaceship;
     }

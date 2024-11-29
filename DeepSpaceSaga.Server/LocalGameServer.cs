@@ -4,7 +4,8 @@ public class LocalGameServer : IGameServer
 {
     private GameSession _session;
     private readonly ReaderWriterLockSlim _sessionLock = new ReaderWriterLockSlim();
-    private ConcurrentBag<Command> _commands = new ConcurrentBag<Command>();
+    private ConcurrentBag<Command> _tickCommands = new ConcurrentBag<Command>();
+    private ConcurrentBag<Command> _turnCommands = new ConcurrentBag<Command>();
 
     public LocalGameServer()
     {
@@ -34,11 +35,20 @@ public class LocalGameServer : IGameServer
         _session = GameSessionGenerator.ProduceSession();
     }
 
-    internal void EventsCalculation()
+    private void EventsCalculation()
     {
         if (_session.IsRunning == false) return;
 
+        EventsCalculation(1);
+    }
+
+    internal void EventsCalculation(int turns = 1)
+    {
         _sessionLock.EnterWriteLock();
+
+        _session = new TurnCalculator().Execute(_session, new List<Command>(_turnCommands));
+
+        _turnCommands = [];
 
         _session.Turn++;
         _session.TurnTick = 0;
@@ -55,19 +65,18 @@ public class LocalGameServer : IGameServer
         LocationCalculation(1);
     }
     internal void LocationCalculation(int turns = 1)
-    {
-        
+    {       
         if (_isCalculationInProgress) return;
 
         _isCalculationInProgress = true;
 
         _sessionLock.EnterWriteLock();
 
-        _session = new TurnTickCalculator().Execute(_session, new List<Command>(_commands));
+        _session = new TurnTickCalculator().Execute(_session, new List<Command>(_tickCommands));
 
         _session.TurnTick++;
 
-        _commands = [];
+        _tickCommands = [];
 
         _sessionLock.ExitWriteLock();
 
@@ -78,7 +87,15 @@ public class LocalGameServer : IGameServer
     {
         try
         {
-            _commands.Add(command);
+            // The calculation granularity has been reduced to 10 times per second for smooth movement of objects on the map.
+            if (command.Category == CommandCategory.Navigation)
+            {
+                _tickCommands.Add(command);
+                return;
+            }
+
+            _turnCommands.Add(command);
+
         }
         catch (Exception)
         {

@@ -13,3 +13,4 @@ global using System.Collections.Concurrent;
 global using DeepSpaceSaga.Common.Universe.Commands;
 global using DeepSpaceSaga.Server.Calculation.DataProcessing;
 global using DeepSpaceSaga.Common.Extensions;
+global using DeepSpaceSaga.Common.Universe.Equipment.Scanner;

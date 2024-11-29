@@ -5,6 +5,7 @@ public partial class StellarTacticalMap : UserControl
     private static readonly ILog Logger = LogManager.GetLogger(MethodBase.GetCurrentMethod()?.DeclaringType);
 
     private bool isDrawInProcess = false;
+    private long drawDuration = 0;
 
     public StellarTacticalMap()
     {
@@ -37,6 +38,8 @@ public partial class StellarTacticalMap : UserControl
 
     private void RefreshControls(GameSession data)
     {
+        var stopwatch = Stopwatch.StartNew();
+
         var image = new Bitmap(Width, Height);
 
         var graphics = Graphics.FromImage(image);
@@ -64,16 +67,28 @@ public partial class StellarTacticalMap : UserControl
                     GraphicSurface = graphics
                 };
             }            
+        }        
+
+        var session = Global.GameManager.GetSession();
+
+        Global.Resources.DrawTool.DrawTacticalMapScreen(graphics, session, Global.ScreenData);
+
+        Global.ScreenData.Metrics.PreRenderBaseGridsTimeinMs = stopwatch.ElapsedMilliseconds;
+
+        if(drawDuration > 0)
+        {
+            drawDuration = (drawDuration + stopwatch.ElapsedMilliseconds) / 2;
         }
+        else
+        {
+            drawDuration = stopwatch.ElapsedMilliseconds;
+        }        
 
-        Global.Resources.DrawTool.DrawTacticalMapScreen(graphics, Global.GameManager.GetSession(), Global.ScreenData);
-
-        graphics.DrawString($"{DateTime.Now.Second}.{DateTime.Now.Millisecond}", new Font("Tahoma", 8), Brushes.White, new RectangleF(70, 90, 90, 50));
+        graphics.DrawString($"Draw duration is {drawDuration} ms", new Font("Tahoma", 8), Brushes.White, new RectangleF(70, 90, 190, 50));
 
         imageTacticalMap.Image?.Dispose();
         imageTacticalMap.Image = image;
-
-        graphics.Dispose();
+        graphics.Dispose();        
     }
 
     private void MapMouseMove(object sender, MouseEventArgs e)

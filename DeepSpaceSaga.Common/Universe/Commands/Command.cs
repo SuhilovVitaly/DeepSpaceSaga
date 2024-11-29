@@ -2,6 +2,7 @@
 
 public class Command
 {
+    public CommandCategory Category { get; set; }
     public CommandTypes Type { get; set; }
     public long CelestialObjectId { get; set; }
     public int MemberId { get; set; }

@@ -11,3 +11,5 @@ global using DeepSpaceSaga.Common.Universe.Entities.CelestialObjects;
 global using DeepSpaceSaga.UI.Render.Tools;
 global using DeepSpaceSaga.Common.Universe;
 global using DeepSpaceSaga.Common.Universe.Entities.CelestialObjects.Spacecrafts;
+global using DeepSpaceSaga.Common.Universe.Commands;
+global using System.Diagnostics;

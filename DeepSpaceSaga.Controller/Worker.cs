@@ -1,6 +1,4 @@
-﻿using DeepSpaceSaga.Common.Universe.Commands;
-
-namespace DeepSpaceSaga.Controller;
+﻿namespace DeepSpaceSaga.Controller;
 
 public class Worker
 {

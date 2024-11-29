@@ -18,7 +18,7 @@ internal class GameSessionGenerator
     {
         var result = new GameSession(CelestialMapGenerator.GenerateEmptyBase())
         {
-            Id = RandomGenerator.GetId(),
+            Id = new GenerationTool().GetId(),
             IsRunning = false
         };
 
