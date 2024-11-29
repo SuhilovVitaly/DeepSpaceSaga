@@ -4,7 +4,8 @@ internal class DrawSpaceScanner
 {
     public static void Execute(IScreenInfo screenInfo, GameSession session)
     {
-        var color = Color.FromArgb(15, 0, 255, 0);
+        //var color = Color.FromArgb(15, 0, 255, 0);
+        var color = Color.FromArgb(5, 0, 255, 0);
 
         var spacecraft = session.GetPlayerSpaceShip();
         var location = UiTools.ToScreenCoordinates(screenInfo, spacecraft.GetLocation());
@@ -19,8 +20,9 @@ internal class DrawSpaceScanner
 
         using var brush = new SolidBrush(color); // Почти прозрачный зелёный
 
-        //screenInfo.GraphicSurface?.FillEllipse(brush, rectangle);
-        screenInfo.GraphicSurface?.DrawEllipse(new Pen(Color.FromArgb(22, 22, 22), 1), rectangle);
+        screenInfo.GraphicSurface?.FillEllipse(brush, rectangle);
+        screenInfo.GraphicSurface?.DrawEllipse(new Pen(Color.FromArgb(22, 22, 22), 2), rectangle);
+
         //screenInfo.GraphicSurface?.DrawEllipse(new Pen(Color.FromArgb(12, 22, 22), 4), rectangle);
         //screenInfo.GraphicSurface?.DrawEllipse(new Pen(Color.FromArgb(42, 22, 22), 2), rectangle);
 
@@ -39,7 +41,7 @@ internal class DrawSpaceScanner
 
         var gradientBrush = new PathGradientBrush(path)
         {
-            CenterColor = Color.FromArgb(200, color), // Насыщенный зелёный в центре
+            CenterColor = Color.FromArgb(10, color), // Насыщенный зелёный в центре
             SurroundColors = [Color.FromArgb(0, color)] // Почти прозрачный по краям
         };
 

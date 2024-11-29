@@ -14,7 +14,7 @@ public class GeneralModuleGenerator
                     Id = new GenerationTool().GetId(),
                     OwnerId = ownerId,
                     Category = Category.SpaceScanner,
-                    ScanRange = 800,
+                    ScanRange = 1400,
                     Power = 55,
                     ActivationCost = 10,
                     ReloadTime = 5,

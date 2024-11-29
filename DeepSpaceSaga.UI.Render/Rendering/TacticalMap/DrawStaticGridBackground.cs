@@ -9,8 +9,8 @@ internal class DrawStaticGridBackground
         var cellSize = UiTools.ZoomToCellSize(screenInfo.Zoom.Size);
 
         DrawGenericGrid(graphics, screenInfo, cellSize, Color.FromArgb(22, 22, 22));
-        DrawGenericGrid(graphics, screenInfo, cellSize * 5, Color.FromArgb(32, 32, 32));
-        DrawGenericGrid(graphics, screenInfo, cellSize * 25, Color.FromArgb(52, 52, 52));
+       // DrawGenericGrid(graphics, screenInfo, cellSize * 5, Color.FromArgb(32, 32, 32));
+       // DrawGenericGrid(graphics, screenInfo, cellSize * 25, Color.FromArgb(52, 52, 52));
 
         screenInfo.Metrics.LastGridDraw = DateTime.Now;
         screenInfo.Metrics.LastGridDrawTimeinMs = stopwatch.Elapsed.TotalMilliseconds;

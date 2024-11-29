@@ -2,6 +2,38 @@
 
 public class DrawGrid
 {
+    public static void Execute(Graphics graphics, IScreenInfo screenInfo)
+    {       
+        DrawGenericGrid(graphics, screenInfo, 50, Color.FromArgb(22, 22, 22), GetLeftCorner(screenInfo));
+        DrawGenericGrid(graphics, screenInfo, 250, Color.FromArgb(32, 32, 32), GetLeftCorner(screenInfo));
+    }
+
+    private static void DrawGenericGrid(Graphics graphics, IScreenInfo screenInfo, int step, Color color, PointF corner)
+    {
+        var smallGridPen = new Pen(color);
+
+        var stepsInScreenWidth = screenInfo.Width * 2 / step;
+        var stepsInScreenHeight = screenInfo.Height * 2 / step;
+
+        var mapTopLeftCorner = corner;
+
+        for (var i = 0; i < stepsInScreenWidth; i++)
+        {
+            var lineFrom = new PointF(mapTopLeftCorner.X + i * step, mapTopLeftCorner.Y);
+            var lineTo = new PointF(mapTopLeftCorner.X + i * step, mapTopLeftCorner.Y + screenInfo.Height * 2);
+
+            graphics.DrawLine(smallGridPen, lineFrom.X, lineFrom.Y, lineTo.X, lineTo.Y);
+        }
+
+        for (var i = 0; i < stepsInScreenHeight; i++)
+        {
+            var lineFrom = new PointF(mapTopLeftCorner.X, mapTopLeftCorner.Y + i * step);
+            var lineTo = new PointF(mapTopLeftCorner.X + screenInfo.Width * 2, mapTopLeftCorner.Y + i * step);
+
+            graphics.DrawLine(smallGridPen, lineFrom.X, lineFrom.Y, lineTo.X, lineTo.Y);
+        }
+    }
+
     public static void Execute(Graphics graphics, IScreenInfo screenInfo, Bitmap grid)
     {
         var staticGrid = (Bitmap)grid.Clone();

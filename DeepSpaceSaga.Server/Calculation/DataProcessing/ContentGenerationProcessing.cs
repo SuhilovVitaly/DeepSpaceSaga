@@ -22,7 +22,7 @@ internal class ContentGenerationProcessing
 
         if (scannerModule is null) return;
 
-        var distance = generationTool.GetInteger((int)(scannerModule.ScanRange - 50), (int)scannerModule.ScanRange);
+        var distance = generationTool.GetInteger((int)(scannerModule.ScanRange - 50), (int)scannerModule.ScanRange) / 2;
         var direction = generationTool.GetInteger(0, 359);
         var velocity = generationTool.GetDouble(0.1, 10.0);
 
