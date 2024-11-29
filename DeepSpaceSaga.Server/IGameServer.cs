@@ -6,7 +6,5 @@ public interface IGameServer
     void PauseSession();
     void SessionInitialization(int sessionId = -1);
     GameSession GetSession();
-    void EventsCalculation();
-    void LocationCalculation();
     Task AddCommand(Command command);
 }

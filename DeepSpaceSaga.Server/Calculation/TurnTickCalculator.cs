@@ -13,7 +13,7 @@ public class TurnTickCalculator
 
         for (var i = 0; i < ticks; i++)
         {
-            processingSession = new DataProcessing.Navigation().Recalculate(processingSession);
+            processingSession = new Navigation().Recalculate(processingSession);
         }
 
         return processingSession;

@@ -1,35 +1,39 @@
 ﻿namespace DeepSpaceSaga.Common.Universe;
 
-[Serializable]
-public class CelestialMap
+
+public class CelestialMap(IEnumerable<ICelestialObject> objects) : List<ICelestialObject>(objects)
 {
-    private List<ICelestialObject> _celestialObjects = new List<ICelestialObject>();
-
-    public CelestialMap(List<ICelestialObject> objects)
-    {
-        _celestialObjects = objects;
-    }
-
     public List<ICelestialObject> GetCelestialObjects()
     {
-        return _celestialObjects;
+        return this.ToList(); ;
     }
 
-    public void Add(List<ICelestialObject> celestialObjects)
+    public void AddCelestialObjects(List<ICelestialObject> celestialObjects)
     {
         foreach (var celestialObject in celestialObjects)
         {
-            _celestialObjects.Add(celestialObject);
+            Add(celestialObject);
         }
     }
 
-    public void Add(ICelestialObject celestialObject)
-    {
-        _celestialObjects.Add(celestialObject);
-    }
+    //public void AddCelestialObject(ICelestialObject celestialObject)
+    //{
+    //    try
+    //    {
+    //        Add(celestialObject);
+    //    }
+    //    catch (Exception ex)
+    //    {
 
-    public void Clear()
+    //        throw;
+    //    }
+        
+    //}
+
+    
+    public void ClearMap()
     {
-        _celestialObjects = new List<ICelestialObject>();
+        Clear();
     }
 }
+

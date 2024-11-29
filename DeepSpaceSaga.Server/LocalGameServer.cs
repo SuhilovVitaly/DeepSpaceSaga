@@ -1,6 +1,4 @@
-﻿using DeepSpaceSaga.Common.Universe.Commands;
-
-namespace DeepSpaceSaga.Server;
+﻿namespace DeepSpaceSaga.Server;
 
 public class LocalGameServer : IGameServer
 {
@@ -10,7 +8,7 @@ public class LocalGameServer : IGameServer
 
     public LocalGameServer()
     {
-        _session = new GameSession();
+        _session = new GameSession(new CelestialMap(new List<ICelestialObject>()));
 
         Scheduler.Instance.ScheduleTask(1, 100, LocationCalculation);
         Scheduler.Instance.ScheduleTask(1, 1000, EventsCalculation);
@@ -36,7 +34,7 @@ public class LocalGameServer : IGameServer
         _session = GameSessionGenerator.ProduceSession();
     }
 
-    public void EventsCalculation()
+    internal void EventsCalculation()
     {
         if (_session.IsRunning == false) return;
 
@@ -46,15 +44,19 @@ public class LocalGameServer : IGameServer
         _session.TurnTick = 0;
 
         _sessionLock.ExitWriteLock();
-
-       // 
     }
 
     private bool _isCalculationInProgress = false;
 
-    public void LocationCalculation()
+    private void LocationCalculation()
     {
         if (_session.IsRunning == false) return;
+
+        LocationCalculation(1);
+    }
+    internal void LocationCalculation(int turns = 1)
+    {
+        
         if (_isCalculationInProgress) return;
 
         _isCalculationInProgress = true;

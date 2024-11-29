@@ -1,6 +1,4 @@
-﻿using DeepSpaceSaga.Common.Universe.Equipment;
-
-namespace DeepSpaceSaga.Common.Universe.Entities.CelestialObjects.Spacecrafts;
+﻿namespace DeepSpaceSaga.Common.Universe.Entities.CelestialObjects.Spacecrafts;
 
 public interface ISpacecraft : ICelestialObject
 {

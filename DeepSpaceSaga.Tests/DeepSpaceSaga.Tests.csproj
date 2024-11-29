@@ -17,6 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\DeepSpaceSaga.Server\DeepSpaceSaga.Server.csproj" />
     <ProjectReference Include="..\DeepSpaceSaga.UI.Render\DeepSpaceSaga.UI.Render.csproj" />
   </ItemGroup>
 

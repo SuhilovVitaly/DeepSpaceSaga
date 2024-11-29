@@ -1,7 +1,7 @@
 ﻿namespace DeepSpaceSaga.Universe;
 
 [Serializable]
-public class GameSession
+public class GameSession(CelestialMap spaceMap)
 {
     public int Id { get; set; }
 
@@ -11,5 +11,5 @@ public class GameSession
 
     public int TurnTick { get; set; } = 0;
 
-    public CelestialMap SpaceMap { get; set; } = new CelestialMap(new List<ICelestialObject>());
+    public CelestialMap SpaceMap { get; internal set; } = spaceMap;
 }

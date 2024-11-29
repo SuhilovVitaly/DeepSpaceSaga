@@ -1,2 +1,9 @@
 ﻿global using DeepSpaceSaga.UI.Render.Model;
 global using System.Drawing;
+global using DeepSpaceSaga.Server;
+global using DeepSpaceSaga.Common.Universe.Entities.CelestialObjects.Spacecrafts;
+global using DeepSpaceSaga.Tests.TestsFramework;
+global using DeepSpaceSaga.Common.Universe.Entities.CelestialObjects;
+global using DeepSpaceSaga.Common.Universe;
+global using DeepSpaceSaga.Server.Generation;
+global using DeepSpaceSaga.Universe;

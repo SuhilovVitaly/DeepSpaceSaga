@@ -1,27 +1,27 @@
-﻿using DeepSpaceSaga.Common.Tools;
+﻿namespace DeepSpaceSaga.Server.Generation;
 
-namespace DeepSpaceSaga.Server.Generation
+internal class GameSessionGenerator
 {
-    internal class GameSessionGenerator
+    public static GameSession ProduceSession(int sessionId = -1)
     {
-        public static GameSession ProduceSession(int sessionId = -1)
+        if (sessionId == -1)
         {
-            if (sessionId == -1)
-                return EmptySession();
-
-            throw new NotImplementedException();
+            var session = EmptySession();
+            session.Id = sessionId;
+            return session;
         }
 
-        private static GameSession EmptySession()
-        {
-            var result = new GameSession
-            {
-                Id = RandomGenerator.GetId(),
-                IsRunning = false,
-                SpaceMap = CelestialMapGenerator.GenerateEmptyBase()
-            };
+        throw new NotImplementedException();
+    }
 
-            return result;
-        }
+    private static GameSession EmptySession()
+    {
+        var result = new GameSession(CelestialMapGenerator.GenerateEmptyBase())
+        {
+            Id = RandomGenerator.GetId(),
+            IsRunning = false
+        };
+
+        return result;
     }
 }

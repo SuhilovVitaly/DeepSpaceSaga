@@ -24,7 +24,7 @@ internal class NavigationCommandsProcessing
         var module = spacecraft.GetModule(command.ModuleId);
 
         double directionBeforeManeuver = celestialObject.Direction;
-        double directionAfterManeuver = (directionBeforeManeuver - 5).To360Degrees();
+        double directionAfterManeuver = (directionBeforeManeuver - spacecraft.Agility).To360Degrees();
 
         spacecraft.SetDirection(directionAfterManeuver);
 
@@ -38,7 +38,7 @@ internal class NavigationCommandsProcessing
         var module = spacecraft.GetModule(command.ModuleId);
 
         double directionBeforeManeuver = celestialObject.Direction;
-        double directionAfterManeuver = (directionBeforeManeuver + 5).To360Degrees();
+        double directionAfterManeuver = (directionBeforeManeuver + spacecraft.Agility).To360Degrees();
 
         spacecraft.SetDirection(directionAfterManeuver);
 
