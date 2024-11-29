@@ -47,11 +47,13 @@ public class Draw
 
         DrawSpaceScanner.Execute(screenParameters, session);
 
+        DrawDirections.Execute(screenParameters, session);
+
         DrawGrid.Execute(graphics, screenParameters);
 
         DrawCelestialObjects.Execute(screenParameters, session);
 
-        DrawDirections.Execute(screenParameters, session);
+        
 
         
 

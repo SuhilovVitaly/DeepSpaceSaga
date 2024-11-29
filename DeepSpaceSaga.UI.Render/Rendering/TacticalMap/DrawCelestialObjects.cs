@@ -1,7 +1,4 @@
-﻿using System.Drawing;
-using static System.Runtime.InteropServices.JavaScript.JSType;
-
-namespace DeepSpaceSaga.UI.Render.Rendering.TacticalMap;
+﻿namespace DeepSpaceSaga.UI.Render.Rendering.TacticalMap;
 
 public class DrawCelestialObjects
 {
@@ -80,7 +77,7 @@ public class DrawCelestialObjects
         }
         else
         {
-            screenInfo.GraphicSurface?.FillRectangle(new SolidBrush(Color.FromArgb(120, 90, 0)), startLabel.X, startLabel.Y + 3, 8, 8);
+            screenInfo.GraphicSurface?.FillRectangle(new SolidBrush(Color.WhiteSmoke), startLabel.X, startLabel.Y + 3, 8, 8);
         }
         
 

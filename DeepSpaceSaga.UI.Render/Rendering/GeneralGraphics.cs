@@ -33,10 +33,20 @@ internal class GeneralGraphics
         var line = new SpaceMapVector(
             screenCoordinates,
             GeometryTools.Move(screenCoordinates, 4000, currentObject.Direction),
-            currentObject.Direction);
+            currentObject.Direction);        
 
         using var dashedPen = new Pen(color, 2) { DashStyle = DashStyle.DashDot };
 
         screenInfo.GraphicSurface.DrawLine(dashedPen, line.PointFrom.X, line.PointFrom.Y, line.PointTo.X, line.PointTo.Y);
+
+        if (currentObject.Types == CelestialObjectTypes.Asteroid)
+        {
+            line = new SpaceMapVector(
+            screenCoordinates,
+            GeometryTools.Move(screenCoordinates, 4000, (currentObject.Direction - 180).To360Degrees()),
+            currentObject.Direction);
+
+            screenInfo.GraphicSurface.DrawLine(dashedPen, line.PointFrom.X, line.PointFrom.Y, line.PointTo.X, line.PointTo.Y);
+        }
     }
 }
