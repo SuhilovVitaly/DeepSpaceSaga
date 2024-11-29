@@ -21,7 +21,7 @@ public class GenerationTool
 
     public string GenerateCelestialObjectName()
     {
-        return RandomString(6) + "-" + RandomNumber(4) + "-" + RandomNumber(4);
+        return RandomString(4) + "-" + RandomNumber(4) + "-" + RandomNumber(3);
     }
 
     public double Direction()

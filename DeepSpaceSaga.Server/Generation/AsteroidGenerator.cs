@@ -8,7 +8,7 @@ internal class AsteroidGenerator
         {
             Id = new GenerationTool().GetId(),
             OwnerId = 0, 
-            Name = "ASR-" + name,
+            Name = name,
             Direction = direction,
             PositionX = x,
             PositionY = y,
