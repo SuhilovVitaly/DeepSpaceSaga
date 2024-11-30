@@ -8,19 +8,21 @@ internal class ContentGenerationProcessing
 
         switch (command.Type)
         {
-            case Common.Universe.Commands.CommandTypes.GenerateAsteroid:
-                CelestialMaplestialObjectGeneration (session, command);
+            case CommandTypes.GenerateAsteroid:
+                currentCelestialObject = CelestialMaplestialObjectGeneration(session, command);
                 break;
         }
+
+        AddToJournal(session, command, currentCelestialObject);
     }
 
-    private void CelestialMaplestialObjectGeneration(GameSession session, Command command)
+    private ICelestialObject CelestialMaplestialObjectGeneration(GameSession session, Command command)
     {
         var generationTool = new GenerationTool();
 
         var scannerModule = session.GetPlayerSpaceShip().GetModules(Category.SpaceScanner).FirstOrDefault() as IScanner;
 
-        if (scannerModule is null) return;
+        if (scannerModule is null) return null;
 
         var distance = generationTool.GetInteger((int)(scannerModule.ScanRange - 50), (int)scannerModule.ScanRange) / 2;
         var direction = generationTool.GetInteger(0, 359);
@@ -31,5 +33,18 @@ internal class ContentGenerationProcessing
         var asteroid = AsteroidGenerator.CreateAsteroid(direction, asteroidLocation.X, asteroidLocation.Y, velocity, generationTool.GenerateCelestialObjectName());
 
         session.SpaceMap.Add(asteroid);
+
+        return asteroid;
+    }
+
+    private void AddToJournal(GameSession session, Command command, ICelestialObject celestialObject)
+    {
+        session.Logbook.Add(
+            new Common.Universe.Audit.EventMessage
+            {
+                Id = IdGenerator.GetNextId(),
+                Type = Common.Universe.Audit.EventType.DetectCelestialObject,
+                Text = command.Type.GetDescription() + $" [{Math.Round(celestialObject.PositionX,0)}:{Math.Round(celestialObject.PositionY, 0)}] {celestialObject.Direction}"
+            });
     }
 }

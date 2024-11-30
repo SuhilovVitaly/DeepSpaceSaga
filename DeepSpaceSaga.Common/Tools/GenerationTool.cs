@@ -53,3 +53,17 @@ public class GenerationTool
             .Select(s => s[_randomBase.Next(s.Length)]).ToArray());
     }
 }
+
+public static class IdGenerator
+{
+    private static int _currentId = 0; // Начальное значение ID
+    private static readonly object _lock = new object(); // Для потокобезопасности
+
+    public static int GetNextId()
+    {
+        lock (_lock)
+        {
+            return ++_currentId;
+        }
+    }
+}

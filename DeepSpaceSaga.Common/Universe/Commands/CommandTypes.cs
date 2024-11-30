@@ -2,18 +2,31 @@
 
 public enum CommandTypes
 {
+    [Description("")]
     MoveForward = 200,
+    [Description("Turn Left")]
     TurnLeft = 201,
+    [Description("Turn Right")]
     TurnRight = 202,
+    [Description("")]
     StopShip = 203,
+    [Description("")]
     Acceleration = 204,
+    [Description("")]
     Fire = 300,
+    [Description("")]
     AlignTo = 100,
+    [Description("")]
     Orbit = 110,
+    [Description("")]
     Explosion = 800,
+    [Description("")]
     ReloadWeapon = 900,
+    [Description("")]
     Scanning = 1600,
+    [Description("")]
     Shot = 2001,
+    [Description("Object detected")]
     GenerateAsteroid = 5001
 }
 

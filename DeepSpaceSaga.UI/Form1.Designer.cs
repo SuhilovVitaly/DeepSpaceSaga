@@ -31,6 +31,7 @@
             button1 = new Button();
             crlLabelTurns = new Label();
             panel1 = new Panel();
+            panel3 = new Panel();
             spacecraftTelemetryControl1 = new Screens.MainGameScreen.SpacecraftTelemetryControl();
             panel2 = new Panel();
             crlMousePosition = new Label();
@@ -39,7 +40,9 @@
             CrlZoomOut = new Button();
             CrlZoomIn = new Button();
             crlTacticalMap = new Screens.MainGameScreen.StellarTacticalMap();
+            logbookControl1 = new Screens.MainGameScreen.LogbookControl();
             panel1.SuspendLayout();
+            panel3.SuspendLayout();
             panel2.SuspendLayout();
             SuspendLayout();
             // 
@@ -69,6 +72,7 @@
             // panel1
             // 
             panel1.BorderStyle = BorderStyle.FixedSingle;
+            panel1.Controls.Add(panel3);
             panel1.Controls.Add(spacecraftTelemetryControl1);
             panel1.Controls.Add(panel2);
             panel1.Controls.Add(button1);
@@ -80,6 +84,15 @@
             panel1.Name = "panel1";
             panel1.Size = new Size(1317, 636);
             panel1.TabIndex = 1;
+            // 
+            // panel3
+            // 
+            panel3.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            panel3.Controls.Add(logbookControl1);
+            panel3.Location = new Point(1003, 283);
+            panel3.Name = "panel3";
+            panel3.Size = new Size(301, 177);
+            panel3.TabIndex = 13;
             // 
             // spacecraftTelemetryControl1
             // 
@@ -162,6 +175,15 @@
             crlTacticalMap.Size = new Size(652, 578);
             crlTacticalMap.TabIndex = 4;
             // 
+            // logbookControl1
+            // 
+            logbookControl1.BackColor = Color.Black;
+            logbookControl1.Dock = DockStyle.Fill;
+            logbookControl1.Location = new Point(0, 0);
+            logbookControl1.Name = "logbookControl1";
+            logbookControl1.Size = new Size(301, 177);
+            logbookControl1.TabIndex = 0;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -176,6 +198,7 @@
             Text = "Form1";
             WindowState = FormWindowState.Maximized;
             panel1.ResumeLayout(false);
+            panel3.ResumeLayout(false);
             panel2.ResumeLayout(false);
             panel2.PerformLayout();
             ResumeLayout(false);
@@ -194,5 +217,7 @@
         private Panel panel2;
         private Label crlMousePosition;
         private Screens.MainGameScreen.SpacecraftTelemetryControl spacecraftTelemetryControl1;
+        private Panel panel3;
+        private Screens.MainGameScreen.LogbookControl logbookControl1;
     }
 }

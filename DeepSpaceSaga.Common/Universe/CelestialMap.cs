@@ -1,6 +1,5 @@
 ﻿namespace DeepSpaceSaga.Common.Universe;
 
-
 public class CelestialMap(IEnumerable<ICelestialObject> objects) : List<ICelestialObject>(objects)
 {
     public List<ICelestialObject> GetCelestialObjects()
@@ -15,21 +14,6 @@ public class CelestialMap(IEnumerable<ICelestialObject> objects) : List<ICelesti
             Add(celestialObject);
         }
     }
-
-    //public void AddCelestialObject(ICelestialObject celestialObject)
-    //{
-    //    try
-    //    {
-    //        Add(celestialObject);
-    //    }
-    //    catch (Exception ex)
-    //    {
-
-    //        throw;
-    //    }
-        
-    //}
-
     
     public void ClearMap()
     {

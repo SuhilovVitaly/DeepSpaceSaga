@@ -8,13 +8,15 @@ internal class NavigationCommandsProcessing
 
         switch (command.Type)
         {
-            case Common.Universe.Commands.CommandTypes.TurnLeft:
+            case CommandTypes.TurnLeft:
                 TurnLeft(currentCelestialObject, command);
                 break;
-            case Common.Universe.Commands.CommandTypes.TurnRight:
+            case CommandTypes.TurnRight:
                 TurnRight(currentCelestialObject, command);
                 break;
         }
+
+        AddToJournal(session, command, currentCelestialObject);
     }
 
     private void TurnLeft(ICelestialObject celestialObject, Command command)
@@ -43,5 +45,16 @@ internal class NavigationCommandsProcessing
         spacecraft.SetDirection(directionAfterManeuver);
 
         module.Reload();
+    }
+
+    private void AddToJournal(GameSession session, Command command, ICelestialObject celestialObject)
+    {
+        session.Logbook.Add(
+            new Common.Universe.Audit.EventMessage
+            {
+                Id = IdGenerator.GetNextId(),
+                Type = Common.Universe.Audit.EventType.NavigationManeuver,
+                Text = "Navigation: " + command.Type.GetDescription() + $" {celestialObject.Direction}"
+            });
     }
 }

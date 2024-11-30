@@ -12,5 +12,5 @@ global using log4net;
 global using Newtonsoft.Json.Linq;
 global using DeepSpaceSaga.Common.Universe.Commands;
 global using DeepSpaceSaga.Common.Universe.Equipment;
-global using DeepSpaceSaga.Common.Universe.Equipment.Propulsion;
-global using DeepSpaceSaga.Common.Universe.Equipment.Scanner;
+global using DeepSpaceSaga.Common.Universe.Audit;
+global using System.ComponentModel;
