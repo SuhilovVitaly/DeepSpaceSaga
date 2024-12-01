@@ -20,11 +20,11 @@ public partial class LogbookControl : UserControl
     private void LogbookControl_Paint(object sender, PaintEventArgs e)
     {
         if (Global.GameManager is null) return;
+
         var session = Global.GameManager.GetSession();
 
         Graphics graphics = e.Graphics;
 
-        // Устанавливаем параметры шрифта и кисти
         using Font font = new Font("Tahoma", 8, FontStyle.Bold);
         using Brush brush = new SolidBrush(Color.WhiteSmoke);
 
@@ -34,6 +34,8 @@ public partial class LogbookControl : UserControl
         {
             graphics.DrawString($"{item.Text} ", font, brush, new PointF(10, 10 + row * 12));
             row++;
+
+            if(row > 10) break;
         }
     }
 }

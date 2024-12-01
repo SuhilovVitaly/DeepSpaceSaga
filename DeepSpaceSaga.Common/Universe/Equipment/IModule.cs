@@ -4,10 +4,11 @@ public interface IModule
 {
     int Id { get; set; }
     long OwnerId { get; set; }
+    long TargetId { get; set; }
     string Name { get; set; }
     Category Category { get; set; }
     bool IsAutoRun { get; set; }
-
+    bool IsCalculated { get; set; }
     double ActivationCost { get; set; }
 
     /// <summary>

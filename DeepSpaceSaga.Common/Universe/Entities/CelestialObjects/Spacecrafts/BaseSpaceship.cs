@@ -7,7 +7,7 @@ public class BaseSpaceship : BaseCelestialObject, ISpacecraft
     public float Agility { get; set; }
     public List<IModule> Modules { get; set; } = new List<IModule>();
 
-    public IModule GetModule(int moduleId)
+    public IModule GetModule(long moduleId)
     {
         return Modules.FirstOrDefault(module => module.Id == moduleId);
     }

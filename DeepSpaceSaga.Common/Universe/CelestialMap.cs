@@ -5,7 +5,7 @@ public class CelestialMap(IEnumerable<ICelestialObject> objects) : List<ICelesti
     public List<ICelestialObject> GetCelestialObjects()
     {
         return this.ToList(); ;
-    }
+    }    
 
     public void AddCelestialObjects(List<ICelestialObject> celestialObjects)
     {

@@ -3,6 +3,8 @@
 public enum CommandCategory
 {
     None,
+    Scan,
     Navigation,
-    ContentGeneration
+    ContentGeneration,
+    ModuleActionFinished
 }

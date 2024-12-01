@@ -14,3 +14,5 @@ global using DeepSpaceSaga.Common.Universe.Commands;
 global using DeepSpaceSaga.Server.Calculation.DataProcessing;
 global using DeepSpaceSaga.Common.Extensions;
 global using DeepSpaceSaga.Common.Universe.Equipment.Scanner;
+global using DeepSpaceSaga.Server.Calculation.DataPreProcessing;
+global using DeepSpaceSaga.Server.Calculation.GameActionEventProcessing;

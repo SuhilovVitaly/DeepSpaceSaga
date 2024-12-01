@@ -43,8 +43,6 @@ public class Draw
 
     public void DrawTacticalMapScreen(Graphics graphics, GameSession session, ScreenParameters screenParameters)
     {
-        //DrawGrid.Execute(graphics, screenParameters, prerenderedGridsByZoom[1]);
-
         DrawSpaceScanner.Execute(screenParameters, session);
 
         DrawDirections.Execute(screenParameters, session);
@@ -53,10 +51,6 @@ public class Draw
 
         DrawCelestialObjects.Execute(screenParameters, session);
 
-        
-
-        
-
-
+        DrawModulesActions.Execute(screenParameters, session);
     }
 }

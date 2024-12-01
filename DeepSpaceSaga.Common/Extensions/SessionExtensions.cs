@@ -37,4 +37,9 @@ public static class SessionExtensions
 
         return resultObjects;
     }
+
+    public static ICelestialObject GetCelestialObject(this GameSession gameSession, long id)
+    {
+        return gameSession.SpaceMap.FirstOrDefault(x => x.Id == id); ;
+    }
 }

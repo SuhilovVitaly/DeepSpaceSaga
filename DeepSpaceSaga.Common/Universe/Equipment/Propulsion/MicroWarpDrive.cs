@@ -9,8 +9,6 @@ public class MicroWarpDrive : AbstractModule, IModule, IPropulsionModule
 
     public dynamic Acceleration()
     {
-        Logger.Debug($"[{GetType().Name}]\t Execute command 'Acceleration'");
-
         var serverCommand = CreateServerCommand();
 
         serverCommand.TypeId = CommandTypes.Acceleration;
@@ -20,8 +18,6 @@ public class MicroWarpDrive : AbstractModule, IModule, IPropulsionModule
 
     public dynamic Braking()
     {
-        Logger.Debug($"[{GetType().Name}]\t Execute command 'Braking'");
-
         var serverCommand = CreateServerCommand();
 
         serverCommand.TypeId = CommandTypes.StopShip;
@@ -33,8 +29,6 @@ public class MicroWarpDrive : AbstractModule, IModule, IPropulsionModule
 
     public dynamic TurnLeft()
     {
-        Logger.Debug($"[{GetType().Name}]\t Execute command 'TurnLeft'");
-
         var serverCommand = CreateServerCommand();
 
         serverCommand.TypeId = CommandTypes.TurnLeft;
@@ -44,8 +38,6 @@ public class MicroWarpDrive : AbstractModule, IModule, IPropulsionModule
 
     public dynamic TurnRight()
     {
-        Logger.Debug($"[{GetType().Name}]\t Execute command 'TurnRight'");
-
         var serverCommand = CreateServerCommand();
 
         serverCommand.TypeId = CommandTypes.TurnRight;

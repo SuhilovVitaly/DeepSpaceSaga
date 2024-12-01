@@ -26,6 +26,9 @@ public enum CommandTypes
     Scanning = 1600,
     [Description("")]
     Shot = 2001,
+    [Description("[Scanning] Pre scan celestial object")]
+    PreScanCelestialObject = 3001,
+    PreScanCelestialObjectFinished = 3002,
     [Description("Object detected")]
     GenerateAsteroid = 5001
 }

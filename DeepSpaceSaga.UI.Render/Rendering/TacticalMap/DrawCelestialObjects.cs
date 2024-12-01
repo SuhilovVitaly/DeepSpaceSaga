@@ -57,7 +57,11 @@ public class DrawCelestialObjects
         screenInfo.GraphicSurface?.FillEllipse(new SolidBrush(color), screenCoordinates.X - 4, screenCoordinates.Y - 4, 8, 8);
         screenInfo.GraphicSurface?.DrawEllipse(new Pen(color), screenCoordinates.X - 4, screenCoordinates.Y - 4, 8, 8);
 
-        DrawCelestialObjectInfo(screenInfo, celestialObject, color, session);
+        if(celestialObject.IsPreScanned)
+        {
+            DrawCelestialObjectInfo(screenInfo, celestialObject, color, session);
+        }
+        
     }
 
     private static void DrawCelestialObjectInfo(IScreenInfo screenInfo, ICelestialObject celestialObject, Color color, GameSession session)
@@ -80,8 +84,9 @@ public class DrawCelestialObjects
             screenInfo.GraphicSurface?.FillRectangle(new SolidBrush(Color.WhiteSmoke), startLabel.X, startLabel.Y + 3, 8, 8);
         }
         
+        var label = celestialObject.IsPreScanned ? celestialObject.Name : "Unknown Celestial Object";
 
-        screenInfo.GraphicSurface?.DrawString($"{celestialObject.Name}", new Font("Tahoma", 7), new SolidBrush(color), new RectangleF(startLabel.X + 15, startLabel.Y, 190, 50));
+        screenInfo.GraphicSurface?.DrawString($"{label}", new Font("Tahoma", 7), new SolidBrush(color), new RectangleF(startLabel.X + 15, startLabel.Y, 190, 50));
     }
 
     private static int LabelDirection(ICelestialObject celestialObject)

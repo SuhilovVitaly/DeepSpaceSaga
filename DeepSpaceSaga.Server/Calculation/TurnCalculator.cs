@@ -2,35 +2,18 @@
 
 public class TurnCalculator
 {
-    public GameSession Execute(GameSession session, List<Command> commands, int ticks = 1)
+    public GameSession Execute(GameSession session, GameEventsSystem eventsSystem, int ticks = 1)
     {
         var processingSession = session.Copy();
 
-        RandomAsteroidGenerate(commands);
+        processingSession = new GameEventsProcessing().Execute(processingSession, eventsSystem, ticks);
 
-        foreach (Command command in commands)
-        {
-            new ContentGenerationProcessing().Execute(processingSession, command);
-        }
+        processingSession = new PreProcessing().Execute(processingSession, eventsSystem, ticks);
+
+        processingSession = new Processing().Execute(processingSession, eventsSystem, ticks);
+
+        processingSession = new PostProcessing().Execute(processingSession, eventsSystem, ticks);
 
         return processingSession;
-    }
-
-    private void RandomAsteroidGenerate(List<Command> commands)
-    {
-        var generationTool = new GenerationTool();
-
-        var diceResult = generationTool.GetInteger(0, 100);
-
-        if(diceResult > 90)
-        {
-            var command = new Command
-            {
-                Category = CommandCategory.ContentGeneration,
-                Type = CommandTypes.GenerateAsteroid
-            };
-
-            commands.Add(command);
-        }
-    }
+    }    
 }

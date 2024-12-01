@@ -3,9 +3,9 @@
 public class LocalGameServer : IGameServer
 {
     private GameSession _session;
-    private readonly ReaderWriterLockSlim _sessionLock = new ReaderWriterLockSlim();
-    private ConcurrentBag<Command> _tickCommands = new ConcurrentBag<Command>();
-    private ConcurrentBag<Command> _turnCommands = new ConcurrentBag<Command>();
+    private readonly ReaderWriterLockSlim _sessionLock = new();
+    private ConcurrentBag<Command> _tickCommands = new();
+    private GameEventsSystem _gameEventsSystem = new();
 
     public LocalGameServer()
     {
@@ -46,9 +46,9 @@ public class LocalGameServer : IGameServer
     {
         _sessionLock.EnterWriteLock();
 
-        _session = new TurnCalculator().Execute(_session, new List<Command>(_turnCommands));
+        _session = new TurnCalculator().Execute(_session, _gameEventsSystem);
 
-        _turnCommands = [];
+        _gameEventsSystem.EndTurnProcessing();
 
         _session.Turn++;
         _session.TurnTick = 0;
@@ -94,7 +94,7 @@ public class LocalGameServer : IGameServer
                 return;
             }
 
-            _turnCommands.Add(command);
+            _gameEventsSystem.AddCommand(command);
 
         }
         catch (Exception)

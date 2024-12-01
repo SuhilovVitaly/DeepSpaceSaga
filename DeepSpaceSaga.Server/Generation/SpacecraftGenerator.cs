@@ -4,7 +4,6 @@ internal class SpacecraftGenerator
 {
     public static ICelestialObject GetPlayerSpacecraft()
     {
-
         ISpacecraft spaceship = new BaseSpaceship
         {
             Id = new GenerationTool().GetId(),

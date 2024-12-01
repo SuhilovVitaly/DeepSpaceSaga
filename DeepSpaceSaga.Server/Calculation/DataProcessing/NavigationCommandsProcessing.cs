@@ -30,7 +30,7 @@ internal class NavigationCommandsProcessing
 
         spacecraft.SetDirection(directionAfterManeuver);
 
-        module.Reload();
+        //module.Reload();
     }
 
     private void TurnRight(ICelestialObject celestialObject, Command command)
@@ -44,7 +44,7 @@ internal class NavigationCommandsProcessing
 
         spacecraft.SetDirection(directionAfterManeuver);
 
-        module.Reload();
+        //module.Reload();
     }
 
     private void AddToJournal(GameSession session, Command command, ICelestialObject celestialObject)
