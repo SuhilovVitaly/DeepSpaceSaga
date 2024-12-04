@@ -2,15 +2,23 @@
 
 public class DrawGrid
 {
-    public static void Execute(Graphics graphics, IScreenInfo screenInfo)
+    public static void Execute(IScreenInfo screenInfo)
     {       
-        DrawGenericGrid(graphics, screenInfo, 50, Color.FromArgb(22, 22, 22), GetLeftCorner(screenInfo));
-        DrawGenericGrid(graphics, screenInfo, 250, Color.FromArgb(32, 32, 32), GetLeftCorner(screenInfo));
+        DrawGenericGrid(screenInfo.GraphicSurface, screenInfo, 50, Color.FromArgb(22, 22, 22), GetLeftCorner(screenInfo));
+        DrawGenericGrid(screenInfo.GraphicSurface, screenInfo, 250, Color.FromArgb(32, 32, 32), GetLeftCorner(screenInfo));
     }
 
-    private static void DrawGenericGrid(Graphics graphics, IScreenInfo screenInfo, int step, Color color, PointF corner)
+    private static void DrawGenericGrid(SKCanvas graphics, IScreenInfo screenInfo, int step, Color color, PointF corner)
     {
-        var smallGridPen = new Pen(color);
+        var smallGridPen = new SKColor(color.R, color.G, color.B);
+
+        using var gridPaint = new SKPaint
+        {
+            Color = smallGridPen,
+            StrokeWidth = 1,
+            IsAntialias = true,
+            Style = SKPaintStyle.Stroke
+        };
 
         var stepsInScreenWidth = screenInfo.Width * 2 / step;
         var stepsInScreenHeight = screenInfo.Height * 2 / step;
@@ -22,7 +30,7 @@ public class DrawGrid
             var lineFrom = new PointF(mapTopLeftCorner.X + i * step, mapTopLeftCorner.Y);
             var lineTo = new PointF(mapTopLeftCorner.X + i * step, mapTopLeftCorner.Y + screenInfo.Height * 2);
 
-            graphics.DrawLine(smallGridPen, lineFrom.X, lineFrom.Y, lineTo.X, lineTo.Y);
+            graphics.DrawLine(lineFrom.X, lineFrom.Y, lineTo.X, lineTo.Y, gridPaint);
         }
 
         for (var i = 0; i < stepsInScreenHeight; i++)
@@ -30,17 +38,8 @@ public class DrawGrid
             var lineFrom = new PointF(mapTopLeftCorner.X, mapTopLeftCorner.Y + i * step);
             var lineTo = new PointF(mapTopLeftCorner.X + screenInfo.Width * 2, mapTopLeftCorner.Y + i * step);
 
-            graphics.DrawLine(smallGridPen, lineFrom.X, lineFrom.Y, lineTo.X, lineTo.Y);
+            graphics.DrawLine(lineFrom.X, lineFrom.Y, lineTo.X, lineTo.Y, gridPaint);
         }
-    }
-
-    public static void Execute(Graphics graphics, IScreenInfo screenInfo, Bitmap grid)
-    {
-        var staticGrid = (Bitmap)grid.Clone();
-
-        graphics.DrawImage(staticGrid, GetLeftCorner(screenInfo));
-
-        //graphics.FillEllipse(new SolidBrush(Color.Beige), screenInfo.Center.X - 2, screenInfo.Center.Y - 2, 4, 4);
     }
 
     internal static PointF GetLeftCorner(IScreenInfo screenInfo)

@@ -3,6 +3,7 @@ namespace DeepSpaceSaga.UI;
 public partial class Form1 : Form
 {
     private static readonly ILog Logger = LogManager.GetLogger(MethodBase.GetCurrentMethod()?.DeclaringType);
+    
 
     public Form1()
     {

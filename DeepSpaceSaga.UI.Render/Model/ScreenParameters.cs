@@ -1,4 +1,6 @@
-﻿namespace DeepSpaceSaga.UI.Render.Model;
+﻿using SkiaSharp;
+
+namespace DeepSpaceSaga.UI.Render.Model;
 
 public class ScreenParameters : IScreenInfo
 {
@@ -8,7 +10,7 @@ public class ScreenParameters : IScreenInfo
     public float Height { get; }
     public int DrawInterval { get; set; }
     public PointF CenterScreenOnMap { get; set; }
-    public Graphics GraphicSurface { get; set; }
+    public SKCanvas GraphicSurface { get; set; }
     public Zoom Zoom { get; }
 
     public bool IsPlayerSpacecraftCenterScreen { get; set; } = true;

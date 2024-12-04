@@ -9,5 +9,5 @@ public interface IScreenInfo
     int DrawInterval { get; set; }
     PointF CenterScreenOnMap { get; set; }
     Zoom Zoom { get; }
-    Graphics GraphicSurface { get; set; }
+    SKCanvas GraphicSurface { get; set; }
 }

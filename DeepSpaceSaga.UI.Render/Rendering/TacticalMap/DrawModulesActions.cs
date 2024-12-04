@@ -1,4 +1,6 @@
-﻿namespace DeepSpaceSaga.UI.Render.Rendering.TacticalMap;
+﻿using DeepSpaceSaga.UI.Render.Extensions;
+
+namespace DeepSpaceSaga.UI.Render.Rendering.TacticalMap;
 
 internal class DrawModulesActions
 {
@@ -37,7 +39,7 @@ internal class DrawModulesActions
         var direction = GeometryTools.Azimuth(spacecraftLocation, targetLocation);
         var direction1 = GeometryTools.Azimuth(targetLocation, spacecraftLocation);
 
-        screenInfo.GraphicSurface?.DrawEllipse(new Pen(Color.DarkOrange, 1), targetLocation.X - 30, targetLocation.Y - 30, 60, 60);
+        screenInfo.GraphicSurface?.DrawEllipse(new Pen(Color.DarkOrange, 1), targetLocation.X , targetLocation.Y, 15, 15);
 
         var locationConnector = GeometryTools.Move(targetLocation, 30, direction);
         var locationConnector2 = GeometryTools.Move(spacecraftLocation, 30, direction1);

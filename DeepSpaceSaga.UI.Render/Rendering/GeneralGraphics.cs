@@ -1,8 +1,10 @@
-﻿namespace DeepSpaceSaga.UI.Render.Rendering;
+﻿using DeepSpaceSaga.UI.Render.Extensions;
+
+namespace DeepSpaceSaga.UI.Render.Rendering;
 
 internal class GeneralGraphics
 {
-    public static void DrawArrow(Graphics graphics, SpaceMapVector line, Color color, int arrowSize = 4)
+    public static void DrawArrow(SKCanvas graphics, SpaceMapVector line, Color color, int arrowSize = 4)
     {
         // Base arrow line
         graphics?.DrawLine(new Pen(color), line.PointFrom.X, line.PointFrom.Y, line.PointTo.X, line.PointTo.Y);
@@ -33,11 +35,19 @@ internal class GeneralGraphics
         var line = new SpaceMapVector(
             screenCoordinates,
             GeometryTools.Move(screenCoordinates, 4000, currentObject.Direction),
-            currentObject.Direction);        
+            currentObject.Direction);
 
         using var dashedPen = new Pen(color, 2) { DashStyle = DashStyle.DashDot };
 
-        screenInfo.GraphicSurface.DrawLine(dashedPen, line.PointFrom.X, line.PointFrom.Y, line.PointTo.X, line.PointTo.Y);
+        using var gridPaint = new SKPaint
+        {
+            Color = new SKColor(dashedPen.Color.R, dashedPen.Color.G, dashedPen.Color.B),
+            StrokeWidth = 1,
+            IsAntialias = true,
+            Style = SKPaintStyle.Stroke
+        };
+
+        screenInfo.GraphicSurface.DrawLine(line.PointFrom.ToSkPoint(), line.PointTo.ToSkPoint(), gridPaint);
 
         if (currentObject.Types == CelestialObjectTypes.Asteroid)
         {

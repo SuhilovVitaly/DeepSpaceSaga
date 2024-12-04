@@ -41,13 +41,13 @@ public class Draw
         return bitmapGrid;
     }
 
-    public void DrawTacticalMapScreen(Graphics graphics, GameSession session, ScreenParameters screenParameters)
+    public void DrawTacticalMapScreen(GameSession session, ScreenParameters screenParameters)
     {
         DrawSpaceScanner.Execute(screenParameters, session);
 
         DrawDirections.Execute(screenParameters, session);
 
-        DrawGrid.Execute(graphics, screenParameters);
+        DrawGrid.Execute(screenParameters);
 
         DrawCelestialObjects.Execute(screenParameters, session);
 

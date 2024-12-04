@@ -13,3 +13,4 @@ global using DeepSpaceSaga.Common.Universe.Equipment.Scanner;
 global using DeepSpaceSaga.Common.Universe.Equipment;
 global using DeepSpaceSaga.Common.Extensions;
 global using DeepSpaceSaga.Common.Universe.Entities.CelestialObjects.Spacecrafts;
+global using SkiaSharp;

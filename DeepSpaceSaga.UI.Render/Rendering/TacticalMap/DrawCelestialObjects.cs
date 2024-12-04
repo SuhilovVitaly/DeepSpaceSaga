@@ -1,4 +1,6 @@
-﻿namespace DeepSpaceSaga.UI.Render.Rendering.TacticalMap;
+﻿using DeepSpaceSaga.UI.Render.Extensions;
+
+namespace DeepSpaceSaga.UI.Render.Rendering.TacticalMap;
 
 public class DrawCelestialObjects
 {
@@ -43,10 +45,10 @@ public class DrawCelestialObjects
         var screenCoordinates = UiTools.ToScreenCoordinates(screenInfo, spaceShip.GetLocation());
         var color = spaceShip.GetColor();
 
-        screenInfo.GraphicSurface?.FillEllipse(new SolidBrush(color), screenCoordinates.X - 2, screenCoordinates.Y - 2, 4, 4);
-        screenInfo.GraphicSurface?.DrawEllipse(new Pen(color), screenCoordinates.X - 4, screenCoordinates.Y - 4, 8, 8);
+        screenInfo.GraphicSurface?.FillEllipse(new SolidBrush(color), screenCoordinates.X, screenCoordinates.Y, 2, 2);
+        screenInfo.GraphicSurface?.DrawEllipse(new Pen(color), screenCoordinates.X , screenCoordinates.Y, 4, 4);
 
-        screenInfo.GraphicSurface?.DrawEllipse(new Pen(color), screenCoordinates.X - 8, screenCoordinates.Y - 8, 16, 16);
+        screenInfo.GraphicSurface?.DrawEllipse(new Pen(color), screenCoordinates.X , screenCoordinates.Y, 8, 8);
     }
 
     private static void DrawCelestialObject(IScreenInfo screenInfo, ICelestialObject celestialObject, GameSession session)
@@ -54,14 +56,14 @@ public class DrawCelestialObjects
         var screenCoordinates = UiTools.ToScreenCoordinates(screenInfo, celestialObject.GetLocation());
         var color = celestialObject.GetColor();
 
-        screenInfo.GraphicSurface?.FillEllipse(new SolidBrush(color), screenCoordinates.X - 4, screenCoordinates.Y - 4, 8, 8);
-        screenInfo.GraphicSurface?.DrawEllipse(new Pen(color), screenCoordinates.X - 4, screenCoordinates.Y - 4, 8, 8);
+        screenInfo.GraphicSurface?.FillEllipse(new SolidBrush(color), screenCoordinates.X , screenCoordinates.Y, 4, 4);
+        screenInfo.GraphicSurface?.DrawEllipse(new Pen(color), screenCoordinates.X, screenCoordinates.Y , 4, 4);
 
-        if(celestialObject.IsPreScanned)
+        if (celestialObject.IsPreScanned)
         {
             DrawCelestialObjectInfo(screenInfo, celestialObject, color, session);
         }
-        
+
     }
 
     private static void DrawCelestialObjectInfo(IScreenInfo screenInfo, ICelestialObject celestialObject, Color color, GameSession session)
@@ -72,10 +74,10 @@ public class DrawCelestialObjects
 
         screenInfo.GraphicSurface?.DrawLine(new Pen(Color.FromArgb(32, 32, 32)), screenCoordinates, new PointF(startLabel.X, startLabel.Y + 15));
 
-        screenInfo.GraphicSurface?.FillRectangle(new SolidBrush(Color.FromArgb(22, 22, 22)), startLabel.X - 3, startLabel.Y - 3, 120, 18);
-        screenInfo.GraphicSurface?.FillRectangle(new SolidBrush(Color.FromArgb(32, 32, 32)), startLabel.X - 3, startLabel.Y + 15, 120, 4);
+        screenInfo.GraphicSurface?.FillRectangle(new SolidBrush(Color.FromArgb(22, 22, 22)), startLabel.X, startLabel.Y, 120, 18);
+        screenInfo.GraphicSurface?.FillRectangle(new SolidBrush(Color.FromArgb(52, 52, 52)), startLabel.X, startLabel.Y + 15, 120, 4);
 
-        if(session.Turn % 2 == 0)
+        if (session.Turn % 2 == 0)
         {
             screenInfo.GraphicSurface?.FillRectangle(new SolidBrush(Color.FromArgb(160, 90, 0)), startLabel.X, startLabel.Y + 3, 8, 8);
         }
@@ -83,10 +85,10 @@ public class DrawCelestialObjects
         {
             screenInfo.GraphicSurface?.FillRectangle(new SolidBrush(Color.WhiteSmoke), startLabel.X, startLabel.Y + 3, 8, 8);
         }
-        
+
         var label = celestialObject.IsPreScanned ? celestialObject.Name : "Unknown Celestial Object";
 
-        screenInfo.GraphicSurface?.DrawString($"{label}", new Font("Tahoma", 7), new SolidBrush(color), new RectangleF(startLabel.X + 15, startLabel.Y, 190, 50));
+        screenInfo.GraphicSurface?.DrawString($"{label}", new Font("Tahoma", 12), new SolidBrush(color), new RectangleF(startLabel.X + 15, startLabel.Y + 12, 190, 50));
     }
 
     private static int LabelDirection(ICelestialObject celestialObject)

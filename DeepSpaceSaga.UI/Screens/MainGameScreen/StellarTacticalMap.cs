@@ -1,4 +1,7 @@
-﻿namespace DeepSpaceSaga.UI.Screens.MainGameScreen;
+﻿using SkiaSharp;
+using System.Drawing;
+
+namespace DeepSpaceSaga.UI.Screens.MainGameScreen;
 
 public partial class StellarTacticalMap : UserControl
 {
@@ -7,9 +10,21 @@ public partial class StellarTacticalMap : UserControl
     private bool isDrawInProcess = false;
     private long drawDuration = 0;
 
+    private readonly SKControl _skControl;
+
     public StellarTacticalMap()
     {
         InitializeComponent();
+
+        _skControl = new SKControl
+        {
+            Dock = DockStyle.Fill,
+            Visible = true
+        };
+        _skControl.PaintSurface += OnPaintSurface;
+        _skControl.BringToFront();
+        Controls.Add(_skControl);
+        _skControl.BringToFront();
 
         imageTacticalMap.MouseClick += MapClick;
         imageTacticalMap.MouseMove += MapMouseMove;
@@ -36,59 +51,23 @@ public partial class StellarTacticalMap : UserControl
         isDrawInProcess = false;
     }
 
-    private void RefreshControls(GameSession data)
+    private void OnPaintSurface(object sender, SKPaintSurfaceEventArgs e)
     {
-        var stopwatch = Stopwatch.StartNew();
+        var canvas = e.Surface.Canvas;
 
-        var image = new Bitmap(Width, Height);
-
-        var graphics = Graphics.FromImage(image);
-
-        graphics.CompositingQuality = CompositingQuality.HighQuality;
-        graphics.InterpolationMode = InterpolationMode.Bicubic;
-        graphics.SmoothingMode = SmoothingMode.AntiAlias;
-        graphics.TextRenderingHint = TextRenderingHint.AntiAlias;
-
-        Global.ScreenData =
-                new ScreenParameters(Width, Height, (int)Global.ScreenData.CenterScreenOnMap.X, (int)Global.ScreenData.CenterScreenOnMap.Y)
-                {
-                    GraphicSurface = graphics
-                };
-
-        if(Global.ScreenData.IsPlayerSpacecraftCenterScreen)
-        {
-            var spacecraftLocation = Global.GameManager.GetCelestialMap().GetCelestialObjects().Where(x => x.OwnerId == 1).FirstOrDefault()?.GetLocation();
-
-            if(spacecraftLocation != null)
-            {
-                Global.ScreenData =
-                new ScreenParameters(Width, Height, (int)spacecraftLocation.Value.X, (int)spacecraftLocation.Value.Y)
-                {
-                    GraphicSurface = graphics
-                };
-            }            
-        }        
+        canvas.Clear(SKColors.Black);
 
         var session = Global.GameManager.GetSession();
 
-        Global.Resources.DrawTool.DrawTacticalMapScreen(graphics, session, Global.ScreenData);
+        Global.ScreenData.GraphicSurface = canvas;
 
-        Global.ScreenData.Metrics.PreRenderBaseGridsTimeinMs = stopwatch.ElapsedMilliseconds;
+        Global.Resources.DrawTool.DrawTacticalMapScreen(session, Global.ScreenData);
+    }
 
-        if(drawDuration > 0)
-        {
-            drawDuration = (drawDuration + stopwatch.ElapsedMilliseconds) / 2;
-        }
-        else
-        {
-            drawDuration = stopwatch.ElapsedMilliseconds;
-        }        
-
-        graphics.DrawString($"Draw duration is {drawDuration} ms", new Font("Tahoma", 8), Brushes.White, new RectangleF(70, 90, 190, 50));
-
-        imageTacticalMap.Image?.Dispose();
-        imageTacticalMap.Image = image;
-        graphics.Dispose();        
+    private void RefreshControls(GameSession data)
+    {
+        _skControl.Invalidate();
+        _skControl.Update();
     }
 
     private void MapMouseMove(object sender, MouseEventArgs e)
