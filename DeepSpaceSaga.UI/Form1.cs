@@ -1,4 +1,4 @@
-using DeepSpaceSaga.Common.Geometry;
+﻿using DeepSpaceSaga.Common.Geometry;
 
 namespace DeepSpaceSaga.UI;
 
@@ -10,18 +10,20 @@ public partial class Form1 : Form
     public Form1()
     {
         InitializeComponent();
-
-        Rectangle resolution = Screen.PrimaryScreen.Bounds;
-
-        Width = resolution.Width;
-        Height = resolution.Height;
-
+ 
         crlTacticalMap.Dock = DockStyle.Fill;
 
         KeyPreview = true;
         KeyDown += Window_KeyDown;
 
         if (Global.GameManager == null) return;
+
+        var selectedScreen = Screen.AllScreens[Global.ScreenData.MonitorId];
+
+        Location = selectedScreen.WorkingArea.Location;
+
+        Width = (int)Global.ScreenData.Width;
+        Height = (int)Global.ScreenData.Height;
 
         Global.GameManager.EventController.OnTacticalMapMouseMove += CrlTacticalMap_OnMouseMove;
 

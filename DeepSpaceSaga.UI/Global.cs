@@ -11,9 +11,13 @@ public class Global
     {
         log4net.Config.XmlConfigurator.Configure();
 
-        Rectangle resolution = Screen.PrimaryScreen.Bounds;
+        var monitorId = 1;
+        Rectangle resolution = Screen.AllScreens[monitorId].Bounds;
 
-        ScreenData = new ScreenParameters(resolution.Width, resolution.Height);
+        ScreenData = new ScreenParameters(resolution.Width, resolution.Height)
+        {
+            MonitorId = monitorId
+        };
 
         Resources = new GlobalResources(ScreenData);
 

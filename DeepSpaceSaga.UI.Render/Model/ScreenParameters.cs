@@ -10,6 +10,7 @@ public class ScreenParameters : IScreenInfo
     public SpaceMapPoint CenterScreenOnMap { get; set; }
     public SKCanvas GraphicSurface { get; set; }
     public Zoom Zoom { get; }
+    public int MonitorId { get; set; }
 
     public bool IsPlayerSpacecraftCenterScreen { get; set; } = true;
 
