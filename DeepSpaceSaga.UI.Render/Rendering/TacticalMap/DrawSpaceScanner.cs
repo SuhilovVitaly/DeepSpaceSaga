@@ -18,9 +18,11 @@ internal class DrawSpaceScanner
 
         var radius = CalculateDistanceCovered(scannerModule.ReloadTime, scannerModule.Reloading, scannerModule.ScanRange);
 
-        //DrawTools.DrawEllipse(screenInfo, location.X, location.Y, radius, new SpaceMapColor(Color.OrangeRed));
+        var color = new SpaceMapColor(Color.OrangeRed.R, Color.OrangeRed.G, Color.OrangeRed.B, 120);
+        //DrawTools.DrawEllipse(screenInfo, location.X, location.Y, radius, color, 10);
     }
 
+    
     private static float CalculateDistanceCovered(double cycleDuration, double currentSecond, double totalDistance)
     {
         if (cycleDuration <= 0)
@@ -29,7 +31,7 @@ internal class DrawSpaceScanner
         }
         if (currentSecond < 0 || currentSecond > cycleDuration)
         {
-            throw new ArgumentException("Current second must be within the cycle duration.", nameof(currentSecond));
+            return 0;
         }
 
         // Расчет пройденного расстояния
@@ -37,4 +39,6 @@ internal class DrawSpaceScanner
 
         return distanceCovered;
     }
+
+    
 }

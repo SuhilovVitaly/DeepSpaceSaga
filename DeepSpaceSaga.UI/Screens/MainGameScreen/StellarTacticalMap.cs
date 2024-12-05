@@ -62,20 +62,9 @@ public partial class StellarTacticalMap : UserControl
         var session = Global.GameManager.GetSession();
 
         Global.ScreenData.GraphicSurface = canvas;
+        Global.ScreenData.CenterScreenOnMap = session.GetPlayerSpaceShip().GetLocation();
 
         Global.Resources.DrawTool.DrawTacticalMapScreen(session, Global.ScreenData);
-
-
-        //using var gridPaint = new SKPaint
-        //{
-        //    Color = new SpaceMapColor(Color.OrangeRed).ToSKColor(),
-        //    StrokeWidth = 10,
-        //    IsAntialias = true,
-        //    Style = SKPaintStyle.Stroke
-        //};
-
-        //canvas.DrawCircle(800, 800, 100, gridPaint);
-
     }
 
     private void RefreshControls(GameSession data)

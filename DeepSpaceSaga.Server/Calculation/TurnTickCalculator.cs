@@ -2,7 +2,7 @@
 
 public class TurnTickCalculator
 {
-    public GameSession Execute(GameSession session, List<Command> commands, int ticks = 1)
+    public GameSession Execute(GameSession session, GameEventsSystem eventsSystem, List<Command> commands, int ticks = 1)
     {
         var processingSession = session.Copy();
 
@@ -14,6 +14,14 @@ public class TurnTickCalculator
         for (var i = 0; i < ticks; i++)
         {
             processingSession = new Navigation().Recalculate(processingSession);
+
+            processingSession = new GameEventsProcessing().Execute(processingSession, eventsSystem, ticks);
+
+            processingSession = new PreProcessing().Execute(processingSession, eventsSystem, ticks);
+
+            processingSession = new Processing().Execute(processingSession, eventsSystem, ticks);
+
+            processingSession = new PostProcessing().Execute(processingSession, eventsSystem, ticks);
         }
 
         return processingSession;

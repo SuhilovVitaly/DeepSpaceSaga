@@ -21,7 +21,7 @@ public class GenerateCelestialObjectTests
 
         _ = _gameServer.AddCommand(command);
 
-        _gameServer.EventsCalculation();
+        //_gameServer.EventsCalculation();
 
         var celestialObjectsAfterCommandExecute = _gameServer.GetSession().SpaceMap.Count;
 

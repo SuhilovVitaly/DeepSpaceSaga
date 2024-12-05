@@ -16,7 +16,7 @@ internal class GeneralGraphics
         DrawTools.DrawLine(screenInfo, color, line.PointTo, rightArrowLine);
     }
 
-    public static void DrawArrow(IScreenInfo screenInfo, ICelestialObject currentObject, SpaceMapColor color, int arrowLength = 22, int arrowSize = 5)
+    public static void DrawArrow(IScreenInfo screenInfo, ICelestialObject currentObject, SpaceMapColor color, int arrowLength = 16, int arrowSize = 5)
     {
         var screenCoordinates = UiTools.ToScreenCoordinates(screenInfo, currentObject.GetLocation());
 

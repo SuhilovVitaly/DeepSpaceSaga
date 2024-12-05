@@ -17,8 +17,8 @@ public class GeneralModuleGenerator
                     ScanRange = 700,
                     Power = 55,
                     ActivationCost = 10,
-                    ReloadTime = 5,
-                    Reloading = 5,
+                    ReloadTime = 50,
+                    Reloading = 50,
                     Name = "SpaceScanner Mk I"
                 };
                 break;

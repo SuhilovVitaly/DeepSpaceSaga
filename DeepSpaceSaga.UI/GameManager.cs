@@ -1,6 +1,4 @@
-﻿using DeepSpaceSaga.Common.Universe.Commands;
-
-namespace DeepSpaceSaga.UI;
+﻿namespace DeepSpaceSaga.UI;
 
 public class GameManager(EventManager eventManager)
 {

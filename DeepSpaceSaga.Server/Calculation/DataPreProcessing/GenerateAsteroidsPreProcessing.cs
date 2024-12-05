@@ -13,9 +13,9 @@ internal class GenerateAsteroidsPreProcessing
     {
         var generationTool = new GenerationTool();
 
-        var diceResult = generationTool.GetInteger(0, 100);
+        var diceResult = generationTool.GetInteger(0, 1000);
 
-        if (diceResult > 90)
+        if (diceResult > 990)
         {
             var command = new Command
             {

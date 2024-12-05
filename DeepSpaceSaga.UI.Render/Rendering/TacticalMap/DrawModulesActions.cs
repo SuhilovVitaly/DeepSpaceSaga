@@ -1,4 +1,7 @@
-﻿namespace DeepSpaceSaga.UI.Render.Rendering.TacticalMap;
+﻿using DeepSpaceSaga.Common.Universe.Entities.CelestialObjects;
+using System.Drawing;
+
+namespace DeepSpaceSaga.UI.Render.Rendering.TacticalMap;
 
 internal class DrawModulesActions
 {
@@ -42,5 +45,63 @@ internal class DrawModulesActions
         var locationConnector2 = GeometryTools.Move(spacecraftLocation, 30, direction1);
 
         DrawTools.DrawLine(screenInfo, Colors.ModuleSpaceScannerConnector, locationConnector, locationConnector2);
+
+
+        var startLabel = GeometryTools.Move(targetLocation, 45, LabelDirection(session.GetCelestialObject(module.TargetId)));
+
+        DrawTools.DrawLine(screenInfo, new SpaceMapColor(32, 32, 32), targetLocation, new SpaceMapPoint(startLabel.X, startLabel.Y + 15));
+
+        DrawTools.FillRectangle(screenInfo, new SpaceMapColor(Color.FromArgb(22, 22, 22)), startLabel, 120, 18);
+
+        var label = $"Scanning progress: {CalculateWorkPercentage(module.ReloadTime, module.Reloading)}%";
+
+        DrawTools.DrawString(screenInfo, label, new Font("Tahoma", 12), Colors.ModuleSpaceScannerConnector, new RectangleF(startLabel.X + 15, startLabel.Y + 12, 190, 50));
     }
+
+    public static double CalculateWorkPercentage(double totalTime, double currentTime)
+    {
+        if (totalTime <= 0)
+        {
+            throw new ArgumentException("Total time must be greater than zero.", nameof(totalTime));
+        }
+        if (currentTime < 0 || currentTime > totalTime)
+        {
+            return 100;
+        }
+
+        // Рассчитываем процент завершённого времени
+        double percentage = (currentTime / totalTime) * 100;
+
+        return Math.Round(percentage, 2);
+    }
+
+
+    private static int LabelDirection(ICelestialObject celestialObject)
+    {
+        var direction = 0;
+
+        if (celestialObject.Direction > 0 && celestialObject.Direction < 90)
+        {
+            return 270 + 90 / 2;
+        }
+
+        if (celestialObject.Direction > 90 && celestialObject.Direction < 180)
+        {
+            return 270 + 90 / 2;
+        }
+
+        if (celestialObject.Direction > 180 && celestialObject.Direction < 270)
+        {
+            return 45;
+        }
+
+        if (celestialObject.Direction > 270 && celestialObject.Direction < 360)
+        {
+            return 135;
+        }
+
+
+        return direction;
+    }
+
 }

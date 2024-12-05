@@ -11,8 +11,7 @@ public class LocalGameServer : IGameServer
     {
         _session = new GameSession(new CelestialMap(new List<ICelestialObject>()));
 
-        Scheduler.Instance.ScheduleTask(1, 100, LocationCalculation);
-        Scheduler.Instance.ScheduleTask(1, 1000, EventsCalculation);
+        Scheduler.Instance.ScheduleTask(1, 100, TurnExecute);
     }
 
     public GameSession GetSession()
@@ -35,36 +34,15 @@ public class LocalGameServer : IGameServer
         _session = GameSessionGenerator.ProduceSession();
     }
 
-    private void EventsCalculation()
-    {
-        if (_session.IsRunning == false) return;
-
-        EventsCalculation(1);
-    }
-
-    internal void EventsCalculation(int turns = 1)
-    {
-        _sessionLock.EnterWriteLock();
-
-        _session = new TurnCalculator().Execute(_session, _gameEventsSystem);
-
-        _gameEventsSystem.EndTurnProcessing();
-
-        _session.Turn++;
-        _session.TurnTick = 0;
-
-        _sessionLock.ExitWriteLock();
-    }
-
     private bool _isCalculationInProgress = false;
 
-    private void LocationCalculation()
+    private void TurnExecute()
     {
         if (_session.IsRunning == false) return;
 
-        LocationCalculation(1);
+        Execution(1);
     }
-    internal void LocationCalculation(int turns = 1)
+    internal void Execution(int turns = 1)
     {       
         if (_isCalculationInProgress) return;
 
@@ -72,9 +50,11 @@ public class LocalGameServer : IGameServer
 
         _sessionLock.EnterWriteLock();
 
-        _session = new TurnTickCalculator().Execute(_session, new List<Command>(_tickCommands));
+        _session = new TurnTickCalculator().Execute(_session, _gameEventsSystem, new List<Command>(_tickCommands));
 
         _session.TurnTick++;
+
+        _gameEventsSystem.EndTurnProcessing();
 
         _tickCommands = [];
 

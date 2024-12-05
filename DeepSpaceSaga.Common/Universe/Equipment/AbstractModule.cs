@@ -12,7 +12,7 @@ public abstract class AbstractModule
     public int Slot { get; set; }
     public double ReloadTime { get; set; }
     public double Reloading { get; set; } 
-    public bool IsReloaded => Reloading == ReloadTime;
+    public bool IsReloaded => Reloading >= ReloadTime;
     public List<ISkill> Skills { get; set; } = new List<ISkill>();
 
     public void AddSkill(ISkill skill)
@@ -40,7 +40,7 @@ public abstract class AbstractModule
         }
         else
         {
-            Reloading++;
+            Reloading += 1;
         }
     }
 }

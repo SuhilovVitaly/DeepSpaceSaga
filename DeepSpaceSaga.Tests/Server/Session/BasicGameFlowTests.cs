@@ -85,7 +85,7 @@ public class BasicGameFlowTests
         var _gameServer = Generator.LocalGameServer();
         double startPositionX = (_gameServer.GetSession().SpaceMap.GetCelestialObjects()[0] as ISpacecraft).PositionX;
 
-        _gameServer.LocationCalculation(1);
+        _gameServer.Execution(1);
 
         double afterCalculationPositionX = (_gameServer.GetSession().SpaceMap.GetCelestialObjects()[0] as ISpacecraft).PositionX;
 

@@ -16,12 +16,12 @@ public class DrawTools
         screen.GraphicSurface.DrawText(text, new SKPoint(rectangle.X, rectangle.Y), font.ConvertToSKFont(), textPaint);
     }
 
-    public static void DrawEllipse(IScreenInfo screen, float x, float y, float radius, SpaceMapColor color)
+    public static void DrawEllipse(IScreenInfo screen, float x, float y, float radius, SpaceMapColor color, float strokeWidth = 1)
     {
         using var gridPaint = new SKPaint
         {
             Color = color.ToSKColor(),
-            StrokeWidth = 1,
+            StrokeWidth = strokeWidth,
             IsAntialias = true,
             Style = SKPaintStyle.Stroke
         };

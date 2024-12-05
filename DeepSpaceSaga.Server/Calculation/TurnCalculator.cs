@@ -6,13 +6,13 @@ public class TurnCalculator
     {
         var processingSession = session.Copy();
 
-        processingSession = new GameEventsProcessing().Execute(processingSession, eventsSystem, ticks);
+        //processingSession = new GameEventsProcessing().Execute(processingSession, eventsSystem, ticks);
 
-        processingSession = new PreProcessing().Execute(processingSession, eventsSystem, ticks);
+        //processingSession = new PreProcessing().Execute(processingSession, eventsSystem, ticks);
 
-        processingSession = new Processing().Execute(processingSession, eventsSystem, ticks);
+        //processingSession = new Processing().Execute(processingSession, eventsSystem, ticks);
 
-        processingSession = new PostProcessing().Execute(processingSession, eventsSystem, ticks);
+        //processingSession = new PostProcessing().Execute(processingSession, eventsSystem, ticks);
 
         return processingSession;
     }    
