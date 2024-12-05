@@ -2,32 +2,32 @@
 
 public static class CelestialObjectExtensions
 {
-    public static PointF GetLocation(this ICelestialObject celestialObject)
+    public static SpaceMapPoint GetLocation(this ICelestialObject celestialObject)
     {
-        return new PointF((float)celestialObject.PositionX, (float)celestialObject.PositionY);
+        return new SpaceMapPoint((float)celestialObject.PositionX, (float)celestialObject.PositionY);
     }
 
-    public static Color GetColor(this ICelestialObject celestialObject)
+    public static SpaceMapColor GetColor(this ICelestialObject celestialObject)
     {
         switch (celestialObject.Types)
         {
             case CelestialObjectTypes.Missile:
                 break;
             case CelestialObjectTypes.SpaceshipPlayer:
-                return Color.DarkOliveGreen;
+                return new SpaceMapColor(Color.DarkOliveGreen);
             case CelestialObjectTypes.SpaceshipNpcNeutral:
-                return Color.DarkGray;
+                return new SpaceMapColor(Color.DarkGray);
             case CelestialObjectTypes.SpaceshipNpcEnemy:
-                return Color.DarkRed;
+                return new SpaceMapColor(Color.DarkRed);
             case CelestialObjectTypes.SpaceshipNpcFriend:
-                return Color.SeaGreen;
+                return new SpaceMapColor(Color.SeaGreen);
             case CelestialObjectTypes.Asteroid:
-                return Color.DimGray;
+                return new SpaceMapColor(Color.WhiteSmoke);
             case CelestialObjectTypes.Explosion:
                 break;
         }
 
-        return Color.FromArgb(30, 45, 65);
+        return new SpaceMapColor(Color.FromArgb(30, 45, 65));
     }
 
     public static ISpacecraft ToSpaceship(this ICelestialObject celestialObject)

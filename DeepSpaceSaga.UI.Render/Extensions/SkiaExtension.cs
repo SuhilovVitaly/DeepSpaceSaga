@@ -1,9 +1,12 @@
-﻿using LanguageExt;
-
-namespace DeepSpaceSaga.UI.Render.Extensions;
+﻿namespace DeepSpaceSaga.UI.Render.Extensions;
 
 public static class SkiaExtension
 {
+    public static SKColor ToSKColor(this SpaceMapColor mapColor)
+    {
+        return new SKColor(mapColor.Red, mapColor.Green, mapColor.Blue, mapColor.Alpha);
+    }
+
     public static void FillEllipse(this SKCanvas canvas, SolidBrush solidBrush, float x, float y, float width, float hight)
     {
         var smallGridPen = new SKColor(solidBrush.Color.R, solidBrush.Color.G, solidBrush.Color.B);
@@ -84,21 +87,12 @@ public static class SkiaExtension
         return new SKPoint(point.X, point.Y);
     }
 
-    public static void DrawString(this SKCanvas canvas, string text, Font font, SolidBrush solidBrush, RectangleF rectangle)
+    public static SKPoint ToSkPoint(this SpaceMapPoint point)
     {
-        var smallGridPen = new SKColor(solidBrush.Color.R, solidBrush.Color.G, solidBrush.Color.B);
+        return new SKPoint(point.X, point.Y);
+    }    
 
-        using var textPaint = new SKPaint
-        {
-            Color = SKColors.White,
-            TextSize = font.Size,
-            IsAntialias = true
-        };
-
-        canvas.DrawText(text, new SKPoint(rectangle.X, rectangle.Y), ConvertToSKFont(font), textPaint);
-    }
-
-    public static SKFont ConvertToSKFont(Font font)
+    public static SKFont ConvertToSKFont(this Font font)
     {
         if (font == null)
         {

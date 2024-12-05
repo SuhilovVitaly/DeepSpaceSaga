@@ -2,11 +2,11 @@
 
 public class SpaceMapLine
 {
-    public PointF From { get; set; }
+    public SpaceMapPoint From { get; set; }
 
-    public PointF To { get; set; }
+    public SpaceMapPoint To { get; set; }
 
-    public SpaceMapLine(PointF from, PointF to)
+    public SpaceMapLine(SpaceMapPoint from, SpaceMapPoint to)
     {
         From = from;
         To = to;

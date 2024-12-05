@@ -12,7 +12,7 @@ internal class DrawDirections
 
     private static void DrawDirection(IScreenInfo screenInfo, ICelestialObject currentObject)
     {
-        GeneralGraphics.DrawLongLine(screenInfo, currentObject, Color.FromArgb(22, 22, 22));
+        GeneralGraphics.DrawLongLine(screenInfo, currentObject, new SpaceMapColor(Color.FromArgb(22, 22, 22)));
         GeneralGraphics.DrawArrow(screenInfo, currentObject, currentObject.GetColor());
     }
 }

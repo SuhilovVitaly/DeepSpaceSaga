@@ -1,7 +1,4 @@
-﻿using SkiaSharp;
-using System.Drawing;
-
-namespace DeepSpaceSaga.UI.Screens.MainGameScreen;
+﻿namespace DeepSpaceSaga.UI.Screens.MainGameScreen;
 
 public partial class StellarTacticalMap : UserControl
 {
@@ -72,15 +69,20 @@ public partial class StellarTacticalMap : UserControl
 
     private void MapMouseMove(object sender, MouseEventArgs e)
     {
-        var mouseScreenCoordinates = UiTools.ToRelativeCoordinates(e.Location, Global.ScreenData.Center);
+        var location = e.Location.ToSpaceMapCoordinates();
+
+        var mouseScreenCoordinates = UiTools.ToRelativeCoordinates(location, Global.ScreenData.Center);
 
         var mouseLocation = UiTools.ToTacticalMapCoordinates(mouseScreenCoordinates, Global.ScreenData.CenterScreenOnMap);
 
         Global.GameManager.EventController.TacticalMapMouseMove(mouseLocation);
     }
+
     private void MapClick(object sender, MouseEventArgs e)
     {
-        var mouseScreenCoordinates = UiTools.ToRelativeCoordinates(e.Location, Global.ScreenData.Center);
+        var location = e.Location.ToSpaceMapCoordinates();
+
+        var mouseScreenCoordinates = UiTools.ToRelativeCoordinates(location, Global.ScreenData.Center);
 
         var mouseLocation = UiTools.ToTacticalMapCoordinates(mouseScreenCoordinates, Global.ScreenData.CenterScreenOnMap);
 

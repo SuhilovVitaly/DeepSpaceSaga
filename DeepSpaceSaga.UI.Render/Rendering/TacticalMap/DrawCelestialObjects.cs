@@ -1,6 +1,4 @@
-﻿using DeepSpaceSaga.UI.Render.Extensions;
-
-namespace DeepSpaceSaga.UI.Render.Rendering.TacticalMap;
+﻿namespace DeepSpaceSaga.UI.Render.Rendering.TacticalMap;
 
 public class DrawCelestialObjects
 {
@@ -45,10 +43,9 @@ public class DrawCelestialObjects
         var screenCoordinates = UiTools.ToScreenCoordinates(screenInfo, spaceShip.GetLocation());
         var color = spaceShip.GetColor();
 
-        screenInfo.GraphicSurface?.FillEllipse(new SolidBrush(color), screenCoordinates.X, screenCoordinates.Y, 2, 2);
-        screenInfo.GraphicSurface?.DrawEllipse(new Pen(color), screenCoordinates.X , screenCoordinates.Y, 4, 4);
-
-        screenInfo.GraphicSurface?.DrawEllipse(new Pen(color), screenCoordinates.X , screenCoordinates.Y, 8, 8);
+        DrawTools.FillEllipse(screenInfo, screenCoordinates.X, screenCoordinates.Y, 4, color);
+        DrawTools.DrawEllipse(screenInfo, screenCoordinates.X, screenCoordinates.Y, 4, color);
+        DrawTools.DrawEllipse(screenInfo, screenCoordinates.X, screenCoordinates.Y, 8, color);
     }
 
     private static void DrawCelestialObject(IScreenInfo screenInfo, ICelestialObject celestialObject, GameSession session)
@@ -56,8 +53,8 @@ public class DrawCelestialObjects
         var screenCoordinates = UiTools.ToScreenCoordinates(screenInfo, celestialObject.GetLocation());
         var color = celestialObject.GetColor();
 
-        screenInfo.GraphicSurface?.FillEllipse(new SolidBrush(color), screenCoordinates.X , screenCoordinates.Y, 4, 4);
-        screenInfo.GraphicSurface?.DrawEllipse(new Pen(color), screenCoordinates.X, screenCoordinates.Y , 4, 4);
+        DrawTools.FillEllipse(screenInfo, screenCoordinates.X, screenCoordinates.Y, 4, color);
+        DrawTools.DrawEllipse(screenInfo, screenCoordinates.X, screenCoordinates.Y, 4, color);
 
         if (celestialObject.IsPreScanned)
         {
@@ -66,13 +63,13 @@ public class DrawCelestialObjects
 
     }
 
-    private static void DrawCelestialObjectInfo(IScreenInfo screenInfo, ICelestialObject celestialObject, Color color, GameSession session)
+    private static void DrawCelestialObjectInfo(IScreenInfo screenInfo, ICelestialObject celestialObject, SpaceMapColor color, GameSession session)
     {
         var screenCoordinates = UiTools.ToScreenCoordinates(screenInfo, celestialObject.GetLocation());
 
         var startLabel = GeometryTools.Move(screenCoordinates, 45, LabelDirection(celestialObject));
 
-        screenInfo.GraphicSurface?.DrawLine(new Pen(Color.FromArgb(32, 32, 32)), screenCoordinates, new PointF(startLabel.X, startLabel.Y + 15));
+        DrawTools.DrawLine(screenInfo, new SpaceMapColor(32, 32, 32), screenCoordinates, new SpaceMapPoint(startLabel.X, startLabel.Y + 15));
 
         screenInfo.GraphicSurface?.FillRectangle(new SolidBrush(Color.FromArgb(22, 22, 22)), startLabel.X, startLabel.Y, 120, 18);
         screenInfo.GraphicSurface?.FillRectangle(new SolidBrush(Color.FromArgb(52, 52, 52)), startLabel.X, startLabel.Y + 15, 120, 4);
@@ -88,7 +85,7 @@ public class DrawCelestialObjects
 
         var label = celestialObject.IsPreScanned ? celestialObject.Name : "Unknown Celestial Object";
 
-        screenInfo.GraphicSurface?.DrawString($"{label}", new Font("Tahoma", 12), new SolidBrush(color), new RectangleF(startLabel.X + 15, startLabel.Y + 12, 190, 50));
+        DrawTools.DrawString(screenInfo, label, new Font("Tahoma", 12), color, new RectangleF(startLabel.X + 15, startLabel.Y + 12, 190, 50));
     }
 
     private static int LabelDirection(ICelestialObject celestialObject)

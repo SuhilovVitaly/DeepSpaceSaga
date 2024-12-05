@@ -1,7 +1,20 @@
-﻿namespace DeepSpaceSaga.Common.Extensions;
+﻿using DeepSpaceSaga.Common.Geometry;
+using System.Runtime.CompilerServices;
+
+namespace DeepSpaceSaga.Common.Extensions;
 
 public static class GeometryExtensions
 {
+    public static SpaceMapPoint ToSpaceMapCoordinates(this PointF pointF)
+    {
+        return new SpaceMapPoint(pointF.X, pointF.Y);
+    }
+
+    public static SpaceMapPoint ToSpaceMapCoordinates(this Point point)
+    {
+        return new SpaceMapPoint(point.X, point.Y);
+    }
+
     public static float To360Degrees(this float angle)
     {
         if (angle > 360) angle = angle - 360;

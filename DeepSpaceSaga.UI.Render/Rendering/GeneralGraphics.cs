@@ -1,34 +1,31 @@
-﻿using DeepSpaceSaga.UI.Render.Extensions;
-
-namespace DeepSpaceSaga.UI.Render.Rendering;
+﻿namespace DeepSpaceSaga.UI.Render.Rendering;
 
 internal class GeneralGraphics
 {
-    public static void DrawArrow(SKCanvas graphics, SpaceMapVector line, Color color, int arrowSize = 4)
+    public static void DrawArrow(IScreenInfo screenInfo, SpaceMapVector line, SpaceMapColor color, int arrowSize = 4)
     {
         // Base arrow line
-        graphics?.DrawLine(new Pen(color), line.PointFrom.X, line.PointFrom.Y, line.PointTo.X, line.PointTo.Y);
+        DrawTools.DrawLine(screenInfo, color, line.PointFrom, line.PointTo);
 
         // Arrow left line
         var leftArrowLine = GeometryTools.Move(line.PointTo, arrowSize, line.Direction + 150);
-        graphics?.DrawLine(new Pen(color), line.PointTo.X, line.PointTo.Y, leftArrowLine.X, leftArrowLine.Y);
+        DrawTools.DrawLine(screenInfo, color, line.PointTo, leftArrowLine);
 
         // Arrow right line
         var rightArrowLine = GeometryTools.Move(line.PointTo, arrowSize, line.Direction - 150);
-        graphics?.DrawLine(new Pen(color), line.PointTo.X, line.PointTo.Y, rightArrowLine.X, rightArrowLine.Y);
-
+        DrawTools.DrawLine(screenInfo, color, line.PointTo, rightArrowLine);
     }
 
-    public static void DrawArrow(IScreenInfo screenInfo, ICelestialObject currentObject, Color color, int arrowLength = 22, int arrowSize = 5)
+    public static void DrawArrow(IScreenInfo screenInfo, ICelestialObject currentObject, SpaceMapColor color, int arrowLength = 22, int arrowSize = 5)
     {
         var screenCoordinates = UiTools.ToScreenCoordinates(screenInfo, currentObject.GetLocation());
 
         var endArrowPoint = GeometryTools.Move(screenCoordinates, arrowLength, currentObject.Direction);
 
-        DrawArrow(screenInfo.GraphicSurface, new SpaceMapVector(screenCoordinates, endArrowPoint, currentObject.Direction), color, arrowSize);
+        DrawArrow(screenInfo, new SpaceMapVector(screenCoordinates, endArrowPoint, currentObject.Direction), color, arrowSize);
     }
 
-    public static void DrawLongLine(IScreenInfo screenInfo, ICelestialObject currentObject, Color color)
+    public static void DrawLongLine(IScreenInfo screenInfo, ICelestialObject currentObject, SpaceMapColor color)
     {
         var screenCoordinates = UiTools.ToScreenCoordinates(screenInfo, currentObject.GetLocation());
 
@@ -37,11 +34,9 @@ internal class GeneralGraphics
             GeometryTools.Move(screenCoordinates, 4000, currentObject.Direction),
             currentObject.Direction);
 
-        using var dashedPen = new Pen(color, 2) { DashStyle = DashStyle.DashDot };
-
         using var gridPaint = new SKPaint
         {
-            Color = new SKColor(dashedPen.Color.R, dashedPen.Color.G, dashedPen.Color.B),
+            Color = color.ToSKColor(),
             StrokeWidth = 1,
             IsAntialias = true,
             Style = SKPaintStyle.Stroke
@@ -56,7 +51,7 @@ internal class GeneralGraphics
             GeometryTools.Move(screenCoordinates, 4000, (currentObject.Direction - 180).To360Degrees()),
             currentObject.Direction);
 
-            screenInfo.GraphicSurface.DrawLine(dashedPen, line.PointFrom.X, line.PointFrom.Y, line.PointTo.X, line.PointTo.Y);
+            DrawTools.DrawLine(screenInfo, color, line.PointFrom, line.PointTo);
         }
     }
 }

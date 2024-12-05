@@ -2,52 +2,52 @@
 
 public class Draw
 {
-    Dictionary<int, Bitmap> prerenderedGridsByZoom = new();
+    //Dictionary<int, Bitmap> prerenderedGridsByZoom = new();
 
-    public void Initialization(ScreenParameters screenParameters)
-    {
-        var stopwatch = Stopwatch.StartNew();
+    //public void Initialization(ScreenParameters screenParameters)
+    //{
+    //    var stopwatch = Stopwatch.StartNew();
 
-        // TODO: 
-        var zoomModes = new ConcurrentBag<int> { 1 };
+    //    // TODO: 
+    //    var zoomModes = new ConcurrentBag<int> { 1 };
 
-        foreach (var zoomMode in zoomModes)
-        {
-            AddPreRenderGrid(screenParameters, zoomMode);
-        }
+    //    foreach (var zoomMode in zoomModes)
+    //    {
+    //        AddPreRenderGrid(screenParameters, zoomMode);
+    //    }
 
-        screenParameters.Metrics.PreRenderBaseGridsTimeinMs = stopwatch.Elapsed.TotalMilliseconds;
-    }
+    //    screenParameters.Metrics.PreRenderBaseGridsTimeinMs = stopwatch.Elapsed.TotalMilliseconds;
+    //}
 
-    private void AddPreRenderGrid(ScreenParameters screenParameters, int zoomSize)
-    {
-        var screenParametersRebuilded = new ScreenParameters(screenParameters, zoomSize);
-        prerenderedGridsByZoom.Add(screenParametersRebuilded.Zoom.Size, DrawBackgroundGridByZoom(screenParametersRebuilded));
-    }
+    //private void AddPreRenderGrid(ScreenParameters screenParameters, int zoomSize)
+    //{
+    //    var screenParametersRebuilded = new ScreenParameters(screenParameters, zoomSize);
+    //    prerenderedGridsByZoom.Add(screenParametersRebuilded.Zoom.Size, DrawBackgroundGridByZoom(screenParametersRebuilded));
+    //}
 
-    private Bitmap DrawBackgroundGridByZoom(ScreenParameters screenParameters)
-    {
-        var bitmapGrid = new Bitmap((int)(screenParameters.Width * 2), (int)(screenParameters.Height * 2));
+    //private Bitmap DrawBackgroundGridByZoom(ScreenParameters screenParameters)
+    //{
+    //    var bitmapGrid = new Bitmap((int)(screenParameters.Width * 2), (int)(screenParameters.Height * 2));
 
-        var graphics = Graphics.FromImage(bitmapGrid);
+    //    var graphics = Graphics.FromImage(bitmapGrid);
 
-        graphics.CompositingQuality = CompositingQuality.HighQuality;
-        graphics.InterpolationMode = InterpolationMode.Bicubic;
-        graphics.SmoothingMode = SmoothingMode.AntiAlias;
-        graphics.TextRenderingHint = TextRenderingHint.AntiAlias;
+    //    graphics.CompositingQuality = CompositingQuality.HighQuality;
+    //    graphics.InterpolationMode = InterpolationMode.Bicubic;
+    //    graphics.SmoothingMode = SmoothingMode.AntiAlias;
+    //    graphics.TextRenderingHint = TextRenderingHint.AntiAlias;
 
-        DrawStaticGridBackground.Execute(graphics, screenParameters);
+    //    DrawStaticGridBackground.Execute(graphics, screenParameters);
 
-        return bitmapGrid;
-    }
+    //    return bitmapGrid;
+    //}
 
     public void DrawTacticalMapScreen(GameSession session, ScreenParameters screenParameters)
     {
+        DrawGrid.Execute(screenParameters);
+
         DrawSpaceScanner.Execute(screenParameters, session);
 
-        DrawDirections.Execute(screenParameters, session);
-
-        DrawGrid.Execute(screenParameters);
+        DrawDirections.Execute(screenParameters, session);        
 
         DrawCelestialObjects.Execute(screenParameters, session);
 

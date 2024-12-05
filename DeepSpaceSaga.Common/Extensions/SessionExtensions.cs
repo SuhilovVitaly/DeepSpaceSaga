@@ -1,4 +1,6 @@
-﻿namespace DeepSpaceSaga.Common.Extensions;
+﻿using DeepSpaceSaga.Common.Geometry;
+
+namespace DeepSpaceSaga.Common.Extensions;
 
 public static class SessionExtensions
 {
@@ -23,7 +25,7 @@ public static class SessionExtensions
         return (from celestialObjects in gameSession.SpaceMap.GetCelestialObjects() where id == celestialObjects.Id select celestialObjects).FirstOrDefault();
     }
 
-    public static List<ICelestialObject> GetCelestialObjectsByDistance(this GameSession gameSession, PointF coordinates, int range)
+    public static List<ICelestialObject> GetCelestialObjectsByDistance(this GameSession gameSession, SpaceMapPoint coordinates, int range)
     {
         var resultObjects = gameSession.SpaceMap.GetCelestialObjects().Map(celestialObject => (celestialObject,
                     GeometryTools.Distance(

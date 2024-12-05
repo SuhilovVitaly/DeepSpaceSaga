@@ -2,11 +2,11 @@
 
 public class SpaceMapVector
 {
-    public PointF PointFrom { get; set; }
-    public PointF PointTo { get; set; }
+    public SpaceMapPoint PointFrom { get; set; }
+    public SpaceMapPoint PointTo { get; set; }
     public double Direction { get; set; }
 
-    public SpaceMapVector(PointF pointFrom, PointF pointTo, double direction)
+    public SpaceMapVector(SpaceMapPoint pointFrom, SpaceMapPoint pointTo, double direction)
     {
         PointFrom = pointFrom;
         PointTo = pointTo;

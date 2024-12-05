@@ -1,10 +1,12 @@
-﻿namespace DeepSpaceSaga.Common.Tools;
+﻿using DeepSpaceSaga.Common.Geometry;
+
+namespace DeepSpaceSaga.Common.Tools;
 
 public class GeometryTools
 {
     private static double ToDegrees(double angle) => (angle * 180 / Math.PI);
 
-    public static double Azimuth(PointF destination, PointF center)
+    public static double Azimuth(SpaceMapPoint destination, SpaceMapPoint center)
     {
         var deltaX = destination.X - center.X;
         var deltaY = destination.Y - center.Y;
@@ -19,17 +21,17 @@ public class GeometryTools
         return angle;
     }
 
-    public static PointF Move(PointF currentLocation, double speed, double angleInDegrees)
+    public static SpaceMapPoint Move(SpaceMapPoint currentLocation, double speed, double angleInDegrees)
     {
         var angleInRadians = angleInDegrees * (Math.PI) / 180;
 
         var x = (float)(currentLocation.X + speed * Math.Cos(angleInRadians));
         var y = (float)(currentLocation.Y + speed * Math.Sin(angleInRadians));
 
-        return new PointF(x, y);
+        return new SpaceMapPoint(x, y);
     }
 
-    public static double Distance(PointF p1, PointF p2)
+    public static double Distance(SpaceMapPoint p1, SpaceMapPoint p2)
     {
         double xDelta = p1.X - p2.X;
         double yDelta = p1.Y - p2.Y;
@@ -42,12 +44,12 @@ public class GeometryTools
         return Math.Abs(p1 - p2).To360Degrees();
     }
 
-    public static PointF GetCentreLine(PointF from, PointF to)
+    public static SpaceMapPoint GetCentreLine(SpaceMapPoint from, SpaceMapPoint to)
     {
-        return new PointF((to.X + from.X) / 2, (to.Y + from.Y) / 2);
+        return new SpaceMapPoint((to.X + from.X) / 2, (to.Y + from.Y) / 2);
     }
 
-    public static (PointF, PointF) CalculateTangents(PointF externalPoint, PointF circleCenter, float radius)
+    public static (SpaceMapPoint, SpaceMapPoint) CalculateTangents(SpaceMapPoint externalPoint, SpaceMapPoint circleCenter, float radius)
     {
         // Вычисляем расстояние от внешней точки до центра окружности
         double distanceToCenter = Distance(externalPoint, circleCenter);
@@ -69,12 +71,12 @@ public class GeometryTools
         double angle2 = angleToPoint - tangentAngle;
 
         // Вычисляем координаты точек касания
-        PointF tangentPoint1 = new PointF(
+        var tangentPoint1 = new SpaceMapPoint(
             (float)(circleCenter.X + radius * Math.Cos(angle1)),
             (float)(circleCenter.Y + radius * Math.Sin(angle1))
         );
 
-        PointF tangentPoint2 = new PointF(
+        var tangentPoint2 = new SpaceMapPoint(
             (float)(circleCenter.X + radius * Math.Cos(angle2)),
             (float)(circleCenter.Y + radius * Math.Sin(angle2))
         );

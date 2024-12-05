@@ -1,4 +1,5 @@
-﻿using DeepSpaceSaga.UI.Render.Rendering.TacticalMap;
+﻿using DeepSpaceSaga.Common.Geometry;
+using DeepSpaceSaga.UI.Render.Rendering.TacticalMap;
 
 namespace DeepSpaceSaga.Tests.UI.Rendering.TacticalMap;
 
@@ -9,7 +10,7 @@ public class DrawGridTests
     {
         // Arrange
         var zoomSize = 1000;
-        var expectedCorner = new PointF(-350, -100);
+        var expectedCorner = new SpaceMapPoint(-350, -100);
 
         IScreenInfo screenInfo = new ScreenParameters(3300, 1800, 10000, 10000, zoomSize);
 
@@ -25,7 +26,7 @@ public class DrawGridTests
     {
         // Arrange
         var zoomSize = 1000;
-        var expectedCorner = new PointF(-350, -100);
+        var expectedCorner = new SpaceMapPoint(-350, -100);
 
         IScreenInfo screenInfo = new ScreenParameters(3300, 1800, 10000, 10000, zoomSize);
 

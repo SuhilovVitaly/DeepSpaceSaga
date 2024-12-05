@@ -8,6 +8,6 @@ public class GlobalResources
 
     public GlobalResources(ScreenParameters screenParameters)
     {
-        DrawTool.Initialization(screenParameters);
+       
     }
 }

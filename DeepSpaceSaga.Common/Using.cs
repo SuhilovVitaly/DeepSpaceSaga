@@ -14,3 +14,4 @@ global using DeepSpaceSaga.Common.Universe.Commands;
 global using DeepSpaceSaga.Common.Universe.Equipment;
 global using DeepSpaceSaga.Common.Universe.Audit;
 global using System.ComponentModel;
+global using DeepSpaceSaga.Common.Geometry;

@@ -4,7 +4,7 @@ internal class DrawSpaceScanner
 {
     public static void Execute(IScreenInfo screenInfo, GameSession session)
     {
-        var color = new SKColor(0, 255, 0, 5);// Color.FromArgb(5, 0, 255, 0);
+        var color = new SKColor(0, 255, 0, 10);// Color.FromArgb(5, 0, 255, 0);
 
         var spacecraft = session.GetPlayerSpaceShip();
         var location = UiTools.ToScreenCoordinates(screenInfo, spacecraft.GetLocation());

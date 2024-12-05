@@ -1,3 +1,5 @@
+using DeepSpaceSaga.Common.Geometry;
+
 namespace DeepSpaceSaga.UI;
 
 public partial class Form1 : Form
@@ -26,7 +28,7 @@ public partial class Form1 : Form
         Global.GameManager.EventController.OnRefreshData += Worker_OnGetDataFromServer;
     }
 
-    private void CrlTacticalMap_OnMouseMove(PointF e)
+    private void CrlTacticalMap_OnMouseMove(SpaceMapPoint e)
     {
         crlMousePosition.Text = $"({Width}:{Height}) - ({Width/2}:{Height/2}){Environment.NewLine}({e.X}:{e.Y})";
     }
@@ -56,17 +58,17 @@ public partial class Form1 : Form
 
     private void button2_Click(object sender, EventArgs e)
     {
-        Global.ScreenData.CenterScreenOnMap = new PointF(Global.ScreenData.CenterScreenOnMap.X + 100, Global.ScreenData.CenterScreenOnMap.Y);
+        Global.ScreenData.CenterScreenOnMap = new SpaceMapPoint(Global.ScreenData.CenterScreenOnMap.X + 100, Global.ScreenData.CenterScreenOnMap.Y);
     }
 
     private void button3_Click(object sender, EventArgs e)
     {
-        Global.ScreenData.CenterScreenOnMap = new PointF(Global.ScreenData.CenterScreenOnMap.X, Global.ScreenData.CenterScreenOnMap.Y + 100);
+        Global.ScreenData.CenterScreenOnMap = new SpaceMapPoint(Global.ScreenData.CenterScreenOnMap.X, Global.ScreenData.CenterScreenOnMap.Y + 100);
     }
 
     private void button4_Click(object sender, EventArgs e)
     {
-        Global.ScreenData.CenterScreenOnMap = new PointF(Global.ScreenData.CenterScreenOnMap.X + 1000, Global.ScreenData.CenterScreenOnMap.Y);
+        Global.ScreenData.CenterScreenOnMap = new SpaceMapPoint(Global.ScreenData.CenterScreenOnMap.X + 1000, Global.ScreenData.CenterScreenOnMap.Y);
     }
 
     private void CrlZoomIn_Click(object sender, EventArgs e)

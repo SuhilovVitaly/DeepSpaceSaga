@@ -13,7 +13,7 @@ internal class CelestialMapGenerator
             AsteroidGenerator.CreateAsteroid(327, 10000 + 10, 10000 + 277, 7, generationTool.GenerateCelestialObjectName(), true)
         };
 
-        for(int i = 0; i < 500; i++)
+        for(int i = 0; i < 0; i++)
         {
             var asteroid = AsteroidGenerator.CreateAsteroid(
                 generationTool.GetDouble(0, 359),

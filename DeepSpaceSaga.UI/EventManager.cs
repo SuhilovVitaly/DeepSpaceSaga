@@ -1,10 +1,11 @@
-﻿using DeepSpaceSaga.Common.Universe.Commands;
+﻿using DeepSpaceSaga.Common.Geometry;
+using DeepSpaceSaga.Common.Universe.Commands;
 
 namespace DeepSpaceSaga.Controller;
 
 public class EventManager
 {
-    public event Action<PointF>? OnTacticalMapMouseMove;
+    public event Action<SpaceMapPoint>? OnTacticalMapMouseMove;
     public event Action<GameSession>? OnRefreshData;
     public event Action<GameSession>? OnInitializeData;
 
@@ -45,14 +46,14 @@ public class EventManager
         Session = gameSession;
     }
 
-    public void TacticalMapMouseMove(PointF coordinates)
+    public void TacticalMapMouseMove(SpaceMapPoint coordinates)
     {
         MapEventHandler.MouseMove(coordinates, Worker.GetGameSession());
 
         OnTacticalMapMouseMove?.Invoke(coordinates);
     }
 
-    public void TacticalMapMouseClick(PointF coordinates)
+    public void TacticalMapMouseClick(SpaceMapPoint coordinates)
     {
         MapEventHandler.MouseClick(coordinates, Worker.GetGameSession());
     }

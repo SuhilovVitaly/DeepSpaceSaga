@@ -5,7 +5,7 @@ public class SpaceMapEventHandler()
     public event Action<ICelestialObject>? OnShowCelestialObject;
     public event Action<ICelestialObject>? OnSelectCelestialObject;
 
-    public void MouseMove(PointF coordinates, GameSession gameSession)
+    public void MouseMove(SpaceMapPoint coordinates, GameSession gameSession)
     {
         var objectsInRange = gameSession.GetCelestialObjectsByDistance(coordinates, 20).Where(celestialObject =>
                 celestialObject.Id != gameSession.GetPlayerSpaceShip().Id).ToList();
@@ -15,7 +15,7 @@ public class SpaceMapEventHandler()
         OnShowCelestialObject?.Invoke(objectsInRange.First());
     }
 
-    public void MouseClick(PointF coordinates, GameSession gameSession)
+    public void MouseClick(SpaceMapPoint coordinates, GameSession gameSession)
     {
         var objectsInRange = gameSession.GetCelestialObjectsByDistance(coordinates, 20).Where(celestialObject =>
                 celestialObject.Id != gameSession.GetPlayerSpaceShip().Id).ToList();

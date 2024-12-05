@@ -3,11 +3,11 @@
 public interface IScreenInfo
 {
     ScreenMetrics Metrics { get; set; }
-    PointF Center { get; }
+    SpaceMapPoint Center { get; }
     float Width { get; }
     float Height { get; }
     int DrawInterval { get; set; }
-    PointF CenterScreenOnMap { get; set; }
+    SpaceMapPoint CenterScreenOnMap { get; set; }
     Zoom Zoom { get; }
     SKCanvas GraphicSurface { get; set; }
 }

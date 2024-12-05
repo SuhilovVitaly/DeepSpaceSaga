@@ -8,7 +8,7 @@ public class DrawGrid
         DrawGenericGrid(screenInfo.GraphicSurface, screenInfo, 250, Color.FromArgb(32, 32, 32), GetLeftCorner(screenInfo));
     }
 
-    private static void DrawGenericGrid(SKCanvas graphics, IScreenInfo screenInfo, int step, Color color, PointF corner)
+    private static void DrawGenericGrid(SKCanvas graphics, IScreenInfo screenInfo, int step, Color color, SpaceMapPoint corner)
     {
         var smallGridPen = new SKColor(color.R, color.G, color.B);
 
@@ -27,22 +27,22 @@ public class DrawGrid
 
         for (var i = 0; i < stepsInScreenWidth; i++)
         {
-            var lineFrom = new PointF(mapTopLeftCorner.X + i * step, mapTopLeftCorner.Y);
-            var lineTo = new PointF(mapTopLeftCorner.X + i * step, mapTopLeftCorner.Y + screenInfo.Height * 2);
+            var lineFrom = new SpaceMapPoint(mapTopLeftCorner.X + i * step, mapTopLeftCorner.Y);
+            var lineTo = new SpaceMapPoint(mapTopLeftCorner.X + i * step, mapTopLeftCorner.Y + screenInfo.Height * 2);
 
             graphics.DrawLine(lineFrom.X, lineFrom.Y, lineTo.X, lineTo.Y, gridPaint);
         }
 
         for (var i = 0; i < stepsInScreenHeight; i++)
         {
-            var lineFrom = new PointF(mapTopLeftCorner.X, mapTopLeftCorner.Y + i * step);
-            var lineTo = new PointF(mapTopLeftCorner.X + screenInfo.Width * 2, mapTopLeftCorner.Y + i * step);
+            var lineFrom = new SpaceMapPoint(mapTopLeftCorner.X, mapTopLeftCorner.Y + i * step);
+            var lineTo = new SpaceMapPoint(mapTopLeftCorner.X + screenInfo.Width * 2, mapTopLeftCorner.Y + i * step);
 
             graphics.DrawLine(lineFrom.X, lineFrom.Y, lineTo.X, lineTo.Y, gridPaint);
         }
     }
 
-    internal static PointF GetLeftCorner(IScreenInfo screenInfo)
+    internal static SpaceMapPoint GetLeftCorner(IScreenInfo screenInfo)
     {
         var xGridSize = (int)(screenInfo.Width / 2 / screenInfo.Zoom.Size) + 1;
         var yGridSize = (int)(screenInfo.Height / 2 / screenInfo.Zoom.Size) + 1;
@@ -56,8 +56,8 @@ public class DrawGrid
         var cornerX = screenInfo.CenterScreenOnMap.X - offsetXfromCenterMap - offsetXfromScreenSize;
         var cornerY = screenInfo.CenterScreenOnMap.Y - offsetYfromCenterMap - offsetYfromScreenSize;
 
-        var corner = UiTools.ToScreenCoordinates(screenInfo, new PointF(cornerX, cornerY));
+        var corner = UiTools.ToScreenCoordinates(screenInfo, new SpaceMapPoint(cornerX, cornerY));
 
-        return new PointF(corner.X, corner.Y);
+        return new SpaceMapPoint(corner.X, corner.Y);
     }
 }

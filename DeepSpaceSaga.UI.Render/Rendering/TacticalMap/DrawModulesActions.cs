@@ -1,13 +1,10 @@
-﻿using DeepSpaceSaga.UI.Render.Extensions;
-
-namespace DeepSpaceSaga.UI.Render.Rendering.TacticalMap;
+﻿namespace DeepSpaceSaga.UI.Render.Rendering.TacticalMap;
 
 internal class DrawModulesActions
 {
     public static void Execute(IScreenInfo screenInfo, GameSession session)
     {
-        var spacecraft = session.GetPlayerSpaceShip();
-        
+        var spacecraft = session.GetPlayerSpaceShip();        
 
         foreach (var module in spacecraft.Modules)
         {
@@ -44,6 +41,6 @@ internal class DrawModulesActions
         var locationConnector = GeometryTools.Move(targetLocation, 30, direction);
         var locationConnector2 = GeometryTools.Move(spacecraftLocation, 30, direction1);
 
-        screenInfo.GraphicSurface?.DrawLine(new Pen(Color.DarkOrange, 1), locationConnector, locationConnector2);
+        DrawTools.DrawLine(screenInfo, Colors.ModuleSpaceScannerConnector, locationConnector, locationConnector2);
     }
 }
