@@ -42,7 +42,7 @@ internal class GeneralGraphics
             Style = SKPaintStyle.Stroke
         };
 
-        screenInfo.GraphicSurface.DrawLine(line.PointFrom.ToSkPoint(), line.PointTo.ToSkPoint(), gridPaint);
+        DrawTools.DrawLine(screenInfo, color, line.PointTo, line.PointFrom);
 
         if (currentObject.Types == CelestialObjectTypes.Asteroid)
         {

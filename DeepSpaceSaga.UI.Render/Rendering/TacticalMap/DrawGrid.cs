@@ -4,21 +4,12 @@ public class DrawGrid
 {
     public static void Execute(IScreenInfo screenInfo)
     {       
-        DrawGenericGrid(screenInfo.GraphicSurface, screenInfo, 50, Color.FromArgb(22, 22, 22), GetLeftCorner(screenInfo));
-        DrawGenericGrid(screenInfo.GraphicSurface, screenInfo, 250, Color.FromArgb(32, 32, 32), GetLeftCorner(screenInfo));
+        DrawGenericGrid(screenInfo, 50, new SpaceMapColor(Color.FromArgb(22, 22, 22)), GetLeftCorner(screenInfo));
+        DrawGenericGrid(screenInfo, 250, new SpaceMapColor(Color.FromArgb(32, 32, 32)), GetLeftCorner(screenInfo));
     }
 
-    private static void DrawGenericGrid(SKCanvas graphics, IScreenInfo screenInfo, int step, Color color, SpaceMapPoint corner)
+    private static void DrawGenericGrid(IScreenInfo screenInfo, int step, SpaceMapColor color, SpaceMapPoint corner)
     {
-        var smallGridPen = new SKColor(color.R, color.G, color.B);
-
-        using var gridPaint = new SKPaint
-        {
-            Color = smallGridPen,
-            StrokeWidth = 1,
-            IsAntialias = true,
-            Style = SKPaintStyle.Stroke
-        };
 
         var stepsInScreenWidth = screenInfo.Width * 2 / step;
         var stepsInScreenHeight = screenInfo.Height * 2 / step;
@@ -30,7 +21,7 @@ public class DrawGrid
             var lineFrom = new SpaceMapPoint(mapTopLeftCorner.X + i * step, mapTopLeftCorner.Y);
             var lineTo = new SpaceMapPoint(mapTopLeftCorner.X + i * step, mapTopLeftCorner.Y + screenInfo.Height * 2);
 
-            graphics.DrawLine(lineFrom.X, lineFrom.Y, lineTo.X, lineTo.Y, gridPaint);
+            DrawTools.DrawLine(screenInfo, color, lineFrom, lineTo);
         }
 
         for (var i = 0; i < stepsInScreenHeight; i++)
@@ -38,7 +29,7 @@ public class DrawGrid
             var lineFrom = new SpaceMapPoint(mapTopLeftCorner.X, mapTopLeftCorner.Y + i * step);
             var lineTo = new SpaceMapPoint(mapTopLeftCorner.X + screenInfo.Width * 2, mapTopLeftCorner.Y + i * step);
 
-            graphics.DrawLine(lineFrom.X, lineFrom.Y, lineTo.X, lineTo.Y, gridPaint);
+            DrawTools.DrawLine(screenInfo, color, lineFrom, lineTo);
         }
     }
 

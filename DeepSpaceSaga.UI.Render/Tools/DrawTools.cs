@@ -1,4 +1,6 @@
-﻿namespace DeepSpaceSaga.UI.Render.Tools;
+﻿using LanguageExt.ClassInstances.Pred;
+
+namespace DeepSpaceSaga.UI.Render.Tools;
 
 public class DrawTools
 {
@@ -51,5 +53,41 @@ public class DrawTools
         };
 
         screen.GraphicSurface.DrawLine(p1.ToSkPoint(), p2.ToSkPoint(), gridPaint);
+    }
+
+    public static void FillRectangle(IScreenInfo screen, SpaceMapColor color, float x, float y, float width, float height)
+    {
+        FillRectangle(screen, color, new SpaceMapPoint(x, y), width, height);
+    }
+
+    public static void FillRectangle(IScreenInfo screen, SpaceMapColor color, SpaceMapPoint p1, float width, float height)
+    {
+        using var gridPaint = new SKPaint
+        {
+            Color = color.ToSKColor(),
+            StrokeWidth = 1,
+            IsAntialias = true,
+            Style = SKPaintStyle.Fill
+        };
+
+        screen.GraphicSurface.DrawRect(p1.X, p1.Y, width, height, gridPaint);
+    }
+
+    public static void DrawRectangle(IScreenInfo screen, SpaceMapColor color, float x, float y, float width, float height)
+    {
+        DrawRectangle(screen, color, new SpaceMapPoint(x, y), width, height);
+    }
+
+    public static void DrawRectangle(IScreenInfo screen, SpaceMapColor color, SpaceMapPoint p1, float width, float height)
+    {
+        using var gridPaint = new SKPaint
+        {
+            Color = color.ToSKColor(),
+            StrokeWidth = 1,
+            IsAntialias = true,
+            Style = SKPaintStyle.Stroke
+        };
+
+        screen.GraphicSurface.DrawRect(p1.X, p1.Y, width, height, gridPaint);
     }
 }

@@ -4,34 +4,37 @@ internal class DrawSpaceScanner
 {
     public static void Execute(IScreenInfo screenInfo, GameSession session)
     {
-        var color = new SKColor(0, 255, 0, 10);// Color.FromArgb(5, 0, 255, 0);
-
         var spacecraft = session.GetPlayerSpaceShip();
         var location = UiTools.ToScreenCoordinates(screenInfo, spacecraft.GetLocation());
 
         if (spacecraft.GetModules(Category.SpaceScanner).FirstOrDefault() is not IScanner scannerModule) return;
 
-        var rectangle = new RectangleF(
-            (float)(location.X - scannerModule.ScanRange / 2), 
-            (float)(location.Y - scannerModule.ScanRange / 2), 
-            (float)(scannerModule.ScanRange), 
-            (float)(scannerModule.ScanRange));
+        DrawTools.FillEllipse(screenInfo, location.X, location.Y, (float)(scannerModule.ScanRange), new SpaceMapColor(Color.FromArgb(10, 0, 255, 0)));
+        DrawTools.DrawEllipse(screenInfo, location.X, location.Y, (float)(scannerModule.ScanRange), Colors.LightGray);
 
-        using var paint = new SKPaint
+        if(session.IsRunning == false) return;
+
+        if(scannerModule.IsReloaded == true) return;
+
+        var radius = CalculateDistanceCovered(scannerModule.ReloadTime, scannerModule.Reloading, scannerModule.ScanRange);
+
+        //DrawTools.DrawEllipse(screenInfo, location.X, location.Y, radius, new SpaceMapColor(Color.OrangeRed));
+    }
+
+    private static float CalculateDistanceCovered(double cycleDuration, double currentSecond, double totalDistance)
+    {
+        if (cycleDuration <= 0)
         {
-            Color = color,
-            IsAntialias = true,
-            Style = SKPaintStyle.Fill
-        };
-
-        screenInfo.GraphicSurface.DrawCircle(location.X, location.Y, (float)(scannerModule.ScanRange / 2), paint);
-
-        using var paintLine = new SKPaint
+            throw new ArgumentException("Cycle duration must be greater than zero.", nameof(cycleDuration));
+        }
+        if (currentSecond < 0 || currentSecond > cycleDuration)
         {
-            Color = color,
-            IsAntialias = true,
-            Style = SKPaintStyle.Stroke
-        };
-        screenInfo.GraphicSurface.DrawCircle(location.X, location.Y, (float)(scannerModule.ScanRange / 2), paintLine);
+            throw new ArgumentException("Current second must be within the cycle duration.", nameof(currentSecond));
+        }
+
+        // Расчет пройденного расстояния
+        float distanceCovered = (float)((currentSecond / cycleDuration) * totalDistance);
+
+        return distanceCovered;
     }
 }

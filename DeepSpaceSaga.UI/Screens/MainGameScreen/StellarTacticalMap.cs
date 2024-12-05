@@ -1,4 +1,9 @@
-﻿namespace DeepSpaceSaga.UI.Screens.MainGameScreen;
+﻿using DeepSpaceSaga.Common.Geometry;
+using DeepSpaceSaga.UI.Render.Extensions;
+using System.Drawing;
+using System.Windows.Forms;
+
+namespace DeepSpaceSaga.UI.Screens.MainGameScreen;
 
 public partial class StellarTacticalMap : UserControl
 {
@@ -59,6 +64,18 @@ public partial class StellarTacticalMap : UserControl
         Global.ScreenData.GraphicSurface = canvas;
 
         Global.Resources.DrawTool.DrawTacticalMapScreen(session, Global.ScreenData);
+
+
+        //using var gridPaint = new SKPaint
+        //{
+        //    Color = new SpaceMapColor(Color.OrangeRed).ToSKColor(),
+        //    StrokeWidth = 10,
+        //    IsAntialias = true,
+        //    Style = SKPaintStyle.Stroke
+        //};
+
+        //canvas.DrawCircle(800, 800, 100, gridPaint);
+
     }
 
     private void RefreshControls(GameSession data)

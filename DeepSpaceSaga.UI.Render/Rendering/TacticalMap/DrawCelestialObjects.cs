@@ -71,16 +71,16 @@ public class DrawCelestialObjects
 
         DrawTools.DrawLine(screenInfo, new SpaceMapColor(32, 32, 32), screenCoordinates, new SpaceMapPoint(startLabel.X, startLabel.Y + 15));
 
-        screenInfo.GraphicSurface?.FillRectangle(new SolidBrush(Color.FromArgb(22, 22, 22)), startLabel.X, startLabel.Y, 120, 18);
-        screenInfo.GraphicSurface?.FillRectangle(new SolidBrush(Color.FromArgb(52, 52, 52)), startLabel.X, startLabel.Y + 15, 120, 4);
+        DrawTools.FillRectangle(screenInfo, new SpaceMapColor(Color.FromArgb(22, 22, 22)), startLabel, 120, 18);
+        DrawTools.FillRectangle(screenInfo, new SpaceMapColor(Color.FromArgb(52, 52, 52)), startLabel.X, startLabel.Y + 15, 120, 4);
 
         if (session.Turn % 2 == 0)
         {
-            screenInfo.GraphicSurface?.FillRectangle(new SolidBrush(Color.FromArgb(160, 90, 0)), startLabel.X, startLabel.Y + 3, 8, 8);
+            DrawTools.FillRectangle(screenInfo, new SpaceMapColor(Color.FromArgb(160, 90, 0)), startLabel.X, startLabel.Y + 3, 8, 8);
         }
         else
         {
-            screenInfo.GraphicSurface?.FillRectangle(new SolidBrush(Color.WhiteSmoke), startLabel.X, startLabel.Y + 3, 8, 8);
+            DrawTools.FillRectangle(screenInfo, new SpaceMapColor(Color.WhiteSmoke), startLabel.X, startLabel.Y + 3, 8, 8);
         }
 
         var label = celestialObject.IsPreScanned ? celestialObject.Name : "Unknown Celestial Object";
