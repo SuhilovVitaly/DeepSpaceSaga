@@ -12,4 +12,5 @@ public class BaseCelestialObject: ICelestialObject
     public double PositionY { get; set; }
     public CelestialObjectTypes Types { get; set; } = CelestialObjectTypes.None;
     public bool IsPreScanned { get; set; }
+    public float Size { get; set; }
 }

@@ -34,6 +34,16 @@ public class GenerationTool
         return _randomBase.NextDouble() * (maximum - minimum) + minimum;
     }
 
+    public float GetFloat(double minimum = 0, double maximum = 0)
+    {
+        return (float)(_randomBase.NextDouble() * (maximum - minimum) + minimum);
+    }
+
+    public float GetFloat( double maximum = 0)
+    {
+        return (float)(_randomBase.NextDouble() * maximum);
+    }
+
     public int GetId()
     {
         return _randomBase.Next(1000000000, int.MaxValue);

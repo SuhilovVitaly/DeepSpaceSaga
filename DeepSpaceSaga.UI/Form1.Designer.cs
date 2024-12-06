@@ -31,6 +31,8 @@
             button1 = new Button();
             crlLabelTurns = new Label();
             panel1 = new Panel();
+            crlSelectedCelestialObjectInfo = new Screens.MainGameScreen.CelestialObjectInfo();
+            crlActiveCelestialObjectInfo = new Screens.MainGameScreen.CelestialObjectInfo();
             panel3 = new Panel();
             logbookControl1 = new Screens.MainGameScreen.LogbookControl();
             spacecraftTelemetryControl1 = new Screens.MainGameScreen.SpacecraftTelemetryControl();
@@ -38,11 +40,7 @@
             crlMousePosition = new Label();
             crlGamePause = new Button();
             crlResumeGame = new Button();
-            CrlZoomOut = new Button();
-            CrlZoomIn = new Button();
             crlTacticalMap = new Screens.MainGameScreen.StellarTacticalMap();
-            crlActiveCelestialObjectInfo = new Screens.MainGameScreen.CelestialObjectInfo();
-            crlSelectedCelestialObjectInfo = new Screens.MainGameScreen.CelestialObjectInfo();
             panel1.SuspendLayout();
             panel3.SuspendLayout();
             panel2.SuspendLayout();
@@ -50,9 +48,10 @@
             // 
             // button1
             // 
+            button1.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             button1.Cursor = Cursors.Hand;
             button1.Font = new Font("Segoe UI", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            button1.Location = new Point(3, 3);
+            button1.Location = new Point(1276, 11);
             button1.Name = "button1";
             button1.Size = new Size(28, 29);
             button1.TabIndex = 0;
@@ -74,20 +73,36 @@
             // panel1
             // 
             panel1.BorderStyle = BorderStyle.FixedSingle;
+            panel1.Controls.Add(button1);
             panel1.Controls.Add(crlSelectedCelestialObjectInfo);
             panel1.Controls.Add(crlActiveCelestialObjectInfo);
             panel1.Controls.Add(panel3);
             panel1.Controls.Add(spacecraftTelemetryControl1);
             panel1.Controls.Add(panel2);
-            panel1.Controls.Add(button1);
-            panel1.Controls.Add(CrlZoomOut);
-            panel1.Controls.Add(CrlZoomIn);
             panel1.Controls.Add(crlTacticalMap);
             panel1.Dock = DockStyle.Fill;
             panel1.Location = new Point(0, 0);
             panel1.Name = "panel1";
             panel1.Size = new Size(1317, 636);
             panel1.TabIndex = 1;
+            // 
+            // crlSelectedCelestialObjectInfo
+            // 
+            crlSelectedCelestialObjectInfo.BackColor = Color.Black;
+            crlSelectedCelestialObjectInfo.BorderStyle = BorderStyle.Fixed3D;
+            crlSelectedCelestialObjectInfo.Location = new Point(250, 4);
+            crlSelectedCelestialObjectInfo.Name = "crlSelectedCelestialObjectInfo";
+            crlSelectedCelestialObjectInfo.Size = new Size(240, 238);
+            crlSelectedCelestialObjectInfo.TabIndex = 15;
+            // 
+            // crlActiveCelestialObjectInfo
+            // 
+            crlActiveCelestialObjectInfo.BackColor = Color.Black;
+            crlActiveCelestialObjectInfo.BorderStyle = BorderStyle.Fixed3D;
+            crlActiveCelestialObjectInfo.Location = new Point(6, 4);
+            crlActiveCelestialObjectInfo.Name = "crlActiveCelestialObjectInfo";
+            crlActiveCelestialObjectInfo.Size = new Size(240, 238);
+            crlActiveCelestialObjectInfo.TabIndex = 14;
             // 
             // panel3
             // 
@@ -158,28 +173,6 @@
             crlResumeGame.UseVisualStyleBackColor = true;
             crlResumeGame.Click += crlResumeGame_Click;
             // 
-            // CrlZoomOut
-            // 
-            CrlZoomOut.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            CrlZoomOut.Location = new Point(57, 251);
-            CrlZoomOut.Name = "CrlZoomOut";
-            CrlZoomOut.Size = new Size(40, 39);
-            CrlZoomOut.TabIndex = 9;
-            CrlZoomOut.Text = "-";
-            CrlZoomOut.UseVisualStyleBackColor = true;
-            CrlZoomOut.Click += CrlZoomOut_Click;
-            // 
-            // CrlZoomIn
-            // 
-            CrlZoomIn.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            CrlZoomIn.Location = new Point(11, 251);
-            CrlZoomIn.Name = "CrlZoomIn";
-            CrlZoomIn.Size = new Size(40, 39);
-            CrlZoomIn.TabIndex = 8;
-            CrlZoomIn.Text = "+";
-            CrlZoomIn.UseVisualStyleBackColor = true;
-            CrlZoomIn.Click += CrlZoomIn_Click;
-            // 
             // crlTacticalMap
             // 
             crlTacticalMap.BackColor = Color.DimGray;
@@ -187,22 +180,6 @@
             crlTacticalMap.Name = "crlTacticalMap";
             crlTacticalMap.Size = new Size(652, 578);
             crlTacticalMap.TabIndex = 4;
-            // 
-            // crlActiveCelestialObjectInfo
-            // 
-            crlActiveCelestialObjectInfo.BackColor = Color.Black;
-            crlActiveCelestialObjectInfo.Location = new Point(11, 38);
-            crlActiveCelestialObjectInfo.Name = "crlActiveCelestialObjectInfo";
-            crlActiveCelestialObjectInfo.Size = new Size(163, 165);
-            crlActiveCelestialObjectInfo.TabIndex = 14;
-            // 
-            // crlSelectedCelestialObjectInfo
-            // 
-            crlSelectedCelestialObjectInfo.BackColor = Color.Black;
-            crlSelectedCelestialObjectInfo.Location = new Point(190, 38);
-            crlSelectedCelestialObjectInfo.Name = "crlSelectedCelestialObjectInfo";
-            crlSelectedCelestialObjectInfo.Size = new Size(163, 165);
-            crlSelectedCelestialObjectInfo.TabIndex = 15;
             // 
             // Form1
             // 
@@ -230,8 +207,6 @@
         private Label crlLabelTurns;
         private Panel panel1;
         private Screens.MainGameScreen.StellarTacticalMap crlTacticalMap;
-        private Button CrlZoomIn;
-        private Button CrlZoomOut;
         private Button crlGamePause;
         private Button crlResumeGame;
         private Panel panel2;
