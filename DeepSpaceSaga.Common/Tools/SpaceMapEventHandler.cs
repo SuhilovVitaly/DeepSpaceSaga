@@ -2,6 +2,7 @@
 
 public class SpaceMapEventHandler()
 {
+    public event Action<ICelestialObject>? OnHideCelestialObject;
     public event Action<ICelestialObject>? OnShowCelestialObject;
     public event Action<ICelestialObject>? OnSelectCelestialObject;
 
@@ -10,7 +11,11 @@ public class SpaceMapEventHandler()
         var objectsInRange = gameSession.GetCelestialObjectsByDistance(coordinates, 20).Where(celestialObject =>
                 celestialObject.Id != gameSession.GetPlayerSpaceShip().Id).ToList();
 
-        if (objectsInRange.Count() == 0) return;
+        if (objectsInRange.Count() == 0)
+        {
+            OnHideCelestialObject?.Invoke(gameSession.GetPlayerSpaceShip());
+            return;
+        }
 
         OnShowCelestialObject?.Invoke(objectsInRange.First());
     }

@@ -2,7 +2,7 @@
 
 public class Draw
 {
-    public void DrawTacticalMapScreen(GameSession session, ScreenParameters screenParameters)
+    public void DrawTacticalMapScreen(GameSession session, OuterSpace outerSpace, ScreenParameters screenParameters)
     {
         DrawGrid.Execute(screenParameters);
 
@@ -13,5 +13,7 @@ public class Draw
         DrawCelestialObjects.Execute(screenParameters, session);
 
         DrawModulesActions.Execute(screenParameters, session);
+
+        DrawInteraction.Execute(screenParameters, outerSpace, session);
     }
 }

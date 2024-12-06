@@ -15,3 +15,4 @@ global using DeepSpaceSaga.Common.Extensions;
 global using DeepSpaceSaga.Common.Universe.Entities.CelestialObjects.Spacecrafts;
 global using SkiaSharp;
 global using DeepSpaceSaga.UI.Render.Extensions;
+global using DeepSpaceSaga.Common.Layers.Tactical; 

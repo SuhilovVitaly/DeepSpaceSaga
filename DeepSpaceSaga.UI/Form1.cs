@@ -1,6 +1,4 @@
-﻿using DeepSpaceSaga.Common.Geometry;
-
-namespace DeepSpaceSaga.UI;
+﻿namespace DeepSpaceSaga.UI;
 
 public partial class Form1 : Form
 {
@@ -28,6 +26,25 @@ public partial class Form1 : Form
         Global.GameManager.EventController.OnTacticalMapMouseMove += CrlTacticalMap_OnMouseMove;
 
         Global.GameManager.EventController.OnRefreshData += Worker_OnGetDataFromServer;
+
+        Global.GameManager.EventController.OnShowCelestialObject += Event_ShowCelestialObject;
+        Global.GameManager.EventController.OnHideCelestialObject += Event_HideCelestialObject;
+        Global.GameManager.EventController.OnSelectCelestialObject += Event_SelectCelestialObject;
+    }
+
+    private void Event_HideCelestialObject(ICelestialObject celestialObject)
+    {
+        crlActiveCelestialObjectInfo.RefreshInfo(celestialObject);
+    }
+
+    private void Event_SelectCelestialObject(ICelestialObject celestialObject)
+    {
+        crlSelectedCelestialObjectInfo.RefreshInfo(celestialObject);
+    }
+
+    private void Event_ShowCelestialObject(ICelestialObject celestialObject)
+    {
+        crlActiveCelestialObjectInfo.RefreshInfo(celestialObject);
     }
 
     private void CrlTacticalMap_OnMouseMove(SpaceMapPoint e)

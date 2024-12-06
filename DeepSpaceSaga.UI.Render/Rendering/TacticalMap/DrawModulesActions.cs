@@ -1,7 +1,4 @@
-﻿using DeepSpaceSaga.Common.Universe.Entities.CelestialObjects;
-using System.Drawing;
-
-namespace DeepSpaceSaga.UI.Render.Rendering.TacticalMap;
+﻿namespace DeepSpaceSaga.UI.Render.Rendering.TacticalMap;
 
 internal class DrawModulesActions
 {

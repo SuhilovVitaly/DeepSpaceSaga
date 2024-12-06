@@ -1,13 +1,13 @@
-﻿using DeepSpaceSaga.Common.Geometry;
-using DeepSpaceSaga.Common.Universe.Commands;
-
-namespace DeepSpaceSaga.Controller;
+﻿namespace DeepSpaceSaga.Controller;
 
 public class EventManager
 {
     public event Action<SpaceMapPoint>? OnTacticalMapMouseMove;
     public event Action<GameSession>? OnRefreshData;
     public event Action<GameSession>? OnInitializeData;
+    public event Action<ICelestialObject>? OnSelectCelestialObject;
+    public event Action<ICelestialObject>? OnShowCelestialObject;
+    public event Action<ICelestialObject>? OnHideCelestialObject;
 
     private GameSession session;
 
@@ -32,7 +32,13 @@ public class EventManager
         MapEventHandler = new SpaceMapEventHandler();
 
         MapEventHandler.OnShowCelestialObject += MapEventHandler_OnShowCelestialObject;
+        MapEventHandler.OnHideCelestialObject += MapEventHandler_OnHideCelestialObject;
         MapEventHandler.OnSelectCelestialObject += MapEventHandler_OnSelectCelestialObject;
+    }
+
+    private void MapEventHandler_OnHideCelestialObject(ICelestialObject celestialObject)
+    {
+        OnHideCelestialObject?.Invoke(celestialObject);
     }
 
     private void Worker_OnGameInitialize(GameSession gameSession)
@@ -58,14 +64,14 @@ public class EventManager
         MapEventHandler.MouseClick(coordinates, Worker.GetGameSession());
     }
 
-    private void MapEventHandler_OnSelectCelestialObject(ICelestialObject obj)
+    private void MapEventHandler_OnSelectCelestialObject(ICelestialObject celestialObject)
     {
-
+        OnSelectCelestialObject?.Invoke(celestialObject);
     }
 
-    private void MapEventHandler_OnShowCelestialObject(ICelestialObject obj)
+    private void MapEventHandler_OnShowCelestialObject(ICelestialObject celestialObject)
     {
-
+        OnShowCelestialObject?.Invoke(celestialObject);
     }
 
     public GameSession GetSession()

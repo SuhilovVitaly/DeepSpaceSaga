@@ -13,3 +13,5 @@ global using DeepSpaceSaga.Common.Universe.Commands;
 global using SkiaSharp.Views.Desktop; 
 global using DeepSpaceSaga.Common.Extensions;
 global using SkiaSharp;
+global using DeepSpaceSaga.Common.Geometry;
+global using DeepSpaceSaga.Common.Layers.Tactical;

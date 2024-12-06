@@ -32,6 +32,7 @@
             crlLabelTurns = new Label();
             panel1 = new Panel();
             panel3 = new Panel();
+            logbookControl1 = new Screens.MainGameScreen.LogbookControl();
             spacecraftTelemetryControl1 = new Screens.MainGameScreen.SpacecraftTelemetryControl();
             panel2 = new Panel();
             crlMousePosition = new Label();
@@ -40,7 +41,8 @@
             CrlZoomOut = new Button();
             CrlZoomIn = new Button();
             crlTacticalMap = new Screens.MainGameScreen.StellarTacticalMap();
-            logbookControl1 = new Screens.MainGameScreen.LogbookControl();
+            crlActiveCelestialObjectInfo = new Screens.MainGameScreen.CelestialObjectInfo();
+            crlSelectedCelestialObjectInfo = new Screens.MainGameScreen.CelestialObjectInfo();
             panel1.SuspendLayout();
             panel3.SuspendLayout();
             panel2.SuspendLayout();
@@ -72,6 +74,8 @@
             // panel1
             // 
             panel1.BorderStyle = BorderStyle.FixedSingle;
+            panel1.Controls.Add(crlSelectedCelestialObjectInfo);
+            panel1.Controls.Add(crlActiveCelestialObjectInfo);
             panel1.Controls.Add(panel3);
             panel1.Controls.Add(spacecraftTelemetryControl1);
             panel1.Controls.Add(panel2);
@@ -93,6 +97,15 @@
             panel3.Name = "panel3";
             panel3.Size = new Size(301, 177);
             panel3.TabIndex = 13;
+            // 
+            // logbookControl1
+            // 
+            logbookControl1.BackColor = Color.Black;
+            logbookControl1.Dock = DockStyle.Fill;
+            logbookControl1.Location = new Point(0, 0);
+            logbookControl1.Name = "logbookControl1";
+            logbookControl1.Size = new Size(301, 177);
+            logbookControl1.TabIndex = 0;
             // 
             // spacecraftTelemetryControl1
             // 
@@ -175,14 +188,21 @@
             crlTacticalMap.Size = new Size(652, 578);
             crlTacticalMap.TabIndex = 4;
             // 
-            // logbookControl1
+            // crlActiveCelestialObjectInfo
             // 
-            logbookControl1.BackColor = Color.Black;
-            logbookControl1.Dock = DockStyle.Fill;
-            logbookControl1.Location = new Point(0, 0);
-            logbookControl1.Name = "logbookControl1";
-            logbookControl1.Size = new Size(301, 177);
-            logbookControl1.TabIndex = 0;
+            crlActiveCelestialObjectInfo.BackColor = Color.Black;
+            crlActiveCelestialObjectInfo.Location = new Point(11, 38);
+            crlActiveCelestialObjectInfo.Name = "crlActiveCelestialObjectInfo";
+            crlActiveCelestialObjectInfo.Size = new Size(163, 165);
+            crlActiveCelestialObjectInfo.TabIndex = 14;
+            // 
+            // crlSelectedCelestialObjectInfo
+            // 
+            crlSelectedCelestialObjectInfo.BackColor = Color.Black;
+            crlSelectedCelestialObjectInfo.Location = new Point(190, 38);
+            crlSelectedCelestialObjectInfo.Name = "crlSelectedCelestialObjectInfo";
+            crlSelectedCelestialObjectInfo.Size = new Size(163, 165);
+            crlSelectedCelestialObjectInfo.TabIndex = 15;
             // 
             // Form1
             // 
@@ -219,5 +239,7 @@
         private Screens.MainGameScreen.SpacecraftTelemetryControl spacecraftTelemetryControl1;
         private Panel panel3;
         private Screens.MainGameScreen.LogbookControl logbookControl1;
+        private Screens.MainGameScreen.CelestialObjectInfo crlSelectedCelestialObjectInfo;
+        private Screens.MainGameScreen.CelestialObjectInfo crlActiveCelestialObjectInfo;
     }
 }

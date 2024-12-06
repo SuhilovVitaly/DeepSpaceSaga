@@ -31,11 +31,6 @@ public class Worker
         _gameServer.PauseSession();
     }
 
-    public GameSession GetGameManager()
-    { 
-        return _gameServer.GetSession(); 
-    }
-
     public GameSession GetGameSession()
     {
         return _gameServer.GetSession();

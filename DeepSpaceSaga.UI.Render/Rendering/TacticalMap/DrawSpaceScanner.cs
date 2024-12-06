@@ -19,6 +19,7 @@ internal class DrawSpaceScanner
         var radius = CalculateDistanceCovered(scannerModule.ReloadTime, scannerModule.Reloading, scannerModule.ScanRange);
 
         var color = new SpaceMapColor(Color.OrangeRed.R, Color.OrangeRed.G, Color.OrangeRed.B, 120);
+        
         //DrawTools.DrawEllipse(screenInfo, location.X, location.Y, radius, color, 10);
     }
 

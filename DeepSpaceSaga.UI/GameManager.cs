@@ -1,8 +1,18 @@
 ﻿namespace DeepSpaceSaga.UI;
 
-public class GameManager(EventManager eventManager)
+public class GameManager
 {
-    public EventManager EventController { get; set; } = eventManager;
+    public OuterSpace OuterSpace { get; set; } = new OuterSpace();
+    public EventManager EventController { get; set; }
+
+    public GameManager(EventManager eventManager)
+    {
+        EventController = eventManager;
+
+        EventController.OnSelectCelestialObject += OuterSpace.EventController_OnSelectCelestialObject;
+        EventController.OnShowCelestialObject += OuterSpace.EventController_OnShowCelestialObject;
+        EventController.OnHideCelestialObject += OuterSpace.EventController_OnHideCelestialObject;
+    }    
 
     public ISpacecraft GetPlayerSpacecraft()
     {
@@ -21,6 +31,6 @@ public class GameManager(EventManager eventManager)
 
     public async Task ExecuteCommandAsync(Command command)
     {
-        await eventManager.ExecuteCommandAsync(command);
+        await EventController.ExecuteCommandAsync(command);
     }
 }
