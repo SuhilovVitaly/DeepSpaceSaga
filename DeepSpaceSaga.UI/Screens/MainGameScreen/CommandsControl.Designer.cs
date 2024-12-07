@@ -60,6 +60,7 @@
             commandCourseSyncToTarget.TabIndex = 0;
             commandCourseSyncToTarget.Text = "SYNC";
             commandCourseSyncToTarget.UseVisualStyleBackColor = false;
+            commandCourseSyncToTarget.Click += Event_SyncSpeedWithTarget;
             // 
             // button2
             // 
@@ -221,6 +222,7 @@
             commandRotateToTarget.TabIndex = 10;
             commandRotateToTarget.Text = "ROTT";
             commandRotateToTarget.UseVisualStyleBackColor = false;
+            commandRotateToTarget.Click += Event_RotateToTarget;
             // 
             // button12
             // 

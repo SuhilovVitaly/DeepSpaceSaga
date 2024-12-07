@@ -30,7 +30,7 @@ public partial class CommandsControl : UserControl
             return;
         }
 
-        if(Global.GameManager.OuterSpace.SelectedObjectId == _selectedCelestialObjectId) 
+        if (Global.GameManager.OuterSpace.SelectedObjectId == _selectedCelestialObjectId)
         {
             // No need update commands status (Enabled/Disabled)
             return;
@@ -54,5 +54,31 @@ public partial class CommandsControl : UserControl
         command.Cursor = Cursors.Default;
         command.Enabled = false;
         command.ForeColor = Color.DimGray;
+    }
+
+    private void Event_SyncSpeedWithTarget(object sender, EventArgs e)
+    {
+        var spacecraft = Global.GameManager.GetPlayerSpacecraft();
+
+        _ = Global.GameManager.ExecuteCommandAsync(new Command
+        {
+            Category = CommandCategory.Navigation,
+            Type = CommandTypes.SyncSpeedWithTarget,
+            CelestialObjectId = _selectedCelestialObjectId,
+            ModuleId = spacecraft.GetModules(Common.Universe.Equipment.Category.Propulsion).FirstOrDefault().Id
+        });
+    }
+
+    private void Event_RotateToTarget(object sender, EventArgs e)
+    {
+        var spacecraft = Global.GameManager.GetPlayerSpacecraft();
+
+        _ = Global.GameManager.ExecuteCommandAsync(new Command
+        {
+            Category = CommandCategory.Navigation,
+            Type = CommandTypes.RotateToTarget,
+            CelestialObjectId = _selectedCelestialObjectId,
+            ModuleId = spacecraft.GetModules(Common.Universe.Equipment.Category.Propulsion).FirstOrDefault().Id
+        });
     }
 }

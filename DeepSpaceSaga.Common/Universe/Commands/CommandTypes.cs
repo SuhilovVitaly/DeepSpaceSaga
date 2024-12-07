@@ -8,10 +8,14 @@ public enum CommandTypes
     TurnLeft = 201,
     [Description("Turn Right")]
     TurnRight = 202,
+    [Description("Rotate to Target")]
+    RotateToTarget = 203,
+    [Description("Sync speed with Target")]
+    SyncSpeedWithTarget = 204,
     [Description("")]
-    StopShip = 203,
+    StopShip = 233,
     [Description("")]
-    Acceleration = 204,
+    Acceleration = 244,
     [Description("")]
     Fire = 300,
     [Description("")]
