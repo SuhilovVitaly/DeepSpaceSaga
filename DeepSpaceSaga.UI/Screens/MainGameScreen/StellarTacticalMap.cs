@@ -94,6 +94,14 @@ public partial class StellarTacticalMap : UserControl
 
         var mouseLocation = UiTools.ToTacticalMapCoordinates(mouseScreenCoordinates, Global.ScreenData.CenterScreenOnMap);
 
-        Global.GameManager.EventController.TacticalMapMouseClick(mouseLocation);
+        if(e.Button == MouseButtons.Left)
+        {
+            Global.GameManager.EventController.TacticalMapMouseClick(mouseLocation);
+        }
+
+        if (e.Button == MouseButtons.Right)
+        {
+            Global.GameManager.EventController.TacticalMapLeftMouseClick(mouseLocation);
+        }
     }
 }

@@ -11,6 +11,9 @@ public partial class CommandsControl : UserControl
         if (Global.GameManager == null) return;
 
         Global.GameManager.EventController.OnRefreshData += Worker_RefreshData;
+
+        DisableCommand(commandRotateToTarget);
+        DisableCommand(commandCourseSyncToTarget);
     }
 
     private void Worker_RefreshData(GameSession session)
@@ -20,6 +23,13 @@ public partial class CommandsControl : UserControl
 
     private void RefreshControls(GameSession manager)
     {
+        if (Global.GameManager.OuterSpace.SelectedObjectId == 0)
+        {
+            DisableCommand(commandRotateToTarget);
+            DisableCommand(commandCourseSyncToTarget);
+            return;
+        }
+
         if(Global.GameManager.OuterSpace.SelectedObjectId == _selectedCelestialObjectId) 
         {
             // No need update commands status (Enabled/Disabled)
@@ -37,5 +47,12 @@ public partial class CommandsControl : UserControl
         command.Cursor = Cursors.Hand;
         command.Enabled = true;
         command.ForeColor = Color.WhiteSmoke;
+    }
+
+    private void DisableCommand(Button command)
+    {
+        command.Cursor = Cursors.Default;
+        command.Enabled = false;
+        command.ForeColor = Color.DimGray;
     }
 }

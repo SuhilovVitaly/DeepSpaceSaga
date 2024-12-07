@@ -6,6 +6,7 @@ public class EventManager
     public event Action<GameSession>? OnRefreshData;
     public event Action<GameSession>? OnInitializeData;
     public event Action<ICelestialObject>? OnSelectCelestialObject;
+    public event Action<ICelestialObject>? OnUnselectCelestialObject;
     public event Action<ICelestialObject>? OnShowCelestialObject;
     public event Action<ICelestialObject>? OnHideCelestialObject;
 
@@ -92,5 +93,10 @@ public class EventManager
     public async Task ExecuteCommandAsync(Command command)
     {
         await Worker.SendCommandAsync(command);
+    }
+
+    internal void TacticalMapLeftMouseClick(SpaceMapPoint mouseLocation)
+    {
+        OnUnselectCelestialObject?.Invoke(null);
     }
 }

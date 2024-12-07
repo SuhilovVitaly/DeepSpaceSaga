@@ -1,4 +1,6 @@
-﻿namespace DeepSpaceSaga.UI;
+﻿using DeepSpaceSaga.Common.Universe.Entities.CelestialObjects;
+
+namespace DeepSpaceSaga.UI;
 
 public partial class Form1 : Form
 {
@@ -31,6 +33,12 @@ public partial class Form1 : Form
         Global.GameManager.EventController.OnShowCelestialObject += Event_ShowCelestialObject;
         Global.GameManager.EventController.OnHideCelestialObject += Event_HideCelestialObject;
         Global.GameManager.EventController.OnSelectCelestialObject += Event_SelectCelestialObject;
+        Global.GameManager.EventController.OnUnselectCelestialObject += Event_UnselectCelestialObject;
+    }
+
+    private void Event_UnselectCelestialObject(ICelestialObject @object)
+    {
+        crlSelectedCelestialObjectInfo.RefreshInfo(null);
     }
 
     private void Event_HideCelestialObject(ICelestialObject celestialObject)

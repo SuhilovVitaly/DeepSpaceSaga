@@ -10,6 +10,7 @@ public class GameManager
         EventController = eventManager;
 
         EventController.OnSelectCelestialObject += OuterSpace.EventController_OnSelectCelestialObject;
+        EventController.OnUnselectCelestialObject += OuterSpace.EventController_OnUnselectCelestialObject;
         EventController.OnShowCelestialObject += OuterSpace.EventController_OnShowCelestialObject;
         EventController.OnHideCelestialObject += OuterSpace.EventController_OnHideCelestialObject;
     }    

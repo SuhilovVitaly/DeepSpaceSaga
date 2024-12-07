@@ -1,4 +1,4 @@
-﻿using System.Windows.Forms;
+﻿using System.Drawing;
 
 namespace DeepSpaceSaga.UI.Screens.MainGameScreen;
 
@@ -7,6 +7,8 @@ public partial class CelestialObjectInfo : UserControl
     public CelestialObjectInfo()
     {
         InitializeComponent();
+
+        RereshControlsInModeObjectNotSelected();
     }
 
     public void RefreshInfo(ICelestialObject celestialObject)
@@ -16,6 +18,12 @@ public partial class CelestialObjectInfo : UserControl
 
     private void RereshControls(ICelestialObject celestialObject)
     {
+        if(celestialObject == null)
+        {
+            RereshControlsInModeObjectNotSelected();
+            return;
+        }
+
         ChangeColorsByCelestialObjectType(celestialObject);
 
         var spacecraft = Global.GameManager.GetPlayerSpacecraft();
@@ -42,6 +50,19 @@ public partial class CelestialObjectInfo : UserControl
         lblDirection.Text = $"{Math.Round(celestialObject.Direction, 2)} °";
 
         lblDistance.Text = $"{Math.Round(distance, 2)} mt";
+
+    }
+
+    private void RereshControlsInModeObjectNotSelected()
+    {
+        imageCelestialObject.Image = null;
+        crlCelestialObjectName.ForeColor = Color.DimGray;
+        crlCelestialObjectName.Text = "TARGET IS NOT SELECTED";
+        lblType.Text = "";
+        lblSize.Text = "";
+        lblSpeed.Text = "";
+        lblDirection.Text = "";
+        lblDistance.Text = "";
     }
 
     private void ChangeColorsByCelestialObjectType(ICelestialObject celestialObject)

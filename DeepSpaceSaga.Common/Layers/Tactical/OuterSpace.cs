@@ -19,4 +19,10 @@ public class OuterSpace
     {
         ActiveObjectId = 0;
     }
+
+    public void EventController_OnUnselectCelestialObject(ICelestialObject @object)
+    {
+        SelectedObjectId = 0;
+        ActiveObjectId = 0;
+    }
 }
