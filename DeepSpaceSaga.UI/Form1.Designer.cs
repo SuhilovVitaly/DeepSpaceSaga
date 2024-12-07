@@ -41,6 +41,7 @@
             crlGamePause = new Button();
             crlResumeGame = new Button();
             crlTacticalMap = new Screens.MainGameScreen.StellarTacticalMap();
+            crlCommands = new Screens.MainGameScreen.CommandsControl();
             panel1.SuspendLayout();
             panel3.SuspendLayout();
             panel2.SuspendLayout();
@@ -51,7 +52,7 @@
             button1.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             button1.Cursor = Cursors.Hand;
             button1.Font = new Font("Segoe UI", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            button1.Location = new Point(1276, 11);
+            button1.Location = new Point(2583, 11);
             button1.Name = "button1";
             button1.Size = new Size(28, 29);
             button1.TabIndex = 0;
@@ -73,6 +74,7 @@
             // panel1
             // 
             panel1.BorderStyle = BorderStyle.FixedSingle;
+            panel1.Controls.Add(crlCommands);
             panel1.Controls.Add(button1);
             panel1.Controls.Add(crlSelectedCelestialObjectInfo);
             panel1.Controls.Add(crlActiveCelestialObjectInfo);
@@ -83,16 +85,16 @@
             panel1.Dock = DockStyle.Fill;
             panel1.Location = new Point(0, 0);
             panel1.Name = "panel1";
-            panel1.Size = new Size(1317, 636);
+            panel1.Size = new Size(2624, 1105);
             panel1.TabIndex = 1;
             // 
             // crlSelectedCelestialObjectInfo
             // 
             crlSelectedCelestialObjectInfo.BackColor = Color.Black;
             crlSelectedCelestialObjectInfo.BorderStyle = BorderStyle.Fixed3D;
-            crlSelectedCelestialObjectInfo.Location = new Point(250, 4);
+            crlSelectedCelestialObjectInfo.Location = new Point(279, 4);
             crlSelectedCelestialObjectInfo.Name = "crlSelectedCelestialObjectInfo";
-            crlSelectedCelestialObjectInfo.Size = new Size(240, 238);
+            crlSelectedCelestialObjectInfo.Size = new Size(267, 389);
             crlSelectedCelestialObjectInfo.TabIndex = 15;
             // 
             // crlActiveCelestialObjectInfo
@@ -101,14 +103,14 @@
             crlActiveCelestialObjectInfo.BorderStyle = BorderStyle.Fixed3D;
             crlActiveCelestialObjectInfo.Location = new Point(6, 4);
             crlActiveCelestialObjectInfo.Name = "crlActiveCelestialObjectInfo";
-            crlActiveCelestialObjectInfo.Size = new Size(240, 238);
+            crlActiveCelestialObjectInfo.Size = new Size(267, 389);
             crlActiveCelestialObjectInfo.TabIndex = 14;
             // 
             // panel3
             // 
             panel3.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             panel3.Controls.Add(logbookControl1);
-            panel3.Location = new Point(1003, 283);
+            panel3.Location = new Point(2310, 283);
             panel3.Name = "panel3";
             panel3.Size = new Size(301, 177);
             panel3.TabIndex = 13;
@@ -125,7 +127,7 @@
             // spacecraftTelemetryControl1
             // 
             spacecraftTelemetryControl1.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            spacecraftTelemetryControl1.Location = new Point(1002, 11);
+            spacecraftTelemetryControl1.Location = new Point(2309, 11);
             spacecraftTelemetryControl1.Name = "spacecraftTelemetryControl1";
             spacecraftTelemetryControl1.Size = new Size(302, 260);
             spacecraftTelemetryControl1.TabIndex = 12;
@@ -137,7 +139,7 @@
             panel2.Controls.Add(crlGamePause);
             panel2.Controls.Add(crlResumeGame);
             panel2.Controls.Add(crlLabelTurns);
-            panel2.Location = new Point(11, 309);
+            panel2.Location = new Point(11, 778);
             panel2.Name = "panel2";
             panel2.Size = new Size(250, 314);
             panel2.TabIndex = 11;
@@ -181,12 +183,21 @@
             crlTacticalMap.Size = new Size(652, 578);
             crlTacticalMap.TabIndex = 4;
             // 
+            // crlCommands
+            // 
+            crlCommands.Anchor = AnchorStyles.Bottom;
+            crlCommands.BackColor = Color.FromArgb(12, 12, 12);
+            crlCommands.Location = new Point(1060, 977);
+            crlCommands.Name = "crlCommands";
+            crlCommands.Size = new Size(505, 115);
+            crlCommands.TabIndex = 16;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.Black;
-            ClientSize = new Size(1317, 636);
+            ClientSize = new Size(2624, 1105);
             Controls.Add(panel1);
             DoubleBuffered = true;
             FormBorderStyle = FormBorderStyle.None;
@@ -216,5 +227,6 @@
         private Screens.MainGameScreen.LogbookControl logbookControl1;
         private Screens.MainGameScreen.CelestialObjectInfo crlSelectedCelestialObjectInfo;
         private Screens.MainGameScreen.CelestialObjectInfo crlActiveCelestialObjectInfo;
+        private Screens.MainGameScreen.CommandsControl crlCommands;
     }
 }

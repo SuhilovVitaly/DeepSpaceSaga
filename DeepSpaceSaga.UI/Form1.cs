@@ -22,6 +22,8 @@ public partial class Form1 : Form
         Width = (int)Global.ScreenData.Width;
         Height = (int)Global.ScreenData.Height;
 
+        crlCommands.Location = new Point((Width / 2) - crlCommands.Width / 2, crlCommands.Location.Y); 
+
         Global.GameManager.EventController.OnTacticalMapMouseMove += CrlTacticalMap_OnMouseMove;
 
         Global.GameManager.EventController.OnRefreshData += Worker_OnGetDataFromServer;

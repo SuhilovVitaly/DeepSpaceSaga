@@ -50,7 +50,7 @@
             crlCelestialObjectName.ForeColor = Color.OrangeRed;
             crlCelestialObjectName.Location = new Point(3, 0);
             crlCelestialObjectName.Name = "crlCelestialObjectName";
-            crlCelestialObjectName.Size = new Size(236, 25);
+            crlCelestialObjectName.Size = new Size(255, 25);
             crlCelestialObjectName.TabIndex = 0;
             crlCelestialObjectName.Text = "label1";
             crlCelestialObjectName.TextAlign = ContentAlignment.MiddleCenter;
@@ -58,7 +58,7 @@
             // label1
             // 
             label1.ForeColor = Color.WhiteSmoke;
-            label1.Location = new Point(3, 96);
+            label1.Location = new Point(11, 252);
             label1.Name = "label1";
             label1.Size = new Size(109, 25);
             label1.TabIndex = 1;
@@ -68,7 +68,7 @@
             // lblType
             // 
             lblType.ForeColor = Color.Silver;
-            lblType.Location = new Point(127, 96);
+            lblType.Location = new Point(135, 252);
             lblType.Name = "lblType";
             lblType.Size = new Size(109, 25);
             lblType.TabIndex = 2;
@@ -77,7 +77,7 @@
             // lblSize
             // 
             lblSize.ForeColor = Color.Silver;
-            lblSize.Location = new Point(127, 121);
+            lblSize.Location = new Point(135, 277);
             lblSize.Name = "lblSize";
             lblSize.Size = new Size(109, 25);
             lblSize.TabIndex = 4;
@@ -86,7 +86,7 @@
             // label4
             // 
             label4.ForeColor = Color.WhiteSmoke;
-            label4.Location = new Point(3, 121);
+            label4.Location = new Point(11, 277);
             label4.Name = "label4";
             label4.Size = new Size(109, 25);
             label4.TabIndex = 3;
@@ -96,7 +96,7 @@
             // lblSpeed
             // 
             lblSpeed.ForeColor = Color.Silver;
-            lblSpeed.Location = new Point(127, 146);
+            lblSpeed.Location = new Point(135, 302);
             lblSpeed.Name = "lblSpeed";
             lblSpeed.Size = new Size(109, 25);
             lblSpeed.TabIndex = 6;
@@ -105,7 +105,7 @@
             // label6
             // 
             label6.ForeColor = Color.WhiteSmoke;
-            label6.Location = new Point(3, 146);
+            label6.Location = new Point(11, 302);
             label6.Name = "label6";
             label6.Size = new Size(109, 25);
             label6.TabIndex = 5;
@@ -115,7 +115,7 @@
             // lblDirection
             // 
             lblDirection.ForeColor = Color.Silver;
-            lblDirection.Location = new Point(127, 171);
+            lblDirection.Location = new Point(135, 327);
             lblDirection.Name = "lblDirection";
             lblDirection.Size = new Size(109, 25);
             lblDirection.TabIndex = 8;
@@ -124,7 +124,7 @@
             // label8
             // 
             label8.ForeColor = Color.WhiteSmoke;
-            label8.Location = new Point(3, 171);
+            label8.Location = new Point(11, 327);
             label8.Name = "label8";
             label8.Size = new Size(109, 25);
             label8.TabIndex = 7;
@@ -134,7 +134,7 @@
             // lblDistance
             // 
             lblDistance.ForeColor = Color.Silver;
-            lblDistance.Location = new Point(127, 196);
+            lblDistance.Location = new Point(135, 352);
             lblDistance.Name = "lblDistance";
             lblDistance.Size = new Size(109, 25);
             lblDistance.TabIndex = 10;
@@ -143,7 +143,7 @@
             // label10
             // 
             label10.ForeColor = Color.WhiteSmoke;
-            label10.Location = new Point(3, 196);
+            label10.Location = new Point(11, 352);
             label10.Name = "label10";
             label10.Size = new Size(109, 25);
             label10.TabIndex = 9;
@@ -153,9 +153,9 @@
             // imageCelestialObject
             // 
             imageCelestialObject.BackColor = Color.Transparent;
-            imageCelestialObject.Location = new Point(87, 29);
+            imageCelestialObject.Location = new Point(11, 28);
             imageCelestialObject.Name = "imageCelestialObject";
-            imageCelestialObject.Size = new Size(63, 56);
+            imageCelestialObject.Size = new Size(233, 221);
             imageCelestialObject.SizeMode = PictureBoxSizeMode.StretchImage;
             imageCelestialObject.TabIndex = 12;
             imageCelestialObject.TabStop = false;
@@ -178,7 +178,7 @@
             Controls.Add(label1);
             Controls.Add(crlCelestialObjectName);
             Name = "CelestialObjectInfo";
-            Size = new Size(239, 223);
+            Size = new Size(258, 384);
             ((System.ComponentModel.ISupportInitialize)imageCelestialObject).EndInit();
             ResumeLayout(false);
         }
