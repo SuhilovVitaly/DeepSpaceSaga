@@ -10,7 +10,9 @@ internal class SpaceScannerActionEventProcessing
             CelestialObjectId = spacecraft.Id,
             ModuleId = module.Id,
             TargetCelestialObjectId = target.Id,
-            Type = CommandTypes.PreScanCelestialObjectFinished
+            Type = CommandTypes.PreScanCelestialObjectFinished,
+            Status = CommandStatus.Process,
+            IsOneTimeCommand = true,
         };
 
         eventsSystem.AddCommand(command);

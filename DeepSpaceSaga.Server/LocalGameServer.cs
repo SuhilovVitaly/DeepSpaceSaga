@@ -4,7 +4,6 @@ public class LocalGameServer : IGameServer
 {
     private GameSession _session;
     private readonly ReaderWriterLockSlim _sessionLock = new();
-    private ConcurrentBag<Command> _tickCommands = new();
     private GameEventsSystem _gameEventsSystem = new();
 
     public LocalGameServer()
@@ -50,13 +49,9 @@ public class LocalGameServer : IGameServer
 
         _sessionLock.EnterWriteLock();
 
-        _session = new TurnTickCalculator().Execute(_session, _gameEventsSystem, new List<Command>(_tickCommands));
+        _session = new TurnCalculator().Execute(_session, _gameEventsSystem);
 
         _session.TurnTick++;
-
-        _gameEventsSystem.EndTurnProcessing();
-
-        _tickCommands = [];
 
         _sessionLock.ExitWriteLock();
 
@@ -67,15 +62,8 @@ public class LocalGameServer : IGameServer
     {
         try
         {
-            // The calculation granularity has been reduced to 10 times per second for smooth movement of objects on the map.
-            if (command.Category == CommandCategory.Navigation)
-            {
-                _tickCommands.Add(command);
-                return;
-            }
-
+            command.Status = CommandStatus.PreProcess;
             _gameEventsSystem.AddCommand(command);
-
         }
         catch (Exception)
         {

@@ -1,11 +1,12 @@
-﻿
-using DeepSpaceSaga.Common.Universe.Entities.CelestialObjects;
+﻿namespace DeepSpaceSaga.Server.Calculation.DataProcessing;
 
-namespace DeepSpaceSaga.Server.Calculation.DataProcessing;
-
-internal class NavigationCommandsProcessing
+internal class NavigationProcessingHandler
 {
-    public void Execute(GameSession session, Command command)
+    public static GameSession Execute(GameSession session, Command command)
+    {
+        return new NavigationProcessingHandler().Run(session, command);
+    }
+    internal GameSession Run(GameSession session, Command command)
     {
         var currentCelestialObject = session.GetCelestialObject(command.CelestialObjectId);
 
@@ -23,6 +24,8 @@ internal class NavigationCommandsProcessing
         }
 
         AddToJournal(session, command, currentCelestialObject);
+
+        return session;
     }
 
     private void RotateToTarget(GameSession session, ICelestialObject target, Command command)

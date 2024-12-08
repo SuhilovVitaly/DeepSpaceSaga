@@ -1,6 +1,4 @@
-﻿using DeepSpaceSaga.Common.Universe.Entities.CelestialObjects;
-
-namespace DeepSpaceSaga.UI;
+﻿namespace DeepSpaceSaga.UI;
 
 public partial class Form1 : Form
 {
@@ -145,6 +143,7 @@ public partial class Form1 : Form
                 {
                     Category = CommandCategory.Navigation,
                     Type = CommandTypes.TurnRight,
+                    IsOneTimeCommand = true,
                     CelestialObjectId = spacecraft.Id,
                     ModuleId = spacecraft.GetModules(Common.Universe.Equipment.Category.Propulsion).FirstOrDefault().Id
                 });
@@ -155,6 +154,7 @@ public partial class Form1 : Form
                 await Global.GameManager.ExecuteCommandAsync(new Command{
                     Category = CommandCategory.Navigation,
                     Type = CommandTypes.TurnLeft,
+                    IsOneTimeCommand = true,
                     CelestialObjectId = spacecraft.Id,
                     ModuleId = spacecraft.GetModules(Common.Universe.Equipment.Category.Propulsion).FirstOrDefault().Id
                 });

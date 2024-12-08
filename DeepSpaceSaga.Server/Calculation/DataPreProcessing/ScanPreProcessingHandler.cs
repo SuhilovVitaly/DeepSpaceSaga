@@ -1,11 +1,15 @@
 ﻿namespace DeepSpaceSaga.Server.Calculation.DataPreProcessing;
 
-internal class ScanPreProcessing
+internal class ScanPreProcessingHandler
 {
-    // TODO: Move to General - Modules Pre Processing (For auto-run modules)
-    public GameSession Execute(GameSession session, GameEventsSystem eventsSystem, int ticks = 1)
+    public static GameSession Execute(GameSession session, GameEventsSystem eventsSystem, int ticks = 1)
     {
-        var target = session.SpaceMap.GetCelestialObjects().Where(x=> x.IsPreScanned == false && x.OwnerId != 1).FirstOrDefault();
+        return new ScanPreProcessingHandler().Run(session, eventsSystem, ticks);
+    }
+    // TODO: Move to General - Modules Pre Processing (For auto-run modules)
+    internal GameSession Run(GameSession session, GameEventsSystem eventsSystem, int ticks = 1)
+    {
+        var target = session.SpaceMap.GetCelestialObjects().Where(x=> x.IsPreScanned == false && x.OwnerId != 1 && x.IsPreScanned == false).FirstOrDefault();
 
         // Not target (not pres-scanned celestial objects) found
         if (target is null) return session;
@@ -32,7 +36,8 @@ internal class ScanPreProcessing
             CelestialObjectId = spacecraft.Id,
             ModuleId = scanner.Id,
             TargetCelestialObjectId = target.Id,
-            Type = CommandTypes.PreScanCelestialObject
+            Type = CommandTypes.PreScanCelestialObject,
+            Status = CommandStatus.Process
         };
 
         eventsSystem.AddCommand(scanCommand);

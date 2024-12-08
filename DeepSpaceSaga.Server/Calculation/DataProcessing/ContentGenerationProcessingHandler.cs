@@ -1,8 +1,13 @@
 ﻿namespace DeepSpaceSaga.Server.Calculation.DataProcessing;
 
-internal class ContentGenerationProcessing
+internal class ContentGenerationProcessingHandler
 {
-    public void Execute(GameSession session, Command command)
+    public static GameSession Execute(GameSession session, Command command)
+    {
+        return new ContentGenerationProcessingHandler().Run(session, command);
+    }
+
+    public GameSession Run(GameSession session, Command command)
     {
         var currentCelestialObject = command.CelestialObjectId > 0 ? session.GetCelestialObject(command.CelestialObjectId) : null;
 
@@ -14,6 +19,8 @@ internal class ContentGenerationProcessing
         }
 
         AddToJournal(session, command, currentCelestialObject);
+
+        return session;
     }
 
     private ICelestialObject CelestialMaplestialObjectGeneration(GameSession session, Command command)
@@ -24,7 +31,7 @@ internal class ContentGenerationProcessing
 
         if (scannerModule is null) return null;
 
-        var distance = generationTool.GetInteger((int)(scannerModule.ScanRange - 50), (int)scannerModule.ScanRange) / 2;
+        var distance = generationTool.GetInteger((int)(scannerModule.ScanRange - 10), (int)scannerModule.ScanRange) ;
         var direction = generationTool.GetInteger(0, 359);
         var velocity = generationTool.GetDouble(0.1, 10.0);
 

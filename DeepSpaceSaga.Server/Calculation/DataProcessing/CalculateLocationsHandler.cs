@@ -1,8 +1,13 @@
 ﻿namespace DeepSpaceSaga.Server.Calculation.DataProcessing;
 
-internal class Navigation
+internal class CalculateLocationsHandler
 {
-    public GameSession Recalculate(GameSession session)
+    public static GameSession Execute(GameSession session)
+    {
+        return new CalculateLocationsHandler().Run(session);
+    }
+
+    internal GameSession Run(GameSession session)
     {
         foreach (var celestialObject in session.SpaceMap.GetCelestialObjects())
         {

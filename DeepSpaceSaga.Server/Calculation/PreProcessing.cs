@@ -2,13 +2,20 @@
 
 internal class PreProcessing
 {
-    public GameSession Execute(GameSession session, GameEventsSystem eventsSystem, int ticks = 1)
+    public static GameSession Execute(GameSession session, GameEventsSystem eventsSystem, int ticks = 1)
     {
-        session = new GenerateAsteroidsPreProcessing().Execute(session, eventsSystem, ticks);
+        return new PreProcessing().Run(session, eventsSystem, ticks);
+    }
 
-        session = new SpacecraftPreProcessing().Execute(session, eventsSystem, ticks);
+    internal GameSession Run(GameSession session, GameEventsSystem eventsSystem, int ticks = 1)
+    {
+        session = ContentGenerationPreProcessingHandler.Execute(session, eventsSystem, ticks);
 
-        session = new ScanPreProcessing().Execute(session, eventsSystem, ticks);
+        session = AutoRunModulesHandler.Execute(session, eventsSystem, ticks);
+
+        session = EnablingModulesHandler.Execute(session, eventsSystem, ticks);
+
+        session = ModulesReloadingHandler.Execute(session, eventsSystem, ticks);        
 
         return session;
     }
