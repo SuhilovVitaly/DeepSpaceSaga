@@ -2,33 +2,33 @@
 
 internal class ScanPreProcessingHandler
 {
-    public static GameSession Execute(GameSession session, GameEventsSystem eventsSystem, int ticks = 1)
+    public static SessionContext Execute(SessionContext sessionContext, int ticks = 1)
     {
-        return new ScanPreProcessingHandler().Run(session, eventsSystem, ticks);
+        return new ScanPreProcessingHandler().Run(sessionContext, ticks);
     }
     // TODO: Move to General - Modules Pre Processing (For auto-run modules)
-    internal GameSession Run(GameSession session, GameEventsSystem eventsSystem, int ticks = 1)
+    internal SessionContext Run(SessionContext sessionContext, int ticks = 1)
     {
-        var target = session.SpaceMap.GetCelestialObjects().Where(x=> x.IsPreScanned == false && x.OwnerId != 1 && x.IsPreScanned == false).FirstOrDefault();
+        var target = sessionContext.Session.SpaceMap.GetCelestialObjects().Where(x=> x.IsPreScanned == false && x.OwnerId != 1 && x.IsPreScanned == false).FirstOrDefault();
 
         // Not target (not pres-scanned celestial objects) found
-        if (target is null) return session;
+        if (target is null) return sessionContext;
 
-        var spacecraft = session.GetPlayerSpaceShip();
+        var spacecraft = sessionContext.Session.GetPlayerSpaceShip();
 
         var scanner = spacecraft.GetModules(Category.SpaceScanner).FirstOrDefault() as IScanner;
 
         // Module not exist on spacecraft
-        if (scanner is null) return session;
+        if (scanner is null) return sessionContext;
 
         // Module still not finished action result calculation
-        if (scanner.IsCalculated == false) return session;
+        if (scanner.IsCalculated == false) return sessionContext;
 
         // Target not in module range
-        if (GeometryTools.Distance(target.GetLocation(), spacecraft.GetLocation()) > scanner.ScanRange) return session;
+        if (GeometryTools.Distance(target.GetLocation(), spacecraft.GetLocation()) > scanner.ScanRange) return sessionContext;
 
         // Module still works
-        if(scanner.IsReloaded == false) return session;
+        if(scanner.IsReloaded == false) return sessionContext;
 
         var scanCommand = new Command
         {
@@ -40,8 +40,8 @@ internal class ScanPreProcessingHandler
             Status = CommandStatus.Process
         };
 
-        eventsSystem.AddCommand(scanCommand);
+        sessionContext.EventsSystem.AddCommand(scanCommand);
 
-        return session;
+        return sessionContext;
     }
 }

@@ -2,7 +2,7 @@
 
 internal class SpaceScannerActionEventProcessing
 {
-    public GameSession Execute(GameSession session, GameEventsSystem eventsSystem, ISpacecraft spacecraft, ICelestialObject target, IModule module)
+    public SessionContext Execute(SessionContext sessionContext, ISpacecraft spacecraft, ICelestialObject target, IModule module)
     {
         var command = new Command
         {
@@ -15,8 +15,8 @@ internal class SpaceScannerActionEventProcessing
             IsOneTimeCommand = true,
         };
 
-        eventsSystem.AddCommand(command);
+        sessionContext.EventsSystem.AddCommand(command);
 
-        return session;
+        return sessionContext;
     }
 }

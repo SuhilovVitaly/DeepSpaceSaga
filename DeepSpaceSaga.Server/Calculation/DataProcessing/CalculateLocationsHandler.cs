@@ -2,19 +2,19 @@
 
 internal class CalculateLocationsHandler
 {
-    public static GameSession Execute(GameSession session)
+    public static SessionContext Execute(SessionContext sessionContext)
     {
-        return new CalculateLocationsHandler().Run(session);
+        return new CalculateLocationsHandler().Run(sessionContext);
     }
 
-    internal GameSession Run(GameSession session)
+    internal SessionContext Run(SessionContext sessionContext)
     {
-        foreach (var celestialObject in session.SpaceMap.GetCelestialObjects())
+        foreach (var celestialObject in sessionContext.Session.SpaceMap.GetCelestialObjects())
         {
             RecalculateOneTickObjectLocation(celestialObject);
         }
 
-        return session.Copy();
+        return sessionContext;
     }
 
     private void RecalculateOneTickObjectLocation(ICelestialObject celestialObject)

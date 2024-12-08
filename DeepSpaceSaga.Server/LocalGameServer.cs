@@ -2,42 +2,41 @@
 
 public class LocalGameServer : IGameServer
 {
-    private GameSession _session;
     private readonly ReaderWriterLockSlim _sessionLock = new();
-    private GameEventsSystem _gameEventsSystem = new();
+    private SessionContext _sessionContext;
 
     public LocalGameServer()
     {
-        _session = new GameSession(new CelestialMap(new List<ICelestialObject>()));
+        _sessionContext = new SessionContext(new GameSession(new CelestialMap([])), new GameEventsSystem());
 
         Scheduler.Instance.ScheduleTask(1, 100, TurnExecute);
     }
 
     public GameSession GetSession()
     {
-        return _session.Copy();
+        return _sessionContext.Session.Copy();
     }
 
     public void PauseSession()
     {
-        _session.IsRunning = false;
+        _sessionContext.Session.IsRunning = false;
     }
 
     public void ResumeSession()
     {
-        _session.IsRunning = true;
+        _sessionContext.Session.IsRunning = true;
     }
 
     public void SessionInitialization(int sessionId = -1)
     {
-        _session = GameSessionGenerator.ProduceSession();
+        _sessionContext.Session = GameSessionGenerator.ProduceSession();
     }
 
     private bool _isCalculationInProgress = false;
 
     private void TurnExecute()
     {
-        if (_session.IsRunning == false) return;
+        if (_sessionContext.Session.IsRunning == false) return;
 
         Execution(1);
     }
@@ -49,9 +48,7 @@ public class LocalGameServer : IGameServer
 
         _sessionLock.EnterWriteLock();
 
-        _session = new TurnCalculator().Execute(_session, _gameEventsSystem);
-
-        _session.TurnTick++;
+        _sessionContext = TurnCalculator.Execute(_sessionContext);
 
         _sessionLock.ExitWriteLock();
 
@@ -63,7 +60,7 @@ public class LocalGameServer : IGameServer
         try
         {
             command.Status = CommandStatus.PreProcess;
-            _gameEventsSystem.AddCommand(command);
+            _sessionContext.EventsSystem.AddCommand(command);
         }
         catch (Exception)
         {

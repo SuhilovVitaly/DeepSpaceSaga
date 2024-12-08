@@ -2,32 +2,32 @@
 
 internal class ContentGenerationProcessingHandler
 {
-    public static GameSession Execute(GameSession session, Command command)
+    public static SessionContext Execute(SessionContext sessionContext, Command command)
     {
-        return new ContentGenerationProcessingHandler().Run(session, command);
+        return new ContentGenerationProcessingHandler().Run(sessionContext, command);
     }
 
-    public GameSession Run(GameSession session, Command command)
+    public SessionContext Run(SessionContext sessionContext, Command command)
     {
-        var currentCelestialObject = command.CelestialObjectId > 0 ? session.GetCelestialObject(command.CelestialObjectId) : null;
+        var currentCelestialObject = command.CelestialObjectId > 0 ? sessionContext.Session.GetCelestialObject(command.CelestialObjectId) : null;
 
         switch (command.Type)
         {
             case CommandTypes.GenerateAsteroid:
-                currentCelestialObject = CelestialMaplestialObjectGeneration(session, command);
+                currentCelestialObject = CelestialMaplestialObjectGeneration(sessionContext, command);
                 break;
         }
 
-        AddToJournal(session, command, currentCelestialObject);
+        AddToJournal(sessionContext, command, currentCelestialObject);
 
-        return session;
+        return sessionContext;
     }
 
-    private ICelestialObject CelestialMaplestialObjectGeneration(GameSession session, Command command)
+    private ICelestialObject CelestialMaplestialObjectGeneration(SessionContext sessionContext, Command command)
     {
         var generationTool = new GenerationTool();
 
-        var scannerModule = session.GetPlayerSpaceShip().GetModules(Category.SpaceScanner).FirstOrDefault() as IScanner;
+        var scannerModule = sessionContext.Session.GetPlayerSpaceShip().GetModules(Category.SpaceScanner).FirstOrDefault() as IScanner;
 
         if (scannerModule is null) return null;
 
@@ -35,18 +35,18 @@ internal class ContentGenerationProcessingHandler
         var direction = generationTool.GetInteger(0, 359);
         var velocity = generationTool.GetDouble(0.1, 10.0);
 
-        var asteroidLocation = GeometryTools.Move(session.GetPlayerSpaceShip().GetLocation(), distance, generationTool.GetInteger(0, 359));
+        var asteroidLocation = GeometryTools.Move(sessionContext.Session.GetPlayerSpaceShip().GetLocation(), distance, generationTool.GetInteger(0, 359));
 
         var asteroid = AsteroidGenerator.CreateAsteroid(direction, asteroidLocation.X, asteroidLocation.Y, velocity, generationTool.GenerateCelestialObjectName());
 
-        session.SpaceMap.Add(asteroid);
+        sessionContext.Session.SpaceMap.Add(asteroid);
 
         return asteroid;
     }
 
-    private void AddToJournal(GameSession session, Command command, ICelestialObject celestialObject)
+    private void AddToJournal(SessionContext sessionContext, Command command, ICelestialObject celestialObject)
     {
-        session.Logbook.Add(
+        sessionContext.Session.Logbook.Add(
             new Common.Universe.Audit.EventMessage
             {
                 Id = IdGenerator.GetNextId(),

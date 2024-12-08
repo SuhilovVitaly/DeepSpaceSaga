@@ -2,24 +2,24 @@
 
 internal class GameEventsProcessing
 {
-    public GameSession Execute(GameSession session, GameEventsSystem eventsSystem, int ticks = 1)
+    public SessionContext Execute(SessionContext sessionContext, int ticks = 1)
     {
-        foreach (var action in eventsSystem.Actions)
+        foreach (var action in sessionContext.EventsSystem.Actions)
         {
             var gameEvent = action.Value;
-            var spacecraft = session.GetCelestialObject(gameEvent.CelestialObjectId) as ISpacecraft;
-            var target = session.GetCelestialObject(gameEvent.TargetObjectId);
+            var spacecraft = sessionContext.Session.GetCelestialObject(gameEvent.CelestialObjectId) as ISpacecraft;
+            var target = sessionContext.Session.GetCelestialObject(gameEvent.TargetObjectId);
             var module = spacecraft.GetModule(gameEvent.ModuleId);
 
-            session = HandleGameEvent(session, eventsSystem, spacecraft, target, module);
+            sessionContext = HandleGameEvent(sessionContext, spacecraft, target, module);
 
-            eventsSystem.Actions.TryRemove(action.Key, out _);
+            sessionContext.EventsSystem.Actions.TryRemove(action.Key, out _);
         }
 
-        return session;
+        return sessionContext;
     }
 
-    private GameSession HandleGameEvent(GameSession session, GameEventsSystem eventsSystem, ISpacecraft spacecraft, ICelestialObject target, IModule module)
+    private SessionContext HandleGameEvent(SessionContext sessionContext, ISpacecraft spacecraft, ICelestialObject target, IModule module)
     {
         switch (module.Category)
         {
@@ -32,7 +32,7 @@ internal class GameEventsProcessing
             case Category.Reactor:
                 break;
             case Category.SpaceScanner:
-                session = new SpaceScannerActionEventProcessing().Execute(session, eventsSystem, spacecraft, target, module);
+                sessionContext = new SpaceScannerActionEventProcessing().Execute(sessionContext, spacecraft, target, module);
                 break;
             case Category.DeepScanner:
                 break;
@@ -40,6 +40,6 @@ internal class GameEventsProcessing
                 break;
         }
 
-        return session;
+        return sessionContext;
     }
 }

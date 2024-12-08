@@ -2,15 +2,15 @@
 
 internal class ContentGenerationPreProcessingHandler
 {
-    public static GameSession Execute(GameSession session, GameEventsSystem eventsSystem, int ticks = 1)
+    public static SessionContext Execute(SessionContext sessionContext, int ticks = 1)
     {
-        return new ContentGenerationPreProcessingHandler().Run(session, eventsSystem, ticks);
+        return new ContentGenerationPreProcessingHandler().Run(sessionContext, ticks);
     }
 
-    internal GameSession Run(GameSession session, GameEventsSystem eventsSystem, int ticks = 1)
+    internal SessionContext Run(SessionContext sessionContext, int ticks = 1)
     {
-        session = GenerateAsteroidsPreProcessingHandler.Execute(session, eventsSystem, ticks);
+        sessionContext = GenerateAsteroidsPreProcessingHandler.Execute(sessionContext, ticks);
 
-        return session;
+        return sessionContext;
     }
 }

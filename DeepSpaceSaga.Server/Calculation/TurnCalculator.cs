@@ -2,51 +2,33 @@
 
 public class TurnCalculator
 {
-    public GameSession Execute(GameSession session, GameEventsSystem eventsSystem, int ticks = 1)
+    public static SessionContext Execute(SessionContext sessionContext, int ticks = 1)
     {
-        var processingSession = session.Copy();
+        return new TurnCalculator().Run(sessionContext, ticks);
+    }
+
+    public SessionContext Run(SessionContext sessionContext, int ticks = 1)
+    {
+        var processingSession = new SessionContext(sessionContext.Session.Copy(), sessionContext.EventsSystem.Clone());
 
         for (var i = 0; i < ticks; i++)
         {
-            processingSession = TurnExecution(session, eventsSystem);
+            processingSession = TurnExecution(sessionContext);
         }
 
         return processingSession;
     }
 
-    internal GameSession TurnExecution(GameSession session, GameEventsSystem eventsSystem)
+    internal SessionContext TurnExecution(SessionContext sessionContext)
     {
-        session = PreProcessing.Execute(session, eventsSystem);
+        sessionContext = PreProcessing.Execute(sessionContext);
 
-        session = Processing.Execute(session, eventsSystem);
+        sessionContext = Processing.Execute(sessionContext);
 
-        session = PostProcessing.Execute(session, eventsSystem);
+        sessionContext = PostProcessing.Execute(sessionContext);
 
-        return session;
+        sessionContext.Session.TurnTick++;
+
+        return sessionContext;
     }
-
-    //public GameSession ExecuteXXX(GameSession session, GameEventsSystem eventsSystem, int ticks = 1)
-    //{
-    //    var processingSession = session.Copy();
-
-    //    foreach (Command command in eventsSystem.Commands)
-    //    {
-    //        new NavigationCommandsProcessing().Execute(processingSession, command);
-    //    }
-
-    //    for (var i = 0; i < ticks; i++)
-    //    {
-    //        //processingSession = new CalculateLocationsHandler().Execute(processingSession);
-
-    //        //processingSession = new GameEventsProcessing().Execute(processingSession, eventsSystem, ticks);
-
-    //        processingSession = PreProcessing.Execute(processingSession, eventsSystem, ticks);
-
-    //        processingSession = new Processing().Execute(processingSession, eventsSystem, ticks);
-
-    //        processingSession = new PostProcessing().Execute(processingSession, eventsSystem, ticks);
-    //    }
-
-    //    return processingSession;
-    //}
 }

@@ -2,21 +2,21 @@
 
 internal class PreProcessing
 {
-    public static GameSession Execute(GameSession session, GameEventsSystem eventsSystem, int ticks = 1)
+    public static SessionContext Execute(SessionContext sessionContext, int ticks = 1)
     {
-        return new PreProcessing().Run(session, eventsSystem, ticks);
+        return new PreProcessing().Run(sessionContext, ticks);
     }
 
-    internal GameSession Run(GameSession session, GameEventsSystem eventsSystem, int ticks = 1)
+    internal SessionContext Run(SessionContext sessionContext, int ticks = 1)
     {
-        session = ContentGenerationPreProcessingHandler.Execute(session, eventsSystem, ticks);
+        sessionContext = ContentGenerationPreProcessingHandler.Execute(sessionContext, ticks);
 
-        session = AutoRunModulesHandler.Execute(session, eventsSystem, ticks);
+        sessionContext = AutoRunModulesHandler.Execute(sessionContext, ticks);
 
-        session = EnablingModulesHandler.Execute(session, eventsSystem, ticks);
+        sessionContext = EnablingModulesHandler.Execute(sessionContext, ticks);
 
-        session = ModulesReloadingHandler.Execute(session, eventsSystem, ticks);        
+        sessionContext = ModulesReloadingHandler.Execute(sessionContext, ticks);        
 
-        return session;
+        return sessionContext;
     }
 }

@@ -13,6 +13,8 @@ internal static class Program
         Application.SetCompatibleTextRenderingDefault(false);
         Application.SetHighDpiMode(HighDpiMode.SystemAware);
 
+        Environment.SetEnvironmentVariable("SKIA_BACKEND", "software");
+
         log4net.Config.XmlConfigurator.Configure();
 
         Logger.Info("Start 'Deep Space Saga' game desktop client.");

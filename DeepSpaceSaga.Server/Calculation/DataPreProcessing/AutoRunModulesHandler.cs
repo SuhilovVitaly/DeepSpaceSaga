@@ -2,15 +2,15 @@
 
 internal class AutoRunModulesHandler
 {
-    public static GameSession Execute(GameSession session, GameEventsSystem eventsSystem, int ticks = 1)
+    public static SessionContext Execute(SessionContext sessionContext, int ticks = 1)
     {
-        return new AutoRunModulesHandler().Run(session, eventsSystem, ticks);
+        return new AutoRunModulesHandler().Run(sessionContext,ticks);
     }
 
-    public GameSession Run(GameSession session, GameEventsSystem eventsSystem, int ticks = 1)
+    public SessionContext Run(SessionContext sessionContext, int ticks = 1)
     {
-        session = ScanPreProcessingHandler.Execute(session, eventsSystem, ticks);
+        sessionContext = ScanPreProcessingHandler.Execute(sessionContext, ticks);
 
-        return session;
+        return sessionContext;
     }
 }

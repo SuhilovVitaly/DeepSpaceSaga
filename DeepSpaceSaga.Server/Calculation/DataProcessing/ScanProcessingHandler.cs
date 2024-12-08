@@ -1,38 +1,36 @@
-﻿using DeepSpaceSaga.Server.Calculation.GameActionEventProcessing;
-
-namespace DeepSpaceSaga.Server.Calculation.DataProcessing;
+﻿namespace DeepSpaceSaga.Server.Calculation.DataProcessing;
 
 internal class ScanProcessingHandler
 {
-    public static GameSession Execute(GameSession session, GameEventsSystem eventsSystem, Command command, int ticks = 1)
+    public static SessionContext Execute(SessionContext sessionContext, Command command, int ticks = 1)
     {
-        return new ScanProcessingHandler().Run(session, eventsSystem, command);
+        return new ScanProcessingHandler().Run(sessionContext, command);
     }
 
-    public GameSession Run(GameSession session, GameEventsSystem eventsSystem, Command command, int ticks = 1)
+    public SessionContext Run(SessionContext sessionContext, Command command, int ticks = 1)
     {
-        var currentCelestialObject = session.GetCelestialObject(command.CelestialObjectId);
+        var currentCelestialObject = sessionContext.Session.GetCelestialObject(command.CelestialObjectId);
 
         switch (command.Type)
         {
             case CommandTypes.PreScanCelestialObject:
-                PreScanCelestialObject(session, eventsSystem, currentCelestialObject, command);
+                PreScanCelestialObject(sessionContext, currentCelestialObject, command);
                 break;
 
             case CommandTypes.PreScanCelestialObjectFinished:
-                PreScanCelestialObjectFinished(session, eventsSystem, currentCelestialObject, command);
+                PreScanCelestialObjectFinished(sessionContext, currentCelestialObject, command);
                 break;
         }
 
-        AddToJournal(session, eventsSystem, command, currentCelestialObject);
+        AddToJournal(sessionContext, command, currentCelestialObject);
 
-        return session;
+        return sessionContext;
     }
 
-    private void PreScanCelestialObjectFinished(GameSession session, GameEventsSystem eventsSystem, ICelestialObject celestialObject, Command command)
+    private void PreScanCelestialObjectFinished(SessionContext sessionContext, ICelestialObject celestialObject, Command command)
     {
         var spacecraft = celestialObject.ToSpaceship();
-        var target = session.GetCelestialObject(command.TargetCelestialObjectId);
+        var target = sessionContext.Session.GetCelestialObject(command.TargetCelestialObjectId);
 
         target.IsPreScanned = true;
 
@@ -40,7 +38,7 @@ internal class ScanProcessingHandler
         module.IsCalculated = true;
     }
 
-    private void PreScanCelestialObject(GameSession session, GameEventsSystem eventsSystem, ICelestialObject celestialObject, Command command)
+    private void PreScanCelestialObject(SessionContext sessionContext, ICelestialObject celestialObject, Command command)
     {
         var spacecraft = celestialObject.ToSpaceship();
         
@@ -49,18 +47,18 @@ internal class ScanProcessingHandler
         module.TargetId = command.TargetCelestialObjectId;        
         module.Reload();
 
-        var target = session.GetCelestialObject(module.TargetId);
+        var target = sessionContext.Session.GetCelestialObject(module.TargetId);
 
         if (module.IsReloaded)
         {
-            new SpaceScannerActionEventProcessing().Execute(session, eventsSystem, spacecraft, target, module);
+            new SpaceScannerActionEventProcessing().Execute(sessionContext, spacecraft, target, module);
             command.Status = CommandStatus.PostProcess;
         }
     }
 
-    private void AddToJournal(GameSession session, GameEventsSystem eventsSystem, Command command, ICelestialObject celestialObject)
+    private void AddToJournal(SessionContext sessionContext, Command command, ICelestialObject celestialObject)
     {
-        session.Logbook.Add(
+        sessionContext.Session.Logbook.Add(
             new Common.Universe.Audit.EventMessage
             {
                 Id = IdGenerator.GetNextId(),

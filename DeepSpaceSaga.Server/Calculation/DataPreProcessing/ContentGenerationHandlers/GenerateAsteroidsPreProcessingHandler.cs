@@ -2,16 +2,16 @@
 
 internal class GenerateAsteroidsPreProcessingHandler
 {
-    public static GameSession Execute(GameSession session, GameEventsSystem eventsSystem, int ticks = 1)
+    public static SessionContext Execute(SessionContext sessionContext, int ticks = 1)
     {
-        return new GenerateAsteroidsPreProcessingHandler().Run(session, eventsSystem, ticks);
+        return new GenerateAsteroidsPreProcessingHandler().Run(sessionContext,  ticks);
     }
 
-    public GameSession Run(GameSession session, GameEventsSystem eventsSystem, int ticks = 1)
+    public SessionContext Run(SessionContext sessionContext, int ticks = 1)
     {
-        RandomAsteroidGenerate(eventsSystem);
+        RandomAsteroidGenerate(sessionContext.EventsSystem);
 
-        return session;
+        return sessionContext;
     }
 
     internal void RandomAsteroidGenerate(GameEventsSystem eventsSystem)

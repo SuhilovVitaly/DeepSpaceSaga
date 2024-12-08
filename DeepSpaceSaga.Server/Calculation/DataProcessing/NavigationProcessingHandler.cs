@@ -2,13 +2,13 @@
 
 internal class NavigationProcessingHandler
 {
-    public static GameSession Execute(GameSession session, Command command)
+    public static SessionContext Execute(SessionContext sessionContext, Command command)
     {
-        return new NavigationProcessingHandler().Run(session, command);
+        return new NavigationProcessingHandler().Run(sessionContext, command);
     }
-    internal GameSession Run(GameSession session, Command command)
+    internal SessionContext Run(SessionContext sessionContext, Command command)
     {
-        var currentCelestialObject = session.GetCelestialObject(command.CelestialObjectId);
+        var currentCelestialObject = sessionContext.Session.GetCelestialObject(command.CelestialObjectId);
 
         switch (command.Type)
         {
@@ -19,18 +19,18 @@ internal class NavigationProcessingHandler
                 TurnRight(currentCelestialObject, command);
                 break;
             case CommandTypes.RotateToTarget:
-                RotateToTarget(session, currentCelestialObject, command);
+                RotateToTarget(sessionContext, currentCelestialObject, command);
                 break;
         }
 
-        AddToJournal(session, command, currentCelestialObject);
+        AddToJournal(sessionContext, command, currentCelestialObject);
 
-        return session;
+        return sessionContext;
     }
 
-    private void RotateToTarget(GameSession session, ICelestialObject target, Command command)
+    private void RotateToTarget(SessionContext sessionContext, ICelestialObject target, Command command)
     {
-        var spacecraft = session.GetPlayerSpaceShip();
+        var spacecraft = sessionContext.Session.GetPlayerSpaceShip();
 
         var azimut = GeometryTools.Azimuth(target.GetLocation(), spacecraft.GetLocation());
 
@@ -85,9 +85,9 @@ internal class NavigationProcessingHandler
         //module.Reload();
     }
 
-    private void AddToJournal(GameSession session, Command command, ICelestialObject celestialObject)
+    private void AddToJournal(SessionContext sessionContext, Command command, ICelestialObject celestialObject)
     {
-        session.Logbook.Add(
+        sessionContext.Session.Logbook.Add(
             new Common.Universe.Audit.EventMessage
             {
                 Id = IdGenerator.GetNextId(),

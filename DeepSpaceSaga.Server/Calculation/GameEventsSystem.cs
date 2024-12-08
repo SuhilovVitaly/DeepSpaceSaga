@@ -5,6 +5,27 @@ public class GameEventsSystem
     public ConcurrentBag<Command> Commands { get; set; } = [];
     public ConcurrentDictionary<long, GameActionEvent> Actions { get; set; } = [];
 
+    public GameEventsSystem Clone()
+    {
+        var duplicate = new GameEventsSystem
+        {
+            Commands = new ConcurrentBag<Command>(),
+            Actions = new ConcurrentDictionary<long, GameActionEvent>()
+        };
+
+        foreach (var command in Commands)
+        {
+            duplicate.Commands.Add(command.Copy());
+        }
+
+        foreach (var action in Actions)
+        {
+            duplicate.Actions.TryAdd(action.Key, action.Value.Copy());
+        }
+
+        return duplicate;
+    }
+
     public void EndTurnProcessing()
     {
         Commands = [];

@@ -2,14 +2,14 @@
 
 internal class ModulesReloadingHandler
 {
-    public static GameSession Execute(GameSession session, GameEventsSystem eventsSystem, int ticks = 1)
+    public static SessionContext Execute(SessionContext sessionContext, int ticks = 1)
     {
-        return new ModulesReloadingHandler().Run(session, eventsSystem, ticks);
+        return new ModulesReloadingHandler().Run(sessionContext, ticks);
     }
 
-    public GameSession Run(GameSession session, GameEventsSystem eventsSystem, int ticks = 1)
+    public SessionContext Run(SessionContext sessionContext, int ticks = 1)
     {
-        var spacecraft = session.GetPlayerSpaceShip();
+        var spacecraft = sessionContext.Session.GetPlayerSpaceShip();
 
         foreach (var moudle in spacecraft.Modules)
         {
@@ -19,11 +19,11 @@ internal class ModulesReloadingHandler
 
                 if (moudle.IsReloaded)
                 {
-                   eventsSystem.ProcessModuleResults(spacecraft, moudle);
+                    sessionContext.EventsSystem.ProcessModuleResults(spacecraft, moudle);
                 }
             }
         }
 
-        return session;
+        return sessionContext;
     }
 }

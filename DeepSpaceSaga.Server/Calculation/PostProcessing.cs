@@ -2,21 +2,21 @@
 
 internal class PostProcessing
 {
-    public static GameSession Execute(GameSession session, GameEventsSystem eventsSystem, int ticks = 1)
+    public static SessionContext Execute(SessionContext sessionContext, int ticks = 1)
     {
-        return new PostProcessing().Run(session, eventsSystem);
+        return new PostProcessing().Run(sessionContext);
     }
 
-    internal GameSession Run(GameSession session, GameEventsSystem eventsSystem, int ticks = 1)
+    internal SessionContext Run(SessionContext sessionContext, int ticks = 1)
     {
-        foreach (Command command in eventsSystem.Commands.Where(x => x.Status == CommandStatus.PostProcess))
+        foreach (Command command in sessionContext.EventsSystem.Commands.Where(x => x.Status == CommandStatus.PostProcess))
         {
             // Invoke events for finished modules work
         }
 
-        eventsSystem = RemovefinishedCommands(eventsSystem);
+        sessionContext.EventsSystem = RemovefinishedCommands(sessionContext.EventsSystem);
 
-        return session;
+        return sessionContext;
     }
 
     internal GameEventsSystem RemovefinishedCommands(GameEventsSystem eventsSystem)
