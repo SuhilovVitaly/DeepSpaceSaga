@@ -1,4 +1,6 @@
-﻿namespace DeepSpaceSaga.UI.Screens.MainGameScreen;
+﻿using DeepSpaceSaga.Server;
+
+namespace DeepSpaceSaga.UI.Screens.MainGameScreen;
 
 public partial class CommandsControl : UserControl
 {
@@ -78,6 +80,36 @@ public partial class CommandsControl : UserControl
             Category = CommandCategory.Navigation,
             Type = CommandTypes.RotateToTarget,
             CelestialObjectId = _selectedCelestialObjectId,
+            ModuleId = spacecraft.GetModules(Common.Universe.Equipment.Category.Propulsion).FirstOrDefault().Id
+        });
+    }
+
+    private void crlFullSpeed_Click(object sender, EventArgs e)
+    {
+        var spacecraft = Global.GameManager.GetPlayerSpacecraft();
+
+        _ = Global.GameManager.ExecuteCommandAsync(new Command
+        {
+            Category = CommandCategory.Navigation,
+            Type = CommandTypes.FullSpeed,
+            Status = CommandStatus.Process,
+            IsOneTimeCommand = false,
+            CelestialObjectId = spacecraft.Id,
+            ModuleId = spacecraft.GetModules(Common.Universe.Equipment.Category.Propulsion).FirstOrDefault().Id
+        });
+    }
+
+    private void crlFullStop_Click(object sender, EventArgs e)
+    {
+        var spacecraft = Global.GameManager.GetPlayerSpacecraft();
+
+        _ = Global.GameManager.ExecuteCommandAsync(new Command
+        {
+            Category = CommandCategory.Navigation,
+            Type = CommandTypes.StopShip,
+            Status = CommandStatus.Process,
+            IsOneTimeCommand = false,
+            CelestialObjectId = spacecraft.Id,
             ModuleId = spacecraft.GetModules(Common.Universe.Equipment.Category.Propulsion).FirstOrDefault().Id
         });
     }

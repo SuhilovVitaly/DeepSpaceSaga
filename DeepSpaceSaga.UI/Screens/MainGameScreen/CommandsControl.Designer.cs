@@ -30,13 +30,13 @@
         {
             commandCourseSyncToTarget = new Button();
             button2 = new Button();
-            button3 = new Button();
+            crlFullSpeed = new Button();
             button4 = new Button();
             button5 = new Button();
             button6 = new Button();
             button7 = new Button();
             button8 = new Button();
-            button9 = new Button();
+            crlFullStop = new Button();
             button10 = new Button();
             commandRotateToTarget = new Button();
             button12 = new Button();
@@ -78,21 +78,23 @@
             button2.TabIndex = 1;
             button2.UseVisualStyleBackColor = false;
             // 
-            // button3
+            // crlFullSpeed
             // 
-            button3.BackColor = Color.FromArgb(64, 64, 64);
-            button3.Enabled = false;
-            button3.FlatAppearance.BorderSize = 0;
-            button3.FlatAppearance.MouseDownBackColor = Color.Gray;
-            button3.FlatAppearance.MouseOverBackColor = Color.Silver;
-            button3.FlatStyle = FlatStyle.Flat;
-            button3.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            button3.ForeColor = Color.DimGray;
-            button3.Location = new Point(75, 3);
-            button3.Name = "button3";
-            button3.Size = new Size(66, 51);
-            button3.TabIndex = 2;
-            button3.UseVisualStyleBackColor = false;
+            crlFullSpeed.BackColor = Color.FromArgb(64, 64, 64);
+            crlFullSpeed.Cursor = Cursors.Hand;
+            crlFullSpeed.FlatAppearance.BorderSize = 0;
+            crlFullSpeed.FlatAppearance.MouseDownBackColor = Color.Gray;
+            crlFullSpeed.FlatAppearance.MouseOverBackColor = Color.Silver;
+            crlFullSpeed.FlatStyle = FlatStyle.Flat;
+            crlFullSpeed.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            crlFullSpeed.ForeColor = Color.WhiteSmoke;
+            crlFullSpeed.Location = new Point(75, 3);
+            crlFullSpeed.Name = "crlFullSpeed";
+            crlFullSpeed.Size = new Size(66, 51);
+            crlFullSpeed.TabIndex = 2;
+            crlFullSpeed.Text = "FSP";
+            crlFullSpeed.UseVisualStyleBackColor = false;
+            crlFullSpeed.Click += crlFullSpeed_Click;
             // 
             // button4
             // 
@@ -174,21 +176,23 @@
             button8.TabIndex = 7;
             button8.UseVisualStyleBackColor = false;
             // 
-            // button9
+            // crlFullStop
             // 
-            button9.BackColor = Color.FromArgb(64, 64, 64);
-            button9.Enabled = false;
-            button9.FlatAppearance.BorderSize = 0;
-            button9.FlatAppearance.MouseDownBackColor = Color.Gray;
-            button9.FlatAppearance.MouseOverBackColor = Color.Silver;
-            button9.FlatStyle = FlatStyle.Flat;
-            button9.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            button9.ForeColor = Color.DimGray;
-            button9.Location = new Point(75, 60);
-            button9.Name = "button9";
-            button9.Size = new Size(66, 51);
-            button9.TabIndex = 8;
-            button9.UseVisualStyleBackColor = false;
+            crlFullStop.BackColor = Color.FromArgb(64, 64, 64);
+            crlFullStop.Cursor = Cursors.Hand;
+            crlFullStop.FlatAppearance.BorderSize = 0;
+            crlFullStop.FlatAppearance.MouseDownBackColor = Color.Gray;
+            crlFullStop.FlatAppearance.MouseOverBackColor = Color.Silver;
+            crlFullStop.FlatStyle = FlatStyle.Flat;
+            crlFullStop.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            crlFullStop.ForeColor = Color.WhiteSmoke;
+            crlFullStop.Location = new Point(75, 60);
+            crlFullStop.Name = "crlFullStop";
+            crlFullStop.Size = new Size(66, 51);
+            crlFullStop.TabIndex = 8;
+            crlFullStop.Text = "FST";
+            crlFullStop.UseVisualStyleBackColor = false;
+            crlFullStop.Click += crlFullStop_Click;
             // 
             // button10
             // 
@@ -282,13 +286,13 @@
             Controls.Add(button12);
             Controls.Add(commandRotateToTarget);
             Controls.Add(button10);
-            Controls.Add(button9);
+            Controls.Add(crlFullStop);
             Controls.Add(button8);
             Controls.Add(button7);
             Controls.Add(button6);
             Controls.Add(button5);
             Controls.Add(button4);
-            Controls.Add(button3);
+            Controls.Add(crlFullSpeed);
             Controls.Add(button2);
             Controls.Add(commandCourseSyncToTarget);
             DoubleBuffered = true;
@@ -301,13 +305,13 @@
 
         private Button commandCourseSyncToTarget;
         private Button button2;
-        private Button button3;
+        private Button crlFullSpeed;
         private Button button4;
         private Button button5;
         private Button button6;
         private Button button7;
         private Button button8;
-        private Button button9;
+        private Button crlFullStop;
         private Button button10;
         private Button commandRotateToTarget;
         private Button button12;
