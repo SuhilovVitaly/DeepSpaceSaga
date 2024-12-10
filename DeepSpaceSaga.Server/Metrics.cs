@@ -11,5 +11,7 @@ public enum Metrics
     ProcessingNavigationRotateToTargetCommand,
     MessageAddedToJournal,
     PreProcessingGenerateNewAsteroidCommand,
-    ProcessingGenerateAsteroidCommand
+    ProcessingGenerateAsteroidCommand,
+    ProcessingNavigationStopShipCommand,
+    ProcessingNavigationFullSpeedCommand
 }

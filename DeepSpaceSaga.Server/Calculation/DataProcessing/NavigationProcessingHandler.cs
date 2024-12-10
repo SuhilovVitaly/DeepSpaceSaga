@@ -33,6 +33,14 @@ internal class NavigationProcessingHandler
                 sessionContext.Metrics.Add(Metrics.ProcessingNavigationRotateToTargetCommand);
                 RotateToTarget(sessionContext, currentCelestialObject, command);
                 break;
+            case CommandTypes.StopShip:
+                sessionContext.Metrics.Add(Metrics.ProcessingNavigationStopShipCommand);
+                FullStop(sessionContext, currentCelestialObject, command);
+                break;
+            case CommandTypes.FullSpeed:
+                sessionContext.Metrics.Add(Metrics.ProcessingNavigationFullSpeedCommand);
+                FullSpeed(sessionContext, currentCelestialObject, command);
+                break;
         }
 
         AddToJournal(sessionContext, command, currentCelestialObject);
@@ -40,14 +48,34 @@ internal class NavigationProcessingHandler
         return sessionContext;
     }
 
+    private void FullSpeed(SessionContext sessionContext, ICelestialObject celestialObject, Command command)
+    {
+        var spacecraft = celestialObject.ToSpaceship();
+
+        spacecraft.ChangeVelocity(0.5);
+        var module = spacecraft.GetModule(command.ModuleId);
+
+        module.IsCalculated = spacecraft.Speed >= spacecraft.MaxSpeed;
+    }
+
+    private void FullStop(SessionContext sessionContext, ICelestialObject celestialObject, Command command)
+    {
+        var spacecraft = celestialObject.ToSpaceship();
+
+        spacecraft.ChangeVelocity(-0.5);
+        var module = spacecraft.GetModule(command.ModuleId);
+
+        module.IsCalculated = spacecraft.Speed <= 0;
+    }
+
     private void DecreaseShipSpeed(SessionContext sessionContext, ICelestialObject celestialObject, Command command)
     {
-        celestialObject.ToSpaceship().ChanheVelocity(-0.5);
+        celestialObject.ToSpaceship().ChangeVelocity(-0.5);
     }
 
     private void IncreaseShipSpeed(SessionContext sessionContext, ICelestialObject celestialObject, Command command)
     {
-        celestialObject.ToSpaceship().ChanheVelocity(0.5);
+        celestialObject.ToSpaceship().ChangeVelocity(0.5);
     }
 
     private void RotateToTarget(SessionContext sessionContext, ICelestialObject target, Command command)

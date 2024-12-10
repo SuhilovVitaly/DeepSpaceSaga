@@ -19,6 +19,14 @@ internal class Generator
         return _gameServer;
     }
 
+    public static GameSessionsSettings TestsSessionsSettings()
+    {
+        return new GameSessionsSettings
+        {
+            AsteroidGenerationRatio = 1000
+        };
+    }
+
     public static ISpacecraft SpacecraftWithModules()
     {
         var spacecraft = new BaseSpaceship
