@@ -1,4 +1,6 @@
-﻿namespace DeepSpaceSaga.Tests.Server.Session;
+﻿using DeepSpaceSaga.Common.Tools;
+
+namespace DeepSpaceSaga.Tests.Server.Session;
 
 public class BasicGameFlowTests
 {
@@ -92,5 +94,5 @@ public class BasicGameFlowTests
         // Assert
         Assert.Equal(expectedStartPositionX, startPositionX);
         Assert.NotEqual(expectedStartPositionX, afterCalculationPositionX);
-    }
+    }    
 }

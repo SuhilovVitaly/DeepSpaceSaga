@@ -12,6 +12,11 @@ public class LocalGameServer : IGameServer
         Scheduler.Instance.ScheduleTask(1, 100, TurnExecute);
     }
 
+    public LocalGameServer(GameSession session)
+    {
+        _sessionContext = new SessionContext(session, new GameEventsSystem());
+    }
+
     public GameSession GetSession()
     {
         return _sessionContext.Session.Copy();
@@ -48,7 +53,7 @@ public class LocalGameServer : IGameServer
 
         _sessionLock.EnterWriteLock();
 
-        _sessionContext = TurnCalculator.Execute(_sessionContext);
+        _sessionContext = TurnCalculator.Execute(_sessionContext, turns);
 
         _sessionLock.ExitWriteLock();
 
