@@ -13,7 +13,7 @@ internal class PreProcessing
 
         sessionContext = AutoRunModulesHandler.Execute(sessionContext, ticks);
 
-        sessionContext = EnablingModulesHandler.Execute(sessionContext, ticks);
+        sessionContext = ModulesEnablingHandler.Execute(sessionContext, ticks);
 
         sessionContext = ModulesReloadingHandler.Execute(sessionContext, ticks);        
 

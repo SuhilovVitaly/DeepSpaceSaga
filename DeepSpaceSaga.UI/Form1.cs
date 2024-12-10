@@ -134,6 +134,15 @@ public partial class Form1 : Form
         {
             case Keys.S:
                 if (session.IsRunning == false) return;
+
+                await Global.GameManager.ExecuteCommandAsync(new Command
+                {
+                    Category = CommandCategory.Navigation,
+                    Type = CommandTypes.DecreaseShipSpeed,
+                    IsOneTimeCommand = true,
+                    CelestialObjectId = spacecraft.Id,
+                    ModuleId = spacecraft.GetModules(Common.Universe.Equipment.Category.Propulsion).FirstOrDefault().Id
+                });
                 break;
 
             case Keys.D:
@@ -162,6 +171,14 @@ public partial class Form1 : Form
 
             case Keys.W:
                 if (session.IsRunning == false) return;
+                await Global.GameManager.ExecuteCommandAsync(new Command
+                {
+                    Category = CommandCategory.Navigation,
+                    Type = CommandTypes.IncreaseShipSpeed,
+                    IsOneTimeCommand = true,
+                    CelestialObjectId = spacecraft.Id,
+                    ModuleId = spacecraft.GetModules(Common.Universe.Equipment.Category.Propulsion).FirstOrDefault().Id
+                });
                 break;
         }
     }

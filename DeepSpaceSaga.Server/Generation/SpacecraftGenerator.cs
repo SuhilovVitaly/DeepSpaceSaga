@@ -13,7 +13,7 @@ internal class SpacecraftGenerator
             PositionX = 10000,
             PositionY = 10000,
             Speed = 10,
-            MaxSpeed = 10,
+            MaxSpeed = 20,
             Agility = 5,
             Size = 30,
             Types = CelestialObjectTypes.SpaceshipPlayer

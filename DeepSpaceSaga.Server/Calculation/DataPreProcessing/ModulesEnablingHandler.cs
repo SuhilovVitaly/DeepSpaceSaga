@@ -1,10 +1,10 @@
 ﻿namespace DeepSpaceSaga.Server.Calculation.DataPreProcessing;
 
-internal class EnablingModulesHandler
+internal class ModulesEnablingHandler
 {
     public static SessionContext Execute(SessionContext sessionContext, int ticks = 1)
     {
-        return new EnablingModulesHandler().Run(sessionContext);
+        return new ModulesEnablingHandler().Run(sessionContext);
     }
 
     internal SessionContext Run(SessionContext sessionContext,  int ticks = 1)

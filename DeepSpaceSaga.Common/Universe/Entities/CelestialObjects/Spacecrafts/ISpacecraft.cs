@@ -8,4 +8,5 @@ public interface ISpacecraft : ICelestialObject
     IModule GetModule(long moduleId);
     List<IModule> GetModules(Category category); 
     void SetDirection(double direction);
+    void ChanheVelocity(double delta);
 }

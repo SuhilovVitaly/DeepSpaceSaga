@@ -10,6 +10,10 @@ public enum CommandTypes
     TurnRight = 202,
     [Description("Rotate to Target")]
     RotateToTarget = 203,
+    [Description("Decrease Ship Speed")]
+    DecreaseShipSpeed = 204,
+    [Description("Increase Ship Speed")]
+    IncreaseShipSpeed = 205,
     [Description("Sync speed with Target")]
     SyncSpeedWithTarget = 204,
     [Description("")]

@@ -18,4 +18,21 @@ public class BaseSpaceship : BaseCelestialObject, ISpacecraft
     {
         return Modules.Where(module => module.Category == category).Cast<IModule>().ToList();
     }
+
+    public void ChanheVelocity(double delta)
+    {
+        var updatedVelocity = Speed + delta;
+
+        if(updatedVelocity > MaxSpeed)
+        {
+            updatedVelocity = MaxSpeed;
+        }
+
+        if(updatedVelocity < 0)
+        {
+            updatedVelocity = 0;
+        }
+
+        Speed = updatedVelocity;
+    }
 }

@@ -12,6 +12,12 @@ internal class NavigationProcessingHandler
 
         switch (command.Type)
         {
+            case CommandTypes.IncreaseShipSpeed:
+                IncreaseShipSpeed(sessionContext, currentCelestialObject, command);
+                break;
+            case CommandTypes.DecreaseShipSpeed:
+                DecreaseShipSpeed(sessionContext, currentCelestialObject, command);
+                break;
             case CommandTypes.TurnLeft:
                 TurnLeft(currentCelestialObject, command);
                 break;
@@ -26,6 +32,16 @@ internal class NavigationProcessingHandler
         AddToJournal(sessionContext, command, currentCelestialObject);
 
         return sessionContext;
+    }
+
+    private void DecreaseShipSpeed(SessionContext sessionContext, ICelestialObject celestialObject, Command command)
+    {
+        celestialObject.ToSpaceship().ChanheVelocity(-0.5);
+    }
+
+    private void IncreaseShipSpeed(SessionContext sessionContext, ICelestialObject celestialObject, Command command)
+    {
+        celestialObject.ToSpaceship().ChanheVelocity(0.5);
     }
 
     private void RotateToTarget(SessionContext sessionContext, ICelestialObject target, Command command)
