@@ -64,7 +64,7 @@ public class BasicGameFlowTests
         int expectedCelestialObjectsAfterAddNewAsteroid = 1;
 
         // Act
-        var session = new GameSession(new CelestialMap(new List<ICelestialObject>()));
+        var session = new GameSession(new CelestialMap(new List<ICelestialObject>()), new GameSessionsSettings());
 
         var celestialObjectsAfterInitialization = session.SpaceMap.Count;
 

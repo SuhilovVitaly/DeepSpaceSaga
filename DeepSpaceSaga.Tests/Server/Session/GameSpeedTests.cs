@@ -1,6 +1,4 @@
-﻿using DeepSpaceSaga.Server.Generation.Modules;
-
-namespace DeepSpaceSaga.Tests.Server.Session;
+﻿namespace DeepSpaceSaga.Tests.Server.Session;
 
 public class GameSpeedTests
 {
@@ -14,21 +12,11 @@ public class GameSpeedTests
         // Act
         var session = new GameSession(new CelestialMap([]));
 
-        session.SpaceMap.Add(
-            new BaseSpaceship
-            {
-                Id = new GenerationTool().GetId(),
-                OwnerId = 1,
-                PositionX = 1000,
-                PositionY = 1000,
-                Speed = 10,
-                Direction = 0,
-                Types = CelestialObjectTypes.SpaceshipPlayer
-            }
-        );
+        var spacecraft = Generator.SpacecraftWithModules();
+        session.SpaceMap.Add(spacecraft);
 
         var _gameServer = Generator.LocalGameServerWithPreSetSessoin(session);
-        var spacecraft = _gameServer.GetSession().SpaceMap.GetCelestialObjects()[0] as ISpacecraft;
+        
         double startPositionX = spacecraft.PositionX;
 
         _gameServer.Execution(10);
@@ -46,13 +34,12 @@ public class GameSpeedTests
     public void GameSession_ModuleReloadByFastGameSpeed_ShouldBeCorrect()
     {
         // Arrange
-        double expectedStartPositionX = 1000;
         double expectedReloadingAfterCalculation = 10;
 
         // Act
         var session = new GameSession(new CelestialMap([]));
 
-        var spacecraft = Generator.Spacecraft();
+        var spacecraft = Generator.SpacecraftWithModules();
         var moduleScanner = GeneralModuleGenerator.CreateSpaceScanner(spacecraft.Id, "SCR5001");
         moduleScanner.Id = 100;
         moduleScanner.Reload();
@@ -63,7 +50,6 @@ public class GameSpeedTests
 
         var _gameServer = Generator.LocalGameServerWithPreSetSessoin(session);
         var spacecraftInSession = _gameServer.GetSession().SpaceMap.GetCelestialObjects()[0] as ISpacecraft;
-        double startPositionX = spacecraftInSession.PositionX;
 
         _gameServer.Execution(10);
 

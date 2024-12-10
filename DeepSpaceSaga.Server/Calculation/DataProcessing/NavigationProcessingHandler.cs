@@ -4,6 +4,7 @@ internal class NavigationProcessingHandler
 {
     public static SessionContext Execute(SessionContext sessionContext, Command command)
     {
+        sessionContext.Metrics.Add(Metrics.ProcessingNavigationCommand);
         return new NavigationProcessingHandler().Run(sessionContext, command);
     }
     internal SessionContext Run(SessionContext sessionContext, Command command)
@@ -13,18 +14,23 @@ internal class NavigationProcessingHandler
         switch (command.Type)
         {
             case CommandTypes.IncreaseShipSpeed:
+                sessionContext.Metrics.Add(Metrics.ProcessingNavigationIncreaseShipSpeedCommand);
                 IncreaseShipSpeed(sessionContext, currentCelestialObject, command);
                 break;
             case CommandTypes.DecreaseShipSpeed:
+                sessionContext.Metrics.Add(Metrics.ProcessingNavigationDecreaseShipSpeedCommand);
                 DecreaseShipSpeed(sessionContext, currentCelestialObject, command);
                 break;
             case CommandTypes.TurnLeft:
+                sessionContext.Metrics.Add(Metrics.ProcessingNavigationTurnLeftCommand);
                 TurnLeft(currentCelestialObject, command);
                 break;
             case CommandTypes.TurnRight:
+                sessionContext.Metrics.Add(Metrics.ProcessingNavigationTurnRightCommand);
                 TurnRight(currentCelestialObject, command);
                 break;
             case CommandTypes.RotateToTarget:
+                sessionContext.Metrics.Add(Metrics.ProcessingNavigationRotateToTargetCommand);
                 RotateToTarget(sessionContext, currentCelestialObject, command);
                 break;
         }
@@ -103,6 +109,8 @@ internal class NavigationProcessingHandler
 
     private void AddToJournal(SessionContext sessionContext, Command command, ICelestialObject celestialObject)
     {
+        sessionContext.Metrics.Add(Metrics.MessageAddedToJournal);
+
         sessionContext.Session.Logbook.Add(
             new Common.Universe.Audit.EventMessage
             {

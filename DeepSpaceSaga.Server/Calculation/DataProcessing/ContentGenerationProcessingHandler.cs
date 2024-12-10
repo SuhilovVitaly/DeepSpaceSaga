@@ -14,6 +14,7 @@ internal class ContentGenerationProcessingHandler
         switch (command.Type)
         {
             case CommandTypes.GenerateAsteroid:
+                sessionContext.Metrics.Add(Metrics.ProcessingGenerateAsteroidCommand);
                 currentCelestialObject = CelestialMaplestialObjectGeneration(sessionContext, command);
                 break;
         }
@@ -46,6 +47,8 @@ internal class ContentGenerationProcessingHandler
 
     private void AddToJournal(SessionContext sessionContext, Command command, ICelestialObject celestialObject)
     {
+        sessionContext.Metrics.Add(Metrics.MessageAddedToJournal);
+
         sessionContext.Session.Logbook.Add(
             new Common.Universe.Audit.EventMessage
             {

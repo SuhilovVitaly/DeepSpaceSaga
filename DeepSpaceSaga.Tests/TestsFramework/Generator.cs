@@ -1,4 +1,6 @@
-﻿namespace DeepSpaceSaga.Tests.TestsFramework;
+﻿using DeepSpaceSaga.Common.Universe.Entities.CelestialObjects.Spacecrafts;
+
+namespace DeepSpaceSaga.Tests.TestsFramework;
 
 internal class Generator
 {
@@ -12,14 +14,14 @@ internal class Generator
 
     public static LocalGameServer LocalGameServerWithPreSetSessoin(GameSession session)
     {
-        var _gameServer = new LocalGameServer(session);
+        var _gameServer = new LocalGameServer(session, new ServerMetrics());
 
         return _gameServer;
     }
 
-    public static ISpacecraft Spacecraft()
+    public static ISpacecraft SpacecraftWithModules()
     {
-        return new BaseSpaceship
+        var spacecraft = new BaseSpaceship
         {
             Id = new GenerationTool().GetId(),
             OwnerId = 1,
@@ -27,7 +29,14 @@ internal class Generator
             PositionY = 1000,
             Speed = 10,
             Direction = 0,
+            Agility = 1,
+            MaxSpeed = 20,
             Types = CelestialObjectTypes.SpaceshipPlayer
         };
+
+        spacecraft.Modules.Add(PropulsionModulesGenerator.CreateMicroWarpDrive(spacecraft.Id, "PMV5002"));
+        spacecraft.Modules.Add(GeneralModuleGenerator.CreateSpaceScanner(spacecraft.Id, "SCR5001"));
+
+        return spacecraft;
     }
 }

@@ -9,7 +9,7 @@ public class TurnCalculator
 
     public SessionContext Run(SessionContext sessionContext, int ticks = 1)
     {
-        var processingSession = new SessionContext(sessionContext.Session.Copy(), sessionContext.EventsSystem.Clone());
+        var processingSession = new SessionContext(sessionContext.Session.Copy(), sessionContext.EventsSystem.Clone(), sessionContext.Metrics);
 
         for (var i = 0; i < ticks; i++)
         {

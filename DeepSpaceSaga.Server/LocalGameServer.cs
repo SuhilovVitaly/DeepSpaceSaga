@@ -3,45 +3,49 @@
 public class LocalGameServer : IGameServer
 {
     private readonly ReaderWriterLockSlim _sessionLock = new();
-    private SessionContext _sessionContext;
+    public SessionContext SessionContext { get; private set; }
+    public IServerMetrics Metrics { get; set; }
 
     public LocalGameServer()
     {
-        _sessionContext = new SessionContext(new GameSession(new CelestialMap([])), new GameEventsSystem());
+        Metrics = new ServerMetrics();
+
+        SessionContext = new SessionContext(new GameSession(new CelestialMap([]), new GameSessionsSettings()), new GameEventsSystem(Metrics), Metrics);
 
         Scheduler.Instance.ScheduleTask(1, 100, TurnExecute);
     }
 
-    public LocalGameServer(GameSession session)
+    public LocalGameServer(GameSession session, ServerMetrics metrics)
     {
-        _sessionContext = new SessionContext(session, new GameEventsSystem());
+        Metrics = metrics;
+        SessionContext = new SessionContext(session, new GameEventsSystem(metrics), metrics);
     }
 
     public GameSession GetSession()
     {
-        return _sessionContext.Session.Copy();
+        return SessionContext.Session.Copy();
     }
 
     public void PauseSession()
     {
-        _sessionContext.Session.IsRunning = false;
+        SessionContext.Session.IsRunning = false;
     }
 
     public void ResumeSession()
     {
-        _sessionContext.Session.IsRunning = true;
+        SessionContext.Session.IsRunning = true;
     }
 
     public void SessionInitialization(int sessionId = -1)
     {
-        _sessionContext.Session = GameSessionGenerator.ProduceSession();
+        SessionContext.Session = GameSessionGenerator.ProduceSession();
     }
 
     private bool _isCalculationInProgress = false;
 
     private void TurnExecute()
     {
-        if (_sessionContext.Session.IsRunning == false) return;
+        if (SessionContext.Session.IsRunning == false) return;
 
         Execution(1);
     }
@@ -53,7 +57,7 @@ public class LocalGameServer : IGameServer
 
         _sessionLock.EnterWriteLock();
 
-        _sessionContext = TurnCalculator.Execute(_sessionContext, turns);
+        SessionContext = TurnCalculator.Execute(SessionContext, turns);
 
         _sessionLock.ExitWriteLock();
 
@@ -65,7 +69,7 @@ public class LocalGameServer : IGameServer
         try
         {
             command.Status = CommandStatus.PreProcess;
-            _sessionContext.EventsSystem.AddCommand(command);
+            SessionContext.EventsSystem.AddCommand(command);
         }
         catch (Exception)
         {

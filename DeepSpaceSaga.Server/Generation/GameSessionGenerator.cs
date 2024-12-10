@@ -16,7 +16,7 @@ internal class GameSessionGenerator
 
     private static GameSession EmptySession()
     {
-        var result = new GameSession(CelestialMapGenerator.GenerateEmptyBase())
+        var result = new GameSession(CelestialMapGenerator.GenerateEmptyBase(), new GameSessionsSettings())
         {
             Id = new GenerationTool().GetId(),
             IsRunning = false

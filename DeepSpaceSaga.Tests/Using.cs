@@ -8,3 +8,6 @@ global using DeepSpaceSaga.Common.Universe;
 global using DeepSpaceSaga.Server.Generation;
 global using DeepSpaceSaga.Universe;
 global using DeepSpaceSaga.Common.Universe.Commands;
+global using System.Collections.Concurrent;
+global using DeepSpaceSaga.Server.Generation.Modules;
+global using DeepSpaceSaga.Common.Extensions;

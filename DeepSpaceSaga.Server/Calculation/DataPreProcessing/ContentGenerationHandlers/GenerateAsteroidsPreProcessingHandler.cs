@@ -9,20 +9,21 @@ internal class GenerateAsteroidsPreProcessingHandler
 
     public SessionContext Run(SessionContext sessionContext, int ticks = 1)
     {
-        RandomAsteroidGenerate(sessionContext.EventsSystem);
+        RandomAsteroidGenerate(sessionContext);
 
         return sessionContext;
     }
 
-    internal void RandomAsteroidGenerate(GameEventsSystem eventsSystem)
+    internal void RandomAsteroidGenerate(SessionContext sessionContext)
     {
         var generationTool = new GenerationTool();
-        var baseGenerationChance = 990;
+        var baseGenerationChance = sessionContext.Session.Settings.AsteroidGenerationRatio;
 
         var diceResult = generationTool.GetInteger(0, 1000);
 
         if (diceResult > baseGenerationChance)
         {
+            sessionContext.Metrics.Add(Metrics.PreProcessingGenerateNewAsteroidCommand);
             var command = new Command
             {
                 Category = CommandCategory.ContentGeneration,
@@ -31,7 +32,7 @@ internal class GenerateAsteroidsPreProcessingHandler
                 IsOneTimeCommand = true,
             };
 
-            eventsSystem.AddCommand(command);
+            sessionContext.EventsSystem.AddCommand(command);
         }
     }
 }

@@ -1,13 +1,15 @@
 ﻿namespace DeepSpaceSaga.Server.Calculation;
 
-public class GameEventsSystem
+public class GameEventsSystem(IServerMetrics metrics)
 {
+    private IServerMetrics metrics = metrics;
+
     public ConcurrentBag<Command> Commands { get; set; } = [];
     public ConcurrentDictionary<long, GameActionEvent> Actions { get; set; } = [];
 
     public GameEventsSystem Clone()
     {
-        var duplicate = new GameEventsSystem
+        var duplicate = new GameEventsSystem(metrics)
         {
             Commands = new ConcurrentBag<Command>(),
             Actions = new ConcurrentDictionary<long, GameActionEvent>()
@@ -33,6 +35,7 @@ public class GameEventsSystem
 
     public void AddCommand(Command command)
     {
+        metrics.Add(Metrics.ReceivedCommand);
         Commands.Add(command);
     }
 
