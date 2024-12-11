@@ -10,7 +10,10 @@ public class LocalGameServer : IGameServer
     {
         Metrics = new ServerMetrics();
 
-        SessionContext = new SessionContext(new GameSession(new CelestialMap([]), new GameSessionsSettings()), new GameEventsSystem(Metrics), Metrics);
+        SessionContext = new SessionContext(
+            new GameSession(new CelestialMap([]), new GameSessionsSettings()), 
+            new GameEventsSystem(Metrics),
+            Metrics);
 
         Scheduler.Instance.ScheduleTask(1, 100, TurnExecute);
     }
@@ -77,5 +80,14 @@ public class LocalGameServer : IGameServer
             throw;
         }
         
+    }
+
+    public void DecreaseGameSpeed()
+    {
+        SessionContext.Session.Speed.Decrease();
+    }
+    public void IncreaseGameSpeed()
+    {
+        SessionContext.Session.Speed.Increase();
     }
 }

@@ -7,4 +7,7 @@ public interface IGameServer
     void SessionInitialization(int sessionId = -1);
     GameSession GetSession();
     Task AddCommand(Command command);
+
+    void DecreaseGameSpeed();
+    void IncreaseGameSpeed();
 }

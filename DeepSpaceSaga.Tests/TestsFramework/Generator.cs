@@ -1,6 +1,4 @@
-﻿using DeepSpaceSaga.Common.Universe.Entities.CelestialObjects.Spacecrafts;
-
-namespace DeepSpaceSaga.Tests.TestsFramework;
+﻿namespace DeepSpaceSaga.Tests.TestsFramework;
 
 internal class Generator
 {
