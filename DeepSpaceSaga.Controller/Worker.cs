@@ -53,4 +53,14 @@ public class Worker
             throw;
         }
     }
+
+    public void SetGameSpeed(int speed)
+    {
+        _gameServer.SetGameSpeed(speed);
+
+        if(_gameServer.GetSession().IsRunning == false)
+        {
+            _gameServer.ResumeSession();
+        }
+    }
 }

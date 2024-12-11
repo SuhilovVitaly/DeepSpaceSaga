@@ -90,6 +90,11 @@ public class EventManager
         Worker.Pause();
     }
 
+    public void SetGameSpeed(int speed)
+    {
+        Worker.SetGameSpeed(speed);
+    }
+
     public async Task ExecuteCommandAsync(Command command)
     {
         await Worker.SendCommandAsync(command);

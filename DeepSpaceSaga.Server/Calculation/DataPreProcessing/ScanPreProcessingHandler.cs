@@ -9,14 +9,25 @@ internal class ScanPreProcessingHandler
     // TODO: Move to General - Modules Pre Processing (For auto-run modules)
     internal SessionContext Run(SessionContext sessionContext, int ticks = 1)
     {
-        var target = sessionContext.Session.SpaceMap.GetCelestialObjects().Where(x=> x.IsPreScanned == false && x.OwnerId != 1 && x.IsPreScanned == false).FirstOrDefault();
+        var spacecraft = sessionContext.Session.GetPlayerSpaceShip();
+
+        var scanner = spacecraft.GetModules(Category.SpaceScanner).FirstOrDefault() as IScanner;
+
+        var target = sessionContext.Session.SpaceMap.GetCelestialObjects()
+            .Where(x=> 
+                x.IsPreScanned == false 
+                && 
+                x.OwnerId != 1 
+                && 
+                x.IsPreScanned == false 
+                && GeometryTools.Distance(x.GetLocation(), spacecraft.GetLocation()) < scanner.ScanRange
+                )
+            .FirstOrDefault();
 
         // Not target (not pres-scanned celestial objects) found
         if (target is null) return sessionContext;
 
-        var spacecraft = sessionContext.Session.GetPlayerSpaceShip();
-
-        var scanner = spacecraft.GetModules(Category.SpaceScanner).FirstOrDefault() as IScanner;
+        
 
         // Module not exist on spacecraft
         if (scanner is null) return sessionContext;

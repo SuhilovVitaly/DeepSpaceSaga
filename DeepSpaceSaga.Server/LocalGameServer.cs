@@ -31,12 +31,30 @@ public class LocalGameServer : IGameServer
 
     public void PauseSession()
     {
-        SessionContext.Session.IsRunning = false;
+        try
+        {
+            SessionContext.Session.IsRunning = false;
+            SessionContext.Session.Speed.IsPaused = true;
+        }
+        catch (Exception ex)
+        {
+            throw;
+        }
+
+        
     }
 
     public void ResumeSession()
     {
-        SessionContext.Session.IsRunning = true;
+        try
+        {
+            SessionContext.Session.IsRunning = true;
+            SessionContext.Session.Speed.IsPaused = false;
+        }
+        catch (Exception ex)
+        {
+            throw;
+        }        
     }
 
     public void SessionInitialization(int sessionId = -1)
@@ -53,18 +71,26 @@ public class LocalGameServer : IGameServer
         Execution(1);
     }
     internal void Execution(int turns = 1)
-    {       
-        if (_isCalculationInProgress) return;
+    {
+        try
+        {
+            if (_isCalculationInProgress) return;
 
-        _isCalculationInProgress = true;
+            _isCalculationInProgress = true;
 
-        _sessionLock.EnterWriteLock();
+            _sessionLock.EnterWriteLock();
 
-        SessionContext = TurnCalculator.Execute(SessionContext, turns);
+            SessionContext = TurnCalculator.Execute(SessionContext, turns);
 
-        _sessionLock.ExitWriteLock();
+            _sessionLock.ExitWriteLock();
 
-        _isCalculationInProgress = false;
+            _isCalculationInProgress = false;
+        }
+        catch (Exception ex)
+        {
+
+            throw;
+        }
     }
 
     public async Task AddCommand(Command command)
@@ -82,12 +108,8 @@ public class LocalGameServer : IGameServer
         
     }
 
-    public void DecreaseGameSpeed()
+    public void SetGameSpeed(int speed)
     {
-        SessionContext.Session.Speed.Decrease();
-    }
-    public void IncreaseGameSpeed()
-    {
-        SessionContext.Session.Speed.Increase();
+        SessionContext.Session.Speed.SetSpeed(speed);
     }
 }

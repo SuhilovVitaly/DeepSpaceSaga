@@ -31,6 +31,8 @@
             button1 = new Button();
             crlLabelTurns = new Label();
             panel1 = new Panel();
+            gameSpeedControl1 = new Screens.MainGameScreen.GameSpeedControl();
+            crlCommands = new Screens.MainGameScreen.CommandsControl();
             crlSelectedCelestialObjectInfo = new Screens.MainGameScreen.CelestialObjectInfo();
             crlActiveCelestialObjectInfo = new Screens.MainGameScreen.CelestialObjectInfo();
             panel3 = new Panel();
@@ -38,10 +40,7 @@
             spacecraftTelemetryControl1 = new Screens.MainGameScreen.SpacecraftTelemetryControl();
             panel2 = new Panel();
             crlMousePosition = new Label();
-            crlGamePause = new Button();
-            crlResumeGame = new Button();
             crlTacticalMap = new Screens.MainGameScreen.StellarTacticalMap();
-            crlCommands = new Screens.MainGameScreen.CommandsControl();
             panel1.SuspendLayout();
             panel3.SuspendLayout();
             panel2.SuspendLayout();
@@ -56,6 +55,7 @@
             button1.Name = "button1";
             button1.Size = new Size(28, 29);
             button1.TabIndex = 0;
+            button1.TabStop = false;
             button1.Text = "X";
             button1.UseVisualStyleBackColor = true;
             button1.Click += button1_Click;
@@ -74,6 +74,7 @@
             // panel1
             // 
             panel1.BorderStyle = BorderStyle.FixedSingle;
+            panel1.Controls.Add(gameSpeedControl1);
             panel1.Controls.Add(crlCommands);
             panel1.Controls.Add(button1);
             panel1.Controls.Add(crlSelectedCelestialObjectInfo);
@@ -87,6 +88,23 @@
             panel1.Name = "panel1";
             panel1.Size = new Size(2624, 1105);
             panel1.TabIndex = 1;
+            // 
+            // gameSpeedControl1
+            // 
+            gameSpeedControl1.BackColor = Color.FromArgb(12, 12, 12);
+            gameSpeedControl1.Location = new Point(2261, 1016);
+            gameSpeedControl1.Name = "gameSpeedControl1";
+            gameSpeedControl1.Size = new Size(350, 76);
+            gameSpeedControl1.TabIndex = 17;
+            // 
+            // crlCommands
+            // 
+            crlCommands.Anchor = AnchorStyles.Bottom;
+            crlCommands.BackColor = Color.FromArgb(12, 12, 12);
+            crlCommands.Location = new Point(1060, 977);
+            crlCommands.Name = "crlCommands";
+            crlCommands.Size = new Size(505, 115);
+            crlCommands.TabIndex = 16;
             // 
             // crlSelectedCelestialObjectInfo
             // 
@@ -136,8 +154,6 @@
             // 
             panel2.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             panel2.Controls.Add(crlMousePosition);
-            panel2.Controls.Add(crlGamePause);
-            panel2.Controls.Add(crlResumeGame);
             panel2.Controls.Add(crlLabelTurns);
             panel2.Location = new Point(11, 778);
             panel2.Name = "panel2";
@@ -155,26 +171,6 @@
             crlMousePosition.TabIndex = 11;
             crlMousePosition.Text = "label1";
             // 
-            // crlGamePause
-            // 
-            crlGamePause.Location = new Point(139, 138);
-            crlGamePause.Name = "crlGamePause";
-            crlGamePause.Size = new Size(94, 29);
-            crlGamePause.TabIndex = 10;
-            crlGamePause.Text = "Pause";
-            crlGamePause.UseVisualStyleBackColor = true;
-            crlGamePause.Click += crlGamePause_Click;
-            // 
-            // crlResumeGame
-            // 
-            crlResumeGame.Location = new Point(15, 138);
-            crlResumeGame.Name = "crlResumeGame";
-            crlResumeGame.Size = new Size(94, 29);
-            crlResumeGame.TabIndex = 10;
-            crlResumeGame.Text = "Resume";
-            crlResumeGame.UseVisualStyleBackColor = true;
-            crlResumeGame.Click += crlResumeGame_Click;
-            // 
             // crlTacticalMap
             // 
             crlTacticalMap.BackColor = Color.DimGray;
@@ -182,15 +178,6 @@
             crlTacticalMap.Name = "crlTacticalMap";
             crlTacticalMap.Size = new Size(652, 578);
             crlTacticalMap.TabIndex = 4;
-            // 
-            // crlCommands
-            // 
-            crlCommands.Anchor = AnchorStyles.Bottom;
-            crlCommands.BackColor = Color.FromArgb(12, 12, 12);
-            crlCommands.Location = new Point(1060, 977);
-            crlCommands.Name = "crlCommands";
-            crlCommands.Size = new Size(505, 115);
-            crlCommands.TabIndex = 16;
             // 
             // Form1
             // 
@@ -218,8 +205,6 @@
         private Label crlLabelTurns;
         private Panel panel1;
         private Screens.MainGameScreen.StellarTacticalMap crlTacticalMap;
-        private Button crlGamePause;
-        private Button crlResumeGame;
         private Panel panel2;
         private Label crlMousePosition;
         private Screens.MainGameScreen.SpacecraftTelemetryControl spacecraftTelemetryControl1;
@@ -228,5 +213,6 @@
         private Screens.MainGameScreen.CelestialObjectInfo crlSelectedCelestialObjectInfo;
         private Screens.MainGameScreen.CelestialObjectInfo crlActiveCelestialObjectInfo;
         private Screens.MainGameScreen.CommandsControl crlCommands;
+        private Screens.MainGameScreen.GameSpeedControl gameSpeedControl1;
     }
 }

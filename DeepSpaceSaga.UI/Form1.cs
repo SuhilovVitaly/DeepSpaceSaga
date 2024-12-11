@@ -7,7 +7,9 @@ public partial class Form1 : Form
     public Form1()
     {
         InitializeComponent();
- 
+
+        ActiveControl = null;
+
         crlTacticalMap.Dock = DockStyle.Fill;
 
         KeyPreview = true;
@@ -132,6 +134,16 @@ public partial class Form1 : Form
 
         switch (e.KeyCode)
         {
+            case Keys.Space:
+                if(session.Speed.IsPaused)
+                {
+                    Global.GameManager.EventController.Resume();
+                }
+                else
+                {
+                    Global.GameManager.EventController.Pause();
+                }
+                break;
             case Keys.S:
                 if (session.IsRunning == false) return;
 
