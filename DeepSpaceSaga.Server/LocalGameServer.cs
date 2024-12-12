@@ -33,7 +33,6 @@ public class LocalGameServer : IGameServer
     {
         try
         {
-            SessionContext.Session.IsRunning = false;
             SessionContext.Session.State.IsPaused = true;
         }
         catch (Exception ex)
@@ -46,7 +45,6 @@ public class LocalGameServer : IGameServer
     {
         try
         {
-            SessionContext.Session.IsRunning = true;
             SessionContext.Session.State.IsPaused = false;
         }
         catch (Exception ex)
@@ -64,7 +62,7 @@ public class LocalGameServer : IGameServer
 
     private void TurnExecute()
     {
-        if (SessionContext.Session.IsRunning == false) return;
+        if (SessionContext.Session.State.IsPaused) return;
 
         Execution();
     }

@@ -145,7 +145,7 @@ public partial class Form1 : Form
                 }
                 break;
             case Keys.S:
-                if (session.IsRunning == false) return;
+                if (session.State.IsPaused) return;
 
                 await Global.GameManager.ExecuteCommandAsync(new Command
                 {
@@ -158,7 +158,7 @@ public partial class Form1 : Form
                 break;
 
             case Keys.D:
-                if (session.IsRunning == false) return;
+                if (session.State.IsPaused) return;
 
                 await Global.GameManager.ExecuteCommandAsync(new Command
                 {
@@ -171,7 +171,7 @@ public partial class Form1 : Form
                 break;
 
             case Keys.A:
-                if (session.IsRunning == false) return;
+                if (session.State.IsPaused) return;
                 await Global.GameManager.ExecuteCommandAsync(new Command{
                     Category = CommandCategory.Navigation,
                     Type = CommandTypes.TurnLeft,
@@ -182,7 +182,7 @@ public partial class Form1 : Form
                 break;
 
             case Keys.W:
-                if (session.IsRunning == false) return;
+                if (session.State.IsPaused) return;
                 await Global.GameManager.ExecuteCommandAsync(new Command
                 {
                     Category = CommandCategory.Navigation,

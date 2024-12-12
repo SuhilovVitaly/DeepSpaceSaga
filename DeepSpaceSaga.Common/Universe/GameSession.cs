@@ -18,8 +18,6 @@ public class GameSession
 
     public int Id { get; set; }
 
-    public bool IsRunning { get; set; } = false;
-
     public int Turn { get; set; } = 1;
 
     public int TurnTick { get; set; } = 0;

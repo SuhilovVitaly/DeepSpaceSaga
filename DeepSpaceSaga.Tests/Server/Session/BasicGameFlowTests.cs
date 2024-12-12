@@ -37,15 +37,15 @@ public class BasicGameFlowTests
         var _gameServer = new LocalGameServer();
         _gameServer.SessionInitialization(expectedSessionId);
 
-        var turnFirstSessionStatus = _gameServer.GetSession().IsRunning;
+        var turnFirstSessionStatus = !_gameServer.GetSession().State.IsPaused;
 
         _gameServer.ResumeSession();
 
-        var turnSecondSessionStatus = _gameServer.GetSession().IsRunning;
+        var turnSecondSessionStatus = !_gameServer.GetSession().State.IsPaused;
 
         _gameServer.PauseSession();
 
-        var turnThirdSessionStatus = _gameServer.GetSession().IsRunning;
+        var turnThirdSessionStatus = !_gameServer.GetSession().State.IsPaused;
 
         // Assert
         Assert.Equal(expectedTurnFirstSessionStatus, turnFirstSessionStatus);

@@ -13,11 +13,11 @@ public class LocalGameServerTests
 
         _gameServer.ResumeSession();
 
-        var isRunningSessionAfterResume = _gameServer.GetSession().IsRunning;
+        var isRunningSessionAfterResume = !_gameServer.GetSession().State.IsPaused;
 
         _gameServer.PauseSession();
 
-        var isRunningSessionAfterPause = _gameServer.GetSession().IsRunning;
+        var isRunningSessionAfterPause = !_gameServer.GetSession().State.IsPaused;
 
         // Assert
         Assert.Equal(expectedIsSessionRunning, isRunningSessionAfterPause);

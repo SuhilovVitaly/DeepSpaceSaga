@@ -12,7 +12,7 @@ internal class DrawSpaceScanner
         DrawTools.FillEllipse(screenInfo, location.X, location.Y, (float)(scannerModule.ScanRange), new SpaceMapColor(Color.FromArgb(10, 0, 255, 0)));
         DrawTools.DrawEllipse(screenInfo, location.X, location.Y, (float)(scannerModule.ScanRange), Colors.LightGray);
 
-        if(session.IsRunning == false) return;
+        if(session.State.IsPaused) return;
 
         if(scannerModule.IsReloaded == true) return;
 

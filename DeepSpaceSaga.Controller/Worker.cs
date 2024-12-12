@@ -58,7 +58,7 @@ public class Worker
     {
         _gameServer.SetGameSpeed(speed);
 
-        if(_gameServer.GetSession().IsRunning == false)
+        if(_gameServer.GetSession().State.IsPaused)
         {
             _gameServer.ResumeSession();
         }
