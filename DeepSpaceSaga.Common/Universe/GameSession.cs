@@ -1,6 +1,4 @@
-﻿using DeepSpaceSaga.Common.Layers;
-
-namespace DeepSpaceSaga.Universe;
+﻿namespace DeepSpaceSaga.Universe;
 
 public class GameSession
 {
@@ -8,14 +6,14 @@ public class GameSession
     {
         SpaceMap = spaceMap;
         Settings = new GameSessionsSettings();
-        Speed = new GameSpeed();
+        State = new GameState();
     }
 
     public GameSession(CelestialMap spaceMap, GameSessionsSettings settings)
     {
         SpaceMap = spaceMap;
         Settings = settings;
-        Speed = new GameSpeed();
+        State = new GameState();
     }
 
     public int Id { get; set; }
@@ -32,5 +30,5 @@ public class GameSession
 
     public GameSessionsSettings Settings { get; set; }
 
-    public GameSpeed Speed { get; set; }
+    public GameState State { get; set; }
 }

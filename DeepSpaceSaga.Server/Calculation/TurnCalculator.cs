@@ -1,22 +1,20 @@
-﻿using DeepSpaceSaga.Common.Layers;
-
-namespace DeepSpaceSaga.Server.Calculation;
+﻿namespace DeepSpaceSaga.Server.Calculation;
 
 public class TurnCalculator
 {
-    public static SessionContext Execute(SessionContext sessionContext, int ticks = 1)
+    public static SessionContext Execute(SessionContext sessionContext)
     {
-        return new TurnCalculator().Run(sessionContext, ticks);
+        return new TurnCalculator().Run(sessionContext);
     }
 
-    public SessionContext Run(SessionContext sessionContext, int ticks = 1)
+    public SessionContext Run(SessionContext sessionContext)
     {
         var processingSession = new SessionContext(
             sessionContext.Session.Copy(), 
             sessionContext.EventsSystem.Clone(), 
             sessionContext.Metrics);
 
-        for (var i = 0; i < ticks; i++)
+        for (var i = 0; i < processingSession.Session.State.Speed; i++)
         {
             processingSession = TurnExecution(sessionContext);
         }

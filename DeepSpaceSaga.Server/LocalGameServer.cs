@@ -34,14 +34,12 @@ public class LocalGameServer : IGameServer
         try
         {
             SessionContext.Session.IsRunning = false;
-            SessionContext.Session.Speed.IsPaused = true;
+            SessionContext.Session.State.IsPaused = true;
         }
         catch (Exception ex)
         {
             throw;
-        }
-
-        
+        }        
     }
 
     public void ResumeSession()
@@ -49,7 +47,7 @@ public class LocalGameServer : IGameServer
         try
         {
             SessionContext.Session.IsRunning = true;
-            SessionContext.Session.Speed.IsPaused = false;
+            SessionContext.Session.State.IsPaused = false;
         }
         catch (Exception ex)
         {
@@ -68,9 +66,9 @@ public class LocalGameServer : IGameServer
     {
         if (SessionContext.Session.IsRunning == false) return;
 
-        Execution(1);
+        Execution();
     }
-    internal void Execution(int turns = 1)
+    internal void Execution()
     {
         try
         {
@@ -80,7 +78,7 @@ public class LocalGameServer : IGameServer
 
             _sessionLock.EnterWriteLock();
 
-            SessionContext = TurnCalculator.Execute(SessionContext, turns);
+            SessionContext = TurnCalculator.Execute(SessionContext);
 
             _sessionLock.ExitWriteLock();
 
@@ -110,6 +108,6 @@ public class LocalGameServer : IGameServer
 
     public void SetGameSpeed(int speed)
     {
-        SessionContext.Session.Speed.SetSpeed(speed);
+        SessionContext.Session.State.SetSpeed(speed);
     }
 }

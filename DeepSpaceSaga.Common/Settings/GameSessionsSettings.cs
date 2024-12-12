@@ -1,4 +1,4 @@
-﻿namespace DeepSpaceSaga.Common.Universe;
+﻿namespace DeepSpaceSaga.Common.Settings;
 
 public class GameSessionsSettings
 {

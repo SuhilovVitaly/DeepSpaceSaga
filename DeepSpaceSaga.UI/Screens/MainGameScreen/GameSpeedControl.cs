@@ -20,7 +20,7 @@ public partial class GameSpeedControl : UserControl
 
     private void RereshControls(GameSession session)
     {
-        if (session.Speed.IsPaused)
+        if (session.State.IsPaused)
         {
             cmdPause.ForeColor = Color.OrangeRed;
 
@@ -33,7 +33,7 @@ public partial class GameSpeedControl : UserControl
         else
         {
             cmdPause.ForeColor = Color.DarkGray;
-            if(_lastGameSpeed != session.Speed.Speed || _lastGameIsPaused != session.Speed.IsPaused)
+            if(_lastGameSpeed != session.State.Speed || _lastGameIsPaused != session.State.IsPaused)
             {
                 button1.ForeColor = Color.DarkGray;
                 button2.ForeColor = Color.DarkGray;
@@ -41,7 +41,7 @@ public partial class GameSpeedControl : UserControl
                 button4.ForeColor = Color.DarkGray;
                 button5.ForeColor = Color.DarkGray;
 
-                switch (session.Speed.Speed)
+                switch (session.State.Speed)
                 {
                     case 1:
                         button1.ForeColor = Color.OrangeRed;
@@ -62,8 +62,8 @@ public partial class GameSpeedControl : UserControl
             }            
         }
 
-        _lastGameSpeed = session.Speed.Speed;
-        _lastGameIsPaused = session.Speed.IsPaused;
+        _lastGameSpeed = session.State.Speed;
+        _lastGameIsPaused = session.State.IsPaused;
     }
 
     private void cmdPause_Click(object sender, EventArgs e)

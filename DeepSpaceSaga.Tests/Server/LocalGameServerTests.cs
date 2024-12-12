@@ -36,19 +36,19 @@ public class LocalGameServerTests
         // Act
         var _gameServer = Generator.LocalGameServer();
 
-        var step1 = _gameServer.SessionContext.Session.Speed.Speed;
+        var step1 = _gameServer.SessionContext.Session.State.Speed;
 
         _gameServer.SetGameSpeed(2);
 
-        var step2 = _gameServer.SessionContext.Session.Speed.Speed;
+        var step2 = _gameServer.SessionContext.Session.State.Speed;
 
         _gameServer.SetGameSpeed(3);
 
-        var step3 = _gameServer.SessionContext.Session.Speed.Speed;
+        var step3 = _gameServer.SessionContext.Session.State.Speed;
 
         _gameServer.SetGameSpeed(4);
 
-        var step4 = _gameServer.SessionContext.Session.Speed.Speed;
+        var step4 = _gameServer.SessionContext.Session.State.Speed;
 
         // Assert
         Assert.Equal(expectedStep1, step1);
@@ -71,19 +71,19 @@ public class LocalGameServerTests
 
         _gameServer.SetGameSpeed(3);
 
-        var step1 = _gameServer.SessionContext.Session.Speed.Speed;
+        var step1 = _gameServer.SessionContext.Session.State.Speed;
 
         _gameServer.SetGameSpeed(2);
 
-        var step2 = _gameServer.SessionContext.Session.Speed.Speed;
+        var step2 = _gameServer.SessionContext.Session.State.Speed;
 
         _gameServer.SetGameSpeed(1);
 
-        var step3 = _gameServer.SessionContext.Session.Speed.Speed;
+        var step3 = _gameServer.SessionContext.Session.State.Speed;
 
         _gameServer.SetGameSpeed(1);
 
-        var step4 = _gameServer.SessionContext.Session.Speed.Speed;
+        var step4 = _gameServer.SessionContext.Session.State.Speed;
 
         // Assert
         Assert.Equal(expectedStep1, step1);

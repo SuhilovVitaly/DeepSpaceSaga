@@ -1,6 +1,4 @@
-﻿using DeepSpaceSaga.Common.Tools;
-
-namespace DeepSpaceSaga.Tests.Server.Session;
+﻿namespace DeepSpaceSaga.Tests.Server.Session;
 
 public class BasicGameFlowTests
 {
@@ -87,7 +85,7 @@ public class BasicGameFlowTests
         var _gameServer = Generator.LocalGameServer();
         double startPositionX = (_gameServer.GetSession().SpaceMap.GetCelestialObjects()[0] as ISpacecraft).PositionX;
 
-        _gameServer.Execution(1);
+        _gameServer.Execution();
 
         double afterCalculationPositionX = (_gameServer.GetSession().SpaceMap.GetCelestialObjects()[0] as ISpacecraft).PositionX;
 

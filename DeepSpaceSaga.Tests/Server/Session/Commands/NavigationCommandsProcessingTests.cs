@@ -245,6 +245,7 @@ public class NavigationCommandsProcessingTests
         var spacecraft = Generator.SpacecraftWithModules();
 
         session.SpaceMap.Add(spacecraft);
+        
 
         var _gameServer = Generator.LocalGameServerWithPreSetSessoin(session);
 
@@ -260,7 +261,12 @@ public class NavigationCommandsProcessingTests
 
         _gameServer?.Execution();
 
-        _gameServer?.Execution(20);
+        session.State.SetSpeed(10);
+
+        // 10 turns from State.Speed
+        _gameServer?.Execution();
+        // 10 turns from State.Speed
+        _gameServer?.Execution();
 
         var spacecraftAfterCalculateCommand = _gameServer.GetSession().GetPlayerSpaceShip();
 
@@ -300,8 +306,9 @@ public class NavigationCommandsProcessingTests
         });
 
         _gameServer?.Execution();
-
-        _gameServer?.Execution(20);
+        session.State.SetSpeed(10);
+        _gameServer?.Execution();
+        _gameServer?.Execution();
 
         var spacecraftAfterCalculateCommand = _gameServer.GetSession().GetPlayerSpaceShip();
 
@@ -327,6 +334,7 @@ public class NavigationCommandsProcessingTests
         var spacecraft = Generator.SpacecraftWithModules();
 
         session.SpaceMap.Add(spacecraft);
+        session.State.SetSpeed(5);
 
         var _gameServer = Generator.LocalGameServerWithPreSetSessoin(session);
 
@@ -340,7 +348,7 @@ public class NavigationCommandsProcessingTests
             ModuleId = spacecraft.GetModules(Common.Universe.Equipment.Category.Propulsion).FirstOrDefault().Id
         });
 
-        _gameServer?.Execution(5);
+        _gameServer?.Execution();
 
         _gameServer?.AddCommand(new Command
         {
@@ -352,7 +360,10 @@ public class NavigationCommandsProcessingTests
             ModuleId = spacecraft.GetModules(Common.Universe.Equipment.Category.Propulsion).FirstOrDefault().Id
         });
 
-        _gameServer?.Execution(20);
+        session.State.SetSpeed(10);
+
+        _gameServer?.Execution();
+        _gameServer?.Execution();
 
         var spacecraftAfterCalculateCommand = _gameServer?.GetSession().GetPlayerSpaceShip();
 

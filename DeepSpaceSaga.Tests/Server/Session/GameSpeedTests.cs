@@ -14,12 +14,13 @@ public class GameSpeedTests
 
         var spacecraft = Generator.SpacecraftWithModules();
         session.SpaceMap.Add(spacecraft);
+        session.State.SetSpeed(10);
 
         var _gameServer = Generator.LocalGameServerWithPreSetSessoin(session);
         
         double startPositionX = spacecraft.PositionX;
 
-        _gameServer.Execution(10);
+        _gameServer.Execution();
 
         var spacecraftAfterCalculation = _gameServer.GetSession().SpaceMap.GetCelestialObjects()[0] as ISpacecraft;
 
@@ -47,11 +48,12 @@ public class GameSpeedTests
         spacecraft.Modules.Add(moduleScanner);
 
         session.SpaceMap.Add(spacecraft);
+        session.State.SetSpeed(10);
 
         var _gameServer = Generator.LocalGameServerWithPreSetSessoin(session);
         var spacecraftInSession = _gameServer.GetSession().SpaceMap.GetCelestialObjects()[0] as ISpacecraft;
 
-        _gameServer.Execution(10);
+        _gameServer.Execution();
 
         var spacecraftAfterCalculation = _gameServer.GetSession().SpaceMap.GetCelestialObjects()[0] as ISpacecraft;
 

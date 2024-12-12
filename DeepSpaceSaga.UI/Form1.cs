@@ -135,7 +135,7 @@ public partial class Form1 : Form
         switch (e.KeyCode)
         {
             case Keys.Space:
-                if(session.Speed.IsPaused)
+                if(session.State.IsPaused)
                 {
                     Global.GameManager.EventController.Resume();
                 }

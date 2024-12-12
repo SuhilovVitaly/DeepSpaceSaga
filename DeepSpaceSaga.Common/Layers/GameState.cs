@@ -1,6 +1,6 @@
 ﻿namespace DeepSpaceSaga.Common.Layers;
 
-public class GameSpeed
+public class GameState
 {
     public bool IsPaused { get; set; } = true;
 
