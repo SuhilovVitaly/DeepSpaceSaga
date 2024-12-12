@@ -1,4 +1,4 @@
-﻿namespace DeepSpaceSaga.Server;
+﻿namespace DeepSpaceSaga.Common.Tools.Telemetry;
 
 public enum Metrics
 {
@@ -13,5 +13,6 @@ public enum Metrics
     PreProcessingGenerateNewAsteroidCommand,
     ProcessingGenerateAsteroidCommand,
     ProcessingNavigationStopShipCommand,
-    ProcessingNavigationFullSpeedCommand
+    ProcessingNavigationFullSpeedCommand,
+    CalculationTurnAvg
 }

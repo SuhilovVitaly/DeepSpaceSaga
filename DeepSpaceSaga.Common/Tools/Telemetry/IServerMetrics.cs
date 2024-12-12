@@ -1,4 +1,4 @@
-﻿namespace DeepSpaceSaga.Server;
+﻿namespace DeepSpaceSaga.Common.Tools.Telemetry;
 
 public interface IServerMetrics
 {
@@ -8,6 +8,8 @@ public interface IServerMetrics
     void IncreaseTurn();
 
     void Add(Metrics metric, double incrementValue);
+
+    void AddMilliseconds(Metrics metric, double milliseconds);
 
     void Add(Metrics metric);
 

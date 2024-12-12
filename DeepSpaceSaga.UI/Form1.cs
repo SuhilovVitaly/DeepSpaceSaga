@@ -26,10 +26,6 @@ public partial class Form1 : Form
 
         crlCommands.Location = new Point((Width / 2) - crlCommands.Width / 2, crlCommands.Location.Y); 
 
-        Global.GameManager.EventController.OnTacticalMapMouseMove += CrlTacticalMap_OnMouseMove;
-
-        Global.GameManager.EventController.OnRefreshData += Worker_OnGetDataFromServer;
-
         Global.GameManager.EventController.OnShowCelestialObject += Event_ShowCelestialObject;
         Global.GameManager.EventController.OnHideCelestialObject += Event_HideCelestialObject;
         Global.GameManager.EventController.OnSelectCelestialObject += Event_SelectCelestialObject;
@@ -54,29 +50,6 @@ public partial class Form1 : Form
     private void Event_ShowCelestialObject(ICelestialObject celestialObject)
     {
         crlActiveCelestialObjectInfo.RefreshInfo(celestialObject);
-    }
-
-    private void CrlTacticalMap_OnMouseMove(SpaceMapPoint e)
-    {
-        crlMousePosition.Text = $"({Width}:{Height}) - ({Width/2}:{Height/2}){Environment.NewLine}({e.X}:{e.Y})";
-    }
-
-    private void Worker_OnGetDataFromServer(GameSession obj)
-    {
-        CrossThreadExtensions.PerformSafely(this, RefreshControls);
-    }
-
-    private void RefreshControls()
-    {
-        var lastGridReDrawData = $" time: {Global.ScreenData.Metrics.LastGridDrawTimeinMs}";
-        var prerenderingGrids = $" time: {Global.ScreenData.Metrics.PreRenderBaseGridsTimeinMs}";
-
-
-        crlLabelTurns.Text = $" Turn is {Global.GameManager.GetSession().Turn}.{Global.GameManager.GetSession().TurnTick} {Environment.NewLine} " +
-            $"Center is ({Global.ScreenData.CenterScreenOnMap.X},{Global.ScreenData.CenterScreenOnMap.Y}) {Environment.NewLine}" +
-            $"Zoom is {Global.ScreenData.Zoom.Size} {Environment.NewLine}" +
-            $"Prerendering is {prerenderingGrids} {Environment.NewLine}" +
-            $"Grid Redraw info is {lastGridReDrawData} {Environment.NewLine}";
     }
 
     private void button1_Click(object sender, EventArgs e)

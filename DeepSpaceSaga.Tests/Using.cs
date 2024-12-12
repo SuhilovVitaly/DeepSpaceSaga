@@ -10,3 +10,4 @@ global using DeepSpaceSaga.Common.Universe.Commands;
 global using DeepSpaceSaga.Common.Settings;
 global using DeepSpaceSaga.Server.Generation.Modules;
 global using DeepSpaceSaga.Common.Extensions;
+global using DeepSpaceSaga.Common.Tools.Telemetry;

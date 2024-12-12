@@ -1,6 +1,4 @@
-﻿using DeepSpaceSaga.Common.Settings;
-
-namespace DeepSpaceSaga.Tests.TestsFramework;
+﻿namespace DeepSpaceSaga.Tests.TestsFramework;
 
 internal class Generator
 {

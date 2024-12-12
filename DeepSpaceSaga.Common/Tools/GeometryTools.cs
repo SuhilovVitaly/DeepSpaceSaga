@@ -1,6 +1,4 @@
-﻿using DeepSpaceSaga.Common.Geometry;
-
-namespace DeepSpaceSaga.Common.Tools;
+﻿namespace DeepSpaceSaga.Common.Tools;
 
 public class GeometryTools
 {

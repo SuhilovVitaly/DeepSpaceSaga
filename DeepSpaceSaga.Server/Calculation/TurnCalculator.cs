@@ -16,7 +16,13 @@ public class TurnCalculator
 
         for (var i = 0; i < processingSession.Session.State.Speed; i++)
         {
+            var stopwatch = Stopwatch.StartNew();
+
             processingSession = TurnExecution(sessionContext);
+
+            stopwatch.Stop();
+
+            sessionContext.Metrics.AddMilliseconds(Metrics.CalculationTurnAvg, stopwatch.ElapsedMilliseconds);
         }
 
         return processingSession;
