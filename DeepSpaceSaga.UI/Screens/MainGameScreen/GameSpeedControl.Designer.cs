@@ -34,6 +34,7 @@
             button3 = new Button();
             button4 = new Button();
             button5 = new Button();
+            crlEmpty = new Button();
             SuspendLayout();
             // 
             // cmdPause
@@ -114,11 +115,24 @@
             button5.UseVisualStyleBackColor = false;
             button5.Click += button5_Click;
             // 
+            // crlEmpty
+            // 
+            crlEmpty.BackColor = Color.Olive;
+            crlEmpty.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            crlEmpty.ForeColor = Color.DarkGray;
+            crlEmpty.Location = new Point(152, 125);
+            crlEmpty.Name = "crlEmpty";
+            crlEmpty.Size = new Size(48, 48);
+            crlEmpty.TabIndex = 4;
+            crlEmpty.Text = "5";
+            crlEmpty.UseVisualStyleBackColor = false;
+            // 
             // GameSpeedControl
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(12, 12, 12);
+            Controls.Add(crlEmpty);
             Controls.Add(button5);
             Controls.Add(button4);
             Controls.Add(button3);
@@ -127,7 +141,7 @@
             Controls.Add(cmdPause);
             DoubleBuffered = true;
             Name = "GameSpeedControl";
-            Size = new Size(353, 77);
+            Size = new Size(353, 298);
             ResumeLayout(false);
         }
 
@@ -139,5 +153,6 @@
         private Button button3;
         private Button button4;
         private Button button5;
+        private Button crlEmpty;
     }
 }
