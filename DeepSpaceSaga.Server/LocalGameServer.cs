@@ -81,6 +81,8 @@ public class LocalGameServer : IGameServer
             _sessionLock.ExitWriteLock();
 
             _isCalculationInProgress = false;
+
+            var x = SessionContext.Metrics.Get(Common.Tools.Telemetry.Metrics.CalculationTurnAvg);
         }
         catch (Exception ex)
         {

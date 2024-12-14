@@ -1,4 +1,6 @@
-﻿namespace DeepSpaceSaga.Tests.Server.Session.Commands;
+﻿using DeepSpaceSaga.Server;
+
+namespace DeepSpaceSaga.Tests.Server.Session.Commands;
 
 public class GenerateCelestialObjectTests
 {
