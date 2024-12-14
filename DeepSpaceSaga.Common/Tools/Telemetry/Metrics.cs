@@ -14,5 +14,7 @@ public enum Metrics
     ProcessingGenerateAsteroidCommand,
     ProcessingNavigationStopShipCommand,
     ProcessingNavigationFullSpeedCommand,
-    CalculationTurnAvg
+    CalculationTurnAvg,
+    ProcessingNavigationSyncSpeedWithTargetCommand,
+    ProcessingNavigationCommandError
 }

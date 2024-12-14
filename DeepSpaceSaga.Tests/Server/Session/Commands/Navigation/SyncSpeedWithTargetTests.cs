@@ -8,12 +8,14 @@ public class SyncSpeedWithTargetTests
         // Arrange
         double expectedReceivedCommand = 1;
         double expectedSpeed = 8;
+        double startSpacecrafeSpeed = 2;
 
         // Act
         var session = new GameSession(new CelestialMap([]));
 
         var spacecraft = Generator.SpacecraftWithModules();
-        spacecraft.Speed = 2;
+        spacecraft.Speed = startSpacecrafeSpeed;
+        spacecraft.Agility = 1;
 
         session.SpaceMap.Add(spacecraft);
 
@@ -29,7 +31,8 @@ public class SyncSpeedWithTargetTests
             Category = CommandCategory.Navigation,
             Type = CommandTypes.SyncSpeedWithTarget,
             IsOneTimeCommand = false,
-            CelestialObjectId = asteroid.Id,
+            TargetCelestialObjectId = asteroid.Id,
+            CelestialObjectId = spacecraft.Id,
             ModuleId = spacecraft.GetModules(Common.Universe.Equipment.Category.Propulsion).FirstOrDefault().Id
         });
 
@@ -37,16 +40,18 @@ public class SyncSpeedWithTargetTests
 
         _gameServer?.Execution();
 
-        session.State.SetSpeed(10);
+        _gameServer?.Execution();
 
         var spacecraftAfterCalculateCommand = _gameServer.GetSession().GetPlayerSpaceShip();
 
+        var calculationCycles = (asteroid.Speed - startSpacecrafeSpeed) * 2 + 1;
+
         // Assert
         Assert.Equal(expectedSpeed, spacecraftAfterCalculateCommand.Speed);
-        //Assert.Equal(expectedReceivedCommand, _gameServer.Metrics.Get(Metrics.ReceivedCommand));
-        //Assert.Equal(1, _gameServer.Metrics.Get(Metrics.ProcessingNavigationCommand));
-        //Assert.Equal(1, _gameServer.Metrics.Get(Metrics.ProcessingNavigationIncreaseShipSpeedCommand));
-        //Assert.Equal(1, _gameServer.Metrics.Get(Metrics.MessageAddedToJournal));
+        Assert.Equal(expectedReceivedCommand, _gameServer.Metrics.Get(Metrics.ReceivedCommand));
+        Assert.Equal(calculationCycles, _gameServer.Metrics.Get(Metrics.ProcessingNavigationCommand));
+        Assert.Equal(calculationCycles, _gameServer.Metrics.Get(Metrics.ProcessingNavigationSyncSpeedWithTargetCommand));
+        Assert.Equal(calculationCycles, _gameServer.Metrics.Get(Metrics.MessageAddedToJournal));
         Assert.Equal(0, _gameServer.SessionContext.EventsSystem.Commands.Count);
     }
 
@@ -56,12 +61,14 @@ public class SyncSpeedWithTargetTests
         // Arrange
         double expectedReceivedCommand = 1;
         double expectedSpeed = 8;
+        double startSpacecrafeSpeed = 12;
 
         // Act
         var session = new GameSession(new CelestialMap([]));
 
         var spacecraft = Generator.SpacecraftWithModules();
-        spacecraft.Speed = 12;
+        spacecraft.Speed = startSpacecrafeSpeed;
+        spacecraft.Agility = 1;
 
         session.SpaceMap.Add(spacecraft);
 
@@ -77,7 +84,8 @@ public class SyncSpeedWithTargetTests
             Category = CommandCategory.Navigation,
             Type = CommandTypes.SyncSpeedWithTarget,
             IsOneTimeCommand = false,
-            CelestialObjectId = asteroid.Id,
+            TargetCelestialObjectId = asteroid.Id,
+            CelestialObjectId = spacecraft.Id,
             ModuleId = spacecraft.GetModules(Common.Universe.Equipment.Category.Propulsion).FirstOrDefault().Id
         });
 
@@ -85,16 +93,18 @@ public class SyncSpeedWithTargetTests
 
         _gameServer?.Execution();
 
-        session.State.SetSpeed(10);
+        _gameServer?.Execution();
 
         var spacecraftAfterCalculateCommand = _gameServer.GetSession().GetPlayerSpaceShip();
 
+        var calculationCycles = Math.Abs(asteroid.Speed - startSpacecrafeSpeed) * 2 + 1;
+
         // Assert
         Assert.Equal(expectedSpeed, spacecraftAfterCalculateCommand.Speed);
-        //Assert.Equal(expectedReceivedCommand, _gameServer.Metrics.Get(Metrics.ReceivedCommand));
-        //Assert.Equal(1, _gameServer.Metrics.Get(Metrics.ProcessingNavigationCommand));
-        //Assert.Equal(1, _gameServer.Metrics.Get(Metrics.ProcessingNavigationIncreaseShipSpeedCommand));
-        //Assert.Equal(1, _gameServer.Metrics.Get(Metrics.MessageAddedToJournal));
+        Assert.Equal(expectedReceivedCommand, _gameServer.Metrics.Get(Metrics.ReceivedCommand));
+        Assert.Equal(calculationCycles, _gameServer.Metrics.Get(Metrics.ProcessingNavigationCommand));
+        Assert.Equal(calculationCycles, _gameServer.Metrics.Get(Metrics.ProcessingNavigationSyncSpeedWithTargetCommand));
+        Assert.Equal(calculationCycles, _gameServer.Metrics.Get(Metrics.MessageAddedToJournal));
         Assert.Equal(0, _gameServer.SessionContext.EventsSystem.Commands.Count);
     }
 
@@ -103,7 +113,7 @@ public class SyncSpeedWithTargetTests
     {
         // Arrange
         double expectedReceivedCommand = 1;
-        double expectedSpeed = 14;
+        double expectedSpeed = 12;
 
         // Act
         var session = new GameSession(new CelestialMap([]));
@@ -126,7 +136,8 @@ public class SyncSpeedWithTargetTests
             Category = CommandCategory.Navigation,
             Type = CommandTypes.SyncSpeedWithTarget,
             IsOneTimeCommand = false,
-            CelestialObjectId = 8000,
+            TargetCelestialObjectId = -1,
+            CelestialObjectId = spacecraft.Id,
             ModuleId = spacecraft.GetModules(Common.Universe.Equipment.Category.Propulsion).FirstOrDefault().Id
         });
 
@@ -140,10 +151,9 @@ public class SyncSpeedWithTargetTests
 
         // Assert
         Assert.Equal(expectedSpeed, spacecraftAfterCalculateCommand.Speed);
-        //Assert.Equal(expectedReceivedCommand, _gameServer.Metrics.Get(Metrics.ReceivedCommand));
-        //Assert.Equal(1, _gameServer.Metrics.Get(Metrics.ProcessingNavigationCommand));
-        //Assert.Equal(1, _gameServer.Metrics.Get(Metrics.ProcessingNavigationIncreaseShipSpeedCommand));
-        //Assert.Equal(1, _gameServer.Metrics.Get(Metrics.MessageAddedToJournal));
+        Assert.Equal(expectedReceivedCommand, _gameServer.Metrics.Get(Metrics.ReceivedCommand));
+        Assert.Equal(1, _gameServer.Metrics.Get(Metrics.ProcessingNavigationCommand));
+        Assert.Equal(1, _gameServer.Metrics.Get(Metrics.ProcessingNavigationCommandError));
         Assert.Equal(0, _gameServer.SessionContext.EventsSystem.Commands.Count);
     }
 
@@ -175,7 +185,8 @@ public class SyncSpeedWithTargetTests
             Category = CommandCategory.Navigation,
             Type = CommandTypes.SyncSpeedWithTarget,
             IsOneTimeCommand = false,
-            CelestialObjectId = asteroid.Id,
+            TargetCelestialObjectId = asteroid.Id,
+            CelestialObjectId = spacecraft.Id,
             ModuleId = spacecraft.GetModules(Common.Universe.Equipment.Category.Propulsion).FirstOrDefault().Id
         });
 
@@ -189,10 +200,10 @@ public class SyncSpeedWithTargetTests
 
         // Assert
         Assert.Equal(expectedSpeed, spacecraftAfterCalculateCommand.Speed);
-        //Assert.Equal(expectedReceivedCommand, _gameServer.Metrics.Get(Metrics.ReceivedCommand));
-        //Assert.Equal(1, _gameServer.Metrics.Get(Metrics.ProcessingNavigationCommand));
-        //Assert.Equal(1, _gameServer.Metrics.Get(Metrics.ProcessingNavigationIncreaseShipSpeedCommand));
-        //Assert.Equal(1, _gameServer.Metrics.Get(Metrics.MessageAddedToJournal));
+        Assert.Equal(expectedReceivedCommand, _gameServer.Metrics.Get(Metrics.ReceivedCommand));
+        Assert.Equal(4, _gameServer.Metrics.Get(Metrics.ProcessingNavigationCommand));
+        Assert.Equal(4, _gameServer.Metrics.Get(Metrics.ProcessingNavigationSyncSpeedWithTargetCommand));
+        Assert.Equal(4, _gameServer.Metrics.Get(Metrics.MessageAddedToJournal));
         Assert.Equal(0, _gameServer.SessionContext.EventsSystem.Commands.Count);
     }
 }

@@ -29,6 +29,10 @@ internal class NavigationProcessingHandler
                 sessionContext.Metrics.Add(Metrics.ProcessingNavigationTurnRightCommand);
                 TurnRight(currentCelestialObject, command);
                 break;
+            case CommandTypes.SyncSpeedWithTarget:
+                sessionContext.Metrics.Add(Metrics.ProcessingNavigationSyncSpeedWithTargetCommand);
+                SyncSpeedWithTarget(sessionContext, currentCelestialObject, command);
+                break;
             case CommandTypes.RotateToTarget:
                 sessionContext.Metrics.Add(Metrics.ProcessingNavigationRotateToTargetCommand);
                 RotateToTarget(sessionContext, currentCelestialObject, command);
@@ -46,6 +50,44 @@ internal class NavigationProcessingHandler
         AddToJournal(sessionContext, command, currentCelestialObject);
 
         return sessionContext;
+    }
+
+    private void SyncSpeedWithTarget(SessionContext sessionContext, ICelestialObject currentCelestialObject, Command command)
+    {
+        var targetCelestialObject = sessionContext.Session.GetCelestialObject(command.TargetCelestialObjectId);
+        var spacecraft = currentCelestialObject as ISpacecraft;
+        var module = spacecraft.GetModule(command.ModuleId);
+
+        if(targetCelestialObject is null)
+        {
+            sessionContext.Metrics.Add(Metrics.ProcessingNavigationCommandError);
+            module.IsCalculated = true;
+            return;
+        }
+
+        var speedDelta = Math.Abs(targetCelestialObject.Speed - spacecraft.Speed);
+
+        if(speedDelta < spacecraft.Agility / 2)
+        {
+            spacecraft.Speed = targetCelestialObject.Speed;
+            module.IsCalculated = true;
+            return;
+        }
+
+        if(targetCelestialObject.Speed > spacecraft.Speed)
+        {
+            spacecraft.ChangeVelocity(spacecraft.Agility / 2);
+        }
+        else
+        {
+            spacecraft.ChangeVelocity(- (spacecraft.Agility / 2));
+        }
+
+        if(spacecraft.Speed >= spacecraft.MaxSpeed)
+        {
+            spacecraft.Speed = spacecraft.MaxSpeed;
+            module.IsCalculated = true;
+        }
     }
 
     private void FullSpeed(SessionContext sessionContext, ICelestialObject celestialObject, Command command)
