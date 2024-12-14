@@ -2,16 +2,11 @@
 
 public interface IServerMetrics
 {
-    int TickCounter { get; }
-    int TurnCounter { get; }
-    void IncreaseTick();
-    void IncreaseTurn();
-
-    void Add(Metrics metric, double incrementValue);
+    void Add(Metrics metric, double incrementValue = 1);
 
     void AddMilliseconds(Metrics metric, double milliseconds);
 
-    void Add(Metrics metric);
-
     double Get(Metrics metric);
+
+    double GetAverageMillisecondst(Metrics metric);
 }

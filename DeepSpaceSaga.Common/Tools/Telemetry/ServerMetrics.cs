@@ -1,92 +1,120 @@
-﻿using System.Collections.Concurrent;
+﻿namespace DeepSpaceSaga.Common.Tools.Telemetry;
 
-namespace DeepSpaceSaga.Common.Tools.Telemetry;
-
+/// <summary>
+/// Tracks server metrics including ticks, turns, and various performance indicators.
+/// </summary>
 public class ServerMetrics : IServerMetrics
 {
-    private int _tickCounter;
-    private int _turnCounter;
+    private readonly ConcurrentDictionary<Metrics, MetricData> _metrics = new();
 
-    public int TickCounter => _tickCounter;
-    public int TurnCounter => _turnCounter;
-
-    public void IncreaseTick()
-    {
-        _tickCounter++;
-    }
-
-    public void IncreaseTurn()
-    {
-        _turnCounter++;
-    }
-
-    private readonly ConcurrentDictionary<Metrics, double> _metrics = new ConcurrentDictionary<Metrics, double>();
-
-    private readonly ConcurrentDictionary<Metrics, (double Sum, int Count)> _averageMetrics = new ConcurrentDictionary<Metrics, (double Sum, int Count)>();
-
-    private readonly ConcurrentDictionary<Metrics, int> _metricCounts = new ConcurrentDictionary<Metrics, int>();
-
-
-    public void Add(Metrics metric, double incrementValue)
+    /// <summary>
+    /// Adds or updates the value of a metric by the specified increment.
+    /// </summary>
+    /// <param name="metric">The metric to update.</param>
+    /// <param name="incrementValue">The value to add to the metric.</param>
+    public void Add(Metrics metric, double incrementValue = 1)
     {
         _metrics.AddOrUpdate(
             metric,
-            incrementValue,
-            (key, currentValue) => currentValue + incrementValue
-        );
-    }
-
-    public void Add(Metrics metric)
-    {
-        Add(metric, 1);
-    }
-
-    public void AddMilliseconds(Metrics metric, double milliseconds)
-    {
-        _metricCounts.AddOrUpdate(
-            metric,
-            1,
-            (key, currentCount) => currentCount + 1
-        );
-
-        _averageMetrics.AddOrUpdate(
-            metric,
-            (milliseconds, 1),
-            (key, current) =>
+            new MetricData(incrementValue, 1, incrementValue),
+            (_, data) => data with
             {
-                double newSum = current.Sum + milliseconds;
-                int newCount = current.Count + 1;
-
-                return (newSum, newCount);
+                CurrentValue = data.CurrentValue + incrementValue,
+                Count = data.Count + 1,
+                Average = (data.CurrentValue + incrementValue) / (data.Count + 1)
             }
         );
+    }
 
-        var avg = GetAverageMilliseconds(metric);
-
+    /// <summary>
+    /// Records a performance metric in milliseconds and updates its average.
+    /// </summary>
+    /// <param name="metric">The metric to update.</param>
+    /// <param name="milliseconds">The time in milliseconds to record.</param>
+    public void AddMilliseconds(Metrics metric, double milliseconds)
+    {
         _metrics.AddOrUpdate(
             metric,
-            avg,
-            (key, currentValue) => avg
+            new MetricData(milliseconds, 1, milliseconds),
+            (_, data) => data with
+            {
+                CurrentValue = data.CurrentValue + milliseconds,
+                Count = data.Count + 1,
+                Average = (data.CurrentValue + milliseconds) / (data.Count + 1)
+            }
         );
     }
 
-    public double GetAverageMilliseconds(Metrics metric)
-    {
-        if (_averageMetrics.TryGetValue(metric, out var value))
-        {
-            return value.Sum / value.Count;
-        }
-
-        throw new KeyNotFoundException($"Metric '{metric}' not found.");
-    }
-
+    /// <summary>
+    /// Gets the current value of a metric.
+    /// </summary>
+    /// <param name="metric">The metric to retrieve.</param>
+    /// <returns>The current value of the metric.</returns>
+    /// <exception cref="KeyNotFoundException">Thrown if the metric is not found.</exception>
     public double Get(Metrics metric)
     {
-        if (_metrics.TryGetValue(metric, out var value))
+        if (_metrics.TryGetValue(metric, out var data))
         {
-            return value;
+            return data.CurrentValue;
         }
 
         throw new KeyNotFoundException($"Metric '{metric}' not found.");
     }
+
+    /// <summary>
+    /// Attempts to get the current value of a metric.
+    /// </summary>
+    /// <param name="metric">The metric to retrieve.</param>
+    /// <param name="value">The current value of the metric if found.</param>
+    /// <returns>True if the metric was found, otherwise false.</returns>
+    public bool TryGetMetricValue(Metrics metric, out double value)
+    {
+        if (_metrics.TryGetValue(metric, out var data))
+        {
+            value = data.CurrentValue;
+            return true;
+        }
+
+        value = 0;
+        return false;
+    }
+
+    /// <summary>
+    /// Gets the precomputed average value of a performance metric in milliseconds.
+    /// </summary>
+    /// <param name="metric">The metric to retrieve.</param>
+    /// <returns>The average value of the metric in milliseconds.</returns>
+    /// <exception cref="KeyNotFoundException">Thrown if the metric is not found.</exception>
+    public double GetAverageMillisecondst(Metrics metric)
+    {
+        if (_metrics.TryGetValue(metric, out var data))
+        {
+            return data.Average;
+        }
+
+        throw new KeyNotFoundException($"Metric '{metric}' not found.");
+    }
+
+    /// <summary>
+    /// Attempts to get the precomputed average value of a performance metric in milliseconds.
+    /// </summary>
+    /// <param name="metric">The metric to retrieve.</param>
+    /// <param name="average">The precomputed average value if the metric is found.</param>
+    /// <returns>True if the metric was found, otherwise false.</returns>
+    public bool TryGetAverageMilliseconds(Metrics metric, out double average)
+    {
+        if (_metrics.TryGetValue(metric, out var data))
+        {
+            average = data.Average;
+            return true;
+        }
+
+        average = 0;
+        return false;
+    }
+
+    /// <summary>
+    /// A record to store metric data.
+    /// </summary>
+    private record MetricData(double CurrentValue, int Count, double Average);
 }
