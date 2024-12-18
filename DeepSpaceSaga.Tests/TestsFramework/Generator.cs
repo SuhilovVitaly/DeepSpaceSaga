@@ -4,7 +4,7 @@ internal class Generator
 {
     public static LocalGameServer LocalGameServer()
     {
-        var _gameServer = new LocalGameServer();
+        var _gameServer = new LocalGameServer(new ServerMetrics(), new LocalGameServerOptions());
         _gameServer.SessionInitialization();
 
         return _gameServer;

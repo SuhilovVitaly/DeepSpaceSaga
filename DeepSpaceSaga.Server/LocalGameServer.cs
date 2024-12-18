@@ -2,26 +2,58 @@
 
 public class LocalGameServer : IGameServer
 {
+    private static readonly ILog Logger = LogManager.GetLogger(MethodBase.GetCurrentMethod()?.DeclaringType); 
+    
+    private readonly LocalGameServerOptions _options;
     private readonly ReaderWriterLockSlim _sessionLock = new();
-    public SessionContext SessionContext { get; private set; }
-    public IServerMetrics Metrics { get; set; }
+    private readonly IServerMetrics _metrics;
+    private SessionContext _sessionContext;
+    private CancellationTokenSource _cancellationTokenSource = new();
 
-    public LocalGameServer()
+    public SessionContext SessionContext 
+    { 
+        get => _sessionContext;
+        private set => _sessionContext = value ?? throw new ArgumentNullException(nameof(value));
+    }
+
+    public IServerMetrics Metrics 
+    { 
+        get => _metrics;
+        private init => _metrics = value ?? throw new ArgumentNullException(nameof(value));
+    }
+
+    public LocalGameServer(
+        IServerMetrics metrics,
+        LocalGameServerOptions options,
+        GameEventsSystem? eventsSystem = null)
     {
-        Metrics = new ServerMetrics();
+        ArgumentNullException.ThrowIfNull(metrics);
+        ArgumentNullException.ThrowIfNull(options);
+        
+        _options = options;
+        Metrics = metrics;
 
         SessionContext = new SessionContext(
-            new GameSession(new CelestialMap([]), new GameSessionsSettings()), 
-            new GameEventsSystem(Metrics),
-            Metrics);
+            new GameSession(_options.InitialMap, _options.SessionSettings), 
+            eventsSystem ?? new GameEventsSystem(metrics),
+            metrics);
 
-        Scheduler.Instance.ScheduleTask(1, 100, TurnExecute);
+        Scheduler.Instance.ScheduleTask(
+            _options.InitialTurnDelay, 
+            _options.TurnInterval, 
+            TurnExecute);
     }
 
     public LocalGameServer(GameSession session, ServerMetrics metrics)
     {
+        ArgumentNullException.ThrowIfNull(session);
+        ArgumentNullException.ThrowIfNull(metrics);
+
         Metrics = metrics;
-        SessionContext = new SessionContext(session, new GameEventsSystem(metrics), metrics);
+        SessionContext = new SessionContext(
+            session,
+            new GameEventsSystem(metrics),
+            metrics);
     }
 
     public GameSession GetSession()
@@ -37,7 +69,7 @@ public class LocalGameServer : IGameServer
         }
         catch (Exception ex)
         {
-            throw;
+            Logger.Error("[LocalGameServer] PauseSession error: " + ex.Message);
         }        
     }
 
@@ -49,7 +81,7 @@ public class LocalGameServer : IGameServer
         }
         catch (Exception ex)
         {
-            throw;
+            Logger.Error("[LocalGameServer] ResumeSession error: " + ex.Message);
         }        
     }
 
@@ -62,7 +94,13 @@ public class LocalGameServer : IGameServer
 
     private void TurnExecute()
     {
-        if (SessionContext.Session.State.IsPaused) return;
+        TurnExecute(_cancellationTokenSource.Token);
+    }
+
+    private void TurnExecute(CancellationToken cancellationToken = default)
+    {
+        if (cancellationToken.IsCancellationRequested || SessionContext.Session.State.IsPaused) 
+            return;
 
         Execution();
     }
@@ -77,35 +115,42 @@ public class LocalGameServer : IGameServer
             _sessionLock.EnterWriteLock();
 
             SessionContext = TurnCalculator.Execute(SessionContext);
-
-            _sessionLock.ExitWriteLock();
-
-            _isCalculationInProgress = false;
         }
         catch (Exception ex)
         {
-
-            throw;
+            Logger.Error("[LocalGameServer] Execution error: " + ex.Message);
+        }
+        finally
+        {
+            if (_sessionLock.IsWriteLockHeld)
+            {
+                _sessionLock.ExitWriteLock();
+            }
+            _isCalculationInProgress = false;
         }
     }
 
-    public async Task AddCommand(Command command)
+    public void AddCommand(Command command)
     {
         try
         {
             command.Status = CommandStatus.PreProcess;
             SessionContext.EventsSystem.AddCommand(command);
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-
-            throw;
+            Logger.Error("[LocalGameServer] AddCommand error: " + ex.Message);
         }
-        
     }
 
     public void SetGameSpeed(int speed)
     {
         SessionContext.Session.State.SetSpeed(speed);
+    }
+
+    public void Shutdown()
+    {
+        _cancellationTokenSource.Cancel();
+        _cancellationTokenSource.Dispose();
     }
 }

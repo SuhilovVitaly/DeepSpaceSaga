@@ -34,7 +34,7 @@ public class BasicGameFlowTests
         int expectedSessionId = -1;
 
         // Act
-        var _gameServer = new LocalGameServer();
+        var _gameServer = new LocalGameServer(new ServerMetrics(), new LocalGameServerOptions());
         _gameServer.SessionInitialization(expectedSessionId);
 
         var turnFirstSessionStatus = !_gameServer.GetSession().State.IsPaused;

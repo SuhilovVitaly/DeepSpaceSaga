@@ -1,4 +1,6 @@
-﻿namespace DeepSpaceSaga.Controller;
+﻿using DeepSpaceSaga.Common.Tools.Telemetry;
+
+namespace DeepSpaceSaga.Controller;
 
 public class Worker
 {
@@ -9,7 +11,7 @@ public class Worker
 
     public Worker()
     {
-        _gameServer = new LocalGameServer();
+        _gameServer = new LocalGameServer(new ServerMetrics(), new LocalGameServerOptions());
     }
 
     public void Initialize()
@@ -45,7 +47,7 @@ public class Worker
     {
         try
         {
-            await _gameServer.AddCommand(command);
+            _gameServer.AddCommand(command);
         }
         catch (Exception)
         {

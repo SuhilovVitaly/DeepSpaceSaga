@@ -20,3 +20,5 @@ global using DeepSpaceSaga.Server.Calculation.GameActionEventProcessing;
 global using DeepSpaceSaga.Common.Settings;
 global using System.Diagnostics;
 global using DeepSpaceSaga.Common.Tools.Telemetry;
+global using log4net;
+global using System.Reflection;
