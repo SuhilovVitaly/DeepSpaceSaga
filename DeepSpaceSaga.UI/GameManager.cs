@@ -1,6 +1,6 @@
 ﻿namespace DeepSpaceSaga.UI;
 
-public class GameManager
+public class GameManager : IDisposable
 {
     public OuterSpace OuterSpace { get; set; } = new OuterSpace();
     public EventManager EventController { get; set; }
@@ -33,5 +33,10 @@ public class GameManager
     public async Task ExecuteCommandAsync(Command command)
     {
         await EventController.ExecuteCommandAsync(command);
+    }
+
+    public void Dispose()
+    {
+        // Освобождение ресурсов
     }
 }
