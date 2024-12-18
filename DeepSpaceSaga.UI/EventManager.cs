@@ -1,4 +1,7 @@
-﻿namespace DeepSpaceSaga.Controller;
+﻿using DeepSpaceSaga.Server;
+using DeepSpaceSaga.Common.Tools.Telemetry;
+
+namespace DeepSpaceSaga.Controller;
 
 public class EventManager
 {
@@ -10,7 +13,7 @@ public class EventManager
     public event Action<ICelestialObject>? OnShowCelestialObject;
     public event Action<ICelestialObject>? OnHideCelestialObject;
 
-    private GameSession session;
+    private GameSession session = null!;
 
     private GameSession Session
     {
@@ -24,8 +27,8 @@ public class EventManager
 
     public EventManager()
     {
-        Worker = new Worker();
-        Worker.Initialize();
+        Worker = new Worker(new LocalGameServer(new ServerMetrics(), new LocalGameServerOptions()));
+        InitializeAsync().GetAwaiter().GetResult();
 
         Worker.OnGetDataFromServer += Worker_RefreshData;
         Worker.OnGameInitialize += Worker_OnGameInitialize;
@@ -35,6 +38,11 @@ public class EventManager
         MapEventHandler.OnShowCelestialObject += MapEventHandler_OnShowCelestialObject;
         MapEventHandler.OnHideCelestialObject += MapEventHandler_OnHideCelestialObject;
         MapEventHandler.OnSelectCelestialObject += MapEventHandler_OnSelectCelestialObject;
+    }
+
+    private async Task InitializeAsync()
+    {
+        await Worker.Initialize();
     }
 
     private void MapEventHandler_OnHideCelestialObject(ICelestialObject celestialObject)

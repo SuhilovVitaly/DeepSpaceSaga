@@ -1,26 +1,82 @@
-﻿using DeepSpaceSaga.Common.Tools.Telemetry;
+﻿using log4net;
 
 namespace DeepSpaceSaga.Controller;
 
-public class Worker
+public interface IWorker
 {
+    Task Initialize();
+    void Resume();
+    void Pause();
+    GameSession GetGameSession();
+    Task SendCommandAsync(Command command, CancellationToken cancellationToken = default);
+    void SetGameSpeed(int speed);
+}
+
+public class Worker : IWorker
+{
+    private readonly ILog _logger;
+    private readonly IGameServer _gameServer;
+
     public event Action<GameSession>? OnGetDataFromServer;
     public event Action<GameSession>? OnGameInitialize;
 
-    private IGameServer _gameServer;
-
-    public Worker()
+    public Worker(IGameServer gameServer)
     {
-        _gameServer = new LocalGameServer(new ServerMetrics(), new LocalGameServerOptions());
+        _gameServer = gameServer ?? throw new ArgumentNullException(nameof(gameServer));
+        _logger = LogManager.GetLogger(typeof(Worker));
     }
 
-    public void Initialize()
+    public async Task Initialize()
     {
-        
-        _gameServer.SessionInitialization();
-        OnGameInitialize?.Invoke(_gameServer.GetSession());
+        try
+        {
+            await _gameServer.SessionInitialization();
+            
+            var session = _gameServer.GetSession();
+            OnGameInitialize?.Invoke(session);
+            _logger.Info("Game initialized successfully");
 
-        Scheduler.Instance.ScheduleTask(1, 100, GetDataFromServer);
+            Scheduler.Instance.ScheduleTask(1, 100, GetDataFromServer);
+        }
+        catch (Exception ex)
+        {
+            _logger.Error("Failed to initialize game session", ex);
+            throw;
+        }
+    }
+
+    private void GetDataFromServer()
+    {
+        try
+        {
+            var handlers = OnGetDataFromServer;
+            if (handlers != null)
+            {
+                handlers.Invoke(_gameServer.GetSession());
+            }
+        }
+        catch (Exception ex)
+        {
+            _logger.Error("Error while getting data from server", ex);
+        }
+    }
+
+    public async Task SendCommandAsync(Command command, CancellationToken cancellationToken = default)
+    {
+        try
+        {
+            await _gameServer.AddCommand(command);
+        }
+        catch (OperationCanceledException)
+        {
+            _logger.Info("Command sending was cancelled");
+            throw;
+        }
+        catch (Exception ex)
+        {
+            _logger.Error("Failed to send command", ex);
+            throw;
+        }
     }
 
     public void Resume()
@@ -36,24 +92,6 @@ public class Worker
     public GameSession GetGameSession()
     {
         return _gameServer.GetSession();
-    }
-
-    private void GetDataFromServer()
-    {
-        OnGetDataFromServer?.Invoke(_gameServer.GetSession());
-    }
-
-    public async Task SendCommandAsync(Command command)
-    {
-        try
-        {
-            _gameServer.AddCommand(command);
-        }
-        catch (Exception)
-        {
-
-            throw;
-        }
     }
 
     public void SetGameSpeed(int speed)

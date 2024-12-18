@@ -85,9 +85,10 @@ public class LocalGameServer : IGameServer
         }        
     }
 
-    public void SessionInitialization(int sessionId = -1)
+    public async Task SessionInitialization(int sessionId = -1)
     {
         SessionContext.Session = GameSessionGenerator.ProduceSession();
+        await Task.CompletedTask;
     }
 
     private bool _isCalculationInProgress = false;
@@ -130,16 +131,18 @@ public class LocalGameServer : IGameServer
         }
     }
 
-    public void AddCommand(Command command)
+    public async Task AddCommand(Command command)
     {
         try
         {
             command.Status = CommandStatus.PreProcess;
             SessionContext.EventsSystem.AddCommand(command);
+            await Task.CompletedTask;
         }
         catch (Exception ex)
         {
             Logger.Error("[LocalGameServer] AddCommand error: " + ex.Message);
+            throw;
         }
     }
 
