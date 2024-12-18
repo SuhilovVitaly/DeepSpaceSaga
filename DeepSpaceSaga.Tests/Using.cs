@@ -11,3 +11,6 @@ global using DeepSpaceSaga.Common.Settings;
 global using DeepSpaceSaga.Server.Generation.Modules;
 global using DeepSpaceSaga.Common.Extensions;
 global using DeepSpaceSaga.Common.Tools.Telemetry;
+global using DeepSpaceSaga.Server.Calculation;
+global using FluentAssertions;
+global using Moq;
