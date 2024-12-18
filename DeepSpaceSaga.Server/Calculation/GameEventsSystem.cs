@@ -2,22 +2,20 @@
 
 public class GameEventsSystem(IServerMetrics metrics)
 {
-    private IServerMetrics metrics = metrics;
-
-    public ConcurrentBag<Command> Commands { get; set; } = [];
+    public ConcurrentQueue<Command> Commands { get; set; } = new();
     public ConcurrentDictionary<long, GameActionEvent> Actions { get; set; } = [];
 
     public GameEventsSystem Clone()
     {
         var duplicate = new GameEventsSystem(metrics)
         {
-            Commands = new ConcurrentBag<Command>(),
+            Commands = new ConcurrentQueue<Command>(),
             Actions = new ConcurrentDictionary<long, GameActionEvent>()
         };
 
         foreach (var command in Commands)
         {
-            duplicate.Commands.Add(command.Copy());
+            duplicate.Commands.Enqueue(command.Copy());
         }
 
         foreach (var action in Actions)
@@ -30,17 +28,22 @@ public class GameEventsSystem(IServerMetrics metrics)
 
     public void EndTurnProcessing()
     {
-        Commands = [];
+        Commands = new ConcurrentQueue<Command>();
     }
 
     public void AddCommand(Command command)
     {
+        ArgumentNullException.ThrowIfNull(command);
+        
         metrics.Add(Metrics.ReceivedCommand);
-        Commands.Add(command);
+        Commands.Enqueue(command);
     }
 
     public void ProcessModuleResults(ICelestialObject spacecraft, IModule module)
     {
+        ArgumentNullException.ThrowIfNull(spacecraft);
+        ArgumentNullException.ThrowIfNull(module);
+        
         var gameEvent = new GameActionEvent
         {
             Id = IdGenerator.GetNextId(),

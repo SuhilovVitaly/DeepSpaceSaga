@@ -21,13 +21,13 @@ internal class PostProcessing
 
     internal GameEventsSystem RemovefinishedCommands(GameEventsSystem eventsSystem)
     {
-        var filteredCommands = new ConcurrentBag<Command>();
+        var filteredCommands = new ConcurrentQueue<Command>();
 
         foreach (var command in eventsSystem.Commands)
         {
             if (command.Status != CommandStatus.PostProcess)
             {
-                filteredCommands.Add(command);
+                filteredCommands.Enqueue(command);
             }
         }
 

@@ -2,14 +2,14 @@
 
 internal class ContentGenerationPreProcessingHandler
 {
-    public static SessionContext Execute(SessionContext sessionContext, int ticks = 1)
+    public static SessionContext Execute(SessionContext sessionContext)
     {
-        return new ContentGenerationPreProcessingHandler().Run(sessionContext, ticks);
+        return new ContentGenerationPreProcessingHandler().Run(sessionContext);
     }
 
-    internal SessionContext Run(SessionContext sessionContext, int ticks = 1)
+    internal SessionContext Run(SessionContext sessionContext)
     {
-        sessionContext = GenerateAsteroidsPreProcessingHandler.Execute(sessionContext, ticks);
+        sessionContext = GenerateAsteroidsPreProcessingHandler.Execute(sessionContext);
 
         return sessionContext;
     }

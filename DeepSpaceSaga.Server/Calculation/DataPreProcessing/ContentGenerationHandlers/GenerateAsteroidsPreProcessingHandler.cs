@@ -2,12 +2,14 @@
 
 internal class GenerateAsteroidsPreProcessingHandler
 {
-    public static SessionContext Execute(SessionContext sessionContext, int ticks = 1)
+    private const int DICE_MAX_VALUE = 1000;
+
+    public static SessionContext Execute(SessionContext sessionContext)
     {
-        return new GenerateAsteroidsPreProcessingHandler().Run(sessionContext,  ticks);
+        return new GenerateAsteroidsPreProcessingHandler().Run(sessionContext);
     }
 
-    public SessionContext Run(SessionContext sessionContext, int ticks = 1)
+    public SessionContext Run(SessionContext sessionContext)
     {
         RandomAsteroidGenerate(sessionContext);
 
@@ -19,7 +21,7 @@ internal class GenerateAsteroidsPreProcessingHandler
         var generationTool = new GenerationTool();
         var baseGenerationChance = sessionContext.Session.Settings.AsteroidGenerationRatio;
 
-        var diceResult = generationTool.GetInteger(0, 1000);
+        var diceResult = generationTool.GetInteger(0, DICE_MAX_VALUE);
 
         if (diceResult > baseGenerationChance)
         {

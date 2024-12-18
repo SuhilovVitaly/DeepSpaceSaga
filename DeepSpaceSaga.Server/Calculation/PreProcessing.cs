@@ -9,7 +9,7 @@ internal class PreProcessing
 
     internal SessionContext Run(SessionContext sessionContext, int ticks = 1)
     {
-        sessionContext = ContentGenerationPreProcessingHandler.Execute(sessionContext, ticks);
+        sessionContext = ContentGenerationPreProcessingHandler.Execute(sessionContext);
 
         sessionContext = AutoRunModulesHandler.Execute(sessionContext, ticks);
 
