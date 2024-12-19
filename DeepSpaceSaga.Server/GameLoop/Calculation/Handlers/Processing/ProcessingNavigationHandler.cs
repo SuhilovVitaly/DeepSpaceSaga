@@ -139,7 +139,7 @@ public class ProcessingNavigationHandler : BaseHandler, ICalculationHandler
         double directionBeforeManeuver = spacecraft.Direction;
         double directionAfterManeuver = 0;
 
-        if (azimut > 180)
+        if (azimut < 180)
         {
             // Turn Left
             directionAfterManeuver = (directionBeforeManeuver - spacecraft.Agility).To360Degrees();
@@ -155,6 +155,7 @@ public class ProcessingNavigationHandler : BaseHandler, ICalculationHandler
         if (Math.Abs(GeometryTools.Azimuth(target.GetLocation(), spacecraft.GetLocation())) < spacecraft.Agility)
         {
             // Command execution finished
+            command.Status = CommandStatus.PostProcess;
         }
 
     }
