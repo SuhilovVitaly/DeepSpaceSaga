@@ -3,6 +3,4 @@
 public interface IPropulsionModule
 {
     double Power { get; set; }
-
-    dynamic Braking();
 }

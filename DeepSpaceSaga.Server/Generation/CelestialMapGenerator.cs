@@ -6,7 +6,7 @@ internal class CelestialMapGenerator
     {
         var objects = new List<ICelestialObject>
         {
-            SpacecraftGenerator.GetPlayerSpacecraft(),
+            SpacecraftGenerator.GetPlayerSpacecraft(generationTool),
             AsteroidGenerator.CreateAsteroid(generationTool, 217, 10000 - 310, 10000 - 221, 7, generationTool.GenerateCelestialObjectName()),
             AsteroidGenerator.CreateAsteroid(generationTool, 327, 10000 + 10, 10000 + 277, 7, generationTool.GenerateCelestialObjectName(), true)
         };

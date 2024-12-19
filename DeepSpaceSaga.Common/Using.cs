@@ -16,4 +16,6 @@ global using DeepSpaceSaga.Common.Universe.Equipment;
 global using DeepSpaceSaga.Common.Universe.Audit;
 global using System.ComponentModel;
 global using DeepSpaceSaga.Common.Geometry;
-global using System.Collections.Concurrent; 
+global using System.Collections.Concurrent;
+global using log4net;
+global using Newtonsoft.Json;

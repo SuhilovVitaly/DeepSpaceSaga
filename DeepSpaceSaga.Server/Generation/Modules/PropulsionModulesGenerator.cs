@@ -2,7 +2,7 @@
 
 public class PropulsionModulesGenerator
 {
-    public static IModule CreateMicroWarpDrive(int ownerId, string id)
+    public static IModule CreateMicroWarpDrive(GenerationTool randomizer, int ownerId, string id)
     {
         IModule resultModule = null;
 
@@ -11,7 +11,7 @@ public class PropulsionModulesGenerator
             case "PMV5002":
                 resultModule = new MicroWarpDrive
                 {
-                    Id = new GenerationTool().GetId(),
+                    Id = randomizer.GetId(),
                     OwnerId = ownerId,
                     ActivationCost = 100,
                     Power = 2000,

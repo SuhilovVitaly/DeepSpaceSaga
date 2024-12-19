@@ -2,7 +2,7 @@
 
 public class GeneralModuleGenerator
 {
-    public static IModule CreateSpaceScanner(int ownerId, string id)
+    public static IModule CreateSpaceScanner(GenerationTool randomizer, int ownerId, string id)
     {
         IModule resultModule = null;
 
@@ -11,7 +11,7 @@ public class GeneralModuleGenerator
             case "SCR5001":
                 resultModule = new SpaceScanner
                 {
-                    Id = new GenerationTool().GetId(),
+                    Id = randomizer.GetId(),
                     OwnerId = ownerId,
                     Category = Category.SpaceScanner,
                     ScanRange = 700,

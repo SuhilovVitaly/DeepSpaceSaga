@@ -7,5 +7,6 @@ public enum Category
     Propulsion,
     Reactor,
     SpaceScanner,
-    DeepScanner
+    DeepScanner,
+    MiningLaser
 }

@@ -4,6 +4,7 @@ public enum CommandCategory
 {
     None,
     Scan,
+    Mining,
     Navigation,
     ContentGeneration,
     ModuleActionFinished

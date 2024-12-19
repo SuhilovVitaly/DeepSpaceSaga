@@ -2,11 +2,11 @@
 
 internal class SpacecraftGenerator
 {
-    public static ICelestialObject GetPlayerSpacecraft()
+    public static ICelestialObject GetPlayerSpacecraft(GenerationTool randomizer)
     {
         ISpacecraft spaceship = new BaseSpaceship
         {
-            Id = new GenerationTool().GetId(),
+            Id = randomizer.GetId(),
             OwnerId = 1, 
             Name = "Glowworm",
             Direction = 45,
@@ -19,8 +19,9 @@ internal class SpacecraftGenerator
             Types = CelestialObjectTypes.SpaceshipPlayer
         };
 
-        spaceship.Modules.Add(PropulsionModulesGenerator.CreateMicroWarpDrive(spaceship.Id, "PMV5002"));
-        spaceship.Modules.Add(GeneralModuleGenerator.CreateSpaceScanner(spaceship.Id, "SCR5001"));
+        spaceship.Modules.Add(PropulsionModulesGenerator.CreateMicroWarpDrive(randomizer, spaceship.Id, "PMV5002"));
+        spaceship.Modules.Add(GeneralModuleGenerator.CreateSpaceScanner(randomizer, spaceship.Id, "SCR5001"));
+        spaceship.Modules.Add(MiningModulesGenerator.CreateMiningLaser(randomizer, spaceship.Id, "MLC8002"));
 
         return spaceship;
     }

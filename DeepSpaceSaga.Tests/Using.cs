@@ -14,3 +14,5 @@ global using DeepSpaceSaga.Common.Tools.Telemetry;
 global using DeepSpaceSaga.Server.Calculation;
 global using FluentAssertions;
 global using Moq;
+global using DeepSpaceSaga.Common.Universe.Equipment.Mining;
+global using DeepSpaceSaga.Common.Universe.Equipment;

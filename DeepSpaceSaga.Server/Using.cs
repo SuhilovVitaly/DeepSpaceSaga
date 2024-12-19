@@ -22,3 +22,4 @@ global using System.Diagnostics;
 global using DeepSpaceSaga.Common.Tools.Telemetry;
 global using log4net;
 global using System.Reflection;
+global using DeepSpaceSaga.Common.Universe.Equipment.Mining;

@@ -39,7 +39,8 @@ public enum CommandTypes
     PreScanCelestialObject = 3001,
     PreScanCelestialObjectFinished = 3002,
     [Description("Object detected")]
-    GenerateAsteroid = 5001
+    GenerateAsteroid = 5001,
+    MiningOperationsHarvest = 8001,
 }
 
 public static class CommandTypesExtensions

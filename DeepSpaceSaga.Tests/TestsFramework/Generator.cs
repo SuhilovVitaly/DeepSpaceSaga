@@ -25,11 +25,16 @@ internal class Generator
         };
     }
 
-    public static ISpacecraft SpacecraftWithModules()
+    public static ISpacecraft SpacecraftWithModules(GenerationTool? randomizer = null)
     {
+        if(randomizer is null)
+        {
+            randomizer = new GenerationTool();
+        }
+
         var spacecraft = new BaseSpaceship
         {
-            Id = new GenerationTool().GetId(),
+            Id = randomizer.GetId(),
             OwnerId = 1,
             PositionX = 1000,
             PositionY = 1000,
@@ -40,8 +45,8 @@ internal class Generator
             Types = CelestialObjectTypes.SpaceshipPlayer
         };
 
-        spacecraft.Modules.Add(PropulsionModulesGenerator.CreateMicroWarpDrive(spacecraft.Id, "PMV5002"));
-        spacecraft.Modules.Add(GeneralModuleGenerator.CreateSpaceScanner(spacecraft.Id, "SCR5001"));
+        spacecraft.Modules.Add(PropulsionModulesGenerator.CreateMicroWarpDrive(randomizer, spacecraft.Id, "PMV5002"));
+        spacecraft.Modules.Add(GeneralModuleGenerator.CreateSpaceScanner(randomizer, spacecraft.Id, "SCR5001"));
 
         return spacecraft;
     }

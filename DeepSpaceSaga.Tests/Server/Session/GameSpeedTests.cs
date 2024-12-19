@@ -41,7 +41,7 @@ public class GameSpeedTests
         var session = new GameSession(new CelestialMap([]));
 
         var spacecraft = Generator.SpacecraftWithModules();
-        var moduleScanner = GeneralModuleGenerator.CreateSpaceScanner(spacecraft.Id, "SCR5001");
+        var moduleScanner = GeneralModuleGenerator.CreateSpaceScanner(new GenerationTool(), spacecraft.Id, "SCR5001");
         moduleScanner.Id = 100;
         moduleScanner.Reload();
 

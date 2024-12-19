@@ -2,7 +2,7 @@
 
 public class SpaceScanner : AbstractModule, IModule, IScanner
 {
-    public Category Category { get; set; }
+    public Category Category { get; set; } = Category.SpaceScanner;
     public double ActivationCost { get; set; }
     public double ScanRange { get; set; }
     public double Power { get; set; }
