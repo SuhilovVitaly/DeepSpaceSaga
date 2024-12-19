@@ -32,21 +32,15 @@ internal class Generator
             randomizer = new GenerationTool();
         }
 
-        var spacecraft = new BaseSpaceship
-        {
-            Id = randomizer.GetId(),
-            OwnerId = 1,
-            PositionX = 1000,
-            PositionY = 1000,
-            Speed = 10,
-            Direction = 0,
-            Agility = 1,
-            MaxSpeed = 20,
-            Types = CelestialObjectTypes.SpaceshipPlayer
-        };
+        ISpacecraft spacecraft = SpacecraftGenerator.GetPlayerSpacecraft(randomizer).ToSpaceship();
 
-        spacecraft.Modules.Add(PropulsionModulesGenerator.CreateMicroWarpDrive(randomizer, spacecraft.Id, "PMV5002"));
-        spacecraft.Modules.Add(GeneralModuleGenerator.CreateSpaceScanner(randomizer, spacecraft.Id, "SCR5001"));
+        spacecraft.OwnerId = 1;
+        spacecraft.PositionX = 1000;
+        spacecraft.PositionY = 1000;
+        spacecraft.Speed = 10;
+        spacecraft.Direction = 0;
+        spacecraft.Agility = 1;
+        spacecraft.MaxSpeed = 20;
 
         return spacecraft;
     }

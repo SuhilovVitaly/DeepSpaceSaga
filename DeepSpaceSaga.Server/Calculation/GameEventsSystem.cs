@@ -39,6 +39,11 @@ public class GameEventsSystem(IServerMetrics metrics)
         Commands.Enqueue(command);
     }
 
+    public Command? GetCommand(int commandId)
+    {
+        return Commands?.Where(x => x.Id == commandId).FirstOrDefault();
+    }
+
     public void ProcessModuleResults(ICelestialObject spacecraft, IModule module)
     {
         ArgumentNullException.ThrowIfNull(spacecraft);

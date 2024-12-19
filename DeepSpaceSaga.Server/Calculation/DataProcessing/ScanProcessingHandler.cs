@@ -40,8 +40,7 @@ internal class ScanProcessingHandler
 
     private void PreScanCelestialObject(SessionContext sessionContext, ICelestialObject celestialObject, Command command)
     {
-        var spacecraft = celestialObject.ToSpaceship();
-        
+        var spacecraft = celestialObject.ToSpaceship();        
 
         var module = spacecraft.GetModule(command.ModuleId);
         module.TargetId = command.TargetCelestialObjectId;        

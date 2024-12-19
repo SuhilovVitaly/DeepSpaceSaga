@@ -28,6 +28,9 @@ internal class Processing
                     break;
                 case CommandCategory.ModuleActionFinished:
                     break;
+                case CommandCategory.Mining:
+                    sessionContext = MiningProcessingHandler.Execute(sessionContext, command);
+                    break;
                 default:
                     break;
             }

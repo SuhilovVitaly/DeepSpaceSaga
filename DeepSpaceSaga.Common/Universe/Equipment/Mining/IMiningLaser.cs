@@ -4,6 +4,5 @@ public interface IMiningLaser : IModule
 {
     double Power { get; set; }
     double MiningRange { get; set; }
-
     Command Harvest(int targetCelestialObjectId);
 }

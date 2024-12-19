@@ -2,6 +2,7 @@
 
 public class Command
 {
+    public int Id { get; set; }
     public CommandCategory Category { get; set; }
     public CommandTypes Type { get; set; }
     public CommandStatus Status { get; set; } = CommandStatus.None;
