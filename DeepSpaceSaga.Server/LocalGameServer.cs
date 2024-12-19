@@ -1,6 +1,7 @@
 ﻿using DeepSpaceSaga.Server.GameLoop.Calculation.Handlers.PostProcessing;
 using DeepSpaceSaga.Server.GameLoop.Calculation.Handlers.PreProcessing;
 using DeepSpaceSaga.Server.GameLoop.Calculation.Handlers.Processing;
+using DeepSpaceSaga.Server.Infrastructure;
 
 namespace DeepSpaceSaga.Server;
 
@@ -69,20 +70,12 @@ public class LocalGameServer : IGameServer
 
     private void HandlersInitialization()
     {
-        var handlers = new ConcurrentBag<ICalculationHandler>
-        {
-            new ProcessingLocationsHandler(),
-            new ProcessingMiningOperationsHandler(),
-            new ProcessingContentGenerationHandler(),
-            new ProcessingNavigationHandler(),
-            new ProcessingScanHandler(),
-            new ProcessingCommandCleanerHandler(),
-            new PreProcessingScanHandler(),
-            new PreProcessingModulesEnablingHandler(),
-            new PreProcessingModulesReloadingHandler(),
-            new PreProcessingContentGenerationHandler(),
-            new PostProcessingCommandCleanerHandler()
-        };
+        ConcurrentBag<ICalculationHandler> handlers =
+        [
+            .. HandlersPreProcessingCollectionExtensions.GetHandlers(),
+            .. HandlersProcessingCollectionExtensions.GetHandlers(),
+            .. HandlersPostProcessingCollectionExtensions.GetHandlers(),
+        ];
 
         SessionContext.CalculationHandlers = handlers;
     }
@@ -148,7 +141,6 @@ public class LocalGameServer : IGameServer
 
             HandlersInitialization();
 
-            //SessionContext = TurnCalculator.Execute(SessionContext);
             SessionContext = TurnExecutor.Execute(SessionContext);            
         }
         catch (Exception ex)

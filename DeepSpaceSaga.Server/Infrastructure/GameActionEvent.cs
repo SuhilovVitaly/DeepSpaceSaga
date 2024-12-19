@@ -1,4 +1,4 @@
-﻿namespace DeepSpaceSaga.Server.Calculation;
+﻿namespace DeepSpaceSaga.Server.Infrastructure;
 
 public class GameActionEvent
 {

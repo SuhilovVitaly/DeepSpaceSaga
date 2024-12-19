@@ -23,3 +23,5 @@ global using DeepSpaceSaga.Common.Universe.Equipment.Mining;
 global using Microsoft.Extensions.DependencyInjection;
 global using DeepSpaceSaga.Server.GameLoop; 
 global using DeepSpaceSaga.Server.GameLoop.TurnCalculation.Handlers;
+global using LanguageExt.Pipes;
+global using DeepSpaceSaga.Server.GameLoop.Calculation.Handlers.PostProcessing;

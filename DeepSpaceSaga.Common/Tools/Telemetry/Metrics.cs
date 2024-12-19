@@ -16,5 +16,8 @@ public enum Metrics
     ProcessingNavigationFullSpeedCommand,
     CalculationTurnAvg,
     ProcessingNavigationSyncSpeedWithTargetCommand,
-    ProcessingNavigationCommandError
+    ProcessingNavigationCommandError,
+    PhasePreProcessing,
+    PhaseProcessing,
+    PhasePostProcessing
 }

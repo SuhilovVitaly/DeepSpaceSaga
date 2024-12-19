@@ -1,4 +1,6 @@
-﻿namespace DeepSpaceSaga.Server;
+﻿using DeepSpaceSaga.Server.Infrastructure;
+
+namespace DeepSpaceSaga.Server;
 
 public class SessionContext(GameSession session, GameEventsSystem eventsSystem, IServerMetrics metrics, GenerationTool randomizer)
 {

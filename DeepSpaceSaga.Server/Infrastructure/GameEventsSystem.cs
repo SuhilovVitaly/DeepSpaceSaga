@@ -1,4 +1,4 @@
-﻿namespace DeepSpaceSaga.Server.Calculation;
+﻿namespace DeepSpaceSaga.Server.Infrastructure;
 
 public class GameEventsSystem(IServerMetrics metrics)
 {
@@ -34,7 +34,7 @@ public class GameEventsSystem(IServerMetrics metrics)
     public void AddCommand(Command command)
     {
         ArgumentNullException.ThrowIfNull(command);
-        
+
         metrics.Add(Metrics.ReceivedCommand);
         Commands.Enqueue(command);
     }
@@ -48,7 +48,7 @@ public class GameEventsSystem(IServerMetrics metrics)
     {
         ArgumentNullException.ThrowIfNull(spacecraft);
         ArgumentNullException.ThrowIfNull(module);
-        
+
         var gameEvent = new GameActionEvent
         {
             Id = IdGenerator.GetNextId(),
