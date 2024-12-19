@@ -2,11 +2,11 @@
 
 public static class HandlersPostProcessingCollectionExtensions
 {
-    public static ConcurrentBag<ICalculationHandler> GetHandlers()
+    public static IEnumerable<ICalculationHandler> GetHandlers()
     {
-        return new ConcurrentBag<ICalculationHandler>
-        {
+        return
+        [
             new PostProcessingCommandCleanerHandler()
-        };
+        ];
     }
 }

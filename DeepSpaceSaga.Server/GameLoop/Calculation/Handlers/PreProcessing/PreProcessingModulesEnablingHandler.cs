@@ -8,11 +8,16 @@ public class PreProcessingModulesEnablingHandler : BaseHandler, ICalculationHand
 
     public SessionContext Handle(SessionContext sessionContext)
     {
+        if (sessionContext == null)
+            throw new ArgumentNullException(nameof(sessionContext));
+
         foreach (Command command in sessionContext.EventsSystem.Commands.Where(x => x.Status == CommandStatus.PreProcess))
         {
             command.Status = CommandStatus.Process;
 
             var module = sessionContext.Session.GetPlayerSpaceShip().GetModule(command.ModuleId);
+            if (module == null)
+                throw new InvalidOperationException($"Module not found with ID: {command.ModuleId}");
 
             if (command.IsOneTimeCommand == false)
             {

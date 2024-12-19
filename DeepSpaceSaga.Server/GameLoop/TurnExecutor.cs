@@ -10,7 +10,9 @@ public class TurnExecutor
             context.Session.Copy(),
             context.EventsSystem.Clone(),
             context.Metrics,
-            context.Randomizer);
+            context.Randomizer,
+            context.Settings);
+
         for (var i = 0; i < processingSession.Session.State.Speed; i++)
         {
             var stopwatch = Stopwatch.StartNew();

@@ -8,7 +8,7 @@ public class ProcessingCommandCleanerHandler : BaseHandler, ICalculationHandler
 
     public SessionContext Handle(SessionContext context)
     {
-         foreach (Command command in context.EventsSystem.Commands.Where(x => x.Status == CommandStatus.Process))
+        foreach (Command command in context.EventsSystem.Commands.GetCommandsByStatus(CommandStatus.Process))
         {
             var module = context.Session.GetPlayerSpaceShip().GetModule(command.ModuleId);
 

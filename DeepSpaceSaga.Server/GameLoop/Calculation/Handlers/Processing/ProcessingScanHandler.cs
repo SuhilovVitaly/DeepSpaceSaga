@@ -10,11 +10,11 @@ public class ProcessingScanHandler : BaseHandler, ICalculationHandler
 
     public SessionContext Handle(SessionContext context)
     {
-        if (context?.EventsSystem?.Commands == null)
-            return context;
+        ArgumentNullException.ThrowIfNull(context);
+        ArgumentNullException.ThrowIfNull(context.EventsSystem);
+        ArgumentNullException.ThrowIfNull(context.EventsSystem.Commands);
 
-        foreach (Command command in context.EventsSystem.Commands.
-            Where(x => x.Status == CommandStatus.Process && x.Category == CommandCategory.Scan))
+        foreach (Command command in context.EventsSystem.Commands.GetCommandsByCategory(CommandStatus.Process, CommandCategory.Scan))
         {
             context = Run(context, command);
         }

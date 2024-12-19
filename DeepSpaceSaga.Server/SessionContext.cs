@@ -1,8 +1,6 @@
-﻿using DeepSpaceSaga.Server.Infrastructure;
+﻿namespace DeepSpaceSaga.Server;
 
-namespace DeepSpaceSaga.Server;
-
-public class SessionContext(GameSession session, GameEventsSystem eventsSystem, IServerMetrics metrics, GenerationTool randomizer)
+public class SessionContext(GameSession session, GameEventsSystem eventsSystem, IServerMetrics metrics, GenerationTool randomizer, LocalGameServerOptions settings)
 {
     public GameSession Session { get; set; } = session;
 
@@ -12,5 +10,7 @@ public class SessionContext(GameSession session, GameEventsSystem eventsSystem, 
 
     public GenerationTool Randomizer { get; set; } = randomizer;
 
-    public ConcurrentBag<ICalculationHandler> CalculationHandlers { get; set; }
+    public ConcurrentBag<ICalculationHandler> CalculationHandlers { get; set; } = [];
+
+    public LocalGameServerOptions Settings { get; set; } = settings;
 }

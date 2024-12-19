@@ -1,19 +1,19 @@
-﻿using DeepSpaceSaga.Server.GameLoop.Calculation.Handlers.Processing;
-
-namespace DeepSpaceSaga.Server.GameLoop.Calculation.Handlers.PreProcessing;
+﻿namespace DeepSpaceSaga.Server.GameLoop.Calculation.Handlers.Processing;
 
 public static class HandlersProcessingCollectionExtensions
 {
-    public static ConcurrentBag<ICalculationHandler> GetHandlers()
+    /// <summary>
+    /// Returns collection of calculation handlers in processing pipeline
+    /// </summary>
+    public static IEnumerable<ICalculationHandler> GetHandlers()
     {
-        return new ConcurrentBag<ICalculationHandler>
-        {
-            new ProcessingLocationsHandler(),
+        return
+        [
             new ProcessingMiningOperationsHandler(),
             new ProcessingContentGenerationHandler(),
             new ProcessingNavigationHandler(),
             new ProcessingScanHandler(),
             new ProcessingCommandCleanerHandler()
-        };
+        ];
     }
 }

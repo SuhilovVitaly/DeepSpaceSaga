@@ -8,8 +8,7 @@ public class ProcessingMiningOperationsHandler : BaseHandler, ICalculationHandle
 
     public SessionContext Handle(SessionContext context)
     {
-        foreach (Command command in context.EventsSystem.Commands.
-            Where(x => x.Status == CommandStatus.Process && x.Category == CommandCategory.Mining))
+        foreach (Command command in context.EventsSystem.Commands.GetCommandsByCategory(CommandStatus.Process, CommandCategory.Mining))
         {
             context = Run(context, command);
         }

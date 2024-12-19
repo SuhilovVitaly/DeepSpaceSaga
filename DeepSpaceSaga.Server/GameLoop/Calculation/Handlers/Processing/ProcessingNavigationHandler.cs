@@ -65,8 +65,10 @@ public class ProcessingNavigationHandler : BaseHandler, ICalculationHandler
     private void SyncSpeedWithTarget(SessionContext sessionContext, ICelestialObject currentCelestialObject, Command command)
     {
         var targetCelestialObject = sessionContext.Session.GetCelestialObject(command.TargetCelestialObjectId);
-        var spacecraft = currentCelestialObject as ISpacecraft;
-        var module = spacecraft.GetModule(command.ModuleId);
+        var spacecraft = currentCelestialObject as ISpacecraft ?? 
+            throw new InvalidOperationException($"Object {currentCelestialObject.Id} is not a spacecraft");
+        var module = spacecraft.GetModule(command.ModuleId) ?? 
+            throw new InvalidOperationException($"Module {command.ModuleId} not found");
 
         if (targetCelestialObject is null)
         {

@@ -8,8 +8,7 @@ internal class ProcessingContentGenerationHandler : BaseHandler, ICalculationHan
 
     public SessionContext Handle(SessionContext context)
     {
-        foreach (Command command in context.EventsSystem.Commands.
-            Where(x => x.Status == CommandStatus.Process && x.Category == CommandCategory.ContentGeneration))
+        foreach (Command command in context.EventsSystem.Commands.GetCommandsByCategory(CommandStatus.Process, CommandCategory.ContentGeneration))
         {
             context = Run(context, command);
         }

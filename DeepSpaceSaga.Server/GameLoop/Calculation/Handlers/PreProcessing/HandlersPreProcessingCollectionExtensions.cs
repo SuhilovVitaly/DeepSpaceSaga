@@ -2,14 +2,14 @@
 
 public static class HandlersPreProcessingCollectionExtensions
 {
-    public static ConcurrentBag<ICalculationHandler> GetHandlers()
+    public static IEnumerable<ICalculationHandler> GetHandlers()
     {
-        return new ConcurrentBag<ICalculationHandler>
-        {
+        return
+        [
             new PreProcessingScanHandler(),
             new PreProcessingModulesEnablingHandler(),
             new PreProcessingModulesReloadingHandler(),
             new PreProcessingContentGenerationHandler()
-        };
+        ];
     }
 }

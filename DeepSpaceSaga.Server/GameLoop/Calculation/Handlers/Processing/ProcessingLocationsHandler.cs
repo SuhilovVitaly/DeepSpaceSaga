@@ -10,15 +10,15 @@ public class ProcessingLocationsHandler : BaseHandler, ICalculationHandler
     {
         foreach (var celestialObject in context.Session.SpaceMap.GetCelestialObjects())
         {
-            RecalculateOneTickObjectLocation(celestialObject);
+            RecalculateOneTickObjectLocation(context, celestialObject);
         }
 
         return context;
     }
 
-    private void RecalculateOneTickObjectLocation(ICelestialObject celestialObject)
+    private void RecalculateOneTickObjectLocation(SessionContext context, ICelestialObject celestialObject)
     {
-        var tickSpeed = celestialObject.Speed / 10;
+        var tickSpeed = celestialObject.Speed / context.Settings.TurnInterval;
 
         var position = GeometryTools.Move(
             celestialObject.GetLocation(),

@@ -1,9 +1,4 @@
-﻿using DeepSpaceSaga.Server.GameLoop.Calculation.Handlers.PostProcessing;
-using DeepSpaceSaga.Server.GameLoop.Calculation.Handlers.PreProcessing;
-using DeepSpaceSaga.Server.GameLoop.Calculation.Handlers.Processing;
-using DeepSpaceSaga.Server.Infrastructure;
-
-namespace DeepSpaceSaga.Server;
+﻿namespace DeepSpaceSaga.Server;
 
 public class LocalGameServer : IGameServer
 {
@@ -43,14 +38,20 @@ public class LocalGameServer : IGameServer
             new GameSession(_options.InitialMap, _options.SessionSettings), 
             eventsSystem ?? new GameEventsSystem(metrics),
             metrics,
-            randomizer);
+            randomizer,
+            _options);
 
-        HandlersInitialization();
+        HandlersTurnInitialization();
 
         Scheduler.Instance.ScheduleTask(
             _options.InitialTurnDelay, 
             _options.TurnInterval, 
             TurnExecute);
+
+        Scheduler.Instance.ScheduleTask(
+            _options.InitialTurnDelay,
+            _options.TickInterval,
+            TickExecute);
     }
 
     public LocalGameServer(GameSession session, ServerMetrics metrics, GenerationTool randomizer)
@@ -63,18 +64,29 @@ public class LocalGameServer : IGameServer
             session,
             new GameEventsSystem(metrics),
             metrics,
-            randomizer);
+            randomizer,
+            new LocalGameServerOptions());
 
-        HandlersInitialization();
+        HandlersTurnInitialization();
     }
 
-    private void HandlersInitialization()
+    private void HandlersTurnInitialization()
     {
         ConcurrentBag<ICalculationHandler> handlers =
         [
             .. HandlersPreProcessingCollectionExtensions.GetHandlers(),
             .. HandlersProcessingCollectionExtensions.GetHandlers(),
             .. HandlersPostProcessingCollectionExtensions.GetHandlers(),
+        ];
+
+        SessionContext.CalculationHandlers = handlers;
+    }
+
+    private void HandlersTickInitialization()
+    {
+        ConcurrentBag<ICalculationHandler> handlers =
+        [
+            new ProcessingLocationsHandler(),
         ];
 
         SessionContext.CalculationHandlers = handlers;
@@ -127,8 +139,26 @@ public class LocalGameServer : IGameServer
         if (cancellationToken.IsCancellationRequested || SessionContext.Session.State.IsPaused) 
             return;
 
+        HandlersTurnInitialization();
+
         Execution();
     }
+
+    private void TickExecute()
+    {
+        TickExecute(_cancellationTokenSource.Token);
+    }
+
+    private void TickExecute(CancellationToken cancellationToken = default)
+    {
+        if (cancellationToken.IsCancellationRequested || SessionContext.Session.State.IsPaused)
+            return;
+
+        HandlersTickInitialization();
+
+        Execution();
+    }
+
     internal void Execution()
     {
         try
@@ -137,9 +167,7 @@ public class LocalGameServer : IGameServer
 
             _isCalculationInProgress = true;
 
-            _sessionLock.EnterWriteLock();
-
-            HandlersInitialization();
+            _sessionLock.EnterWriteLock();            
 
             SessionContext = TurnExecutor.Execute(SessionContext);            
         }
