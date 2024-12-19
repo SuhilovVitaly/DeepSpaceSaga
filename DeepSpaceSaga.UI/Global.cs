@@ -8,8 +8,9 @@ public class Global
     public static GameManager GameManager { get; private set; }
     public static ScreenParameters ScreenData { get; private set; }
     public static GlobalResources Resources { get; private set; }
+    public static GenerationTool Randomizer { get; private set; }
 
-    // Предотвращаем создание экземпляров
+
     private Global() { }
 
     public static void GameInitialization()
@@ -68,7 +69,8 @@ public class Global
 
     private static void InitializeGameManager()
     {
-        GameManager = new GameManager(new EventManager());
+        Randomizer = new GenerationTool();
+        GameManager = new GameManager(new EventManager(Randomizer));
     }
 
     public static void Cleanup()

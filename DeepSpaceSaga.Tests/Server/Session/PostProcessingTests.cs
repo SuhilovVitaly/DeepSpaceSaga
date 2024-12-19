@@ -39,7 +39,7 @@ public class PostProcessingTests
         var postProcessing = new PostProcessing();
         var session = new GameSession(new CelestialMap([]));
         var eventsSystem = new GameEventsSystem(_metricsMock);
-        var sessionContext = new SessionContext(session, eventsSystem, new ServerMetrics());
+        var sessionContext = new SessionContext(session, eventsSystem, new ServerMetrics(), new GenerationTool());
 
         var command1 = new Command { Status = CommandStatus.PostProcess };
         var command2 = new Command { Status = CommandStatus.Process };
@@ -61,7 +61,7 @@ public class PostProcessingTests
         // Arrange
         var session = new GameSession(new CelestialMap([]));
         var eventsSystem = new GameEventsSystem(_metricsMock);
-        var sessionContext = new SessionContext ( session, eventsSystem, new ServerMetrics() );
+        var sessionContext = new SessionContext ( session, eventsSystem, new ServerMetrics(), new GenerationTool());
 
         var command1 = new Command { Status = CommandStatus.PostProcess };
         var command2 = new Command { Status = CommandStatus.Process };

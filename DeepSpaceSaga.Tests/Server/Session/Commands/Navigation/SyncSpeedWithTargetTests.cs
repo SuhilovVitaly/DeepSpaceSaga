@@ -9,6 +9,7 @@ public class SyncSpeedWithTargetTests
         double expectedReceivedCommand = 1;
         double expectedSpeed = 8;
         double startSpacecrafeSpeed = 2;
+        var generationTool = new GenerationTool();
 
         // Act
         var session = new GameSession(new CelestialMap([]));
@@ -19,7 +20,7 @@ public class SyncSpeedWithTargetTests
 
         session.SpaceMap.Add(spacecraft);
 
-        var asteroid = AsteroidGenerator.CreateAsteroid(35, 10010, 10010, 8, "ASR-CS-541");
+        var asteroid = AsteroidGenerator.CreateAsteroid(generationTool, 35, 10010, 10010, 8, "ASR-CS-541");
         asteroid.Id = 2000;
 
         session.SpaceMap.Add(asteroid);
@@ -62,6 +63,7 @@ public class SyncSpeedWithTargetTests
         double expectedReceivedCommand = 1;
         double expectedSpeed = 8;
         double startSpacecrafeSpeed = 12;
+        var generationTool = new GenerationTool();
 
         // Act
         var session = new GameSession(new CelestialMap([]));
@@ -72,7 +74,7 @@ public class SyncSpeedWithTargetTests
 
         session.SpaceMap.Add(spacecraft);
 
-        var asteroid = AsteroidGenerator.CreateAsteroid(35, 10010, 10010, 8, "ASR-CS-541");
+        var asteroid = AsteroidGenerator.CreateAsteroid(generationTool, 35, 10010, 10010, 8, "ASR-CS-541");
         asteroid.Id = 2000;
 
         session.SpaceMap.Add(asteroid);
@@ -114,6 +116,7 @@ public class SyncSpeedWithTargetTests
         // Arrange
         double expectedReceivedCommand = 1;
         double expectedSpeed = 12;
+        var generationTool = new GenerationTool();
 
         // Act
         var session = new GameSession(new CelestialMap([]));
@@ -124,7 +127,7 @@ public class SyncSpeedWithTargetTests
 
         session.SpaceMap.Add(spacecraft);
 
-        var asteroid = AsteroidGenerator.CreateAsteroid(35, 10010, 10010, 32, "ASR-CS-541");
+        var asteroid = AsteroidGenerator.CreateAsteroid(generationTool, 35, 10010, 10010, 32, "ASR-CS-541");
         asteroid.Id = 2000;
 
         session.SpaceMap.Add(asteroid);
@@ -163,6 +166,7 @@ public class SyncSpeedWithTargetTests
         // Arrange
         double expectedReceivedCommand = 1;
         double expectedSpeed = 14;
+        var generationTool = new GenerationTool();
 
         // Act
         var session = new GameSession(new CelestialMap([]));
@@ -173,7 +177,7 @@ public class SyncSpeedWithTargetTests
 
         session.SpaceMap.Add(spacecraft);
 
-        var asteroid = AsteroidGenerator.CreateAsteroid(35, 10010, 10010, 32, "ASR-CS-541");
+        var asteroid = AsteroidGenerator.CreateAsteroid(generationTool, 35, 10010, 10010, 32, "ASR-CS-541");
         asteroid.Id = 2000;
 
         session.SpaceMap.Add(asteroid);

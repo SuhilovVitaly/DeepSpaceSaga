@@ -12,7 +12,8 @@ public class TurnCalculator
         var processingSession = new SessionContext(
             sessionContext.Session.Copy(), 
             sessionContext.EventsSystem.Clone(), 
-            sessionContext.Metrics);
+            sessionContext.Metrics,
+            sessionContext.Randomizer);
 
         for (var i = 0; i < processingSession.Session.State.Speed; i++)
         {

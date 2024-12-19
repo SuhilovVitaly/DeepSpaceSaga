@@ -18,10 +18,10 @@ internal class GenerateAsteroidsPreProcessingHandler
 
     internal void RandomAsteroidGenerate(SessionContext sessionContext)
     {
-        var generationTool = new GenerationTool();
+
         var baseGenerationChance = sessionContext.Session.Settings.AsteroidGenerationRatio;
 
-        var diceResult = generationTool.GetInteger(0, DICE_MAX_VALUE);
+        var diceResult = sessionContext.Randomizer.GetInteger(0, DICE_MAX_VALUE);
 
         if (diceResult > baseGenerationChance)
         {

@@ -26,19 +26,17 @@ internal class ContentGenerationProcessingHandler
 
     private ICelestialObject CelestialMaplestialObjectGeneration(SessionContext sessionContext, Command command)
     {
-        var generationTool = new GenerationTool();
-
         var scannerModule = sessionContext.Session.GetPlayerSpaceShip().GetModules(Category.SpaceScanner).FirstOrDefault() as IScanner;
 
         if (scannerModule is null) return null;
 
-        var distance = generationTool.GetInteger((int)(scannerModule.ScanRange - 10), (int)scannerModule.ScanRange) ;
-        var direction = generationTool.GetInteger(0, 359);
-        var velocity = generationTool.GetDouble(0.1, 10.0);
+        var distance = sessionContext.Randomizer.GetInteger((int)(scannerModule.ScanRange - 10), (int)scannerModule.ScanRange) ;
+        var direction = sessionContext.Randomizer.GetInteger(0, 359);
+        var velocity = sessionContext.Randomizer.GetDouble(0.1, 10.0);
 
-        var asteroidLocation = GeometryTools.Move(sessionContext.Session.GetPlayerSpaceShip().GetLocation(), distance, generationTool.GetInteger(0, 359));
+        var asteroidLocation = GeometryTools.Move(sessionContext.Session.GetPlayerSpaceShip().GetLocation(), distance, sessionContext.Randomizer.GetInteger(0, 359));
 
-        var asteroid = AsteroidGenerator.CreateAsteroid(direction, asteroidLocation.X, asteroidLocation.Y, velocity, generationTool.GenerateCelestialObjectName());
+        var asteroid = AsteroidGenerator.CreateAsteroid(sessionContext.Randomizer, direction, asteroidLocation.X, asteroidLocation.Y, velocity, sessionContext.Randomizer.GenerateCelestialObjectName());
 
         sessionContext.Session.SpaceMap.Add(asteroid);
 

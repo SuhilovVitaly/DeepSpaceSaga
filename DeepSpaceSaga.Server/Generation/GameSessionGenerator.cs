@@ -2,11 +2,11 @@
 
 internal class GameSessionGenerator
 {
-    public static GameSession ProduceSession(int sessionId = -1)
+    public static GameSession ProduceSession(GenerationTool generationTool, int sessionId = -1)
     {
         if (sessionId == -1)
         {
-            var session = EmptySession();
+            var session = EmptySession(generationTool);
             session.Id = sessionId;
             return session;
         }
@@ -14,11 +14,11 @@ internal class GameSessionGenerator
         throw new NotImplementedException();
     }
 
-    private static GameSession EmptySession()
+    private static GameSession EmptySession(GenerationTool generationTool)
     {
-        var result = new GameSession(CelestialMapGenerator.GenerateEmptyBase(), new GameSessionsSettings())
+        var result = new GameSession(CelestialMapGenerator.GenerateEmptyBase(generationTool), new GameSessionsSettings())
         {
-            Id = new GenerationTool().GetId()
+            Id = generationTool.GetId()
         };
 
         return result;

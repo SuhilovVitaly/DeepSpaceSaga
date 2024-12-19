@@ -25,9 +25,9 @@ public class EventManager
 
     private readonly Worker Worker;
 
-    public EventManager()
+    public EventManager(GenerationTool randomizer)
     {
-        Worker = new Worker(new LocalGameServer(new ServerMetrics(), new LocalGameServerOptions()));
+        Worker = new Worker(new LocalGameServer(new ServerMetrics(), new LocalGameServerOptions(), randomizer));
         InitializeAsync().GetAwaiter().GetResult();
 
         Worker.OnGetDataFromServer += Worker_RefreshData;

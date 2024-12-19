@@ -2,10 +2,8 @@
 
 internal class AsteroidGenerator
 {
-    public static ICelestialObject CreateAsteroid(double direction, double x, double y, double speed, string name, bool isPreScanned = false)
+    public static ICelestialObject CreateAsteroid(GenerationTool generationTool, double direction, double x, double y, double speed, string name, bool isPreScanned = false)
     {
-        var generationTool = new GenerationTool();
-
         ICelestialObject asteroid = new BaseCelestialObject
         {
             Id = new GenerationTool().GetId(),

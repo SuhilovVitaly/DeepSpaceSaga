@@ -24,7 +24,8 @@ public class LocalGameServer : IGameServer
 
     public LocalGameServer(
         IServerMetrics metrics,
-        LocalGameServerOptions options,
+        LocalGameServerOptions options, 
+        GenerationTool randomizer,
         GameEventsSystem? eventsSystem = null)
     {
         ArgumentNullException.ThrowIfNull(metrics);
@@ -36,7 +37,8 @@ public class LocalGameServer : IGameServer
         SessionContext = new SessionContext(
             new GameSession(_options.InitialMap, _options.SessionSettings), 
             eventsSystem ?? new GameEventsSystem(metrics),
-            metrics);
+            metrics,
+            randomizer);
 
         Scheduler.Instance.ScheduleTask(
             _options.InitialTurnDelay, 
@@ -44,7 +46,7 @@ public class LocalGameServer : IGameServer
             TurnExecute);
     }
 
-    public LocalGameServer(GameSession session, ServerMetrics metrics)
+    public LocalGameServer(GameSession session, ServerMetrics metrics, GenerationTool randomizer)
     {
         ArgumentNullException.ThrowIfNull(session);
         ArgumentNullException.ThrowIfNull(metrics);
@@ -53,7 +55,8 @@ public class LocalGameServer : IGameServer
         SessionContext = new SessionContext(
             session,
             new GameEventsSystem(metrics),
-            metrics);
+            metrics,
+            randomizer);
     }
 
     public GameSession GetSession()
@@ -87,7 +90,7 @@ public class LocalGameServer : IGameServer
 
     public async Task SessionInitialization(int sessionId = -1)
     {
-        SessionContext.Session = GameSessionGenerator.ProduceSession();
+        SessionContext.Session = GameSessionGenerator.ProduceSession(SessionContext.Randomizer);
         await Task.CompletedTask;
     }
 

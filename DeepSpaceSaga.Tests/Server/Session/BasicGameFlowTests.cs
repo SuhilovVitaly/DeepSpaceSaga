@@ -1,4 +1,6 @@
-﻿namespace DeepSpaceSaga.Tests.Server.Session;
+﻿using DeepSpaceSaga.Common.Tools;
+
+namespace DeepSpaceSaga.Tests.Server.Session;
 
 public class BasicGameFlowTests
 {
@@ -34,7 +36,7 @@ public class BasicGameFlowTests
         int expectedSessionId = -1;
 
         // Act
-        var _gameServer = new LocalGameServer(new ServerMetrics(), new LocalGameServerOptions());
+        var _gameServer = new LocalGameServer(new ServerMetrics(), new LocalGameServerOptions(), new GenerationTool());
         _gameServer.SessionInitialization(expectedSessionId);
 
         var turnFirstSessionStatus = !_gameServer.GetSession().State.IsPaused;
@@ -60,13 +62,14 @@ public class BasicGameFlowTests
         // Arrange
         int expectedCelestialObjectsAfterInitialization = 0;
         int expectedCelestialObjectsAfterAddNewAsteroid = 1;
+        var generationTool = new GenerationTool();
 
         // Act
         var session = new GameSession(new CelestialMap(new List<ICelestialObject>()), new GameSessionsSettings());
 
         var celestialObjectsAfterInitialization = session.SpaceMap.Count;
 
-        session.SpaceMap.Add(AsteroidGenerator.CreateAsteroid(35, 10010, 10010, 3, "ASR-CS-541"));
+        session.SpaceMap.Add(AsteroidGenerator.CreateAsteroid(generationTool, 35, 10010, 10010, 3, "ASR-CS-541"));
 
         var celestialObjectsAfterAddNewAsteroid = session.SpaceMap.Count;
 
