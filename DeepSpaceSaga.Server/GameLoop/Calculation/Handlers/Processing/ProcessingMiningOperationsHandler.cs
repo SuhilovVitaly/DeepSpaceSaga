@@ -1,10 +1,20 @@
-﻿namespace DeepSpaceSaga.Server.Calculation.DataProcessing;
+﻿namespace DeepSpaceSaga.Server.GameLoop.Calculation.Handlers.Processing;
 
-public class MiningProcessingHandler
+public class ProcessingMiningOperationsHandler : BaseHandler, ICalculationHandler
 {
-    public static SessionContext Execute(SessionContext sessionContext, Command command)
+    public int Order => 3;
+
+    public HandlerType Type => HandlerType.Processing;
+
+    public SessionContext Handle(SessionContext context)
     {
-        return new MiningProcessingHandler().Run(sessionContext, command);
+        foreach (Command command in context.EventsSystem.Commands.
+            Where(x => x.Status == CommandStatus.Process && x.Category == CommandCategory.Mining))
+        {
+            context = Run(context, command);
+        }
+
+        return context;
     }
 
     public SessionContext Run(SessionContext sessionContext, Command command)

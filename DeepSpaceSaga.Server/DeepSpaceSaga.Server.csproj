@@ -11,11 +11,15 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Calculation\DataPostProcessing\" />
+    <Folder Include="GameLogicController\Handlers\" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="log4net" Version="3.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>
 
 </Project>

@@ -1,13 +1,25 @@
-﻿namespace DeepSpaceSaga.Server.Calculation.DataProcessing;
+﻿using DeepSpaceSaga.Server.GameLoop.Calculation.Actions;
 
-internal class ScanProcessingHandler
+namespace DeepSpaceSaga.Server.GameLoop.Calculation.Handlers.Processing;
+
+public class ProcessingScanHandler : BaseHandler, ICalculationHandler
 {
-    public static SessionContext Execute(SessionContext sessionContext, Command command, int ticks = 1)
+    public int Order => 5;
+
+    public HandlerType Type => HandlerType.Processing;
+
+    public SessionContext Handle(SessionContext context)
     {
-        return new ScanProcessingHandler().Run(sessionContext, command);
+        foreach (Command command in context.EventsSystem.Commands.
+            Where(x => x.Status == CommandStatus.Process && x.Category == CommandCategory.Scan))
+        {
+            context = Run(context, command);
+        }
+
+        return context;
     }
 
-    public SessionContext Run(SessionContext sessionContext, Command command, int ticks = 1)
+    public SessionContext Run(SessionContext sessionContext, Command command)
     {
         var currentCelestialObject = sessionContext.Session.GetCelestialObject(command.CelestialObjectId);
 
@@ -40,17 +52,17 @@ internal class ScanProcessingHandler
 
     private void PreScanCelestialObject(SessionContext sessionContext, ICelestialObject celestialObject, Command command)
     {
-        var spacecraft = celestialObject.ToSpaceship();        
+        var spacecraft = celestialObject.ToSpaceship();
 
         var module = spacecraft.GetModule(command.ModuleId);
-        module.TargetId = command.TargetCelestialObjectId;        
+        module.TargetId = command.TargetCelestialObjectId;
         module.Reload();
 
         var target = sessionContext.Session.GetCelestialObject(module.TargetId);
 
         if (module.IsReloaded)
         {
-            new SpaceScannerActionEventProcessing().Execute(sessionContext, spacecraft, target, module);
+            ActionScanFinished.Execute(sessionContext, spacecraft, target, module);
             command.Status = CommandStatus.PostProcess;
         }
     }
@@ -62,7 +74,7 @@ internal class ScanProcessingHandler
             {
                 Id = IdGenerator.GetNextId(),
                 Type = Common.Universe.Audit.EventType.DetectCelestialObject,
-                Text = "Scan: " + command.Type.GetDescription() 
+                Text = "Scan: " + command.Type.GetDescription()
             });
     }
 }

@@ -1,12 +1,22 @@
-﻿namespace DeepSpaceSaga.Server.Calculation.DataProcessing;
+﻿namespace DeepSpaceSaga.Server.GameLoop.Calculation.Handlers.Processing;
 
-internal class NavigationProcessingHandler
+public class ProcessingNavigationHandler : BaseHandler, ICalculationHandler
 {
-    public static SessionContext Execute(SessionContext sessionContext, Command command)
+    public int Order => 4;
+
+    public HandlerType Type => HandlerType.Processing;
+
+    public SessionContext Handle(SessionContext context)
     {
-        sessionContext.Metrics.Add(Metrics.ProcessingNavigationCommand);
-        return new NavigationProcessingHandler().Run(sessionContext, command);
+        foreach (Command command in context.EventsSystem.Commands.
+            Where(x => x.Status == CommandStatus.Process && x.Category == CommandCategory.Navigation))
+        {
+            context = Run(context, command);
+        }
+
+        return context;
     }
+
     internal SessionContext Run(SessionContext sessionContext, Command command)
     {
         var currentCelestialObject = sessionContext.Session.GetCelestialObject(command.CelestialObjectId);
@@ -58,7 +68,7 @@ internal class NavigationProcessingHandler
         var spacecraft = currentCelestialObject as ISpacecraft;
         var module = spacecraft.GetModule(command.ModuleId);
 
-        if(targetCelestialObject is null)
+        if (targetCelestialObject is null)
         {
             sessionContext.Metrics.Add(Metrics.ProcessingNavigationCommandError);
             module.IsCalculated = true;
@@ -67,23 +77,23 @@ internal class NavigationProcessingHandler
 
         var speedDelta = Math.Abs(targetCelestialObject.Speed - spacecraft.Speed);
 
-        if(speedDelta < spacecraft.Agility / 2)
+        if (speedDelta < spacecraft.Agility / 2)
         {
             spacecraft.Speed = targetCelestialObject.Speed;
             module.IsCalculated = true;
             return;
         }
 
-        if(targetCelestialObject.Speed > spacecraft.Speed)
+        if (targetCelestialObject.Speed > spacecraft.Speed)
         {
             spacecraft.ChangeVelocity(spacecraft.Agility / 2);
         }
         else
         {
-            spacecraft.ChangeVelocity(- (spacecraft.Agility / 2));
+            spacecraft.ChangeVelocity(-(spacecraft.Agility / 2));
         }
 
-        if(spacecraft.Speed >= spacecraft.MaxSpeed)
+        if (spacecraft.Speed >= spacecraft.MaxSpeed)
         {
             spacecraft.Speed = spacecraft.MaxSpeed;
             module.IsCalculated = true;
@@ -129,7 +139,7 @@ internal class NavigationProcessingHandler
         double directionBeforeManeuver = spacecraft.Direction;
         double directionAfterManeuver = 0;
 
-        if (azimut > 180) 
+        if (azimut > 180)
         {
             // Turn Left
             directionAfterManeuver = (directionBeforeManeuver - spacecraft.Agility).To360Degrees();
@@ -146,7 +156,7 @@ internal class NavigationProcessingHandler
         {
             // Command execution finished
         }
-        
+
     }
 
     private void TurnLeft(ICelestialObject celestialObject, Command command)

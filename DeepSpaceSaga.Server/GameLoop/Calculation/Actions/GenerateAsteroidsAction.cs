@@ -1,12 +1,12 @@
-﻿namespace DeepSpaceSaga.Server.Calculation.DataPreProcessing.ContentGenerationHandlers;
+﻿namespace DeepSpaceSaga.Server.GameLoop.Calculation.Actions;
 
-internal class GenerateAsteroidsPreProcessingHandler
+public class GenerateAsteroidsAction
 {
     private const int DICE_MAX_VALUE = 1000;
 
     public static SessionContext Execute(SessionContext sessionContext)
     {
-        return new GenerateAsteroidsPreProcessingHandler().Run(sessionContext);
+        return new GenerateAsteroidsAction().Run(sessionContext);
     }
 
     public SessionContext Run(SessionContext sessionContext)

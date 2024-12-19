@@ -1,10 +1,20 @@
-﻿namespace DeepSpaceSaga.Server.Calculation.DataProcessing;
+﻿namespace DeepSpaceSaga.Server.GameLoop.Calculation.Handlers.Processing;
 
-internal class ContentGenerationProcessingHandler
+internal class ProcessingContentGenerationHandler : BaseHandler, ICalculationHandler
 {
-    public static SessionContext Execute(SessionContext sessionContext, Command command)
+    public int Order => 1;
+
+    public HandlerType Type => HandlerType.Processing;
+
+    public SessionContext Handle(SessionContext context)
     {
-        return new ContentGenerationProcessingHandler().Run(sessionContext, command);
+        foreach (Command command in context.EventsSystem.Commands.
+            Where(x => x.Status == CommandStatus.Process && x.Category == CommandCategory.ContentGeneration))
+        {
+            context = Run(context, command);
+        }
+                    
+        return context;
     }
 
     public SessionContext Run(SessionContext sessionContext, Command command)
@@ -30,7 +40,7 @@ internal class ContentGenerationProcessingHandler
 
         if (scannerModule is null) return null;
 
-        var distance = sessionContext.Randomizer.GetInteger((int)(scannerModule.ScanRange - 10), (int)scannerModule.ScanRange) ;
+        var distance = sessionContext.Randomizer.GetInteger((int)(scannerModule.ScanRange - 10), (int)scannerModule.ScanRange);
         var direction = sessionContext.Randomizer.GetInteger(0, 359);
         var velocity = sessionContext.Randomizer.GetDouble(0.1, 10.0);
 
@@ -52,7 +62,7 @@ internal class ContentGenerationProcessingHandler
             {
                 Id = IdGenerator.GetNextId(),
                 Type = Common.Universe.Audit.EventType.DetectCelestialObject,
-                Text = command.Type.GetDescription() + $" [{Math.Round(celestialObject.PositionX,0)}:{Math.Round(celestialObject.PositionY, 0)}] {celestialObject.Direction}"
+                Text = command.Type.GetDescription() + $" [{Math.Round(celestialObject.PositionX, 0)}:{Math.Round(celestialObject.PositionY, 0)}] {celestialObject.Direction}"
             });
     }
 }

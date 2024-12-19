@@ -1,8 +1,8 @@
-﻿namespace DeepSpaceSaga.Server.Calculation.GameActionEventProcessing;
+﻿namespace DeepSpaceSaga.Server.GameLoop.Calculation.Actions;
 
-internal class SpaceScannerActionEventProcessing
+public class ActionScanFinished
 {
-    public SessionContext Execute(SessionContext sessionContext, ISpacecraft spacecraft, ICelestialObject target, IModule module)
+    public static SessionContext Execute(SessionContext sessionContext, ISpacecraft spacecraft, ICelestialObject target, IModule module)
     {
         var command = new Command
         {
@@ -11,7 +11,7 @@ internal class SpaceScannerActionEventProcessing
             ModuleId = module.Id,
             TargetCelestialObjectId = target.Id,
             Type = CommandTypes.PreScanCelestialObjectFinished,
-            Status = CommandStatus.Process,
+            Status = CommandStatus.PreProcess,
             IsOneTimeCommand = true,
         };
 

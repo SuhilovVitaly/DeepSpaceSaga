@@ -1,13 +1,12 @@
-﻿namespace DeepSpaceSaga.Server.Calculation.DataPreProcessing;
+﻿namespace DeepSpaceSaga.Server.GameLoop.Calculation.Handlers.PreProcessing;
 
-internal class ModulesReloadingHandler
+public class PreProcessingModulesReloadingHandler : BaseHandler, ICalculationHandler
 {
-    public static SessionContext Execute(SessionContext sessionContext, int ticks = 1)
-    {
-        return new ModulesReloadingHandler().Run(sessionContext, ticks);
-    }
+    public int Order => 3;
 
-    public SessionContext Run(SessionContext sessionContext, int ticks = 1)
+    public HandlerType Type => HandlerType.PreProcessing;
+
+    public SessionContext Handle(SessionContext sessionContext)
     {
         var spacecraft = sessionContext.Session.GetPlayerSpaceShip();
 

@@ -9,4 +9,6 @@ public class SessionContext(GameSession session, GameEventsSystem eventsSystem, 
     public IServerMetrics Metrics { get; set; } = metrics;
 
     public GenerationTool Randomizer { get; set; } = randomizer;
+
+    public ConcurrentBag<ICalculationHandler> CalculationHandlers { get; set; }
 }

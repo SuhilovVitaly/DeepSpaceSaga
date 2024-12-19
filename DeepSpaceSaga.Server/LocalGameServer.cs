@@ -1,4 +1,8 @@
-﻿namespace DeepSpaceSaga.Server;
+﻿using DeepSpaceSaga.Server.GameLoop.Calculation.Handlers.PostProcessing;
+using DeepSpaceSaga.Server.GameLoop.Calculation.Handlers.PreProcessing;
+using DeepSpaceSaga.Server.GameLoop.Calculation.Handlers.Processing;
+
+namespace DeepSpaceSaga.Server;
 
 public class LocalGameServer : IGameServer
 {
@@ -40,6 +44,8 @@ public class LocalGameServer : IGameServer
             metrics,
             randomizer);
 
+        HandlersInitialization();
+
         Scheduler.Instance.ScheduleTask(
             _options.InitialTurnDelay, 
             _options.TurnInterval, 
@@ -57,6 +63,28 @@ public class LocalGameServer : IGameServer
             new GameEventsSystem(metrics),
             metrics,
             randomizer);
+
+        HandlersInitialization();
+    }
+
+    private void HandlersInitialization()
+    {
+        var handlers = new ConcurrentBag<ICalculationHandler>
+        {
+            new ProcessingLocationsHandler(),
+            new ProcessingMiningOperationsHandler(),
+            new ProcessingContentGenerationHandler(),
+            new ProcessingNavigationHandler(),
+            new ProcessingScanHandler(),
+            new ProcessingCommandCleanerHandler(),
+            new PreProcessingScanHandler(),
+            new PreProcessingModulesEnablingHandler(),
+            new PreProcessingModulesReloadingHandler(),
+            new PreProcessingContentGenerationHandler(),
+            new PostProcessingCommandCleanerHandler()
+        };
+
+        SessionContext.CalculationHandlers = handlers;
     }
 
     public GameSession GetSession()
@@ -118,7 +146,10 @@ public class LocalGameServer : IGameServer
 
             _sessionLock.EnterWriteLock();
 
-            SessionContext = TurnCalculator.Execute(SessionContext);
+            HandlersInitialization();
+
+            //SessionContext = TurnCalculator.Execute(SessionContext);
+            SessionContext = TurnExecutor.Execute(SessionContext);            
         }
         catch (Exception ex)
         {

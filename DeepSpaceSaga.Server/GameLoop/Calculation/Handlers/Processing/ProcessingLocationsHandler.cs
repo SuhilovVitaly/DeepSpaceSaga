@@ -1,20 +1,19 @@
-﻿namespace DeepSpaceSaga.Server.Calculation.DataProcessing;
+﻿namespace DeepSpaceSaga.Server.GameLoop.Calculation.Handlers.Processing;
 
-internal class CalculateLocationsHandler
+public class ProcessingLocationsHandler : BaseHandler, ICalculationHandler
 {
-    public static SessionContext Execute(SessionContext sessionContext)
-    {
-        return new CalculateLocationsHandler().Run(sessionContext);
-    }
+    public int Order => 2;
 
-    internal SessionContext Run(SessionContext sessionContext)
+    public HandlerType Type => HandlerType.Processing;
+
+    public SessionContext Handle(SessionContext context)
     {
-        foreach (var celestialObject in sessionContext.Session.SpaceMap.GetCelestialObjects())
+        foreach (var celestialObject in context.Session.SpaceMap.GetCelestialObjects())
         {
             RecalculateOneTickObjectLocation(celestialObject);
         }
 
-        return sessionContext;
+        return context;
     }
 
     private void RecalculateOneTickObjectLocation(ICelestialObject celestialObject)

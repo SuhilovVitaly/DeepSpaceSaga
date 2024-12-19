@@ -1,17 +1,29 @@
 ﻿namespace DeepSpaceSaga.Server.Calculation.DataPreProcessing;
 
-internal class ScanPreProcessingHandler
+internal class PreProcessingScanHandler : BaseHandler, ICalculationHandler
 {
-    public static SessionContext Execute(SessionContext sessionContext, int ticks = 1)
-    {
-        return new ScanPreProcessingHandler().Run(sessionContext, ticks);
-    }
-    // TODO: Move to General - Modules Pre Processing (For auto-run modules)
-    internal SessionContext Run(SessionContext sessionContext, int ticks = 1)
+    public int Order => 2;
+
+    public HandlerType Type => HandlerType.PreProcessing;
+
+    public SessionContext Handle(SessionContext sessionContext)
     {
         var spacecraft = sessionContext.Session.GetPlayerSpaceShip();
 
         var scanner = spacecraft.GetModules(Category.SpaceScanner).FirstOrDefault() as IScanner;
+
+        foreach (Command command in sessionContext.EventsSystem.Commands.
+            Where(x => x.Status == CommandStatus.PreProcess && x.Category == CommandCategory.Scan))
+        {
+            switch (command.Type)
+            {
+                case CommandTypes.PreScanCelestialObjectFinished:
+                    command.Status = CommandStatus.Process;
+                    break;
+            }
+        }
+
+
 
         var target = sessionContext.Session.SpaceMap.GetCelestialObjects()
             .Where(x=> 
@@ -25,9 +37,7 @@ internal class ScanPreProcessingHandler
             .FirstOrDefault();
 
         // Not target (not pres-scanned celestial objects) found
-        if (target is null) return sessionContext;
-
-        
+        if (target is null) return sessionContext;        
 
         // Module not exist on spacecraft
         if (scanner is null) return sessionContext;
@@ -54,5 +64,5 @@ internal class ScanPreProcessingHandler
         sessionContext.EventsSystem.AddCommand(scanCommand);
 
         return sessionContext;
-    }
+    }    
 }
