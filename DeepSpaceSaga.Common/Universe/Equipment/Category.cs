@@ -8,5 +8,6 @@ public enum Category
     Reactor,
     SpaceScanner,
     DeepScanner,
-    MiningLaser
+    MiningLaser,
+    CargoUnit
 }

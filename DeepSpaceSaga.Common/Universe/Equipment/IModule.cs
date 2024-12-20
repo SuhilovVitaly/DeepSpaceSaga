@@ -1,12 +1,8 @@
 ﻿namespace DeepSpaceSaga.Common.Universe.Equipment;
 
-public interface IModule
+public interface IModule : ICoreItem
 {
-    int Id { get; set; }
-    long OwnerId { get; set; }
-    long TargetId { get; set; }
-    string Name { get; set; }
-    Category Category { get; set; }
+    long TargetId { get; set; }       
     bool IsAutoRun { get; set; }
     bool IsCalculated { get; set; }
     double ActivationCost { get; set; }

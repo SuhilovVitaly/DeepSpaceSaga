@@ -1,13 +1,10 @@
 ﻿namespace DeepSpaceSaga.Common.Universe.Equipment;
 
-public abstract class AbstractModule
+public abstract class AbstractModule : AbstractItem
 {
-    public int Id { get; set; }
-    public long OwnerId { get; set; }
     public long TargetId { get; set; }
     public bool IsAutoRun { get; set; } = false;
     public bool IsCalculated { get; set; } = true;
-    public string Name { get; set; }
     public int Compartment { get; set; }
     public int Slot { get; set; }
     public double ReloadTime { get; set; }

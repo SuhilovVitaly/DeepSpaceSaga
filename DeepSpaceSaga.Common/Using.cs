@@ -19,3 +19,4 @@ global using DeepSpaceSaga.Common.Geometry;
 global using System.Collections.Concurrent;
 global using log4net;
 global using Newtonsoft.Json;
+global using DeepSpaceSaga.Common.Universe.Items; 

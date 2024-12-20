@@ -7,5 +7,6 @@ public enum CommandCategory
     Mining,
     Navigation,
     ContentGeneration,
-    ModuleActionFinished
+    ModuleActionFinished,
+    CargoOperations
 }

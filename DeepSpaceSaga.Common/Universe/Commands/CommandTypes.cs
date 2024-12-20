@@ -41,6 +41,7 @@ public enum CommandTypes
     [Description("Object detected")]
     GenerateAsteroid = 5001,
     MiningOperationsHarvest = 8001,
+    CargoOperationsShow = 9001
 }
 
 public static class CommandTypesExtensions
