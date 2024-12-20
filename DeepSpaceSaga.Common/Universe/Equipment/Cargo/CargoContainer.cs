@@ -7,7 +7,6 @@ public class CargoContainer : AbstractModule, IModule, ICargoContainer
     public double Capacity { get; set; } = 0;
     public double MaxCapacity { get; set; } = 0;
     public double ActivationCost { get; set; } = 0;
-    public int Id { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
     public IEnumerable<ICoreItem> Items()
     {
