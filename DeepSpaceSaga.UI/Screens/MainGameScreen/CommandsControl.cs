@@ -78,7 +78,8 @@ public partial class CommandsControl : UserControl
         {
             Category = CommandCategory.Navigation,
             Type = CommandTypes.RotateToTarget,
-            CelestialObjectId = _selectedCelestialObjectId,
+            CelestialObjectId = spacecraft.Id,
+            TargetCelestialObjectId= _selectedCelestialObjectId,
             ModuleId = spacecraft.GetModules(Common.Universe.Equipment.Category.Propulsion).FirstOrDefault().Id
         });
     }

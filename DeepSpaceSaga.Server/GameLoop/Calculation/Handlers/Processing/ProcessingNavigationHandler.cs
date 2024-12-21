@@ -132,32 +132,35 @@ public class ProcessingNavigationHandler : BaseHandler, ICalculationHandler
         celestialObject.ToSpaceship().ChangeVelocity(0.5);
     }
 
-    private void RotateToTarget(SessionContext sessionContext, ICelestialObject target, Command command)
+    private void RotateToTarget(SessionContext sessionContext, ICelestialObject currentCelestialObject, Command command)
     {
-        var spacecraft = sessionContext.Session.GetPlayerSpaceShip();
+        var target = sessionContext.Session.GetCelestialObject(command.TargetCelestialObjectId);
 
-        var azimut = GeometryTools.Azimuth(target.GetLocation(), spacecraft.GetLocation());
+        var spacecraft = sessionContext.Session.GetCelestialObject(command.CelestialObjectId) as ISpacecraft ??
+            throw new InvalidOperationException($"Object {currentCelestialObject.Id} is not a spacecraft");
 
         double directionBeforeManeuver = spacecraft.Direction;
-        double directionAfterManeuver = 0;
+        var azimut = GeometryTools.Azimuth(target.GetLocation(), spacecraft.GetLocation());
 
-        if (azimut < 180)
+        double directionAfterManeuver;
+        if ((azimut - spacecraft.Direction).To360Degrees() > 180)
         {
-            // Turn Left
-            directionAfterManeuver = (directionBeforeManeuver - spacecraft.Agility).To360Degrees();
+            directionAfterManeuver = directionBeforeManeuver - spacecraft.Agility;
         }
         else
         {
-            // Turn Right
-            directionAfterManeuver = (directionBeforeManeuver + spacecraft.Agility).To360Degrees();
+            directionAfterManeuver = directionBeforeManeuver + spacecraft.Agility;
         }
 
-        spacecraft.SetDirection(directionAfterManeuver);
+        spacecraft.SetDirection(directionAfterManeuver.To360Degrees());
 
-        if (Math.Abs(GeometryTools.Azimuth(target.GetLocation(), spacecraft.GetLocation())) < spacecraft.Agility)
+        azimut = GeometryTools.Azimuth(target.GetLocation(), spacecraft.GetLocation());         
+
+        if (Math.Abs(azimut - spacecraft.Direction) < spacecraft.Agility)
         {
             // Command execution finished
             command.Status = CommandStatus.PostProcess;
+            spacecraft.Direction = azimut;
         }
 
     }
