@@ -1,7 +1,7 @@
 ﻿
 namespace DeepSpaceSaga.UI.Screens.MainGameScreen;
 
-public partial class LogbookControl : UserControl
+public partial class LogbookControl : ControlWindow
 {
     public LogbookControl()
     {

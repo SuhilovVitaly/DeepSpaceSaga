@@ -34,7 +34,7 @@
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            BackColor = Color.Black;
+            BackColor = Color.FromArgb(20, 20, 20);
             DoubleBuffered = true;
             Name = "LogbookControl";
             Size = new Size(274, 290);

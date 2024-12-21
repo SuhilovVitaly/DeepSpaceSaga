@@ -16,3 +16,4 @@ global using SkiaSharp;
 global using DeepSpaceSaga.Common.Geometry;
 global using DeepSpaceSaga.Common.Layers.Tactical;
 global using Microsoft.Extensions.DependencyInjection;
+global using System.ComponentModel;

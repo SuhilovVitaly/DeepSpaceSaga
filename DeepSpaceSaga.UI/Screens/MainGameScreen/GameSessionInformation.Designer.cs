@@ -60,14 +60,14 @@
             panel1.Location = new Point(0, 0);
             panel1.Margin = new Padding(3, 4, 3, 4);
             panel1.Name = "panel1";
-            panel1.Size = new Size(218, 34);
+            panel1.Size = new Size(258, 34);
             panel1.TabIndex = 2;
             // 
             // label3
             // 
             label3.Cursor = Cursors.Hand;
             label3.ForeColor = Color.White;
-            label3.Location = new Point(258, 5);
+            label3.Location = new Point(230, 4);
             label3.Name = "label3";
             label3.Size = new Size(13, 21);
             label3.TabIndex = 6;
@@ -151,11 +151,10 @@
             panel2.Controls.Add(label1);
             panel2.Controls.Add(cmdPauseResume);
             panel2.Controls.Add(txtTurn);
-            panel2.Dock = DockStyle.Fill;
             panel2.Location = new Point(0, 0);
             panel2.Margin = new Padding(3, 4, 3, 4);
             panel2.Name = "panel2";
-            panel2.Size = new Size(220, 207);
+            panel2.Size = new Size(260, 187);
             panel2.TabIndex = 6;
             // 
             // crlGameCoordinates
@@ -251,7 +250,7 @@
             BackColor = Color.FromArgb(12, 12, 12);
             Controls.Add(panel2);
             Name = "GameSessionInformation";
-            Size = new Size(220, 207);
+            Size = new Size(264, 189);
             panel1.ResumeLayout(false);
             panel2.ResumeLayout(false);
             panel2.PerformLayout();
