@@ -18,9 +18,11 @@ public class GameSession
 
     public int Id { get; set; }
 
-    public int Turn { get; set; } = 1;
+    public int Turn { get; set; } = 0;
 
     public int TurnTick { get; set; } = 0;
+
+    public int TurnsTicks { get; set; } = 0;
 
     public CelestialMap SpaceMap { get; internal set; }
 

@@ -6,7 +6,8 @@ public static class HandlersPostProcessingCollectionExtensions
     {
         return
         [
-            new PostProcessingCommandCleanerHandler()
+            new PostProcessingCommandCleanerHandler(),
+            new PostProcessingTurnInfoUpdateHandler(),
         ];
     }
 }

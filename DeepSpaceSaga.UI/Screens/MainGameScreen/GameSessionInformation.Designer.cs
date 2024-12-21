@@ -47,16 +47,16 @@
             label1.ForeColor = Color.White;
             label1.Location = new Point(14, 53);
             label1.Name = "label1";
-            label1.Size = new Size(158, 20);
+            label1.Size = new Size(147, 20);
             label1.TabIndex = 0;
             label1.Text = "Turn....................................";
             // 
             // txtTurn
             // 
             txtTurn.ForeColor = Color.White;
-            txtTurn.Location = new Point(178, 53);
+            txtTurn.Location = new Point(156, 53);
             txtTurn.Name = "txtTurn";
-            txtTurn.Size = new Size(43, 20);
+            txtTurn.Size = new Size(97, 20);
             txtTurn.TabIndex = 1;
             txtTurn.Text = "0";
             // 
@@ -113,9 +113,9 @@
             // txtCelestialObjects
             // 
             txtCelestialObjects.ForeColor = Color.White;
-            txtCelestialObjects.Location = new Point(178, 93);
+            txtCelestialObjects.Location = new Point(156, 93);
             txtCelestialObjects.Name = "txtCelestialObjects";
-            txtCelestialObjects.Size = new Size(94, 20);
+            txtCelestialObjects.Size = new Size(97, 20);
             txtCelestialObjects.TabIndex = 8;
             txtCelestialObjects.Text = "0";
             // 
@@ -124,16 +124,16 @@
             label5.ForeColor = Color.White;
             label5.Location = new Point(14, 93);
             label5.Name = "label5";
-            label5.Size = new Size(158, 20);
+            label5.Size = new Size(147, 20);
             label5.TabIndex = 7;
             label5.Text = "Celestial objects..........";
             // 
             // txtSpeed
             // 
             txtSpeed.ForeColor = Color.White;
-            txtSpeed.Location = new Point(178, 73);
+            txtSpeed.Location = new Point(156, 73);
             txtSpeed.Name = "txtSpeed";
-            txtSpeed.Size = new Size(87, 20);
+            txtSpeed.Size = new Size(97, 20);
             txtSpeed.TabIndex = 6;
             txtSpeed.Text = "0";
             // 
@@ -142,7 +142,7 @@
             label4.ForeColor = Color.White;
             label4.Location = new Point(14, 73);
             label4.Name = "label4";
-            label4.Size = new Size(158, 20);
+            label4.Size = new Size(147, 20);
             label4.TabIndex = 5;
             label4.Text = "Speed................................";
             // 
