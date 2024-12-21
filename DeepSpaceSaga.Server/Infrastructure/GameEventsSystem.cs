@@ -4,6 +4,7 @@ public class GameEventsSystem(IServerMetrics metrics)
 {
     public ConcurrentQueue<Command> Commands { get; set; } = new();
     public ConcurrentDictionary<long, GameActionEvent> Actions { get; set; } = [];
+    private readonly GenerationTool _generationTool = new();
 
     public GameEventsSystem Clone()
     {
@@ -36,7 +37,39 @@ public class GameEventsSystem(IServerMetrics metrics)
         ArgumentNullException.ThrowIfNull(command);
 
         metrics.Add(Metrics.ReceivedCommand);
+
+        if (command.IsUnique)
+        {
+            var existingCommandKeys = Commands
+                .Where(cmd => cmd.Type == command.Type &&
+                             cmd.CelestialObjectId == command.CelestialObjectId)
+                .Select(cmd => cmd.Id)
+                .ToList();
+
+            if(existingCommandKeys.Count > 0)
+            {
+                RemoveDuplicateCommands(existingCommandKeys);
+            }            
+        }
+
+        command.Id = _generationTool.GetId();
+
         Commands.Enqueue(command);
+    }
+
+    internal void RemoveDuplicateCommands(List<int> duplicateCommands)
+    {
+        var result = new ConcurrentQueue<Command>();
+
+        foreach (var command in Commands) 
+        { 
+            if(duplicateCommands.Contains(command.Id) == false)
+            {
+                result.Enqueue(command);
+            }
+        }
+
+        Commands = result;
     }
 
     public Command? GetCommand(int commandId)

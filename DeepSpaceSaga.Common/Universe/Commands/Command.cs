@@ -11,4 +11,5 @@ public class Command
     public long TargetCelestialObjectId { get; set; }
     public int ModuleId { get; set; }
     public bool IsOneTimeCommand { get; set; }
+    public bool IsUnique { get; set; } = true;
 }

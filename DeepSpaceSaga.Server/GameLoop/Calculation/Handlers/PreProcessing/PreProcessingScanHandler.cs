@@ -57,6 +57,7 @@ internal class PreProcessingScanHandler : BaseHandler, ICalculationHandler
             CelestialObjectId = spacecraft.Id,
             ModuleId = scanner.Id,
             TargetCelestialObjectId = target.Id,
+            IsUnique = false,
             Type = CommandTypes.PreScanCelestialObject,
             Status = CommandStatus.Process
         };
