@@ -27,21 +27,21 @@ public class TurnExecutor
 
     public static SessionContext TurnExecution(SessionContext context)
     {
-        _log.Info($"Starting turn calculation PreProcessing for session turn {context.Session.TurnTick}");
+        _log.Info($"Starting turn calculation PreProcessing for session turn {context.Session.Metrics.TurnTick}");
 
         foreach (var handler in context.CalculationHandlers.Where(x => x.Type == HandlerType.PreProcessing).OrderBy(o => o.Order))
         {
             context = handler.Handle(context);
         }
 
-        _log.Info($"Starting turn calculation Processing for session turn {context.Session.TurnTick}");
+        _log.Info($"Starting turn calculation Processing for session turn {context.Session.Metrics.TurnTick}");
 
         foreach (var handler in context.CalculationHandlers.Where(x => x.Type == HandlerType.Processing).OrderBy(o => o.Order))
         {
             context = handler.Handle(context);
         }
 
-        _log.Info($"Starting turn calculation PostProcessing for session turn {context.Session.TurnTick}");
+        _log.Info($"Starting turn calculation PostProcessing for session turn {context.Session.Metrics.TurnTick}");
 
         foreach (var handler in context.CalculationHandlers.Where(x => x.Type == HandlerType.PostProcessing).OrderBy(o => o.Order))
         {

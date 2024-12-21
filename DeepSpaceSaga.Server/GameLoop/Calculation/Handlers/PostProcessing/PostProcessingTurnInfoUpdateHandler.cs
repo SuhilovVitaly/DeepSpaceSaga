@@ -19,13 +19,13 @@ public class PostProcessingTurnInfoUpdateHandler : BaseHandler, ICalculationHand
     /// <returns>Processed session context</returns>
     public SessionContext Handle(SessionContext context)
     {
-        context.Session.TurnsTicks++;
-        context.Session.TurnTick++;
+        context.Session.Metrics.TurnsTicks++;
+        context.Session.Metrics.TurnTick++;
 
-        if(context.Session.TurnTick >= 10)
+        if(context.Session.Metrics.TurnTick >= 10)
         {
-            context.Session.TurnTick = 0;
-            context.Session.Turn++;
+            context.Session.Metrics.TurnTick = 0;
+            context.Session.Metrics.Turn++;
         }
         
         return context;

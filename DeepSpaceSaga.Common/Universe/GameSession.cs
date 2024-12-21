@@ -18,15 +18,11 @@ public class GameSession
 
     public int Id { get; set; }
 
-    public int Turn { get; set; } = 0;
-
-    public int TurnTick { get; set; } = 0;
-
-    public int TurnsTicks { get; set; } = 0;
+    public SessionMetrics Metrics { get; set; } = new SessionMetrics();
 
     public CelestialMap SpaceMap { get; internal set; }
 
-    public Journal Logbook { get; internal set; } = new Journal(new List<EventMessage>());
+    public Journal Logbook { get; internal set; } = new Journal([]);
 
     public GameSessionsSettings Settings { get; set; }
 

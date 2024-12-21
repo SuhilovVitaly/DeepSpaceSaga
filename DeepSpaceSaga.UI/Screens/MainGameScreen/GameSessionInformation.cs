@@ -19,7 +19,7 @@ public partial class GameSessionInformation : ControlWindow
 
     private void RereshControls(GameSession session)
     {
-        txtTurn.Text = $"{session.Turn}.{session.TurnTick} ({session.TurnsTicks})";
+        txtTurn.Text = $"{session.Metrics.Turn}.{session.Metrics.TurnTick} ({session.Metrics.TurnsTicks})";
         txtSpeed.Text = session.State.IsPaused ? "Pause" : session.State.Speed + "";
         txtCelestialObjects.Text = session.SpaceMap.Count() + "";
     }

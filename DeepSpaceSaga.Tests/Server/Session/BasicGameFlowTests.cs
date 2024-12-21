@@ -20,7 +20,7 @@ public class BasicGameFlowTests
         ISpacecraft? spacecraft = spaceMap.GetCelestialObjects()[0] as ISpacecraft;
 
         // Assert
-        Assert.Equal(expectedTurn, session.Turn);
+        Assert.Equal(expectedTurn, session.Metrics.Turn);
         Assert.Equal(expectedCelestialObjects, spaceMap.GetCelestialObjects().Count);
         Assert.Equal(expectedSpacecraftName, spacecraft?.Name);
         Assert.Equal(expectedOwnerId, spacecraft?.OwnerId);

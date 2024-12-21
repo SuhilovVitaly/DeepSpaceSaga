@@ -74,7 +74,7 @@ public class DrawCelestialObjects
         DrawTools.FillRectangle(screenInfo, new SpaceMapColor(Color.FromArgb(22, 22, 22)), startLabel, 120, 18);
         DrawTools.FillRectangle(screenInfo, new SpaceMapColor(Color.FromArgb(52, 52, 52)), startLabel.X, startLabel.Y + 15, 120, 4);
 
-        if (session.Turn % 2 == 0)
+        if (session.Metrics.Turn % 2 == 0)
         {
             DrawTools.FillRectangle(screenInfo, new SpaceMapColor(Color.FromArgb(160, 90, 0)), startLabel.X, startLabel.Y + 3, 8, 8);
         }
