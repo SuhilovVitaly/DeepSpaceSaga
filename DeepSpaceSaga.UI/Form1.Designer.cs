@@ -30,18 +30,14 @@
         {
             crlTacticalMap = new Screens.MainGameScreen.StellarTacticalMap();
             spacecraftTelemetryControl1 = new Screens.MainGameScreen.SpacecraftTelemetryControl();
-            panel3 = new Panel();
-            logbookControl1 = new Screens.MainGameScreen.LogbookControl();
             crlActiveCelestialObjectInfo = new Screens.MainGameScreen.CelestialObjectInfo();
             crlSelectedCelestialObjectInfo = new Screens.MainGameScreen.CelestialObjectInfo();
             button1 = new Button();
             crlCommands = new Screens.MainGameScreen.CommandsControl();
             gameSpeedControl1 = new Screens.MainGameScreen.GameSpeedControl();
-            gameSessionInformation1 = new Screens.MainGameScreen.GameSessionInformation();
             panel1 = new Panel();
+            gameSessionInformation2 = new Screens.MainGameScreen.GameSessionInformation();
             logbookControl2 = new Screens.MainGameScreen.LogbookControl();
-            controlWindow1 = new Screens.MainGameScreen.ControlWindow();
-            panel3.SuspendLayout();
             panel1.SuspendLayout();
             SuspendLayout();
             // 
@@ -60,28 +56,6 @@
             spacecraftTelemetryControl1.Name = "spacecraftTelemetryControl1";
             spacecraftTelemetryControl1.Size = new Size(302, 260);
             spacecraftTelemetryControl1.TabIndex = 12;
-            // 
-            // panel3
-            // 
-            panel3.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            panel3.Controls.Add(logbookControl1);
-            panel3.Location = new Point(2310, 283);
-            panel3.Name = "panel3";
-            panel3.Size = new Size(301, 177);
-            panel3.TabIndex = 13;
-            // 
-            // logbookControl1
-            // 
-            logbookControl1.BackColor = Color.FromArgb(20, 20, 20);
-            logbookControl1.BorderStyle = BorderStyle.FixedSingle;
-            logbookControl1.Dock = DockStyle.Fill;
-            logbookControl1.IsDraggible = true;
-            logbookControl1.IsResizible = true;
-            logbookControl1.Location = new Point(0, 0);
-            logbookControl1.Name = "logbookControl1";
-            logbookControl1.Size = new Size(301, 177);
-            logbookControl1.TabIndex = 0;
-            logbookControl1.Title = "Window";
             // 
             // crlActiveCelestialObjectInfo
             // 
@@ -133,29 +107,16 @@
             gameSpeedControl1.Size = new Size(350, 76);
             gameSpeedControl1.TabIndex = 17;
             // 
-            // gameSessionInformation1
-            // 
-            gameSessionInformation1.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
-            gameSessionInformation1.BackColor = Color.FromArgb(12, 12, 12);
-            gameSessionInformation1.Location = new Point(11, 907);
-            gameSessionInformation1.MaximumSize = new Size(2000, 2000);
-            gameSessionInformation1.MinimumSize = new Size(100, 100);
-            gameSessionInformation1.Name = "gameSessionInformation1";
-            gameSessionInformation1.Size = new Size(245, 185);
-            gameSessionInformation1.TabIndex = 18;
-            // 
             // panel1
             // 
             panel1.BorderStyle = BorderStyle.FixedSingle;
+            panel1.Controls.Add(gameSessionInformation2);
             panel1.Controls.Add(logbookControl2);
-            panel1.Controls.Add(controlWindow1);
-            panel1.Controls.Add(gameSessionInformation1);
             panel1.Controls.Add(gameSpeedControl1);
             panel1.Controls.Add(crlCommands);
             panel1.Controls.Add(button1);
             panel1.Controls.Add(crlSelectedCelestialObjectInfo);
             panel1.Controls.Add(crlActiveCelestialObjectInfo);
-            panel1.Controls.Add(panel3);
             panel1.Controls.Add(spacecraftTelemetryControl1);
             panel1.Controls.Add(crlTacticalMap);
             panel1.Dock = DockStyle.Fill;
@@ -164,29 +125,31 @@
             panel1.Size = new Size(2624, 1105);
             panel1.TabIndex = 1;
             // 
+            // gameSessionInformation2
+            // 
+            gameSessionInformation2.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            gameSessionInformation2.BackColor = Color.FromArgb(12, 12, 12);
+            gameSessionInformation2.BorderStyle = BorderStyle.FixedSingle;
+            gameSessionInformation2.IsDraggible = true;
+            gameSessionInformation2.IsResizible = true;
+            gameSessionInformation2.Location = new Point(14, 903);
+            gameSessionInformation2.Name = "gameSessionInformation2";
+            gameSessionInformation2.Size = new Size(259, 189);
+            gameSessionInformation2.TabIndex = 21;
+            gameSessionInformation2.Title = "Game Session Info";
+            // 
             // logbookControl2
             // 
+            logbookControl2.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             logbookControl2.BackColor = Color.FromArgb(20, 20, 20);
             logbookControl2.BorderStyle = BorderStyle.FixedSingle;
             logbookControl2.IsDraggible = false;
             logbookControl2.IsResizible = false;
-            logbookControl2.Location = new Point(449, 703);
+            logbookControl2.Location = new Point(2309, 277);
             logbookControl2.Name = "logbookControl2";
-            logbookControl2.Size = new Size(326, 196);
+            logbookControl2.Size = new Size(302, 196);
             logbookControl2.TabIndex = 20;
             logbookControl2.Title = "Logbook";
-            // 
-            // controlWindow1
-            // 
-            controlWindow1.BackColor = Color.FromArgb(20, 20, 20);
-            controlWindow1.BorderStyle = BorderStyle.FixedSingle;
-            controlWindow1.IsDraggible = true;
-            controlWindow1.IsResizible = true;
-            controlWindow1.Location = new Point(35, 533);
-            controlWindow1.Name = "controlWindow1";
-            controlWindow1.Size = new Size(179, 160);
-            controlWindow1.TabIndex = 19;
-            controlWindow1.Title = "Window Title";
             // 
             // Form1
             // 
@@ -201,7 +164,6 @@
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Form1";
             WindowState = FormWindowState.Maximized;
-            panel3.ResumeLayout(false);
             panel1.ResumeLayout(false);
             ResumeLayout(false);
         }
@@ -210,16 +172,13 @@
 
         private Screens.MainGameScreen.StellarTacticalMap crlTacticalMap;
         private Screens.MainGameScreen.SpacecraftTelemetryControl spacecraftTelemetryControl1;
-        private Panel panel3;
-        private Screens.MainGameScreen.LogbookControl logbookControl1;
         private Screens.MainGameScreen.CelestialObjectInfo crlActiveCelestialObjectInfo;
         private Screens.MainGameScreen.CelestialObjectInfo crlSelectedCelestialObjectInfo;
         private Button button1;
         private Screens.MainGameScreen.CommandsControl crlCommands;
         private Screens.MainGameScreen.GameSpeedControl gameSpeedControl1;
-        private Screens.MainGameScreen.GameSessionInformation gameSessionInformation1;
         private Panel panel1;
-        private Screens.MainGameScreen.ControlWindow controlWindow1;
         private Screens.MainGameScreen.LogbookControl logbookControl2;
+        private Screens.MainGameScreen.GameSessionInformation gameSessionInformation2;
     }
 }
