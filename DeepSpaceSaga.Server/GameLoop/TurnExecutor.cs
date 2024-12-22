@@ -30,21 +30,21 @@ public class TurnExecutor
         _log.Info($"Starting turn calculation PreProcessing for session turn {context.Session.Metrics.TurnTick}");
 
         // TODO: Move to extantion
-        foreach (var handler in context.CalculationHandlers.Where(x => x.Type == HandlerType.PreProcessing).OrderBy(o => o.Order))
+        foreach (var handler in context.GeHandlers(HandlerType.PreProcessing))
         {
             context = handler.Handle(context);
         }
 
         _log.Info($"Starting turn calculation Processing for session turn {context.Session.Metrics.TurnTick}");
 
-        foreach (var handler in context.CalculationHandlers.Where(x => x.Type == HandlerType.Processing).OrderBy(o => o.Order))
+        foreach (var handler in context.GeHandlers(HandlerType.Processing))
         {
             context = handler.Handle(context);
         }
 
         _log.Info($"Starting turn calculation PostProcessing for session turn {context.Session.Metrics.TurnTick}");
 
-        foreach (var handler in context.CalculationHandlers.Where(x => x.Type == HandlerType.PostProcessing).OrderBy(o => o.Order))
+        foreach (var handler in context.GeHandlers(HandlerType.PostProcessing))
         {
             context = handler.Handle(context);
         }
