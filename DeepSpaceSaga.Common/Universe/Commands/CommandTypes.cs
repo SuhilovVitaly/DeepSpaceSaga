@@ -16,6 +16,8 @@ public enum CommandTypes
     IncreaseShipSpeed = 205,
     [Description("Sync speed with Target")]
     SyncSpeedWithTarget = 216,
+    [Description("Sync direction with Target")]
+    SyncDirectionWithTarget = 217,
     [Description("")]
     StopShip = 233,
     FullSpeed = 234,

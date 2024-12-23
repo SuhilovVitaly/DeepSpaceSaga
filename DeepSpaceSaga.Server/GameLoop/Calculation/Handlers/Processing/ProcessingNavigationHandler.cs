@@ -43,6 +43,10 @@ public class ProcessingNavigationHandler : BaseHandler, ICalculationHandler
                 sessionContext.Metrics.Add(Metrics.ProcessingNavigationSyncSpeedWithTargetCommand);
                 SyncSpeedWithTarget(sessionContext, currentCelestialObject, command);
                 break;
+            case CommandTypes.SyncDirectionWithTarget:
+                sessionContext.Metrics.Add(Metrics.ProcessingNavigationSyncDirectionWithTargetCommand);
+                SyncDirectionWithTarget(sessionContext, currentCelestialObject, command);
+                break;
             case CommandTypes.RotateToTarget:
                 sessionContext.Metrics.Add(Metrics.ProcessingNavigationRotateToTargetCommand);
                 RotateToTarget(sessionContext, currentCelestialObject, command);
@@ -60,6 +64,43 @@ public class ProcessingNavigationHandler : BaseHandler, ICalculationHandler
         AddToJournal(sessionContext, command, currentCelestialObject);
 
         return sessionContext;
+    }     
+
+    private void SyncDirectionWithTarget(SessionContext sessionContext, ICelestialObject currentCelestialObject, Command command)
+    {
+        var targetCelestialObject = sessionContext.Session.GetCelestialObject(command.TargetCelestialObjectId);
+        var spacecraft = currentCelestialObject as ISpacecraft ??
+            throw new InvalidOperationException($"Object {currentCelestialObject.Id} is not a spacecraft");
+        var module = spacecraft.GetModule(command.ModuleId) ??
+            throw new InvalidOperationException($"Module {command.ModuleId} not found");
+
+        if (targetCelestialObject is null)
+        {
+            sessionContext.Metrics.Add(Metrics.ProcessingNavigationCommandError);
+            module.IsCalculated = true;
+            return;
+        }
+
+        double directionBeforeManeuver = spacecraft.Direction;
+        double directionAfterManeuver;
+
+        if ((targetCelestialObject.Direction - spacecraft.Direction).To360Degrees() > 180)
+        {
+            directionAfterManeuver = directionBeforeManeuver - spacecraft.Agility;
+        }
+        else
+        {
+            directionAfterManeuver = directionBeforeManeuver + spacecraft.Agility;
+        }
+
+        spacecraft.SetDirection(directionAfterManeuver.To360Degrees());
+
+        if (Math.Abs(targetCelestialObject.Direction - spacecraft.Direction) < spacecraft.Agility)
+        {
+            // Command execution finished
+            command.Status = CommandStatus.PostProcess;
+            spacecraft.Direction = targetCelestialObject.Direction;
+        }
     }
 
     private void SyncSpeedWithTarget(SessionContext sessionContext, ICelestialObject currentCelestialObject, Command command)
