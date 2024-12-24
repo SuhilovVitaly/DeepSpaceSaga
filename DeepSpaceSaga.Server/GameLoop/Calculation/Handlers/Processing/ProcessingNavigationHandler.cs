@@ -19,6 +19,8 @@ public class ProcessingNavigationHandler : BaseHandler, ICalculationHandler
 
     internal SessionContext Run(SessionContext sessionContext, Command command)
     {
+        sessionContext.Metrics.Add(Metrics.ProcessingNavigationCommand);
+        
         var currentCelestialObject = sessionContext.Session.GetCelestialObject(command.CelestialObjectId);
 
         switch (command.Type)
@@ -100,6 +102,7 @@ public class ProcessingNavigationHandler : BaseHandler, ICalculationHandler
             // Command execution finished
             command.Status = CommandStatus.PostProcess;
             spacecraft.Direction = targetCelestialObject.Direction;
+            sessionContext.Metrics.Add(Metrics.ProcessingNavigationSyncDirectionWithTargetCommandFinished);
         }
     }
 
