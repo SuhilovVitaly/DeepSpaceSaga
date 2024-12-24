@@ -12,8 +12,7 @@ public partial class CommandsControl : UserControl
 
         Global.GameManager.EventController.OnRefreshData += Worker_RefreshData;
 
-        DisableCommand(commandRotateToTarget);
-        DisableCommand(commandCourseSyncToTarget);
+        DisableCommands();
     }
 
     private void Worker_RefreshData(GameSession session)
@@ -21,12 +20,18 @@ public partial class CommandsControl : UserControl
         CrossThreadExtensions.PerformSafely(this, RefreshControls, session);
     }
 
+    private void DisableCommands()
+    {
+        DisableCommand(commandRotateToTarget);
+        DisableCommand(commandSyncSpeedWithTarget);
+        DisableCommand(commandSyncDirectionWithTarget);
+    }
+
     private void RefreshControls(GameSession manager)
     {
         if (Global.GameManager.OuterSpace.SelectedObjectId == 0)
         {
-            DisableCommand(commandRotateToTarget);
-            DisableCommand(commandCourseSyncToTarget);
+            DisableCommands();
             return;
         }
 
@@ -39,7 +44,8 @@ public partial class CommandsControl : UserControl
         _selectedCelestialObjectId = Global.GameManager.OuterSpace.SelectedObjectId;
 
         EnableCommand(commandRotateToTarget);
-        EnableCommand(commandCourseSyncToTarget);
+        EnableCommand(commandSyncSpeedWithTarget);
+        EnableCommand(commandSyncDirectionWithTarget);
     }
 
     private void EnableCommand(Button command)
@@ -79,7 +85,7 @@ public partial class CommandsControl : UserControl
             Category = CommandCategory.Navigation,
             Type = CommandTypes.RotateToTarget,
             CelestialObjectId = spacecraft.Id,
-            TargetCelestialObjectId= _selectedCelestialObjectId,
+            TargetCelestialObjectId = _selectedCelestialObjectId,
             ModuleId = spacecraft.GetModules(Common.Universe.Equipment.Category.Propulsion).FirstOrDefault().Id
         });
     }
@@ -110,6 +116,20 @@ public partial class CommandsControl : UserControl
             Status = CommandStatus.Process,
             IsOneTimeCommand = false,
             CelestialObjectId = spacecraft.Id,
+            ModuleId = spacecraft.GetModules(Common.Universe.Equipment.Category.Propulsion).FirstOrDefault().Id
+        });
+    }
+
+    private void Event_SyncDirectionWithTarget(object sender, EventArgs e)
+    {
+        var spacecraft = Global.GameManager.GetPlayerSpacecraft();
+
+        _ = Global.GameManager.ExecuteCommandAsync(new Command
+        {
+            Category = CommandCategory.Navigation,
+            Type = CommandTypes.SyncDirectionWithTarget,
+            CelestialObjectId = spacecraft.Id,
+            TargetCelestialObjectId = _selectedCelestialObjectId,
             ModuleId = spacecraft.GetModules(Common.Universe.Equipment.Category.Propulsion).FirstOrDefault().Id
         });
     }

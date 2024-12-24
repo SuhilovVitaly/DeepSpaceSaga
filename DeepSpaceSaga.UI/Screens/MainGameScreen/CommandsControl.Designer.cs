@@ -28,11 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
-            commandCourseSyncToTarget = new Button();
+            commandSyncSpeedWithTarget = new Button();
             button2 = new Button();
             crlFullSpeed = new Button();
             button4 = new Button();
-            button5 = new Button();
+            commandSyncDirectionWithTarget = new Button();
             button6 = new Button();
             button7 = new Button();
             button8 = new Button();
@@ -44,23 +44,23 @@
             button14 = new Button();
             SuspendLayout();
             // 
-            // commandCourseSyncToTarget
+            // commandSyncSpeedWithTarget
             // 
-            commandCourseSyncToTarget.BackColor = Color.FromArgb(64, 64, 64);
-            commandCourseSyncToTarget.Enabled = false;
-            commandCourseSyncToTarget.FlatAppearance.BorderSize = 0;
-            commandCourseSyncToTarget.FlatAppearance.MouseDownBackColor = Color.Gray;
-            commandCourseSyncToTarget.FlatAppearance.MouseOverBackColor = Color.Silver;
-            commandCourseSyncToTarget.FlatStyle = FlatStyle.Flat;
-            commandCourseSyncToTarget.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            commandCourseSyncToTarget.ForeColor = Color.DimGray;
-            commandCourseSyncToTarget.Location = new Point(219, 3);
-            commandCourseSyncToTarget.Name = "commandCourseSyncToTarget";
-            commandCourseSyncToTarget.Size = new Size(66, 51);
-            commandCourseSyncToTarget.TabIndex = 0;
-            commandCourseSyncToTarget.Text = "SYNC";
-            commandCourseSyncToTarget.UseVisualStyleBackColor = false;
-            commandCourseSyncToTarget.Click += Event_SyncSpeedWithTarget;
+            commandSyncSpeedWithTarget.BackColor = Color.FromArgb(64, 64, 64);
+            commandSyncSpeedWithTarget.Enabled = false;
+            commandSyncSpeedWithTarget.FlatAppearance.BorderSize = 0;
+            commandSyncSpeedWithTarget.FlatAppearance.MouseDownBackColor = Color.Gray;
+            commandSyncSpeedWithTarget.FlatAppearance.MouseOverBackColor = Color.Silver;
+            commandSyncSpeedWithTarget.FlatStyle = FlatStyle.Flat;
+            commandSyncSpeedWithTarget.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            commandSyncSpeedWithTarget.ForeColor = Color.DimGray;
+            commandSyncSpeedWithTarget.Location = new Point(219, 3);
+            commandSyncSpeedWithTarget.Name = "commandSyncSpeedWithTarget";
+            commandSyncSpeedWithTarget.Size = new Size(66, 51);
+            commandSyncSpeedWithTarget.TabIndex = 0;
+            commandSyncSpeedWithTarget.Text = "SYNC V";
+            commandSyncSpeedWithTarget.UseVisualStyleBackColor = false;
+            commandSyncSpeedWithTarget.Click += Event_SyncSpeedWithTarget;
             // 
             // button2
             // 
@@ -112,21 +112,23 @@
             button4.TabIndex = 3;
             button4.UseVisualStyleBackColor = false;
             // 
-            // button5
+            // commandSyncDirectionWithTarget
             // 
-            button5.BackColor = Color.FromArgb(64, 64, 64);
-            button5.Enabled = false;
-            button5.FlatAppearance.BorderSize = 0;
-            button5.FlatAppearance.MouseDownBackColor = Color.Gray;
-            button5.FlatAppearance.MouseOverBackColor = Color.Silver;
-            button5.FlatStyle = FlatStyle.Flat;
-            button5.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            button5.ForeColor = Color.DimGray;
-            button5.Location = new Point(291, 3);
-            button5.Name = "button5";
-            button5.Size = new Size(66, 51);
-            button5.TabIndex = 4;
-            button5.UseVisualStyleBackColor = false;
+            commandSyncDirectionWithTarget.BackColor = Color.FromArgb(64, 64, 64);
+            commandSyncDirectionWithTarget.Enabled = false;
+            commandSyncDirectionWithTarget.FlatAppearance.BorderSize = 0;
+            commandSyncDirectionWithTarget.FlatAppearance.MouseDownBackColor = Color.Gray;
+            commandSyncDirectionWithTarget.FlatAppearance.MouseOverBackColor = Color.Silver;
+            commandSyncDirectionWithTarget.FlatStyle = FlatStyle.Flat;
+            commandSyncDirectionWithTarget.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            commandSyncDirectionWithTarget.ForeColor = Color.DimGray;
+            commandSyncDirectionWithTarget.Location = new Point(291, 3);
+            commandSyncDirectionWithTarget.Name = "commandSyncDirectionWithTarget";
+            commandSyncDirectionWithTarget.Size = new Size(66, 51);
+            commandSyncDirectionWithTarget.TabIndex = 4;
+            commandSyncDirectionWithTarget.Text = "SYNC D";
+            commandSyncDirectionWithTarget.UseVisualStyleBackColor = false;
+            commandSyncDirectionWithTarget.Click += Event_SyncDirectionWithTarget;
             // 
             // button6
             // 
@@ -290,11 +292,11 @@
             Controls.Add(button8);
             Controls.Add(button7);
             Controls.Add(button6);
-            Controls.Add(button5);
+            Controls.Add(commandSyncDirectionWithTarget);
             Controls.Add(button4);
             Controls.Add(crlFullSpeed);
             Controls.Add(button2);
-            Controls.Add(commandCourseSyncToTarget);
+            Controls.Add(commandSyncSpeedWithTarget);
             DoubleBuffered = true;
             Name = "CommandsControl";
             Size = new Size(505, 115);
@@ -303,11 +305,11 @@
 
         #endregion
 
-        private Button commandCourseSyncToTarget;
+        private Button commandSyncSpeedWithTarget;
         private Button button2;
         private Button crlFullSpeed;
         private Button button4;
-        private Button button5;
+        private Button commandSyncDirectionWithTarget;
         private Button button6;
         private Button button7;
         private Button button8;
