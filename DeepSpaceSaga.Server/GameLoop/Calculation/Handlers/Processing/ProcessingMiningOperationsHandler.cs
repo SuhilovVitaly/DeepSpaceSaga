@@ -51,7 +51,7 @@ public class ProcessingMiningOperationsHandler : BaseHandler, ICalculationHandle
         if (module.IsReloaded)
         {
             // Generate mining results
-            AddToJournal(sessionContext, EventType.AsteroidHarvestFinished, $"Asteroid '{target.Name}' Harvest Finished");
+            AddToJournal(sessionContext, EventType.AsteroidHarvestFinished, $"Asteroid '{targetCelestialObject.Name}' Harvest Finished");
             sessionContext.Metrics.Add(Metrics.ProcessingMiningCommandFinished);
             command.Status = CommandStatus.PostProcess;
         }
