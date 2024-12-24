@@ -13,7 +13,7 @@ public class MiningModulesGenerator
         switch (id)
         {
             case "MLC8002":
-                resultModule.MiningRange = 50;
+                resultModule.MiningRange = 300;
                 resultModule.ActivationCost = 100;
                 resultModule.Power = 2000;
                 resultModule.ReloadTime = 100;

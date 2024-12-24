@@ -1,4 +1,5 @@
-﻿using DeepSpaceSaga.Server.GameLoop.Calculation.Actions;
+﻿using DeepSpaceSaga.Common.Universe.Audit;
+using DeepSpaceSaga.Server.GameLoop.Calculation.Actions;
 
 namespace DeepSpaceSaga.Server.GameLoop.Calculation.Handlers.Processing;
 
@@ -37,9 +38,7 @@ public class ProcessingScanHandler : BaseHandler, ICalculationHandler
             case CommandTypes.PreScanCelestialObjectFinished:
                 PreScanCelestialObjectFinished(sessionContext, currentCelestialObject, command);
                 break;
-        }
-
-        AddToJournal(sessionContext, command, currentCelestialObject);
+        }        
 
         return sessionContext;
     }
@@ -64,6 +63,8 @@ public class ProcessingScanHandler : BaseHandler, ICalculationHandler
         target.IsPreScanned = true;
 
         module.IsCalculated = true;
+
+        AddToJournal(sessionContext, EventType.CelestialObjectIdentified, $"Celestial Object '{target.Name}' Identified");
     }
 
     private void PreScanCelestialObject(SessionContext sessionContext, ICelestialObject celestialObject, Command command)
@@ -93,21 +94,17 @@ public class ProcessingScanHandler : BaseHandler, ICalculationHandler
         }
     }
 
-    private void AddToJournal(SessionContext sessionContext, Command command, ICelestialObject celestialObject)
+    private void AddToJournal(SessionContext sessionContext, EventType type, string text)
     {
         if (sessionContext?.Session?.Logbook == null)
             throw new ArgumentNullException(nameof(sessionContext), "Session or Logbook is null");
-        if (command == null)
-            throw new ArgumentNullException(nameof(command));
-        if (celestialObject == null)
-            throw new ArgumentNullException(nameof(celestialObject));
 
-        sessionContext.Session.Logbook.Add(
-            new Common.Universe.Audit.EventMessage
-            {
-                Id = IdGenerator.GetNextId(),
-                Type = Common.Universe.Audit.EventType.DetectCelestialObject,
-                Text = "Scan: " + command.Type.GetDescription()
-            });
+
+        sessionContext.Session.Logbook.Add(new EventMessage
+        {
+            Id = IdGenerator.GetNextId(),
+            Type = type,
+            Text = text
+        });
     }
 }

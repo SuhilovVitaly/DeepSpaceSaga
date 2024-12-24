@@ -32,6 +32,11 @@ public class GameManager : IDisposable
         return GetSession().SpaceMap.GetCelestialObjects().FirstOrDefault(x => x.OwnerId == 1) as ISpacecraft;
     }
 
+    public ICelestialObject GetCelestialObject(int id)
+    {
+        return GetSession().SpaceMap.GetCelestialObjects().FirstOrDefault(x => x.Id == id);
+    }
+
     public CelestialMap GetCelestialMap()
     {
         return GetSession().SpaceMap;

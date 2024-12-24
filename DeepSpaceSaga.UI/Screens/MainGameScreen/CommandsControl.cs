@@ -25,6 +25,32 @@ public partial class CommandsControl : UserControl
         DisableCommand(commandRotateToTarget);
         DisableCommand(commandSyncSpeedWithTarget);
         DisableCommand(commandSyncDirectionWithTarget);
+        DisableCommand(commandHarvestAsteroid);        
+    }
+
+    private void ModulesByRangeEnable(int id)
+    {
+        var spacecraft = Global.GameManager.GetPlayerSpacecraft();
+        var target = Global.GameManager.GetCelestialObject(id);
+        var distance = GeometryTools.Distance(spacecraft.GetLocation(), target.GetLocation());
+        
+        // Harvest asteroid
+        var module = spacecraft.Module(Common.Universe.Equipment.Category.MiningLaser) as IMiningLaser;
+        
+        if (distance <= module.MiningRange)
+        {
+            if (commandHarvestAsteroid.Enabled == false)
+            {
+                EnableCommand(commandHarvestAsteroid);
+            }
+        }
+        else
+        {
+            if (commandHarvestAsteroid.Enabled == true)
+            {
+                DisableCommand(commandHarvestAsteroid);
+            }
+        }
     }
 
     private void RefreshControls(GameSession manager)
@@ -38,6 +64,7 @@ public partial class CommandsControl : UserControl
         if (Global.GameManager.OuterSpace.SelectedObjectId == _selectedCelestialObjectId)
         {
             // No need update commands status (Enabled/Disabled)
+            ModulesByRangeEnable(_selectedCelestialObjectId);
             return;
         }
 
@@ -72,7 +99,7 @@ public partial class CommandsControl : UserControl
             Type = CommandTypes.SyncSpeedWithTarget,
             CelestialObjectId = spacecraft.Id,
             TargetCelestialObjectId = _selectedCelestialObjectId,
-            ModuleId = spacecraft.GetModules(Common.Universe.Equipment.Category.Propulsion).FirstOrDefault().Id
+            ModuleId = spacecraft.Module(Common.Universe.Equipment.Category.Propulsion).Id
         });
     }
 
@@ -86,7 +113,7 @@ public partial class CommandsControl : UserControl
             Type = CommandTypes.RotateToTarget,
             CelestialObjectId = spacecraft.Id,
             TargetCelestialObjectId = _selectedCelestialObjectId,
-            ModuleId = spacecraft.GetModules(Common.Universe.Equipment.Category.Propulsion).FirstOrDefault().Id
+            ModuleId = spacecraft.Module(Common.Universe.Equipment.Category.Propulsion).Id
         });
     }
 
@@ -101,7 +128,7 @@ public partial class CommandsControl : UserControl
             Status = CommandStatus.Process,
             IsOneTimeCommand = false,
             CelestialObjectId = spacecraft.Id,
-            ModuleId = spacecraft.GetModules(Common.Universe.Equipment.Category.Propulsion).FirstOrDefault().Id
+            ModuleId = spacecraft.Module(Common.Universe.Equipment.Category.Propulsion).Id
         });
     }
 
@@ -116,7 +143,7 @@ public partial class CommandsControl : UserControl
             Status = CommandStatus.Process,
             IsOneTimeCommand = false,
             CelestialObjectId = spacecraft.Id,
-            ModuleId = spacecraft.GetModules(Common.Universe.Equipment.Category.Propulsion).FirstOrDefault().Id
+            ModuleId = spacecraft.Module(Common.Universe.Equipment.Category.Propulsion).Id
         });
     }
 
@@ -130,7 +157,21 @@ public partial class CommandsControl : UserControl
             Type = CommandTypes.SyncDirectionWithTarget,
             CelestialObjectId = spacecraft.Id,
             TargetCelestialObjectId = _selectedCelestialObjectId,
-            ModuleId = spacecraft.GetModules(Common.Universe.Equipment.Category.Propulsion).FirstOrDefault().Id
+            ModuleId = spacecraft.Module(Common.Universe.Equipment.Category.Propulsion).Id
+        });
+    }
+
+    private void Event_HarvestAsteroid(object sender, EventArgs e)
+    {
+        var spacecraft = Global.GameManager.GetPlayerSpacecraft();
+
+        _ = Global.GameManager.ExecuteCommandAsync(new Command
+        {
+            Category = CommandCategory.Mining,
+            Type = CommandTypes.MiningOperationsHarvest,
+            CelestialObjectId = spacecraft.Id,
+            TargetCelestialObjectId = _selectedCelestialObjectId,
+            ModuleId = spacecraft.Module(Common.Universe.Equipment.Category.MiningLaser).Id
         });
     }
 }

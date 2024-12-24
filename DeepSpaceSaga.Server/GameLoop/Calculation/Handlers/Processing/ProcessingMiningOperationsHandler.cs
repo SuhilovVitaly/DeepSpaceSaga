@@ -1,4 +1,6 @@
-﻿namespace DeepSpaceSaga.Server.GameLoop.Calculation.Handlers.Processing;
+﻿using DeepSpaceSaga.Common.Universe.Audit;
+
+namespace DeepSpaceSaga.Server.GameLoop.Calculation.Handlers.Processing;
 
 public class ProcessingMiningOperationsHandler : BaseHandler, ICalculationHandler
 {
@@ -18,6 +20,8 @@ public class ProcessingMiningOperationsHandler : BaseHandler, ICalculationHandle
 
     public SessionContext Run(SessionContext sessionContext, Command command)
     {
+        sessionContext.Metrics.Add(Metrics.ProcessingMiningCommand);
+
         switch (command.Type)
         {
             case CommandTypes.MiningOperationsHarvest:
@@ -33,10 +37,12 @@ public class ProcessingMiningOperationsHandler : BaseHandler, ICalculationHandle
         var moduleCelestialObject = sessionContext.Session.GetCelestialObject(command.CelestialObjectId);
         var targetCelestialObject = sessionContext.Session.GetCelestialObject(command.TargetCelestialObjectId);
         var distance = GeometryTools.Distance(moduleCelestialObject.GetLocation(), targetCelestialObject.GetLocation());
+
         var module = moduleCelestialObject.ToSpaceship().GetModule(command.ModuleId) as IMiningLaser;
 
         if (distance > module.MiningRange)
         {
+            sessionContext.Metrics.Add(Metrics.ProcessingMiningCommandCancelled);
             // Cancel command bacause distance is to big
             command.Status = CommandStatus.PostProcess;
             return;
@@ -45,8 +51,23 @@ public class ProcessingMiningOperationsHandler : BaseHandler, ICalculationHandle
         if (module.IsReloaded)
         {
             // Generate mining results
-
+            AddToJournal(sessionContext, EventType.AsteroidHarvestFinished, $"Asteroid '{target.Name}' Harvest Finished");
+            sessionContext.Metrics.Add(Metrics.ProcessingMiningCommandFinished);
             command.Status = CommandStatus.PostProcess;
         }
+    }
+
+    private void AddToJournal(SessionContext sessionContext, EventType type, string text)
+    {
+        if (sessionContext?.Session?.Logbook == null)
+            throw new ArgumentNullException(nameof(sessionContext), "Session or Logbook is null");
+
+
+        sessionContext.Session.Logbook.Add(new EventMessage
+            {
+                Id = IdGenerator.GetNextId(),
+                Type = type,
+                Text = text
+            });
     }
 }

@@ -39,7 +39,7 @@
             crlFullStop = new Button();
             button10 = new Button();
             commandRotateToTarget = new Button();
-            button12 = new Button();
+            commandHarvestAsteroid = new Button();
             button13 = new Button();
             button14 = new Button();
             SuspendLayout();
@@ -230,21 +230,23 @@
             commandRotateToTarget.UseVisualStyleBackColor = false;
             commandRotateToTarget.Click += Event_RotateToTarget;
             // 
-            // button12
+            // commandHarvestAsteroid
             // 
-            button12.BackColor = Color.FromArgb(64, 64, 64);
-            button12.Enabled = false;
-            button12.FlatAppearance.BorderSize = 0;
-            button12.FlatAppearance.MouseDownBackColor = Color.Gray;
-            button12.FlatAppearance.MouseOverBackColor = Color.Silver;
-            button12.FlatStyle = FlatStyle.Flat;
-            button12.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            button12.ForeColor = Color.DimGray;
-            button12.Location = new Point(291, 60);
-            button12.Name = "button12";
-            button12.Size = new Size(66, 51);
-            button12.TabIndex = 11;
-            button12.UseVisualStyleBackColor = false;
+            commandHarvestAsteroid.BackColor = Color.FromArgb(64, 64, 64);
+            commandHarvestAsteroid.Enabled = false;
+            commandHarvestAsteroid.FlatAppearance.BorderSize = 0;
+            commandHarvestAsteroid.FlatAppearance.MouseDownBackColor = Color.Gray;
+            commandHarvestAsteroid.FlatAppearance.MouseOverBackColor = Color.Silver;
+            commandHarvestAsteroid.FlatStyle = FlatStyle.Flat;
+            commandHarvestAsteroid.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            commandHarvestAsteroid.ForeColor = Color.DimGray;
+            commandHarvestAsteroid.Location = new Point(291, 60);
+            commandHarvestAsteroid.Name = "commandHarvestAsteroid";
+            commandHarvestAsteroid.Size = new Size(66, 51);
+            commandHarvestAsteroid.TabIndex = 11;
+            commandHarvestAsteroid.Text = "HRVS";
+            commandHarvestAsteroid.UseVisualStyleBackColor = false;
+            commandHarvestAsteroid.Click += Event_HarvestAsteroid;
             // 
             // button13
             // 
@@ -285,7 +287,7 @@
             BackColor = Color.FromArgb(12, 12, 12);
             Controls.Add(button14);
             Controls.Add(button13);
-            Controls.Add(button12);
+            Controls.Add(commandHarvestAsteroid);
             Controls.Add(commandRotateToTarget);
             Controls.Add(button10);
             Controls.Add(crlFullStop);
@@ -316,7 +318,7 @@
         private Button crlFullStop;
         private Button button10;
         private Button commandRotateToTarget;
-        private Button button12;
+        private Button commandHarvestAsteroid;
         private Button button13;
         private Button button14;
     }

@@ -44,16 +44,17 @@ public class MiningHarvestTests
         session.State.SetSpeed(10);
 
         // 10 seconds execution
-        for(int i = 0; i < 10; i++)
+        for(int i = 0; i < 15; i++)
         {
             _gameServer?.Execution();
         }
 
-        var commandCount = _gameServer.SessionContext.EventsSystem.Commands.Count;
+        var commandCount = _gameServer.SessionContext.EventsSystem.Commands.Where(x => x.Category == CommandCategory.Mining).Count();
 
         // Assert
         Assert.Equal(CommandStatus.PreProcess, commandPreProcessingStatus);
         Assert.Equal(CommandStatus.Process, commandProcessingStatus);
+        Assert.Equal(1, _gameServer.Metrics.Get(Metrics.ProcessingMiningCommandFinished));
         Assert.Equal(0, commandCount);
     }
 
@@ -97,5 +98,6 @@ public class MiningHarvestTests
         // Assert
         Assert.Equal(CommandStatus.PreProcess, commandPreProcessingStatus);
         Assert.Null(commandProcessingStatus);
+        Assert.Equal(1, _gameServer.Metrics.Get(Metrics.ProcessingMiningCommandCancelled));
     }
 }

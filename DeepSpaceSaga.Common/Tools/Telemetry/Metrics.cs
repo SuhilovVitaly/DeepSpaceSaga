@@ -21,5 +21,8 @@ public enum Metrics
     ProcessingNavigationCommandError,
     PhasePreProcessing,
     PhaseProcessing,
-    PhasePostProcessing
+    PhasePostProcessing,
+    ProcessingMiningCommand,
+    ProcessingMiningCommandFinished,
+    ProcessingMiningCommandCancelled
 }
