@@ -6,7 +6,7 @@ public interface IModule : ICoreItem
     bool IsAutoRun { get; set; }
     bool IsCalculated { get; set; }
     double ActivationCost { get; set; }
-
+    bool IsActive { get; set; }
     /// <summary>
     /// Fitting - Compartment number
     /// </summary>

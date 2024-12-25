@@ -13,7 +13,8 @@ public static class HandlersProcessingCollectionExtensions
             new ProcessingContentGenerationHandler(),
             new ProcessingNavigationHandler(),
             new ProcessingScanHandler(),
-            new ProcessingCommandCleanerHandler()
+            new ProcessingCommandCleanerHandler(),
+            new ProcessingModuleActivationHandler()
         ];
     }
 }

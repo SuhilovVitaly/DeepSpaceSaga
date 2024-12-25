@@ -6,6 +6,7 @@ public abstract class AbstractModule : AbstractItem
     public bool IsAutoRun { get; set; } = false;
     public bool IsCalculated { get; set; } = true;
     public int Compartment { get; set; }
+    public bool IsActive { get; set; }
     public int Slot { get; set; }
     public double ReloadTime { get; set; }
     public double Reloading { get; set; } 

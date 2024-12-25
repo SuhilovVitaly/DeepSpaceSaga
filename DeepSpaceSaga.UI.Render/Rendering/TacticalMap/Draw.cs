@@ -15,5 +15,7 @@ public class Draw
         DrawModulesActions.Execute(screenParameters, session);
 
         DrawInteraction.Execute(screenParameters, outerSpace, session);
+
+        DrawActiveCommands.Execute(screenParameters, outerSpace, session);
     }
 }

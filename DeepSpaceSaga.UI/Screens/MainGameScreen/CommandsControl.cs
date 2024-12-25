@@ -165,13 +165,15 @@ public partial class CommandsControl : UserControl
     {
         var spacecraft = Global.GameManager.GetPlayerSpacecraft();
 
-        _ = Global.GameManager.ExecuteCommandAsync(new Command
+        var command = new Command
         {
             Category = CommandCategory.Mining,
             Type = CommandTypes.MiningOperationsHarvest,
             CelestialObjectId = spacecraft.Id,
             TargetCelestialObjectId = _selectedCelestialObjectId,
             ModuleId = spacecraft.Module(Common.Universe.Equipment.Category.MiningLaser).Id
-        });
+        };
+
+        _ = Global.GameManager.ExecuteCommandAsync(command);
     }
 }

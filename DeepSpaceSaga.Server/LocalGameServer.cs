@@ -191,6 +191,19 @@ public class LocalGameServer : IGameServer
         {
             command.Status = CommandStatus.PreProcess;
             SessionContext.EventsSystem.AddCommand(command);
+            var celestialObject = SessionContext.Session.GetCelestialObject(command.CelestialObjectId);
+
+            // TODO: Move to PreProcessing block
+            if (celestialObject is ISpacecraft spacecraft)
+            {
+                var module = spacecraft.GetModule(command.ModuleId);
+
+                if(module != null)
+                {
+                    module.TargetId = command.TargetCelestialObjectId;
+                }                
+            }
+
             await Task.CompletedTask;
         }
         catch (Exception ex)

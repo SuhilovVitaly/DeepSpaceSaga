@@ -5,5 +5,6 @@ public enum EventType
     DetectCelestialObject,
     CelestialObjectIdentified,
     NavigationManeuver,
-    AsteroidHarvestFinished
+    AsteroidHarvestFinished,
+    AsteroidHarvestCancelled
 }

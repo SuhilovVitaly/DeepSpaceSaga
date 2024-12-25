@@ -42,6 +42,7 @@ public class ProcessingMiningOperationsHandler : BaseHandler, ICalculationHandle
 
         if (distance > module.MiningRange)
         {
+            AddToJournal(sessionContext, EventType.AsteroidHarvestCancelled, $"Asteroid '{targetCelestialObject.Name}' Harvest Cancelled");
             sessionContext.Metrics.Add(Metrics.ProcessingMiningCommandCancelled);
             // Cancel command bacause distance is to big
             command.Status = CommandStatus.PostProcess;
