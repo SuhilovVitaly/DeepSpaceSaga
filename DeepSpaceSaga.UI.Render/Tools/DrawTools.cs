@@ -1,9 +1,29 @@
-﻿using LanguageExt.ClassInstances.Pred;
-
-namespace DeepSpaceSaga.UI.Render.Tools;
+﻿namespace DeepSpaceSaga.UI.Render.Tools;
 
 public class DrawTools
 {
+    public static SizeF MeasureString(string label, Font font)
+    {
+        // Create proper typeface with weight for bold
+        var typeface = font.Bold 
+            ? SKTypeface.FromFamilyName(font.Name, SKFontStyleWeight.Bold, SKFontStyleWidth.Normal, SKFontStyleSlant.Upright)
+            : SKTypeface.FromFamilyName(font.Name);
+        
+        using var paint = new SKPaint
+        {
+            Typeface = typeface,
+            TextSize = font.Size,
+            IsAntialias = true
+        };
+        
+        SKRect bounds = new();
+        paint.MeasureText(label, ref bounds);
+        float textHeight = bounds.Height;
+        float simpleWidth = paint.MeasureText(label);
+
+        return new SizeF(simpleWidth, textHeight);
+    }
+
     public static void DrawString(IScreenInfo screen, string text, Font font, SpaceMapColor color, RectangleF rectangle)
     {
         using var textPaint = new SKPaint

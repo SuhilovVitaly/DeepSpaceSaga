@@ -25,11 +25,6 @@ public class PostProcessingCommandCleanerHandler : BaseHandler, ICalculationHand
         { 
             if(command.ModuleId > 0)
             {
-                if (command.Category == CommandCategory.Mining)
-                {
-                    var x = "";
-                }
-
                 var celestialObjectId = context.Session.GetCelestialObject(command.CelestialObjectId);
 
                 if(celestialObjectId is ISpacecraft spacecraft)

@@ -1,4 +1,6 @@
-﻿namespace DeepSpaceSaga.UI.Render.Extensions;
+﻿using System.Drawing;
+
+namespace DeepSpaceSaga.UI.Render.Extensions;
 
 public static class SkiaExtension
 {
@@ -22,19 +24,29 @@ public static class SkiaExtension
         canvas.DrawCircle(x, y, width * 2, gridPaint);
     }
 
-    public static void DrawEllipse(this SKCanvas canvas, Pen pen, float x, float y, float width, float hight)
+    public static void DrawEllipse(this SKCanvas canvas, SKColor color, float x, float y, float width, float hight)
     {
-        var smallGridPen = new SKColor(pen.Color.R, pen.Color.G, pen.Color.B);
-
         using var gridPaint = new SKPaint
         {
-            Color = smallGridPen,
+            Color = color,
             StrokeWidth = 1,
             IsAntialias = true,
             Style = SKPaintStyle.Stroke
         };
 
         canvas.DrawCircle(x, y, width * 2, gridPaint);
+    }
+
+    public static void DrawEllipse(this SKCanvas canvas, SpaceMapColor color, float x, float y, float width, float hight)
+    {
+        var smallGridPen = color.ToSKColor();
+        DrawEllipse(canvas, smallGridPen, x, y, width, hight);
+    }
+
+    public static void DrawEllipse(this SKCanvas canvas, Pen pen, float x, float y, float width, float hight)
+    {
+        var smallGridPen = new SKColor(pen.Color.R, pen.Color.G, pen.Color.B);
+        DrawEllipse(canvas, smallGridPen, x, y, width, hight);
     }
 
     public static void FillRectangle(this SKCanvas canvas, SolidBrush solidBrush, float x, float y, float width, float hight)

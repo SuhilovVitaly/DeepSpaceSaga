@@ -57,9 +57,13 @@ internal class DrawModulesActions
 
         DrawTools.FillRectangle(screenInfo, new SpaceMapColor(Color.FromArgb(22, 22, 22)), startLabel, 120, 18);
 
-        var label = $"Mining progress: {CalculateWorkPercentage(module.ReloadTime, module.Reloading)}%";
+        var label = $"Mining progress: ";
 
-        DrawTools.DrawString(screenInfo, label, new Font("Tahoma", 12), Colors.ModuleSpaceScannerConnector, new RectangleF(startLabel.X + 15, startLabel.Y + 12, 190, 50));
+        DrawTools.DrawString(screenInfo, label, Fonts.SpaceMapLabels, Colors.ForeColorSpaceMap, new RectangleF(startLabel.X + 15, startLabel.Y + 12, 190, 50));
+
+        var labelValue = $"{CalculateWorkPercentage(module.ReloadTime, module.Reloading)}%";
+
+        DrawTools.DrawString(screenInfo, labelValue, Fonts.SpaceMapLabels, Colors.ForePercentColor, new RectangleF(startLabel.X + 15 + DrawTools.MeasureString(label, Fonts.SpaceMapLabels).Width, startLabel.Y + 12, 190, 50));
     }
 
     private static void DrawSpaceScanner(IScreenInfo screenInfo, GameSession session, IModule module, ISpacecraft spacecraft)
@@ -69,7 +73,9 @@ internal class DrawModulesActions
         var direction = GeometryTools.Azimuth(spacecraftLocation, targetLocation);
         var direction1 = GeometryTools.Azimuth(targetLocation, spacecraftLocation);
 
-        screenInfo.GraphicSurface?.DrawEllipse(new Pen(Color.DarkOrange, 1), targetLocation.X , targetLocation.Y, 15, 15);
+        var color = new SpaceMapColor(32, 32, 32);
+
+        screenInfo.GraphicSurface?.DrawEllipse(Colors.ModuleSpaceScannerConnector, targetLocation.X , targetLocation.Y, 15, 15);
 
         var locationConnector = GeometryTools.Move(targetLocation, 30, direction);
         var locationConnector2 = GeometryTools.Move(spacecraftLocation, 30, direction1);
@@ -79,13 +85,19 @@ internal class DrawModulesActions
 
         var startLabel = GeometryTools.Move(targetLocation, 45, LabelDirection(session.GetCelestialObject(module.TargetId)));
 
-        DrawTools.DrawLine(screenInfo, new SpaceMapColor(32, 32, 32), targetLocation, new SpaceMapPoint(startLabel.X, startLabel.Y + 15));
+        DrawTools.DrawLine(screenInfo, color, targetLocation, new SpaceMapPoint(startLabel.X, startLabel.Y + 15));
 
-        DrawTools.FillRectangle(screenInfo, new SpaceMapColor(Color.FromArgb(22, 22, 22)), startLabel, 120, 18);
+        DrawTools.FillRectangle(screenInfo, Colors.ForeBackgroundColorSpaceMap, startLabel, 160, 18);
 
-        var label = $"Scanning progress: {CalculateWorkPercentage(module.ReloadTime, module.Reloading)}%";
+        var label = $"Scanning progress: ";
 
-        DrawTools.DrawString(screenInfo, label, new Font("Tahoma", 12), Colors.ModuleSpaceScannerConnector, new RectangleF(startLabel.X + 15, startLabel.Y + 12, 190, 50));
+        DrawTools.DrawString(screenInfo, label, Fonts.SpaceMapLabels, Colors.ForeColorSpaceMap, new RectangleF(startLabel.X + 15, startLabel.Y + 12, 190, 50));
+
+        var x = DrawTools.MeasureString("Scanning progress: ", Fonts.SpaceMapLabels);
+
+        var labelValue = $"{CalculateWorkPercentage(module.ReloadTime, module.Reloading)}%";
+
+        DrawTools.DrawString(screenInfo, labelValue, Fonts.SpaceMapLabels, Colors.ForePercentColor, new RectangleF(startLabel.X + 15 + x.Width, startLabel.Y + 12, 190, 50));
     }
 
     public static double CalculateWorkPercentage(double totalTime, double currentTime)
