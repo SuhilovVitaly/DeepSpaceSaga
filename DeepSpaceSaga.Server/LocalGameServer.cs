@@ -22,7 +22,7 @@ public class LocalGameServer : IGameServer
         private init => _metrics = value ?? throw new ArgumentNullException(nameof(value));
     }
 
-    // TODO: Cooperation here
+    
     public LocalGameServer(
         IServerMetrics metrics,
         LocalGameServerOptions options,
