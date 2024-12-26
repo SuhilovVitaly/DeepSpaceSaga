@@ -1,17 +1,18 @@
 ﻿namespace DeepSpaceSaga.Server.Infrastructure;
 
-public class GameEventsSystem(IServerMetrics metrics)
+public class GameEventsSystem(IServerMetrics metrics, IGameActionEvents actions)
 {
     public ConcurrentQueue<Command> Commands { get; set; } = new();
-    public ConcurrentDictionary<long, GameActionEvent> Actions { get; set; } = [];
+    //public ConcurrentDictionary<long, GameActionEvent> Actions { get; set; } = [];
+    public IGameActionEvents Actions { get; set; } = actions;
     private readonly GenerationTool _generationTool = new();
 
     public GameEventsSystem Clone()
     {
-        var duplicate = new GameEventsSystem(metrics)
+        var duplicate = new GameEventsSystem(metrics, actions)
         {
             Commands = new ConcurrentQueue<Command>(),
-            Actions = new ConcurrentDictionary<long, GameActionEvent>()
+            Actions = Actions.Clone()
         };
 
         foreach (var command in Commands)
@@ -19,10 +20,10 @@ public class GameEventsSystem(IServerMetrics metrics)
             duplicate.Commands.Enqueue(command.Copy());
         }
 
-        foreach (var action in Actions)
-        {
-            duplicate.Actions.TryAdd(action.Key, action.Value.Copy());
-        }
+        //foreach (var action in Actions)
+        //{
+        //    duplicate.Actions.TryAdd(action.Key, action.Value.Copy());
+        //}
 
         return duplicate;
     }
@@ -90,6 +91,6 @@ public class GameEventsSystem(IServerMetrics metrics)
             TargetObjectId = module.TargetId
         };
 
-        Actions.TryAdd(gameEvent.Id, gameEvent);
+        //Actions.TryAdd(gameEvent.Id, gameEvent);
     }
 }

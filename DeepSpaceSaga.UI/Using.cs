@@ -18,3 +18,6 @@ global using DeepSpaceSaga.Common.Layers.Tactical;
 global using Microsoft.Extensions.DependencyInjection;
 global using System.ComponentModel;
 global using DeepSpaceSaga.Common.Universe.Equipment.Mining;
+global using DeepSpaceSaga.Server;
+global using DeepSpaceSaga.Common.Tools.Telemetry;
+global using DeepSpaceSaga.Server.Infrastructure;

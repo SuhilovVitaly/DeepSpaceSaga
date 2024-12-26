@@ -24,7 +24,8 @@ public class LocalGameServer : IGameServer
 
     public LocalGameServer(
         IServerMetrics metrics,
-        LocalGameServerOptions options, 
+        LocalGameServerOptions options,
+        IGameActionEvents actions,
         GenerationTool randomizer,
         GameEventsSystem? eventsSystem = null)
     {
@@ -36,7 +37,7 @@ public class LocalGameServer : IGameServer
 
         SessionContext = new SessionContext(
             new GameSession(_options.InitialMap, _options.SessionSettings), 
-            eventsSystem ?? new GameEventsSystem(metrics),
+            eventsSystem ?? new GameEventsSystem(metrics, actions),
             metrics,
             randomizer,
             _options);
@@ -54,7 +55,7 @@ public class LocalGameServer : IGameServer
             TickExecute);
     }
 
-    public LocalGameServer(GameSession session, ServerMetrics metrics, GenerationTool randomizer)
+    public LocalGameServer(GameSession session, ServerMetrics metrics, IGameActionEvents actions, GenerationTool randomizer)
     {
         ArgumentNullException.ThrowIfNull(session);
         ArgumentNullException.ThrowIfNull(metrics);
@@ -62,7 +63,7 @@ public class LocalGameServer : IGameServer
         Metrics = metrics;
         SessionContext = new SessionContext(
             session,
-            new GameEventsSystem(metrics),
+            new GameEventsSystem(metrics, actions),
             metrics,
             randomizer,
             new LocalGameServerOptions());

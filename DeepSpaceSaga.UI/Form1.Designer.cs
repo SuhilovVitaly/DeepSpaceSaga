@@ -145,9 +145,9 @@
             logbookControl2.BorderStyle = BorderStyle.FixedSingle;
             logbookControl2.IsDraggible = false;
             logbookControl2.IsResizible = false;
-            logbookControl2.Location = new Point(2309, 277);
+            logbookControl2.Location = new Point(2130, 277);
             logbookControl2.Name = "logbookControl2";
-            logbookControl2.Size = new Size(302, 196);
+            logbookControl2.Size = new Size(481, 196);
             logbookControl2.TabIndex = 20;
             logbookControl2.Title = "Logbook";
             // 

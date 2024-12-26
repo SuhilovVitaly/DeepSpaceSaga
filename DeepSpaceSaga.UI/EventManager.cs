@@ -1,7 +1,4 @@
-﻿using DeepSpaceSaga.Server;
-using DeepSpaceSaga.Common.Tools.Telemetry;
-
-namespace DeepSpaceSaga.Controller;
+﻿namespace DeepSpaceSaga.Controller;
 
 public class EventManager
 {
@@ -27,7 +24,7 @@ public class EventManager
 
     public EventManager(GenerationTool randomizer)
     {
-        Worker = new Worker(new LocalGameServer(new ServerMetrics(), new LocalGameServerOptions(), randomizer));
+        Worker = new Worker(new LocalGameServer(new ServerMetrics(), new LocalGameServerOptions(), new GameActionEvents(), randomizer));
         InitializeAsync().GetAwaiter().GetResult();
 
         Worker.OnGetDataFromServer += Worker_RefreshData;
