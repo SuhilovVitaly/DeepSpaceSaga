@@ -17,7 +17,7 @@ public class GameSession
 
     public CelestialMap SpaceMap { get; internal set; }
 
-    public Journal Logbook { get; internal set; } = new Journal([]);
+    public Journal Logbook { get; internal set; } = new Journal(new List<EventMessage>());
 
     public GameSessionsSettings Settings { get; internal set; }
 

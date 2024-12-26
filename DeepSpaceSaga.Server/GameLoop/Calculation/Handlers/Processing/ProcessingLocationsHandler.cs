@@ -18,7 +18,7 @@ public class ProcessingLocationsHandler : BaseHandler, ICalculationHandler
 
     private void RecalculateOneTickObjectLocation(SessionContext context, ICelestialObject celestialObject)
     {
-        var tickSpeed = celestialObject.Speed / context.Settings.TurnInterval;
+        double tickSpeed = celestialObject.Speed / ( 1000 / context.Settings.TickInterval);
 
         var position = GeometryTools.Move(
             celestialObject.GetLocation(),
