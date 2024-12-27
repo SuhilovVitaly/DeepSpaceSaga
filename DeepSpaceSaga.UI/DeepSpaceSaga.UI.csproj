@@ -42,6 +42,9 @@
     <None Update="Images\Layers\Tactical\blueprint.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Images\Layers\Tactical\container.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Images\Layers\Tactical\PlayerSpaceship.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

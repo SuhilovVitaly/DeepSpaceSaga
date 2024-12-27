@@ -25,4 +25,14 @@ public class OuterSpace
         SelectedObjectId = 0;
         ActiveObjectId = 0;
     }
+
+    public void CleanActiveObject()
+    {
+        ActiveObjectId = 0;
+    }
+
+    public void CleanSelectedObject()
+    {
+        SelectedObjectId = 0;
+    }
 }

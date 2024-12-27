@@ -19,5 +19,6 @@ public enum CelestialObjectTypes
     SpaceshipNpcFriend = 203,
     [Description("Missile")]
     Missile = 300,
-    Explosion = 800
+    Explosion = 800,
+    Container = 1000
 }

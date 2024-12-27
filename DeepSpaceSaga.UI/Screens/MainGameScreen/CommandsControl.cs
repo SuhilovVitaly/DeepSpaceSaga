@@ -32,6 +32,20 @@ public partial class CommandsControl : UserControl
     {
         var spacecraft = Global.GameManager.GetPlayerSpacecraft();
         var target = Global.GameManager.GetCelestialObject(id);
+
+        if (target is null)
+        {
+            // Lost selected target object
+            DisableCommands();
+            return;
+        }
+
+        if(target.Types != CelestialObjectTypes.Asteroid) 
+        {
+            DisableCommand(commandHarvestAsteroid);
+            return;
+        }
+
         var distance = GeometryTools.Distance(spacecraft.GetLocation(), target.GetLocation());
         
         // Harvest asteroid

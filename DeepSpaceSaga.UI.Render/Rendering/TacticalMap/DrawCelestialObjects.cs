@@ -30,6 +30,9 @@ public class DrawCelestialObjects
                 case CelestialObjectTypes.SpaceshipNpcFriend:
                     DrawCelestialObject(screenInfo, currentObject, session);
                     break;
+                case CelestialObjectTypes.Container:
+                    DrawContainerObject(screenInfo, currentObject, session);
+                    break;
                 case CelestialObjectTypes.Missile:
                     break;
                 case CelestialObjectTypes.Explosion:
@@ -61,6 +64,20 @@ public class DrawCelestialObjects
             DrawCelestialObjectInfo(screenInfo, celestialObject, color, session);
         }
 
+    }
+
+    private static void DrawContainerObject(IScreenInfo screenInfo, ICelestialObject celestialObject, GameSession session)
+    {
+        var screenCoordinates = UiTools.ToScreenCoordinates(screenInfo, celestialObject.GetLocation());
+        var color = celestialObject.GetColor();
+
+        DrawTools.FillEllipse(screenInfo, screenCoordinates.X, screenCoordinates.Y, 4, color);
+        DrawTools.DrawEllipse(screenInfo, screenCoordinates.X, screenCoordinates.Y, 4, color);
+
+        if (celestialObject.IsPreScanned)
+        {
+            DrawCelestialObjectInfo(screenInfo, celestialObject, color, session);
+        }
     }
 
     private static void DrawCelestialObjectInfo(IScreenInfo screenInfo, ICelestialObject celestialObject, SpaceMapColor color, GameSession session)

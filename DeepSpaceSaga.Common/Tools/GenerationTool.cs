@@ -46,12 +46,10 @@ public class GenerationTool
 
     public int GetId()
     {
-        var baseId = Math.Abs(Guid.NewGuid().GetHashCode());
-        var randId = _randomBase.Next(10000, int.MaxValue);
-        return baseId + randId;
+        return Math.Abs(Guid.NewGuid().GetHashCode());
     }
 
-    private string RandomString(int length)
+    public string RandomString(int length)
     {
         const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         return new string(Enumerable.Repeat(chars, length)

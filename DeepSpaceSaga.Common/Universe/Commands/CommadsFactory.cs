@@ -27,7 +27,8 @@ public class CommandsFactory
                 command.IsOneTimeCommand = false;
                 command.IsUnique = true;
                 break;
-            case CommandTypes.MiningOperationsresult:
+            case CommandTypes.MiningOperationsDestroyAsteroid:
+            case CommandTypes.MiningOperationsResult:
                 command.Category = CommandCategory.Mining;
                 break;
             default:
@@ -47,7 +48,7 @@ public class CommandsFactory
             Status = CommandStatus.PreProcess,
             CelestialObjectId = sourceObject.Id,
             TargetCelestialObjectId = targetObject.Id,
-            ModuleId = module.Id,
+            ModuleId = module is null ? -1 : module.Id,
         };
 
         return command;

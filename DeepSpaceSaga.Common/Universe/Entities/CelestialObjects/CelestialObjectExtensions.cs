@@ -23,6 +23,8 @@ public static class CelestialObjectExtensions
                 return new SpaceMapColor(Color.SeaGreen);
             case CelestialObjectTypes.Asteroid:
                 return new SpaceMapColor(Color.WhiteSmoke);
+            case CelestialObjectTypes.Container:
+                return new SpaceMapColor(Color.Gray);
             case CelestialObjectTypes.Explosion:
                 break;
         }

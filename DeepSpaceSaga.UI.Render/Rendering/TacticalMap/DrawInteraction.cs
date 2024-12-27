@@ -4,7 +4,18 @@ public class DrawInteraction
 {
     public static void Execute(IScreenInfo screenInfo, OuterSpace outerSpace, GameSession session)
     {
-        if(outerSpace.ActiveObjectId > 0 && outerSpace.ActiveObjectId != outerSpace.SelectedObjectId)
+        if (session.GetCelestialObject(outerSpace.SelectedObjectId) is null)
+        {
+            outerSpace.CleanSelectedObject();
+        }
+
+        if (session.GetCelestialObject(outerSpace.ActiveObjectId) is null)
+        {
+            outerSpace.CleanActiveObject();
+        }
+
+
+        if (outerSpace.ActiveObjectId > 0 && outerSpace.ActiveObjectId != outerSpace.SelectedObjectId)
         {
             var targetLocation = UiTools.ToScreenCoordinates(screenInfo, session.GetCelestialObject(outerSpace.ActiveObjectId).GetLocation());
 

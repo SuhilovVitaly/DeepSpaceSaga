@@ -39,6 +39,11 @@ public partial class CelestialObjectInfo : UserControl
             imageCelestialObject.Image = ImageLoader.LoadLayersTacticalImage("asteroid");
         }
 
+        if (celestialObject.Types == CelestialObjectTypes.Container)
+        {
+            imageCelestialObject.Image = ImageLoader.LoadLayersTacticalImage("container");
+        }
+
         crlCelestialObjectName.Text = celestialObject.Name;
 
         lblType.Text = celestialObject.Types.GetDescription();
