@@ -28,3 +28,4 @@ global using DeepSpaceSaga.Server.GameLoop.Calculation.Handlers.Processing;
 global using DeepSpaceSaga.Server.GameLoop.Calculation.Actions;
 global using DeepSpaceSaga.Server.GameLoop.Calculation.Handlers.PreProcessing;
 global using DeepSpaceSaga.Server.Extensions;
+global using DeepSpaceSaga.Common.Universe.Audit;

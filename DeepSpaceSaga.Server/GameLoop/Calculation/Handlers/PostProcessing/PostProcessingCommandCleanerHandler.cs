@@ -50,15 +50,15 @@ public class PostProcessingCommandCleanerHandler : BaseHandler, ICalculationHand
     /// <returns>Updated game events system</returns>
     internal GameEventsSystem RemoveFinishedCommands(GameEventsSystem eventsSystem)
     {
-        eventsSystem.Commands = new ConcurrentQueue<Command>(
+        eventsSystem.Commands = new ConcurrentQueue<ICommand>(
             eventsSystem.Commands.Where(cmd => cmd.Status != CommandStatus.PostProcess));
             
         return eventsSystem;
     }
 
-    internal ConcurrentQueue<Command> FinishedCommands(GameEventsSystem eventsSystem)
+    internal ConcurrentQueue<ICommand> FinishedCommands(GameEventsSystem eventsSystem)
     {
-        var result = new ConcurrentQueue<Command>(
+        var result = new ConcurrentQueue<ICommand>(
             eventsSystem.Commands.Where(cmd => cmd.Status == CommandStatus.PostProcess));
 
         return result;

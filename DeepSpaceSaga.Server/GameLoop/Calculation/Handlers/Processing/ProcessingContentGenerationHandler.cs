@@ -8,7 +8,7 @@ internal class ProcessingContentGenerationHandler : BaseHandler, ICalculationHan
 
     public SessionContext Handle(SessionContext context)
     {
-        foreach (Command command in context.EventsSystem.Commands.GetCommandsByCategory(CommandStatus.Process, CommandCategory.ContentGeneration))
+        foreach (ICommand command in context.EventsSystem.Commands.GetCommandsByCategory(CommandStatus.Process, CommandCategory.ContentGeneration))
         {
             context = Run(context, command);
         }
@@ -16,7 +16,7 @@ internal class ProcessingContentGenerationHandler : BaseHandler, ICalculationHan
         return context;
     }
 
-    public SessionContext Run(SessionContext sessionContext, Command command)
+    public SessionContext Run(SessionContext sessionContext, ICommand command)
     {
         var currentCelestialObject = command.CelestialObjectId > 0 ? sessionContext.Session.GetCelestialObject(command.CelestialObjectId) : null;
 
@@ -33,7 +33,7 @@ internal class ProcessingContentGenerationHandler : BaseHandler, ICalculationHan
         return sessionContext;
     }
 
-    private ICelestialObject CelestialMaplestialObjectGeneration(SessionContext sessionContext, Command command)
+    private ICelestialObject CelestialMaplestialObjectGeneration(SessionContext sessionContext, ICommand command)
     {
         var scannerModule = sessionContext.Session.GetPlayerSpaceShip().GetModules(Category.SpaceScanner).FirstOrDefault() as IScanner;
 
@@ -52,15 +52,15 @@ internal class ProcessingContentGenerationHandler : BaseHandler, ICalculationHan
         return asteroid;
     }
 
-    private void AddToJournal(SessionContext sessionContext, Command command, ICelestialObject celestialObject)
+    private void AddToJournal(SessionContext sessionContext, ICommand command, ICelestialObject celestialObject)
     {
         sessionContext.Metrics.Add(Metrics.MessageAddedToJournal);
 
         sessionContext.Session.Logbook.Add(
-            new Common.Universe.Audit.EventMessage
+            new EventMessage
             {
                 Id = IdGenerator.GetNextId(),
-                Type = Common.Universe.Audit.EventType.DetectCelestialObject,
+                Type = EventType.DetectCelestialObject,
                 Text = command.Type.GetDescription() + $" [{Math.Round(celestialObject.PositionX, 0)}:{Math.Round(celestialObject.PositionY, 0)}] {celestialObject.Direction}"
             });
     }

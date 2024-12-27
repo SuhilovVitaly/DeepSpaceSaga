@@ -46,7 +46,9 @@ public class GenerationTool
 
     public int GetId()
     {
-        return _randomBase.Next(1000000000, int.MaxValue);
+        var baseId = Math.Abs(Guid.NewGuid().GetHashCode());
+        var randId = _randomBase.Next(10000, int.MaxValue);
+        return baseId + randId;
     }
 
     private string RandomString(int length)

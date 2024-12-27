@@ -1,6 +1,6 @@
 ﻿namespace DeepSpaceSaga.Common.Universe.Commands;
 
-public class Command
+public class Command : ICommand
 {
     public int Id { get; set; }
     public CommandCategory Category { get; set; }

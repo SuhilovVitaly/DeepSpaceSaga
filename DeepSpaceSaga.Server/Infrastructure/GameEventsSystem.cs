@@ -2,8 +2,7 @@
 
 public class GameEventsSystem(IServerMetrics metrics, IGameActionEvents actions)
 {
-    public ConcurrentQueue<Command> Commands { get; set; } = new();
-    //public ConcurrentDictionary<long, GameActionEvent> Actions { get; set; } = [];
+    public ConcurrentQueue<ICommand> Commands { get; set; } = new();
     public IGameActionEvents Actions { get; set; } = actions;
     private readonly GenerationTool _generationTool = new();
 
@@ -11,7 +10,7 @@ public class GameEventsSystem(IServerMetrics metrics, IGameActionEvents actions)
     {
         var duplicate = new GameEventsSystem(metrics, actions)
         {
-            Commands = new ConcurrentQueue<Command>(),
+            Commands = new ConcurrentQueue<ICommand>(),
             Actions = Actions.Clone()
         };
 
@@ -20,20 +19,20 @@ public class GameEventsSystem(IServerMetrics metrics, IGameActionEvents actions)
             duplicate.Commands.Enqueue(command.Copy());
         }
 
-        //foreach (var action in Actions)
-        //{
-        //    duplicate.Actions.TryAdd(action.Key, action.Value.Copy());
-        //}
-
         return duplicate;
     }
 
     public void EndTurnProcessing()
     {
-        Commands = new ConcurrentQueue<Command>();
+        Commands = new ConcurrentQueue<ICommand>();
     }
 
-    public void AddCommand(Command command)
+    public void GenerateCommand(CommandTypes commandType, IModule module, ICelestialObject targetObject, ICelestialObject sourceObject)
+    {
+        AddCommand(CommandsFactory.CreateCommand(_generationTool, commandType, module, targetObject, sourceObject));
+    }
+
+    public void AddCommand(ICommand command)
     {
         ArgumentNullException.ThrowIfNull(command);
 
@@ -60,7 +59,7 @@ public class GameEventsSystem(IServerMetrics metrics, IGameActionEvents actions)
 
     internal void RemoveDuplicateCommands(List<int> duplicateCommands)
     {
-        var result = new ConcurrentQueue<Command>();
+        var result = new ConcurrentQueue<ICommand>();
 
         foreach (var command in Commands) 
         { 
@@ -73,7 +72,7 @@ public class GameEventsSystem(IServerMetrics metrics, IGameActionEvents actions)
         Commands = result;
     }
 
-    public Command? GetCommand(int commandId)
+    public ICommand? GetCommand(int commandId)
     {
         return Commands?.Where(x => x.Id == commandId).FirstOrDefault();
     }

@@ -1,6 +1,4 @@
-﻿using DeepSpaceSaga.Common.Universe.Audit;
-
-namespace DeepSpaceSaga.Server.GameLoop.Calculation.Handlers.Processing;
+﻿namespace DeepSpaceSaga.Server.GameLoop.Calculation.Handlers.Processing;
 
 public class ProcessingMiningOperationsHandler : BaseHandler, ICalculationHandler
 {
@@ -55,6 +53,7 @@ public class ProcessingMiningOperationsHandler : BaseHandler, ICalculationHandle
             AddToJournal(sessionContext, EventType.AsteroidHarvestFinished, $"Asteroid '{targetCelestialObject.Name}' Harvest Finished");
             sessionContext.Metrics.Add(Metrics.ProcessingMiningCommandFinished);
             command.Status = CommandStatus.PostProcess;
+            sessionContext.EventsSystem.GenerateCommand(CommandTypes.MiningOperationsresult, module, targetCelestialObject, moduleCelestialObject);
         }
     }
 

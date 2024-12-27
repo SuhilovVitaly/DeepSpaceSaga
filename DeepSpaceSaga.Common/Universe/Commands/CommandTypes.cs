@@ -43,6 +43,7 @@ public enum CommandTypes
     [Description("Object detected")]
     GenerateAsteroid = 5001,
     MiningOperationsHarvest = 8001,
+    MiningOperationsresult = 8010,
     CargoOperationsShow = 9001
 }
 
