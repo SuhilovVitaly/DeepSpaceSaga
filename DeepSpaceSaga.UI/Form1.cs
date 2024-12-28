@@ -1,4 +1,5 @@
-﻿using DeepSpaceSaga.Common.Infrastructure.Commands;
+﻿
+using DeepSpaceSaga.UI.Handlers;
 
 namespace DeepSpaceSaga.UI;
 
@@ -32,6 +33,12 @@ public partial class Form1 : Form
         Global.GameManager.EventController.OnHideCelestialObject += Event_HideCelestialObject;
         Global.GameManager.EventController.OnSelectCelestialObject += Event_SelectCelestialObject;
         Global.GameManager.EventController.OnUnselectCelestialObject += Event_UnselectCelestialObject;
+        Global.GameManager.EventController.OnRefreshData += Event_WorkerRefreshData;
+    }
+
+    private void Event_WorkerRefreshData(GameSession session)
+    {
+        GameEventsHandker.Execute(session, this);
     }
 
     private void Event_UnselectCelestialObject(ICelestialObject @object)
@@ -169,5 +176,10 @@ public partial class Form1 : Form
                 });
                 break;
         }
+    }
+
+    public void OpenCargoUI(GameActionEvent gameActionEvent)
+    {
+
     }
 }

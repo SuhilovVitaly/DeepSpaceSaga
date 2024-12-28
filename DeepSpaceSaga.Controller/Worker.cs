@@ -1,5 +1,4 @@
-﻿using DeepSpaceSaga.Common.Infrastructure.Commands;
-using log4net;
+﻿using log4net;
 
 namespace DeepSpaceSaga.Controller;
 
@@ -51,10 +50,12 @@ public class Worker : IWorker
         try
         {
             var handlers = OnGetDataFromServer;
+            var session = _gameServer.GetSession();
             if (handlers != null)
             {
-                handlers.Invoke(_gameServer.GetSession());
+                handlers.Invoke(session);
             }
+            _logger.Info($"Turn: {session.Metrics.TurnsTicks}");
         }
         catch (Exception ex)
         {

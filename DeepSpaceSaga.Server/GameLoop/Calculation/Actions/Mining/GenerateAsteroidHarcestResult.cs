@@ -22,6 +22,7 @@ public class GenerateAsteroidHarcestResult
         sessionContext.Session.SpaceMap.Add(container);
 
         var uiEvent = EventsFactory.CreateEvent(sessionContext.Randomizer, command, module, targetCelestialObject, sourceCelestialObject, container);
+        uiEvent.CalculationTurnId = sessionContext.Session.Metrics.TurnTick;
         sessionContext.Session.Events.Add(uiEvent);
 
         return sessionContext;

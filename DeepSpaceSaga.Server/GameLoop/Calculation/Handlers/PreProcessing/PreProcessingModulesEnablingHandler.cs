@@ -19,7 +19,9 @@ public class PreProcessingModulesEnablingHandler : BaseHandler, ICalculationHand
 
             var module = sessionContext.Session.GetPlayerSpaceShip().GetModule(command.ModuleId);
             if (module == null)
-                throw new InvalidOperationException($"Module not found with ID: {command.ModuleId}");
+            {
+                continue;
+            }
 
             if (command.IsOneTimeCommand == false)
             {

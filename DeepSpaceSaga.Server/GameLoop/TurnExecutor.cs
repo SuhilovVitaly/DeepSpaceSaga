@@ -13,6 +13,8 @@ public class TurnExecutor
             context.Randomizer,
             context.Settings);
 
+        context.Session.Events = new GameActionEvents([]);
+
         for (var i = 0; i < processingSession.Session.State.Speed; i++)
         {
             var stopwatch = Stopwatch.StartNew();
@@ -21,13 +23,18 @@ public class TurnExecutor
 
             stopwatch.Stop();
             context.Metrics.AddMilliseconds(Metrics.CalculationTurnAvg, stopwatch.ElapsedMilliseconds);
+
+            _log.Info($"Calculation is {stopwatch.ElapsedMilliseconds} Avg is {context.Metrics.GetAverageMillisecondst(Metrics.CalculationTurnAvg)}");
         }
+
+        
+
         return processingSession;
     }
 
     public static SessionContext TurnExecution(SessionContext context)
     {
-        _log.Info($"Starting turn calculation PreProcessing for session turn {context.Session.Metrics.TurnTick}");
+        _log.Debug($"Starting turn calculation PreProcessing for session turn {context.Session.Metrics.TurnTick}");
 
         // TODO: Move to extantion
         foreach (var handler in context.GeHandlers(HandlerType.PreProcessing))
@@ -35,14 +42,14 @@ public class TurnExecutor
             context = handler.Handle(context);
         }
 
-        _log.Info($"Starting turn calculation Processing for session turn {context.Session.Metrics.TurnTick}");
+        _log.Debug($"Starting turn calculation Processing for session turn {context.Session.Metrics.TurnTick}");
 
         foreach (var handler in context.GeHandlers(HandlerType.Processing))
         {
             context = handler.Handle(context);
         }
 
-        _log.Info($"Starting turn calculation PostProcessing for session turn {context.Session.Metrics.TurnTick}");
+        _log.Debug($"Starting turn calculation PostProcessing for session turn {context.Session.Metrics.TurnTick}");
 
         foreach (var handler in context.GeHandlers(HandlerType.PostProcessing))
         {

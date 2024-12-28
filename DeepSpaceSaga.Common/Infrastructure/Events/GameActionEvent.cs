@@ -7,4 +7,6 @@ public class GameActionEvent
     public long? TargetObjectId { get; set; }
     public long? ModuleId { get; set; }
     public long Id { get; set; }
+    public long CalculationTurnId { get; set; }
+    public long PresentationTurnId { get; set; }
 }
