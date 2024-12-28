@@ -1,4 +1,6 @@
-﻿namespace DeepSpaceSaga.Tests.Universe.Equipment.Mining;
+﻿using DeepSpaceSaga.Common.Infrastructure.Commands;
+
+namespace DeepSpaceSaga.Tests.Universe.Equipment.Mining;
 
 public class MiningLaserTests
 {

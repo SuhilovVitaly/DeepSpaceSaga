@@ -1,4 +1,6 @@
-﻿namespace DeepSpaceSaga.Server;
+﻿using DeepSpaceSaga.Common.Infrastructure.Commands;
+
+namespace DeepSpaceSaga.Server;
 
 public class LocalGameServer : IGameServer
 {

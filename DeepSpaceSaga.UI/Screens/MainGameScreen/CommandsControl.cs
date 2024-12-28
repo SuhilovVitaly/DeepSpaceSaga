@@ -1,4 +1,6 @@
-﻿namespace DeepSpaceSaga.UI.Screens.MainGameScreen;
+﻿using DeepSpaceSaga.Common.Infrastructure.Commands;
+
+namespace DeepSpaceSaga.UI.Screens.MainGameScreen;
 
 public partial class CommandsControl : UserControl
 {

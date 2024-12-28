@@ -1,4 +1,6 @@
-﻿namespace DeepSpaceSaga.Server.Calculation.DataPreProcessing;
+﻿using DeepSpaceSaga.Common.Infrastructure.Commands;
+
+namespace DeepSpaceSaga.Server.Calculation.DataPreProcessing;
 
 internal class PreProcessingScanHandler : BaseHandler, ICalculationHandler
 {

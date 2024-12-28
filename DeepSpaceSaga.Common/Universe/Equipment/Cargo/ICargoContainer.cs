@@ -1,4 +1,5 @@
-﻿using DeepSpaceSaga.Common.Universe.Items;
+﻿using DeepSpaceSaga.Common.Infrastructure.Commands;
+using DeepSpaceSaga.Common.Universe.Items;
 
 namespace DeepSpaceSaga.Common.Universe.Equipment.Mining;
 

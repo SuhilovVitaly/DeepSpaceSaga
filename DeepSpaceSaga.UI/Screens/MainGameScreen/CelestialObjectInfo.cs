@@ -1,6 +1,4 @@
-﻿using System.Drawing;
-
-namespace DeepSpaceSaga.UI.Screens.MainGameScreen;
+﻿namespace DeepSpaceSaga.UI.Screens.MainGameScreen;
 
 public partial class CelestialObjectInfo : UserControl
 {

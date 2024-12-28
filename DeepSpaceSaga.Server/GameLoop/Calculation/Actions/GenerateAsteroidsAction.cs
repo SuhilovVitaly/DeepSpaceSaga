@@ -1,4 +1,6 @@
-﻿namespace DeepSpaceSaga.Server.GameLoop.Calculation.Actions;
+﻿using DeepSpaceSaga.Common.Infrastructure.Commands;
+
+namespace DeepSpaceSaga.Server.GameLoop.Calculation.Actions;
 
 public class GenerateAsteroidsAction
 {

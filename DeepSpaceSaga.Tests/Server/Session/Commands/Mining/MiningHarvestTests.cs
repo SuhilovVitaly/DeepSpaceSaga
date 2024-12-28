@@ -1,4 +1,6 @@
-﻿namespace DeepSpaceSaga.Tests.Server.Session.Commands.Mining;
+﻿using DeepSpaceSaga.Common.Infrastructure.Commands;
+
+namespace DeepSpaceSaga.Tests.Server.Session.Commands.Mining;
 
 public class MiningHarvestTests
 {

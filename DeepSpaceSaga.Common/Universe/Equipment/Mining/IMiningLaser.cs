@@ -1,4 +1,6 @@
-﻿namespace DeepSpaceSaga.Common.Universe.Equipment.Mining;
+﻿using DeepSpaceSaga.Common.Infrastructure.Commands;
+
+namespace DeepSpaceSaga.Common.Universe.Equipment.Mining;
 
 public interface IMiningLaser : IModule
 {

@@ -1,4 +1,6 @@
-﻿namespace DeepSpaceSaga.Tests.Server.Session.Commands.Navigation;
+﻿using DeepSpaceSaga.Common.Infrastructure.Commands;
+
+namespace DeepSpaceSaga.Tests.Server.Session.Commands.Navigation;
 
 public class SyncSpeedWithTargetTests
 {

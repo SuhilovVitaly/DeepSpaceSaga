@@ -1,4 +1,4 @@
-﻿namespace DeepSpaceSaga.Common.Universe.Commands;
+﻿namespace DeepSpaceSaga.Common.Infrastructure.Commands;
 
 public class CommandsFactory
 {
@@ -38,7 +38,7 @@ public class CommandsFactory
         }
         return command;
     }
-    
+
     private static ICommand BaseCommand(GenerationTool generationTool, CommandTypes commandType, IModule module, ICelestialObject targetObject, ICelestialObject sourceObject)
     {
         var command = new Command

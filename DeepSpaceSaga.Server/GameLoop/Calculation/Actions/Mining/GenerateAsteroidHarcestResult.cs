@@ -1,4 +1,7 @@
-﻿namespace DeepSpaceSaga.Server.GameLoop.Calculation.Actions.Mining;
+﻿using DeepSpaceSaga.Common.Infrastructure.Commands;
+using DeepSpaceSaga.Common.Tools;
+
+namespace DeepSpaceSaga.Server.GameLoop.Calculation.Actions.Mining;
 
 public class GenerateAsteroidHarcestResult
 {
@@ -11,10 +14,15 @@ public class GenerateAsteroidHarcestResult
     {
         var sourceCelestialObject = sessionContext.Session.GetCelestialObject(command.CelestialObjectId);
         var targetCelestialObject = sessionContext.Session.GetCelestialObject(command.TargetCelestialObjectId);
+        
+        var module = sourceCelestialObject.ToSpaceship().GetModule(command.ModuleId);
 
         var container = GenerateContainer(sessionContext, sourceCelestialObject, targetCelestialObject);
 
         sessionContext.Session.SpaceMap.Add(container);
+
+        var uiEvent = EventsFactory.CreateEvent(sessionContext.Randomizer, command, module, targetCelestialObject, sourceCelestialObject, container);
+        sessionContext.Session.Events.Add(uiEvent);
 
         return sessionContext;
     }

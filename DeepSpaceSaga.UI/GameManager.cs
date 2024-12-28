@@ -1,4 +1,6 @@
-﻿namespace DeepSpaceSaga.UI;
+﻿using DeepSpaceSaga.Common.Infrastructure.Commands;
+
+namespace DeepSpaceSaga.UI;
 
 public class GameManager : IDisposable
 {

@@ -1,4 +1,6 @@
-﻿namespace DeepSpaceSaga.Tests.RegressionTests;
+﻿using DeepSpaceSaga.Common.Infrastructure.Commands;
+
+namespace DeepSpaceSaga.Tests.RegressionTests;
 
 public class GameSessionCommandsRegressionTests
 {

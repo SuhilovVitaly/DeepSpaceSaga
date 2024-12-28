@@ -1,4 +1,6 @@
-﻿namespace DeepSpaceSaga.Server.GameLoop.Calculation.Handlers.PreProcessing;
+﻿using DeepSpaceSaga.Common.Infrastructure.Commands;
+
+namespace DeepSpaceSaga.Server.GameLoop.Calculation.Handlers.PreProcessing;
 
 public class PreProcessingModulesEnablingHandler : BaseHandler, ICalculationHandler
 {

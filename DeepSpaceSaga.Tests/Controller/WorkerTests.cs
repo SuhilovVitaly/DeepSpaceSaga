@@ -1,4 +1,5 @@
-﻿using DeepSpaceSaga.Controller;
+﻿using DeepSpaceSaga.Common.Infrastructure.Commands;
+using DeepSpaceSaga.Controller;
 
 namespace DeepSpaceSaga.Tests.Controller;
 

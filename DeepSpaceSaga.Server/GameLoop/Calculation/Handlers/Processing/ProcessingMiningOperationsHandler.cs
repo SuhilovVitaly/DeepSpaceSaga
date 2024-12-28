@@ -1,4 +1,5 @@
-﻿using DeepSpaceSaga.Server.GameLoop.Calculation.Actions.Mining;
+﻿using DeepSpaceSaga.Common.Infrastructure.Commands;
+using DeepSpaceSaga.Server.GameLoop.Calculation.Actions.Mining;
 
 namespace DeepSpaceSaga.Server.GameLoop.Calculation.Handlers.Processing;
 

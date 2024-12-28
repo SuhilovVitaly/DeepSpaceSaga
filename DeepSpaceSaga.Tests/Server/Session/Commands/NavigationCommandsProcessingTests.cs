@@ -1,4 +1,6 @@
-﻿namespace DeepSpaceSaga.Tests.Server.Session.Commands;
+﻿using DeepSpaceSaga.Common.Infrastructure.Commands;
+
+namespace DeepSpaceSaga.Tests.Server.Session.Commands;
 
 public class NavigationCommandsProcessingTests
 {

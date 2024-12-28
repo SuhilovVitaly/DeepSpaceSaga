@@ -1,4 +1,6 @@
-﻿namespace DeepSpaceSaga.Server.GameLoop.Calculation.Handlers.PostProcessing;
+﻿using DeepSpaceSaga.Common.Infrastructure.Commands;
+
+namespace DeepSpaceSaga.Server.GameLoop.Calculation.Handlers.PostProcessing;
 
 public class PostProcessingCommandCleanerHandler : BaseHandler, ICalculationHandler
 {

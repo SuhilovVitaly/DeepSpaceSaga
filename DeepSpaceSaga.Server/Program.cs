@@ -16,7 +16,7 @@ public class Program
             _log.Info("Starting Deep Space Saga server...");
 
             // Добавление сервисов
-            builder.Services.AddGameServer();
+            //builder.Services.AddGameServer();
 
             var app = builder.Build();
 

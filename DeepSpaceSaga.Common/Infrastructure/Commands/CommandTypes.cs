@@ -1,4 +1,4 @@
-﻿namespace DeepSpaceSaga.Common.Universe.Commands;
+﻿namespace DeepSpaceSaga.Common.Infrastructure.Commands;
 
 public enum CommandTypes
 {

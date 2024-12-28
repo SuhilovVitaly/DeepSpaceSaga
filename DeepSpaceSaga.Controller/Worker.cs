@@ -1,4 +1,5 @@
-﻿using log4net;
+﻿using DeepSpaceSaga.Common.Infrastructure.Commands;
+using log4net;
 
 namespace DeepSpaceSaga.Controller;
 

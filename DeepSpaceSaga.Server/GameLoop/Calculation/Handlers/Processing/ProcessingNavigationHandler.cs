@@ -1,4 +1,6 @@
-﻿namespace DeepSpaceSaga.Server.GameLoop.Calculation.Handlers.Processing;
+﻿using DeepSpaceSaga.Common.Infrastructure.Commands;
+
+namespace DeepSpaceSaga.Server.GameLoop.Calculation.Handlers.Processing;
 
 public class ProcessingNavigationHandler : BaseHandler, ICalculationHandler
 {

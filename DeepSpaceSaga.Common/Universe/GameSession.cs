@@ -1,4 +1,6 @@
-﻿namespace DeepSpaceSaga.Universe;
+﻿
+
+namespace DeepSpaceSaga.Universe;
 
 public class GameSession
 {
@@ -9,6 +11,7 @@ public class GameSession
         SpaceMap = spaceMap;
         Settings = settings;
         State = new GameState();
+        Events = new GameActionEvents([]);
     }
 
     public int Id { get; set; }
@@ -22,4 +25,6 @@ public class GameSession
     public GameSessionsSettings Settings { get; internal set; }
 
     public GameState State { get; internal set; }
+
+    public GameActionEvents Events { get; set; }  
 }

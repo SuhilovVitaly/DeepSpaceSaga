@@ -1,3 +1,5 @@
+using DeepSpaceSaga.Common.Infrastructure.Commands;
+
 public static class CommandExtensions
 {
     public static ConcurrentQueue<ICommand> GetCommandsByCategory(this ConcurrentQueue<ICommand> commands, CommandStatus status, CommandCategory category)
