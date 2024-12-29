@@ -1,6 +1,4 @@
-﻿using log4net;
-
-namespace DeepSpaceSaga.Controller;
+﻿namespace DeepSpaceSaga.Controller;
 
 public interface IWorker
 {
@@ -45,17 +43,25 @@ public class Worker : IWorker
         }
     }
 
+    int _prevTurn = 0;
+
     private void GetDataFromServer()
     {
         try
         {
             var handlers = OnGetDataFromServer;
             var session = _gameServer.GetSession();
-            if (handlers != null)
+            if (handlers != null)// && session.Metrics.TurnsTicks > _prevTurn)
             {
                 handlers.Invoke(session);
-            }
-            _logger.Info($"Turn: {session.Metrics.TurnsTicks}");
+
+                //if (session.State.IsPaused == false)
+                //{
+                //    _logger.Info($"Turn: {session.Metrics.TurnsTicks}");
+                //}
+            }            
+
+            _prevTurn = session.Metrics.TurnsTicks;
         }
         catch (Exception ex)
         {

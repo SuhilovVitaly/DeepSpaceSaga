@@ -14,7 +14,7 @@ public class PreProcessingModulesReloadingHandler : BaseHandler, ICalculationHan
         {
             if (moudle.IsReloaded == false)
             {
-                moudle.Reload();
+                moudle.Reload(sessionContext.Settings.RatePerSecond());
 
                 if (moudle.IsReloaded)
                 {

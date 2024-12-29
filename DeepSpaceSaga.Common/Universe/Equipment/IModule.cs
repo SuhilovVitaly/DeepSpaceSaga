@@ -24,9 +24,7 @@ public interface IModule : ICoreItem
 
     #endregion
 
-    void Reload();
+    void Reload(double progress);
 
-    List<ISkill> Skills { get; set; }
-
-    void AddSkill(ISkill skill);
+    void Execute();
 }

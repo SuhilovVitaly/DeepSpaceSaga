@@ -25,7 +25,7 @@ public class PreProcessingModulesEnablingHandler : BaseHandler, ICalculationHand
 
             if (command.IsOneTimeCommand == false)
             {
-                module.Reload();
+                module.Reload(sessionContext.Settings.RatePerSecond());
             }
         }
 

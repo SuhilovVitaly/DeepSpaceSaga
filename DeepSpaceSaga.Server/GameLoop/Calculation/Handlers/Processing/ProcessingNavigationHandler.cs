@@ -1,6 +1,4 @@
-﻿using DeepSpaceSaga.Common.Infrastructure.Commands;
-
-namespace DeepSpaceSaga.Server.GameLoop.Calculation.Handlers.Processing;
+﻿namespace DeepSpaceSaga.Server.GameLoop.Calculation.Handlers.Processing;
 
 public class ProcessingNavigationHandler : BaseHandler, ICalculationHandler
 {
@@ -37,7 +35,7 @@ public class ProcessingNavigationHandler : BaseHandler, ICalculationHandler
                 break;
             case CommandTypes.TurnLeft:
                 sessionContext.Metrics.Add(Metrics.ProcessingNavigationTurnLeftCommand);
-                TurnLeft(currentCelestialObject, command);
+                TurnLeft(sessionContext, currentCelestialObject, command);
                 break;
             case CommandTypes.TurnRight:
                 sessionContext.Metrics.Add(Metrics.ProcessingNavigationTurnRightCommand);
@@ -211,17 +209,20 @@ public class ProcessingNavigationHandler : BaseHandler, ICalculationHandler
 
     }
 
-    private void TurnLeft(ICelestialObject celestialObject, Command command)
+    private void TurnLeft(SessionContext sessionContext, ICelestialObject celestialObject, Command command)
     {
         var spacecraft = celestialObject.ToSpaceship();
 
         var module = spacecraft.GetModule(command.ModuleId);
+
+        
 
         double directionBeforeManeuver = celestialObject.Direction;
         double directionAfterManeuver = (directionBeforeManeuver - spacecraft.Agility).To360Degrees();
 
         spacecraft.SetDirection(directionAfterManeuver);
 
+        _log.Info($"[Navigation][TurnLeft][{sessionContext.Session.Metrics.TurnsTicks}] {spacecraft.Id} DB:{directionBeforeManeuver} DA:{directionAfterManeuver}");
         //module.Reload();
     }
 

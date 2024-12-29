@@ -72,7 +72,7 @@ public class LocalGameServer : IGameServer
         HandlersTurnInitialization();
     }
 
-    private void HandlersTurnInitialization()
+    private ConcurrentBag<ICalculationHandler> HandlersTurnInitialization()
     {
         ConcurrentBag<ICalculationHandler> handlers =
         [
@@ -81,17 +81,17 @@ public class LocalGameServer : IGameServer
             .. HandlersPostProcessingCollectionExtensions.GetHandlers(),
         ];
 
-        SessionContext.CalculationHandlers = handlers;
+       return handlers;
     }
 
-    private void HandlersTickInitialization()
+    private ConcurrentBag<ICalculationHandler> HandlersTickInitialization()
     {
         ConcurrentBag<ICalculationHandler> handlers =
         [
             new ProcessingLocationsHandler(),
         ];
 
-        SessionContext.CalculationHandlers = handlers;
+        return handlers;
     }
 
     public GameSession GetSession()
@@ -158,20 +158,60 @@ public class LocalGameServer : IGameServer
 
         HandlersTickInitialization();
 
-        Execution();
+        //ExecutionTick();
     }
 
-    internal void Execution()
+    private readonly object _calculationLock = new object();
+
+    internal void ExecutionTick()
     {
+        // First check if calculation is already in progress using lock
+        if (!Monitor.TryEnter(_calculationLock))
+        {
+            return; // Another thread is already executing
+        }
+
         try
         {
-            if (_isCalculationInProgress) return;
+            // Double-check pattern with volatile flag
+            if (_isCalculationInProgress)
+            {
+                return;
+            }
 
             _isCalculationInProgress = true;
 
-            _sessionLock.EnterWriteLock();            
+            // Try to acquire write lock with timeout to prevent deadlocks
+            if (!_sessionLock.TryEnterWriteLock(TimeSpan.FromSeconds(2)))
+            {
+                Logger.Info("[LocalGameServer] Failed to acquire write lock within timeout");
+                return;
+            }
 
-            SessionContext = TurnExecutor.Execute(SessionContext);            
+            try
+            {
+                var stopwatch = Stopwatch.StartNew();
+                try
+                {
+                    SessionContext = TurnExecutor.Execute(SessionContext, HandlersTickInitialization());
+                }
+                finally
+                {
+                    stopwatch.Stop();
+                    Logger.Debug($"[LocalGameServer] Turn execution took {stopwatch.ElapsedMilliseconds}ms");
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.Error($"[LocalGameServer] Execution error: {ex.Message}\n{ex.StackTrace}");
+            }
+            finally
+            {
+                if (_sessionLock.IsWriteLockHeld)
+                {
+                    _sessionLock.ExitWriteLock();
+                }
+            }
         }
         catch (Exception ex)
         {
@@ -179,11 +219,69 @@ public class LocalGameServer : IGameServer
         }
         finally
         {
-            if (_sessionLock.IsWriteLockHeld)
-            {
-                _sessionLock.ExitWriteLock();
-            }
             _isCalculationInProgress = false;
+            Monitor.Exit(_calculationLock);
+        }
+    }
+
+    internal void Execution()
+    {
+        // First check if calculation is already in progress using lock
+        if (!Monitor.TryEnter(_calculationLock))
+        {
+            return; // Another thread is already executing
+        }
+
+        try
+        {
+            // Double-check pattern with volatile flag
+            if (_isCalculationInProgress)
+            {
+                return;
+            }
+
+            _isCalculationInProgress = true;
+
+            // Try to acquire write lock with timeout to prevent deadlocks
+            if (!_sessionLock.TryEnterWriteLock(TimeSpan.FromSeconds(2)))
+            {
+                Logger.Info("[LocalGameServer] Failed to acquire write lock within timeout");
+                return;
+            }
+
+            try
+            {
+                var stopwatch = Stopwatch.StartNew();
+                try
+                {
+                    SessionContext = TurnExecutor.Execute(SessionContext, HandlersTurnInitialization());
+                }
+                finally
+                {
+                    stopwatch.Stop();
+                    Logger.Debug($"[LocalGameServer] Turn execution took {stopwatch.ElapsedMilliseconds}ms");
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.Error($"[LocalGameServer] Execution error: {ex.Message}\n{ex.StackTrace}");
+            }
+            finally
+            {
+                if (_sessionLock.IsWriteLockHeld)
+                {
+                    _sessionLock.ExitWriteLock();
+                }
+            }      
+        }
+        catch (Exception ex)
+        {
+            Logger.Error("[LocalGameServer] Execution error: " + ex.Message);
+        }
+        finally
+        {
+            _isCalculationInProgress = false;
+            Monitor.Exit(_calculationLock);
         }
     }
 
@@ -203,6 +301,7 @@ public class LocalGameServer : IGameServer
                 if(module != null)
                 {
                     module.TargetId = command.TargetCelestialObjectId;
+                    module.Execute();
                 }                
             }
 

@@ -10,7 +10,5 @@ public class SessionContext(GameSession session, GameEventsSystem eventsSystem, 
 
     public GenerationTool Randomizer { get; set; } = randomizer;
 
-    public ConcurrentBag<ICalculationHandler> CalculationHandlers { get; set; } = [];
-
     public LocalGameServerOptions Settings { get; set; } = settings;
 }

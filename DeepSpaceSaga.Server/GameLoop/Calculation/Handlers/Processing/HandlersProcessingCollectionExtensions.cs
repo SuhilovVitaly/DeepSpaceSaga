@@ -9,6 +9,7 @@ public static class HandlersProcessingCollectionExtensions
     {
         return
         [
+            new ProcessingLocationsHandler(),
             new ProcessingMiningOperationsHandler(),
             new ProcessingContentGenerationHandler(),
             new ProcessingNavigationHandler(),

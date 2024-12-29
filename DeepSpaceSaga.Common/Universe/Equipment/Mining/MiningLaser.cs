@@ -1,6 +1,4 @@
-﻿using DeepSpaceSaga.Common.Infrastructure.Commands;
-
-namespace DeepSpaceSaga.Common.Universe.Equipment.Mining;
+﻿namespace DeepSpaceSaga.Common.Universe.Equipment.Mining;
 
 public class MiningLaser : AbstractModule, IModule, IMiningLaser
 {

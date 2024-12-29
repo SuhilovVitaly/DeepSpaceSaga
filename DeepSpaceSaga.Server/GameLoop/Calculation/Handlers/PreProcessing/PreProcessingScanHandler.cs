@@ -1,6 +1,4 @@
-﻿using DeepSpaceSaga.Common.Infrastructure.Commands;
-
-namespace DeepSpaceSaga.Server.Calculation.DataPreProcessing;
+﻿namespace DeepSpaceSaga.Server.Calculation.DataPreProcessing;
 
 internal class PreProcessingScanHandler : BaseHandler, ICalculationHandler
 {
@@ -24,8 +22,6 @@ internal class PreProcessingScanHandler : BaseHandler, ICalculationHandler
                     break;
             }
         }
-
-
 
         var target = sessionContext.Session.SpaceMap.GetCelestialObjects()
             .Where(x=> 
@@ -63,6 +59,8 @@ internal class PreProcessingScanHandler : BaseHandler, ICalculationHandler
             Type = CommandTypes.PreScanCelestialObject,
             Status = CommandStatus.Process
         };
+
+        scanner.Execute();
 
         sessionContext.EventsSystem.AddCommand(scanCommand);
 

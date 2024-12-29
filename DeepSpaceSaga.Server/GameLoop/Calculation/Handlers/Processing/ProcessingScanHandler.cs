@@ -1,8 +1,4 @@
-﻿using DeepSpaceSaga.Common.Infrastructure.Commands;
-using DeepSpaceSaga.Common.Universe.Audit;
-using DeepSpaceSaga.Server.GameLoop.Calculation.Actions;
-
-namespace DeepSpaceSaga.Server.GameLoop.Calculation.Handlers.Processing;
+﻿namespace DeepSpaceSaga.Server.GameLoop.Calculation.Handlers.Processing;
 
 public class ProcessingScanHandler : BaseHandler, ICalculationHandler
 {
@@ -82,7 +78,7 @@ public class ProcessingScanHandler : BaseHandler, ICalculationHandler
             throw new InvalidOperationException($"Module not found with ID: {command.ModuleId}");
 
         module.TargetId = command.TargetCelestialObjectId;
-        module.Reload();
+        module.Reload(sessionContext.Settings.RatePerSecond());
 
         var target = sessionContext.Session.GetCelestialObject(module.TargetId);
         if (target == null)

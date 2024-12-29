@@ -10,35 +10,26 @@ public abstract class AbstractModule : AbstractItem
     public int Slot { get; set; }
     public double ReloadTime { get; set; }
     public double Reloading { get; set; } 
-    public bool IsReloaded => Reloading >= ReloadTime;
-    public List<ISkill> Skills { get; set; } = new List<ISkill>();
+    public bool IsReloaded { get; set; } 
 
-    public void AddSkill(ISkill skill)
+    private static readonly ILog _log = LogManager.GetLogger(typeof(AbstractModule));
+
+    public void Execute() 
     {
-        Skills.Add(skill);
+        _log.Info($"Module [{Id}][{Name}] Started execution");
+        IsCalculated = false;
+        Reloading = 0;
+        IsReloaded = false;
     }
 
-    public dynamic CreateServerCommand()
+    public void Reload(double progress)
     {
-        dynamic serverCommand = new JObject();
+        Reloading += progress;
 
-        serverCommand.ModuleId = Id;
-        serverCommand.Date = DateTime.Now;
-        serverCommand.OwnerId = OwnerId;
-
-        return serverCommand;
-    }
-
-    public void Reload()
-    {
-        if (IsReloaded)
+        if(Reloading >= ReloadTime)
         {
-            IsCalculated = false;
-            Reloading = 0;
-        }
-        else
-        {
-            Reloading += 1;
+            _log.Info($"Module [{Id}][{Name}] Finish execution");
+            IsReloaded = true;
         }
     }
 }

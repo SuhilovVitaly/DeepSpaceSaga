@@ -1,4 +1,6 @@
-﻿namespace DeepSpaceSaga.Tests.Server.Session;
+﻿using DeepSpaceSaga.Server;
+
+namespace DeepSpaceSaga.Tests.Server.Session;
 
 public class GameSpeedTests
 {
@@ -43,7 +45,7 @@ public class GameSpeedTests
         var spacecraft = Generator.SpacecraftWithModules();
         var moduleScanner = GeneralModuleGenerator.CreateSpaceScanner(new GenerationTool(), spacecraft.Id, "SCR5001");
         moduleScanner.Id = 100;
-        moduleScanner.Reload();
+        moduleScanner.Reload(1);
 
         spacecraft.Modules.Add(moduleScanner);
 
