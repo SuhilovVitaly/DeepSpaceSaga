@@ -1,7 +1,4 @@
-﻿using DeepSpaceSaga.Common.Tools;
-using DeepSpaceSaga.Common.Universe.Entities.CelestialObjects;
-
-namespace DeepSpaceSaga.Controller;
+﻿namespace DeepSpaceSaga.Controller;
 
 public class Prediction
 {
