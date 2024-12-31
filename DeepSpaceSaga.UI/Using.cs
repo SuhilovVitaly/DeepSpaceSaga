@@ -22,3 +22,4 @@ global using DeepSpaceSaga.Server;
 global using DeepSpaceSaga.Common.Tools.Telemetry;
 global using DeepSpaceSaga.UI.Handlers;
 global using DeepSpaceSaga.Common.Infrastructure.Events;
+global using DeepSpaceSaga.Common.Universe.Items;

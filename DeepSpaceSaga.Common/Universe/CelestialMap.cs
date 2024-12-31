@@ -9,10 +9,7 @@ public class CelestialMap(IEnumerable<ICelestialObject> objects) : List<ICelesti
 
     public void AddCelestialObjects(List<ICelestialObject> celestialObjects)
     {
-        foreach (var celestialObject in celestialObjects)
-        {
-            Add(celestialObject);
-        }
+        AddRange(celestialObjects);
     }
     
     public void ClearMap()

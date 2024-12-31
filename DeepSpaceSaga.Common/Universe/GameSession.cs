@@ -1,28 +1,20 @@
 ﻿namespace DeepSpaceSaga.Universe;
 
-public class GameSession
+public class GameSession(CelestialMap spaceMap, GameSessionsSettings settings) : IGameSession
 {
     public GameSession(CelestialMap spaceMap) : this(spaceMap, new GameSessionsSettings()) { }
 
-    public GameSession(CelestialMap spaceMap, GameSessionsSettings settings)
-    {
-        SpaceMap = spaceMap;
-        Settings = settings;
-        State = new GameState();
-        Events = new GameActionEvents([]);
-    }
-
     public int Id { get; set; }
 
-    public SessionMetrics Metrics { get; internal set; } = new SessionMetrics();
+    public SessionMetrics Metrics { get; private set; } = new SessionMetrics();
 
-    public CelestialMap SpaceMap { get; internal set; }
+    public CelestialMap SpaceMap { get; private set; } = spaceMap ?? throw new ArgumentNullException(nameof(spaceMap));
 
-    public Journal Logbook { get; internal set; } = new Journal(new List<EventMessage>());
+    public Journal Logbook { get; private set; } = new Journal(new List<EventMessage>());
 
-    public GameSessionsSettings Settings { get; internal set; }
+    public GameSessionsSettings Settings { get; private set; } = settings ?? throw new ArgumentNullException(nameof(settings));
 
-    public GameState State { get; internal set; }
+    public GameState State { get; private set; } = new GameState();
 
-    public GameActionEvents Events { get; set; }  
+    public GameActionEvents Events { get; set; } = new GameActionEvents([]);
 }

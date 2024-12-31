@@ -67,7 +67,9 @@ public partial class ControlWindow : UserControl
         // Add new focus and click events
         this.GotFocus += ControlWindow_BringToFront;
         this.Click += ControlWindow_BringToFront;
-        
+
+        crlCloseButton.Location = new Point(crlTitleBar.Width - 8, 8);
+
         // Add event handlers for all child controls
         foreach (Control control in this.Controls)
         {

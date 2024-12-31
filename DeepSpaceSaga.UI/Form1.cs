@@ -188,7 +188,8 @@ public partial class Form1 : Form
     {
         if (Global.GameManager.GetSession().State.IsPaused) return;
 
-        controlItemsContainer = new ItemsContainer(gameActionEvent, Global.GameManager.GetSession());
+        controlItemsContainer = new ItemsContainer();
+        controlItemsContainer.ShowContainer(gameActionEvent, Global.GameManager.GetSession());
         controlItemsContainer.Visible = false;
         controlItemsContainer.Location = new Point(600, 600);
         panel1.Controls.Add(controlItemsContainer);

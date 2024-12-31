@@ -1,6 +1,4 @@
-﻿using DeepSpaceSaga.Common.Geometry;
-
-namespace DeepSpaceSaga.Common.Extensions;
+﻿namespace DeepSpaceSaga.Common.Extensions;
 
 public static class SessionExtensions
 {
@@ -14,15 +12,15 @@ public static class SessionExtensions
             }
         }
 
-        return null;
+        throw new InvalidOperationException("Player spaceship not found in the game session");
     }
 
     public static ICelestialObject GetCelestialObject(this GameSession gameSession, long id, bool isCopy = false)
     {
-        if (isCopy)
-            return (from celestialObjects in gameSession.SpaceMap.GetCelestialObjects() where id == celestialObjects.Id select celestialObjects.Copy()).FirstOrDefault();
-
-        return (from celestialObjects in gameSession.SpaceMap.GetCelestialObjects() where id == celestialObjects.Id select celestialObjects).FirstOrDefault();
+        var celestialObjects = gameSession.SpaceMap.GetCelestialObjects();
+        var celestialObject = celestialObjects.FirstOrDefault(x => x.Id == id);
+        
+        return isCopy ? celestialObject?.Copy() : celestialObject;
     }
 
     public static List<ICelestialObject> GetCelestialObjectsByDistance(this GameSession gameSession, SpaceMapPoint coordinates, int range)
@@ -42,6 +40,6 @@ public static class SessionExtensions
 
     public static ICelestialObject GetCelestialObject(this GameSession gameSession, long id)
     {
-        return gameSession.SpaceMap.FirstOrDefault(x => x.Id == id); ;
+        return gameSession.SpaceMap?.FirstOrDefault(x => x.Id == id);
     }
 }

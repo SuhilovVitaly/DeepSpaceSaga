@@ -1,15 +1,17 @@
-﻿using DeepSpaceSaga.Common.Universe.Items;
-
-namespace DeepSpaceSaga.UI.Screens.MainGameScreen;
+﻿namespace DeepSpaceSaga.UI.Screens.MainGameScreen;
 
 public partial class ItemsContainer : ControlWindow
 {
-    public ItemsContainer(GameActionEvent gameEvent, GameSession session)
+    public ItemsContainer()
     {
         InitializeComponent();
+
         IsResizible = false;
         IsDraggible = false;
+    }
 
+    public void ShowContainer(GameActionEvent gameEvent, GameSession session)
+    {
         var sourceCelestialObject = session.GetCelestialObject((long)gameEvent.CelestialObjectId);
         var oreContainer = session.GetCelestialObject((long)gameEvent.TargetObjectId) as Common.Universe.Entities.CelestialObjects.Containers.IContainer;
 
