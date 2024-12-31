@@ -35,7 +35,7 @@
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             Name = "ItemsTransfer";
-            Size = new Size(1056, 137);
+            Size = new Size(542, 323);
             ResumeLayout(false);
         }
 

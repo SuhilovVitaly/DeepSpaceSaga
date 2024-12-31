@@ -247,7 +247,7 @@
             Controls.Add(pictureBox2);
             Controls.Add(pictureBox1);
             Name = "ItemsContainer";
-            Size = new Size(416, 298);
+            Size = new Size(417, 298);
             Controls.SetChildIndex(pictureBox1, 0);
             Controls.SetChildIndex(pictureBox2, 0);
             Controls.SetChildIndex(pictureBox3, 0);

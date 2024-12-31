@@ -53,7 +53,7 @@ public partial class ControlWindow : UserControl
         this.MouseDown += ControlWindow_MouseDown;
         this.MouseMove += ControlWindow_MouseMove;
         this.MouseUp += ControlWindow_MouseUp;
-        
+
 
         // Add mouse events to pictureBox1
         crlTitleBar.MouseDown += TitleBar_MouseDown;
@@ -68,7 +68,7 @@ public partial class ControlWindow : UserControl
         this.GotFocus += ControlWindow_BringToFront;
         this.Click += ControlWindow_BringToFront;
 
-        crlCloseButton.Location = new Point(crlTitleBar.Width - 8, 8);
+        //crlCloseButton.Location = new Point(Width - 8, 8);
 
         // Add event handlers for all child controls
         foreach (Control control in this.Controls)
@@ -172,5 +172,10 @@ public partial class ControlWindow : UserControl
     private void ControlWindow_BringToFront(object? sender, EventArgs e)
     {
         this.BringToFront();
+    }
+
+    private void crlCloseButton_Resize(object sender, EventArgs e)
+    {
+        //crlCloseButton.Location = new Point(this.Width - 8, 8);
     }
 }
