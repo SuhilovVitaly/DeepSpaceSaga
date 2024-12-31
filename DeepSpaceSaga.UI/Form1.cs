@@ -1,11 +1,12 @@
-﻿
-using DeepSpaceSaga.UI.Handlers;
+﻿using DeepSpaceSaga.UI.Screens.MainGameScreen;
 
 namespace DeepSpaceSaga.UI;
 
 public partial class Form1 : Form
 {
-    private static readonly ILog Logger = LogManager.GetLogger(MethodBase.GetCurrentMethod()?.DeclaringType);    
+    private static readonly ILog Logger = LogManager.GetLogger(MethodBase.GetCurrentMethod()?.DeclaringType);
+
+    private ItemsContainer controlItemsContainer;
 
     public Form1()
     {
@@ -19,6 +20,12 @@ public partial class Form1 : Form
         KeyDown += Window_KeyDown;
 
         if (Global.GameManager == null) return;
+
+        controlItemsContainer = new ItemsContainer();
+        controlItemsContainer.Visible = false;
+        controlItemsContainer.Location = new Point(400, 400);
+
+        panel1.Controls.Add(controlItemsContainer);
 
         var selectedScreen = Screen.AllScreens[Global.ScreenData.MonitorId];
 
@@ -180,6 +187,16 @@ public partial class Form1 : Form
 
     public void OpenCargoUI(GameActionEvent gameActionEvent)
     {
+        CrossThreadExtensions.PerformSafely(this, EventOpenCargoUI, gameActionEvent);        
+    }
 
+    public void EventOpenCargoUI(GameActionEvent gameActionEvent)
+    {
+        if (Global.GameManager.GetSession().State.IsPaused) return;
+
+        Logger.Info($"Event id: {gameActionEvent.Id} ");
+        Global.GameManager.EventController.Pause();
+        controlItemsContainer.BringToFront();
+        controlItemsContainer.Visible = true;
     }
 }

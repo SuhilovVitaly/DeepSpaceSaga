@@ -20,5 +20,5 @@ global using System.ComponentModel;
 global using DeepSpaceSaga.Common.Universe.Equipment.Mining;
 global using DeepSpaceSaga.Server;
 global using DeepSpaceSaga.Common.Tools.Telemetry;
-global using DeepSpaceSaga.Common.Infrastructure;
+global using DeepSpaceSaga.UI.Handlers;
 global using DeepSpaceSaga.Common.Infrastructure.Events;

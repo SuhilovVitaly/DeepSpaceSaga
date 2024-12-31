@@ -42,6 +42,6 @@ public class GameEngine: IGameEngine
         {
             OnTickExecute?.Invoke();
         }
-        Logger.Info($"Turn: {_currentTick}");
+        Logger.Debug($"Turn: {_currentTick}");
     }
 }

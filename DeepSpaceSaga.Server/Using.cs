@@ -32,3 +32,4 @@ global using DeepSpaceSaga.Common.Universe.Audit;
 global using DeepSpaceSaga.Common.Infrastructure.Events;
 global using LanguageExt.Pipes;
 global using DeepSpaceSaga.Server.GameLoop.Calculation.Handlers;
+global using DeepSpaceSaga.Server.GameLoop.Calculation.Actions.Mining;

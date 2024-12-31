@@ -1,7 +1,4 @@
-﻿using DeepSpaceSaga.Common.Infrastructure.Commands;
-using DeepSpaceSaga.Server.GameLoop.Calculation.Actions.Mining;
-
-namespace DeepSpaceSaga.Server.GameLoop.Calculation.Handlers.Processing;
+﻿namespace DeepSpaceSaga.Server.GameLoop.Calculation.Handlers.Processing;
 
 public class ProcessingMiningOperationsHandler : BaseHandler, ICalculationHandler
 {
@@ -39,7 +36,7 @@ public class ProcessingMiningOperationsHandler : BaseHandler, ICalculationHandle
         return sessionContext;
     }
 
-    private void DestroyAsteroid(SessionContext sessionContext, Command command)
+    private void DestroyAsteroid(SessionContext sessionContext, ICommand command)
     {
         var targetCelestialObject = sessionContext.Session.GetCelestialObject(command.TargetCelestialObjectId);
 
@@ -48,24 +45,35 @@ public class ProcessingMiningOperationsHandler : BaseHandler, ICalculationHandle
         AddToJournal(sessionContext, EventType.AsteroidHarvestDestroy, $"Asteroid '{targetCelestialObject.Name}' destroyed");
     }
 
-    private void Result(SessionContext sessionContext, Command command)
+    private void Result(SessionContext sessionContext, ICommand command)
     {
         var moduleCelestialObject = sessionContext.Session.GetCelestialObject(command.CelestialObjectId);
         var targetCelestialObject = sessionContext.Session.GetCelestialObject(command.TargetCelestialObjectId);
+
+        var module = moduleCelestialObject.ToSpaceship().GetModule(command.ModuleId) as IMiningLaser;
 
         GenerateAsteroidHarcestResult.Execute(sessionContext, command);
 
         command.Status = CommandStatus.PostProcess;
 
         AddToJournal(sessionContext, EventType.AsteroidHarvestShowResults, $"Asteroid '{targetCelestialObject.Name}' Harvest Results");
-
-        sessionContext.EventsSystem.GenerateCommand(CommandTypes.MiningOperationsDestroyAsteroid, null, targetCelestialObject, moduleCelestialObject);
+        
+        DestroyAsteroid(sessionContext,
+            CommandsFactory.CreateCommand(
+                sessionContext.Randomizer, 
+                CommandTypes.MiningOperationsDestroyAsteroid, 
+                module, 
+                targetCelestialObject, moduleCelestialObject
+                ));
     }
 
     private void Harvest(SessionContext sessionContext, Command command)
     {
         var moduleCelestialObject = sessionContext.Session.GetCelestialObject(command.CelestialObjectId);
         var targetCelestialObject = sessionContext.Session.GetCelestialObject(command.TargetCelestialObjectId);
+
+        if(targetCelestialObject is null) return;
+
         var distance = GeometryTools.Distance(moduleCelestialObject.GetLocation(), targetCelestialObject.GetLocation());
 
         var module = moduleCelestialObject.ToSpaceship().GetModule(command.ModuleId) as IMiningLaser;

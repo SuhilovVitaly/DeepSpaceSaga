@@ -27,10 +27,11 @@ public class Worker : IWorker
 
     private void Server_OnTickExecute(GameSession session)
     {
-        OnGetDataFromServer?.Invoke(session);
+        
 
         if (session.State.IsPaused == false)
         {
+            OnGetDataFromServer?.Invoke(session);
             //_logger.Info($"Turn: {session.Metrics.TurnsTicks}");
         }
     }
@@ -61,32 +62,6 @@ public class Worker : IWorker
         {
             _logger.Error("Failed to initialize game session", ex);
             throw;
-        }
-    }
-
-    int _prevTurn = 0;
-
-    private void GetDataFromServer()
-    {
-        try
-        {
-            var handlers = OnGetDataFromServer;
-            var session = _gameServer.GetSession();
-            if (handlers != null)// && session.Metrics.TurnsTicks > _prevTurn)
-            {
-                handlers.Invoke(session);
-
-                //if (session.State.IsPaused == false)
-                //{
-                //    _logger.Info($"Turn: {session.Metrics.TurnsTicks}");
-                //}
-            }            
-
-            _prevTurn = session.Metrics.TurnsTicks;
-        }
-        catch (Exception ex)
-        {
-            _logger.Error("Error while getting data from server", ex);
         }
     }
 

@@ -1,7 +1,4 @@
-﻿using DeepSpaceSaga.Common.Infrastructure.Commands;
-using DeepSpaceSaga.Common.Tools;
-
-namespace DeepSpaceSaga.Server.GameLoop.Calculation.Actions.Mining;
+﻿namespace DeepSpaceSaga.Server.GameLoop.Calculation.Actions.Mining;
 
 public class GenerateAsteroidHarcestResult
 {

@@ -40,6 +40,9 @@ internal class DrawModulesActions
 
         var spacecraftLocation = UiTools.ToScreenCoordinates(screenInfo, spacecraft.GetLocation());
         var targetLocation = UiTools.ToScreenCoordinates(screenInfo, session.GetCelestialObject(module.TargetId).GetLocation());
+
+        if (targetLocation is null) return;
+
         var direction = GeometryTools.Azimuth(spacecraftLocation, targetLocation);
         var direction1 = GeometryTools.Azimuth(targetLocation, spacecraftLocation);
 
