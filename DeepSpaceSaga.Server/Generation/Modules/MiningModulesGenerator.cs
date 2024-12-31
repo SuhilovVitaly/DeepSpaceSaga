@@ -16,8 +16,8 @@ public class MiningModulesGenerator
                 resultModule.MiningRange = 300;
                 resultModule.ActivationCost = 100;
                 resultModule.Power = 2000;
-                resultModule.ReloadTime = 100;
-                resultModule.Reloading = 100;
+                resultModule.ReloadTime = 10;
+                resultModule.Reloading = 10;
                 resultModule.Name = "Civilian Mining Laser";
                 break;
         }

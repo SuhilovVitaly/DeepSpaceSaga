@@ -10,6 +10,6 @@ public class LocalGameServerOptions
 
     public double RatePerSecond()
     {
-        return (TurnInterval / 1000.0) * 10.0;
+        return 1 / (double)TickInterval;
     }
 }

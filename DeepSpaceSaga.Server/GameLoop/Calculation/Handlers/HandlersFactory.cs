@@ -8,6 +8,7 @@ public class HandlersFactory
         [
             new ProcessingLocationsHandler(),
             new PostProcessingTurnInfoUpdateHandler(),
+            new PreProcessingModulesReloadingHandler()
         ];
 
         return handlers;
