@@ -2,13 +2,17 @@
 
 public class LocalGameServer : IGameServer
 {
-    private static readonly ILog Logger = LogManager.GetLogger(MethodBase.GetCurrentMethod()?.DeclaringType); 
-    
+    public event Action<GameSession>? OnTickExecute;
+    public event Action<GameSession>? OnTurnExecute;
+
+    private readonly IGameEngine _engine;      
     private readonly LocalGameServerOptions _options;
     private readonly ReaderWriterLockSlim _sessionLock = new();
     private readonly IServerMetrics _metrics;
     private SessionContext _sessionContext;
     private CancellationTokenSource _cancellationTokenSource = new();
+
+    private static readonly ILog Logger = LogManager.GetLogger(MethodBase.GetCurrentMethod()?.DeclaringType);
 
     public SessionContext SessionContext 
     { 
@@ -27,6 +31,7 @@ public class LocalGameServer : IGameServer
         IServerMetrics metrics,
         LocalGameServerOptions options,
         IGameActionEvents actions,
+        IGameEngine gameEngine,
         GenerationTool randomizer,
         GameEventsSystem? eventsSystem = null)
     {
@@ -35,6 +40,8 @@ public class LocalGameServer : IGameServer
         
         _options = options;
         Metrics = metrics;
+
+        _engine = gameEngine;
 
         SessionContext = new SessionContext(
             new GameSession(_options.InitialMap, _options.SessionSettings), 
@@ -45,15 +52,8 @@ public class LocalGameServer : IGameServer
 
         HandlersTurnInitialization();
 
-        Scheduler.Instance.ScheduleTask(
-            _options.InitialTurnDelay, 
-            _options.TurnInterval, 
-            TurnExecute);
-
-        Scheduler.Instance.ScheduleTask(
-            _options.InitialTurnDelay,
-            _options.TickInterval,
-            TickExecute);
+        _engine.OnTickExecute += TickExecute;
+        _engine.OnTurnExecute += TurnExecute;
     }
 
     public LocalGameServer(GameSession session, ServerMetrics metrics, IGameActionEvents actions, GenerationTool randomizer)
@@ -72,27 +72,9 @@ public class LocalGameServer : IGameServer
         HandlersTurnInitialization();
     }
 
-    private ConcurrentBag<ICalculationHandler> HandlersTurnInitialization()
-    {
-        ConcurrentBag<ICalculationHandler> handlers =
-        [
-            .. HandlersPreProcessingCollectionExtensions.GetHandlers(),
-            .. HandlersProcessingCollectionExtensions.GetHandlers(),
-            .. HandlersPostProcessingCollectionExtensions.GetHandlers(),
-        ];
+    private ConcurrentBag<ICalculationHandler> HandlersTurnInitialization() => HandlersFactory.GetTurnHandlers();
 
-       return handlers;
-    }
-
-    private ConcurrentBag<ICalculationHandler> HandlersTickInitialization()
-    {
-        ConcurrentBag<ICalculationHandler> handlers =
-        [
-            new ProcessingLocationsHandler(),
-        ];
-
-        return handlers;
-    }
+    private ConcurrentBag<ICalculationHandler> HandlersTickInitialization() => HandlersFactory.GetTickHandlers();
 
     public GameSession GetSession()
     {
@@ -134,6 +116,7 @@ public class LocalGameServer : IGameServer
     private void TurnExecute()
     {
         TurnExecute(_cancellationTokenSource.Token);
+        OnTurnExecute?.Invoke(GetSession());
     }
 
     private void TurnExecute(CancellationToken cancellationToken = default)
@@ -149,6 +132,8 @@ public class LocalGameServer : IGameServer
     private void TickExecute()
     {
         TickExecute(_cancellationTokenSource.Token);
+
+        OnTickExecute?.Invoke(GetSession());
     }
 
     private void TickExecute(CancellationToken cancellationToken = default)
@@ -158,7 +143,7 @@ public class LocalGameServer : IGameServer
 
         HandlersTickInitialization();
 
-        //ExecutionTick();
+        ExecutionTick();
     }
 
     private readonly object _calculationLock = new object();

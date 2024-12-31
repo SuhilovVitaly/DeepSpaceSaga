@@ -24,5 +24,6 @@ public enum Metrics
     PhasePostProcessing,
     ProcessingMiningCommand,
     ProcessingMiningCommandFinished,
-    ProcessingMiningCommandCancelled
+    ProcessingMiningCommandCancelled,
+    GameEngineInitializated
 }

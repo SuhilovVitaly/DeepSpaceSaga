@@ -2,28 +2,26 @@
 
 public class HandlersFactory
 {
-    private readonly List<Func<ICalculationHandler>> _handlerFactories;
-
-    public HandlersFactory()
+    public static ConcurrentBag<ICalculationHandler> GetTickHandlers()
     {
-        _handlerFactories =
+        ConcurrentBag<ICalculationHandler> handlers =
         [
-            () => new ProcessingLocationsHandler(),
-            () => new ProcessingMiningOperationsHandler(),
-            () => new ProcessingContentGenerationHandler(),
-            () => new ProcessingNavigationHandler(),
-            () => new ProcessingScanHandler(),
-            () => new ProcessingCommandCleanerHandler()
+            new ProcessingLocationsHandler(),
+            new PostProcessingTurnInfoUpdateHandler(),
         ];
+
+        return handlers;
     }
 
-    public IEnumerable<ICalculationHandler> CreateHandlers()
+    public static ConcurrentBag<ICalculationHandler> GetTurnHandlers()
     {
-        return _handlerFactories.Select(factory => factory());
-    }
+        ConcurrentBag<ICalculationHandler> handlers =
+        [
+            .. HandlersPreProcessingCollectionExtensions.GetHandlers(),
+            .. HandlersProcessingCollectionExtensions.GetHandlers(),
+            .. HandlersPostProcessingCollectionExtensions.GetHandlers(),
+        ];
 
-    public void RegisterHandler(Func<ICalculationHandler> handlerFactory)
-    {
-        _handlerFactories.Add(handlerFactory);
+        return handlers;
     }
 }

@@ -12,7 +12,7 @@ public interface IWorker
 
 public class Worker : IWorker
 {
-    private readonly ILog _logger;
+    private readonly ILog _logger = LogManager.GetLogger(typeof(Worker));
     private readonly IGameServer _gameServer;
 
     public event Action<GameSession>? OnGetDataFromServer;
@@ -21,7 +21,28 @@ public class Worker : IWorker
     public Worker(IGameServer gameServer)
     {
         _gameServer = gameServer ?? throw new ArgumentNullException(nameof(gameServer));
-        _logger = LogManager.GetLogger(typeof(Worker));
+        _gameServer.OnTickExecute += Server_OnTickExecute;
+        _gameServer.OnTurnExecute += Server_OnTurnExecute;
+    }
+
+    private void Server_OnTickExecute(GameSession session)
+    {
+        OnGetDataFromServer?.Invoke(session);
+
+        if (session.State.IsPaused == false)
+        {
+            //_logger.Info($"Turn: {session.Metrics.TurnsTicks}");
+        }
+    }
+
+    private void Server_OnTurnExecute(GameSession session)
+    {
+        OnGetDataFromServer?.Invoke(session);
+
+        if (session.State.IsPaused == false)
+        {
+            //_logger.Info($"Turn: {session.Metrics.TurnsTicks}");
+        }
     }
 
     public async Task Initialize()
@@ -34,7 +55,7 @@ public class Worker : IWorker
             OnGameInitialize?.Invoke(session);
             _logger.Info("Game initialized successfully");
 
-            Scheduler.Instance.ScheduleTask(1, 100, GetDataFromServer);
+            //Scheduler.Instance.ScheduleTask(1, 100, GetDataFromServer);
         }
         catch (Exception ex)
         {

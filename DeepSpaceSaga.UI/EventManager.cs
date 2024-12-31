@@ -23,7 +23,11 @@ public class EventManager
 
     private async Task Initialization(GenerationTool randomizer)
     {
-        Worker = new Worker(new LocalGameServer(new ServerMetrics(), new LocalGameServerOptions(), new GameActionEvents(new List<GameActionEvent>()), randomizer));
+        var metrics = new ServerMetrics();
+        var settings = new LocalGameServerOptions();
+        IGameEngine engine = new GameEngine(settings, metrics);
+
+        Worker = new Worker(new LocalGameServer(metrics, settings, new GameActionEvents(new List<GameActionEvent>()), engine, randomizer));
         await InitializeAsync();
 
         Worker.OnGetDataFromServer += Worker_RefreshData;
