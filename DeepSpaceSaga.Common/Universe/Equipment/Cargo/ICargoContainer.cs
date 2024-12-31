@@ -1,7 +1,4 @@
-﻿using DeepSpaceSaga.Common.Infrastructure.Commands;
-using DeepSpaceSaga.Common.Universe.Items;
-
-namespace DeepSpaceSaga.Common.Universe.Equipment.Mining;
+﻿namespace DeepSpaceSaga.Common.Universe.Equipment.Mining;
 
 public interface ICargoContainer : IModule
 {

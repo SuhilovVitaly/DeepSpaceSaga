@@ -43,6 +43,8 @@
             pictureBox13 = new PictureBox();
             pictureBox14 = new PictureBox();
             pictureBox15 = new PictureBox();
+            label1 = new Label();
+            label2 = new Label();
             ((ISupportInitialize)pictureBox1).BeginInit();
             ((ISupportInitialize)pictureBox2).BeginInit();
             ((ISupportInitialize)pictureBox3).BeginInit();
@@ -62,18 +64,22 @@
             // 
             // pictureBox1
             // 
+            pictureBox1.BorderStyle = BorderStyle.Fixed3D;
             pictureBox1.Location = new Point(14, 56);
             pictureBox1.Name = "pictureBox1";
             pictureBox1.Size = new Size(64, 64);
+            pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox1.TabIndex = 3;
             pictureBox1.TabStop = false;
             pictureBox1.Visible = false;
             // 
             // pictureBox2
             // 
+            pictureBox2.BorderStyle = BorderStyle.Fixed3D;
             pictureBox2.Location = new Point(95, 56);
             pictureBox2.Name = "pictureBox2";
             pictureBox2.Size = new Size(64, 64);
+            pictureBox2.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox2.TabIndex = 4;
             pictureBox2.TabStop = false;
             pictureBox2.Visible = false;
@@ -195,10 +201,36 @@
             pictureBox15.TabStop = false;
             pictureBox15.Visible = false;
             // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Font = new Font("Inconsolata", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label1.ForeColor = Color.IndianRed;
+            label1.Location = new Point(16, 97);
+            label1.Name = "label1";
+            label1.Size = new Size(20, 20);
+            label1.TabIndex = 18;
+            label1.Text = "0";
+            label1.Visible = false;
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Font = new Font("Inconsolata", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label2.ForeColor = Color.IndianRed;
+            label2.Location = new Point(97, 97);
+            label2.Name = "label2";
+            label2.Size = new Size(20, 20);
+            label2.TabIndex = 19;
+            label2.Text = "0";
+            label2.Visible = false;
+            // 
             // ItemsContainer
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
+            Controls.Add(label2);
+            Controls.Add(label1);
             Controls.Add(pictureBox11);
             Controls.Add(pictureBox12);
             Controls.Add(pictureBox13);
@@ -231,6 +263,8 @@
             Controls.SetChildIndex(pictureBox13, 0);
             Controls.SetChildIndex(pictureBox12, 0);
             Controls.SetChildIndex(pictureBox11, 0);
+            Controls.SetChildIndex(label1, 0);
+            Controls.SetChildIndex(label2, 0);
             ((ISupportInitialize)pictureBox1).EndInit();
             ((ISupportInitialize)pictureBox2).EndInit();
             ((ISupportInitialize)pictureBox3).EndInit();
@@ -247,6 +281,7 @@
             ((ISupportInitialize)pictureBox14).EndInit();
             ((ISupportInitialize)pictureBox15).EndInit();
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -266,5 +301,7 @@
         private PictureBox pictureBox13;
         private PictureBox pictureBox14;
         private PictureBox pictureBox15;
+        private Label label1;
+        private Label label2;
     }
 }

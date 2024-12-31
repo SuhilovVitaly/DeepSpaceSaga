@@ -2,8 +2,9 @@
 
 public class AbstractItem
 {
-    public int Id { get; set; }
+    public int Id { get; set; } = new GenerationTool().GetId();
     public string Name { get; set; }
+    public string Image { get; set; }
     public long OwnerId { get; set; }
     public Category Category { get; set; }
     public bool IsPacked { get; set; }

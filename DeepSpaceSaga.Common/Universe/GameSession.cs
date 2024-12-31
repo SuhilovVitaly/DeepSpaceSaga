@@ -1,6 +1,4 @@
-﻿
-
-namespace DeepSpaceSaga.Universe;
+﻿namespace DeepSpaceSaga.Universe;
 
 public class GameSession
 {

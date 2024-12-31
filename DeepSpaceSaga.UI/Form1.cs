@@ -19,13 +19,7 @@ public partial class Form1 : Form
         KeyPreview = true;
         KeyDown += Window_KeyDown;
 
-        if (Global.GameManager == null) return;
-
-        controlItemsContainer = new ItemsContainer();
-        controlItemsContainer.Visible = false;
-        controlItemsContainer.Location = new Point(400, 400);
-
-        panel1.Controls.Add(controlItemsContainer);
+        if (Global.GameManager == null) return;        
 
         var selectedScreen = Screen.AllScreens[Global.ScreenData.MonitorId];
 
@@ -194,9 +188,13 @@ public partial class Form1 : Form
     {
         if (Global.GameManager.GetSession().State.IsPaused) return;
 
+        controlItemsContainer = new ItemsContainer(gameActionEvent, Global.GameManager.GetSession());
+        controlItemsContainer.Visible = false;
+        controlItemsContainer.Location = new Point(600, 600);
+        panel1.Controls.Add(controlItemsContainer);
         Logger.Info($"Event id: {gameActionEvent.Id} ");
         Global.GameManager.EventController.Pause();
         controlItemsContainer.BringToFront();
-        controlItemsContainer.Visible = true;
+        controlItemsContainer.Visible = true;        
     }
 }

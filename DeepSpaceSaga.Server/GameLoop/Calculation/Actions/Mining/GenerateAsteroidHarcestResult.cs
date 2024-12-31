@@ -1,4 +1,8 @@
-﻿namespace DeepSpaceSaga.Server.GameLoop.Calculation.Actions.Mining;
+﻿using DeepSpaceSaga.Common.Universe.Entities.CelestialObjects.Containers;
+using DeepSpaceSaga.Common.Universe.Items;
+using DeepSpaceSaga.Common.Universe.Items.Ore;
+
+namespace DeepSpaceSaga.Server.GameLoop.Calculation.Actions.Mining;
 
 public class GenerateAsteroidHarcestResult
 {
@@ -16,18 +20,22 @@ public class GenerateAsteroidHarcestResult
 
         var container = GenerateContainer(sessionContext, sourceCelestialObject, targetCelestialObject);
 
-        sessionContext.Session.SpaceMap.Add(container);
+        var ore = GenerateOreItems(sessionContext, sourceCelestialObject, targetCelestialObject);
 
-        var uiEvent = EventsFactory.CreateEvent(sessionContext.Randomizer, command, module, targetCelestialObject, sourceCelestialObject, container);
+        container.Items.AddRange(ore);
+
+        sessionContext.Session.SpaceMap.Add((ICelestialObject)container);
+
+        var uiEvent = EventsFactory.CreateEvent(sessionContext.Randomizer, command, module, (ICelestialObject)container, sourceCelestialObject);
         uiEvent.CalculationTurnId = sessionContext.Session.Metrics.TurnTick;
         sessionContext.Session.Events.Add(uiEvent);
 
         return sessionContext;
     }
 
-    private ICelestialObject GenerateContainer(SessionContext sessionContext, ICelestialObject sourceCelestialObject, ICelestialObject targetCelestialObject)
+    private IContainer GenerateContainer(SessionContext sessionContext, ICelestialObject sourceCelestialObject, ICelestialObject targetCelestialObject)
     {
-        ICelestialObject container = new BaseCelestialObject
+        IContainer container = new OreContainer
         {
             Id = sessionContext.Randomizer.GetId(),
             OwnerId = sourceCelestialObject.Id,
@@ -42,5 +50,16 @@ public class GenerateAsteroidHarcestResult
         };
 
         return container;
+    }
+
+    private List<ICoreItem> GenerateOreItems(SessionContext sessionContext, ICelestialObject sourceCelestialObject, ICelestialObject targetCelestialObject)
+    {
+        var result = new List<ICoreItem>();
+
+        var ore = new Pombesit(sessionContext.Randomizer.GetInteger(1,12));
+
+        result.Add(ore);
+
+        return result;
     }
 }
