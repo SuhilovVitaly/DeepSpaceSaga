@@ -61,7 +61,7 @@ internal class DrawModulesActions
 
         DrawTools.DrawString(screenInfo, label, Fonts.SpaceMapLabels, Colors.ForeColorSpaceMap, new RectangleF(startLabel.X + 15, startLabel.Y + 12, 190, 50));
 
-        var labelValue = $"{CalculateWorkPercentage(module.ReloadTime, module.Reloading)}%";
+        var labelValue = $"{Math.Round(CalculateWorkPercentage(module.ReloadTime, module.Reloading),0)}%";
 
         DrawTools.DrawString(screenInfo, labelValue, Fonts.SpaceMapLabels, Colors.ForePercentColor, new RectangleF(startLabel.X + 15 + DrawTools.MeasureString(label, Fonts.SpaceMapLabels).Width, startLabel.Y + 12, 190, 50));
     }
@@ -95,7 +95,7 @@ internal class DrawModulesActions
 
         var x = DrawTools.MeasureString("Scanning progress: ", Fonts.SpaceMapLabels);
 
-        var labelValue = $"{CalculateWorkPercentage(module.ReloadTime, module.Reloading)}%";
+        var labelValue = $"{Math.Round(CalculateWorkPercentage(module.ReloadTime, module.Reloading),0)}%";
 
         DrawTools.DrawString(screenInfo, labelValue, Fonts.SpaceMapLabels, Colors.ForePercentColor, new RectangleF(startLabel.X + 15 + x.Width, startLabel.Y + 12, 190, 50));
     }
