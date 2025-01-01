@@ -7,7 +7,7 @@ public class LocalGameServer : IGameServer
 
     private readonly IGameEngine _engine;      
     private readonly LocalGameServerOptions _options;
-    private readonly ReaderWriterLockSlim _sessionLock = new();
+    private readonly ThreadSafeExecutor _executor = new();
     private readonly IServerMetrics _metrics;
     private SessionContext _sessionContext;
     private CancellationTokenSource _cancellationTokenSource = new();
@@ -150,124 +150,20 @@ public class LocalGameServer : IGameServer
 
     internal void ExecutionTick()
     {
-        // First check if calculation is already in progress using lock
-        if (!Monitor.TryEnter(_calculationLock))
+        _executor.ExecuteWithLock(() =>
         {
-            return; // Another thread is already executing
-        }
-
-        try
-        {
-            // Double-check pattern with volatile flag
-            if (_isCalculationInProgress)
-            {
-                return;
-            }
-
-            _isCalculationInProgress = true;
-
-            // Try to acquire write lock with timeout to prevent deadlocks
-            if (!_sessionLock.TryEnterWriteLock(TimeSpan.FromSeconds(2)))
-            {
-                Logger.Info("[LocalGameServer] Failed to acquire write lock within timeout");
-                return;
-            }
-
-            try
-            {
-                var stopwatch = Stopwatch.StartNew();
-                try
-                {
-                    SessionContext = TurnExecutor.Execute(SessionContext, HandlersTickInitialization());
-                }
-                finally
-                {
-                    stopwatch.Stop();
-                    Logger.Debug($"[LocalGameServer] Turn execution took {stopwatch.ElapsedMilliseconds}ms");
-                }
-            }
-            catch (Exception ex)
-            {
-                Logger.Error($"[LocalGameServer] Execution error: {ex.Message}\n{ex.StackTrace}");
-            }
-            finally
-            {
-                if (_sessionLock.IsWriteLockHeld)
-                {
-                    _sessionLock.ExitWriteLock();
-                }
-            }
-        }
-        catch (Exception ex)
-        {
-            Logger.Error("[LocalGameServer] Execution error: " + ex.Message);
-        }
-        finally
-        {
-            _isCalculationInProgress = false;
-            Monitor.Exit(_calculationLock);
-        }
+            SessionContext = TurnExecutor.Execute(SessionContext, HandlersTickInitialization());
+            return SessionContext;
+        }, "ExecutionTick");
     }
 
     internal void Execution()
     {
-        // First check if calculation is already in progress using lock
-        if (!Monitor.TryEnter(_calculationLock))
+        _executor.ExecuteWithLock(() =>
         {
-            return; // Another thread is already executing
-        }
-
-        try
-        {
-            // Double-check pattern with volatile flag
-            if (_isCalculationInProgress)
-            {
-                return;
-            }
-
-            _isCalculationInProgress = true;
-
-            // Try to acquire write lock with timeout to prevent deadlocks
-            if (!_sessionLock.TryEnterWriteLock(TimeSpan.FromSeconds(2)))
-            {
-                Logger.Info("[LocalGameServer] Failed to acquire write lock within timeout");
-                return;
-            }
-
-            try
-            {
-                var stopwatch = Stopwatch.StartNew();
-                try
-                {
-                    SessionContext = TurnExecutor.Execute(SessionContext, HandlersTurnInitialization());
-                }
-                finally
-                {
-                    stopwatch.Stop();
-                    Logger.Debug($"[LocalGameServer] Turn execution took {stopwatch.ElapsedMilliseconds}ms");
-                }
-            }
-            catch (Exception ex)
-            {
-                Logger.Error($"[LocalGameServer] Execution error: {ex.Message}\n{ex.StackTrace}");
-            }
-            finally
-            {
-                if (_sessionLock.IsWriteLockHeld)
-                {
-                    _sessionLock.ExitWriteLock();
-                }
-            }      
-        }
-        catch (Exception ex)
-        {
-            Logger.Error("[LocalGameServer] Execution error: " + ex.Message);
-        }
-        finally
-        {
-            _isCalculationInProgress = false;
-            Monitor.Exit(_calculationLock);
-        }
+            SessionContext = TurnExecutor.Execute(SessionContext, HandlersTurnInitialization());
+            return SessionContext;
+        }, "Execution");
     }
 
     public async Task AddCommand(Command command)
