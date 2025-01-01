@@ -25,5 +25,6 @@ public enum Metrics
     ProcessingMiningCommand,
     ProcessingMiningCommandFinished,
     ProcessingMiningCommandCancelled,
+    ProcessingEventAcknowledgementEventReceiptCommand,
     GameEngineInitializated
 }

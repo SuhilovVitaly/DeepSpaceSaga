@@ -6,6 +6,7 @@ public interface ICommand
     CommandCategory Category { get; set; }
     CommandTypes Type { get; set; }
     CommandStatus Status { get; set; }
+    ICommand? TriggerCommand { get; set; }
     long CelestialObjectId { get; set; }
     int MemberId { get; set; }
     long TargetCelestialObjectId { get; set; }

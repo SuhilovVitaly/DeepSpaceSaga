@@ -173,9 +173,4 @@ public partial class ControlWindow : UserControl
     {
         this.BringToFront();
     }
-
-    private void crlCloseButton_Resize(object sender, EventArgs e)
-    {
-        //crlCloseButton.Location = new Point(this.Width - 8, 8);
-    }
 }

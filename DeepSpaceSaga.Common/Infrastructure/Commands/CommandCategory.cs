@@ -8,5 +8,6 @@ public enum CommandCategory
     Navigation,
     ContentGeneration,
     ModuleActionFinished,
-    CargoOperations
+    CargoOperations,
+    EventAcknowledgement
 }

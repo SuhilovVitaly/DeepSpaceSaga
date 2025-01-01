@@ -69,7 +69,6 @@ partial class ControlWindow
         crlCloseButton.TabIndex = 2;
         crlCloseButton.Text = "x";
         crlCloseButton.Click += Event_CloseWindow;
-        crlCloseButton.Resize += crlCloseButton_Resize;
         // 
         // ControlWindow
         // 
@@ -90,5 +89,5 @@ partial class ControlWindow
 
     private PictureBox crlTitleBar;
     private Label crlWindowTitle;
-    private Label crlCloseButton;
+    protected Label crlCloseButton;
 }

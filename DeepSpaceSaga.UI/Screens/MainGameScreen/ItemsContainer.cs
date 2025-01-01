@@ -8,6 +8,16 @@ public partial class ItemsContainer : ControlWindow
 
         IsResizible = false;
         IsDraggible = false;
+
+        crlCloseButton.Click += Event_Close;
+    }
+
+    private void Event_Close(object? sender, EventArgs e)
+    {
+        if(Global.GameManager.GetSession().State.IsPaused)
+        {
+            Global.GameManager.EventController.Resume();
+        }
     }
 
     public void ShowContainer(GameActionEvent gameEvent, GameSession session)

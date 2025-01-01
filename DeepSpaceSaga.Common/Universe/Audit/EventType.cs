@@ -8,5 +8,6 @@ public enum EventType
     AsteroidHarvestFinished,
     AsteroidHarvestCancelled,
     AsteroidHarvestShowResults,
-    AsteroidHarvestDestroy
+    AsteroidHarvestDestroy,
+    EventAcknowledgement
 }

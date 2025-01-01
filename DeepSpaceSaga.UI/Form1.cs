@@ -1,4 +1,5 @@
-﻿using DeepSpaceSaga.UI.Screens.MainGameScreen;
+﻿using DeepSpaceSaga.Common.Universe.Entities.CelestialObjects.Spacecrafts;
+using DeepSpaceSaga.UI.Screens.MainGameScreen;
 
 namespace DeepSpaceSaga.UI;
 
@@ -188,14 +189,29 @@ public partial class Form1 : Form
     {
         if (Global.GameManager.GetSession().State.IsPaused) return;
 
+        var session = Global.GameManager.GetSession();
+
         controlItemsContainer = new ItemsContainer();
-        controlItemsContainer.ShowContainer(gameActionEvent, Global.GameManager.GetSession());
+        controlItemsContainer.ShowContainer(gameActionEvent, session);
         controlItemsContainer.Visible = false;
         controlItemsContainer.Location = new Point(600, 600);
         panel1.Controls.Add(controlItemsContainer);
         Logger.Info($"Event id: {gameActionEvent.Id} ");
         Global.GameManager.EventController.Pause();
         controlItemsContainer.BringToFront();
-        controlItemsContainer.Visible = true;        
+        controlItemsContainer.Visible = true;
+
+        var spacecraft = session.GetCelestialObject((long)gameActionEvent.CelestialObjectId) as ISpacecraft;
+
+        if (spacecraft is null) return;
+
+        Global.GameManager.ExecuteCommandAsync(new Command
+        {
+            Category = CommandCategory.EventAcknowledgement,
+            Type = CommandTypes.EventReceipt,
+            IsOneTimeCommand = true,
+            CelestialObjectId = spacecraft.Id,
+            TriggerCommand = gameActionEvent?.TriggerCommand?.Copy()
+        });
     }
 }

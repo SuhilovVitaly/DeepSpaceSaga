@@ -1,5 +1,4 @@
-﻿
-namespace DeepSpaceSaga.UI.Screens.MainGameScreen;
+﻿namespace DeepSpaceSaga.UI.Screens.MainGameScreen;
 
 public partial class LogbookControl : ControlWindow
 {
@@ -30,7 +29,7 @@ public partial class LogbookControl : ControlWindow
 
         int row = 0;
 
-        foreach (var item in session.Logbook.OrderByDescending(x=>x.Id))
+        foreach (var item in session.Logbook.Where(x=> x.Type != Common.Universe.Audit.EventType.NavigationManeuver).OrderByDescending(x=>x.Id))
         {
             graphics.DrawString($"{item.Text} ", font, brush, new PointF(10, 10 + row * 12));
             row++;

@@ -12,4 +12,5 @@ public class Command : ICommand
     public int ModuleId { get; set; }
     public bool IsOneTimeCommand { get; set; }
     public bool IsUnique { get; set; } = true;
+    public ICommand? TriggerCommand { get; set; }
 }

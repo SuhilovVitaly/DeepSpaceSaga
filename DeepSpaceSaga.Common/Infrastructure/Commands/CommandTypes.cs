@@ -42,6 +42,7 @@ public enum CommandTypes
     PreScanCelestialObjectFinished = 3002,
     [Description("Object detected")]
     GenerateAsteroid = 5001,
+    EventReceipt = 7001,
     MiningOperationsHarvest = 8001,
     MiningOperationsResult = 8010,
     MiningOperationsDestroyAsteroid = 8020,
