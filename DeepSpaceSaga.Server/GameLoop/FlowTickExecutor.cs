@@ -16,8 +16,9 @@ public class FlowTickExecutor
 
         var result = flowManager
             .Initialize()
-            .ValidateInput()
-            .ProcessingLocations();
+            .PreProcessingValidateInput()
+            .ProcessingLocations()
+            .PostProcessingFinishFlow();
 
         return result.FlowContext;
 

@@ -26,7 +26,7 @@ public class ProcessingLocationsHandler(IFlowContext context) : FlowStepBase<IFl
     }    
 }
 
-public static partial class FlowExtensions
+public static class ProcessingLocationsFlowExtensions
 {
     public static IFlowStep<IFlowContext, IFlowContext> ProcessingLocations(this IFlowStep<IFlowContext, IFlowContext> step)
     {

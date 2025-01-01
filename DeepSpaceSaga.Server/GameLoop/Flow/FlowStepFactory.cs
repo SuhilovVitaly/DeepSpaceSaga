@@ -27,10 +27,11 @@ public class FlowStepFactory
     // Initialize all flow steps
     public FlowStepFactory()
     {
-
         RegisterStep<ProcessingLocationsHandler, IFlowContext, IFlowContext>();
+        RegisterStep<PreProcessingValidateInputHandler, IFlowContext, IFlowContext>();
+        RegisterStep<PostProcessingFinishFlowStage, IFlowContext, IFlowContext>();
 
-        //RegisterStep<ValidateInputStep, FlowContext, FlowContext>();
+        //
         //RegisterStep<ProcessDataStep, FlowContext, FlowContext>();
         //RegisterStep<GetPostProcessingStep, FlowContext, FlowContext>();
         //RegisterStep<GetProcessingStep, FlowContext, FlowContext>();
