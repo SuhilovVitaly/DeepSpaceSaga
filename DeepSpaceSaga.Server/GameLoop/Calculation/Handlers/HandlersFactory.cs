@@ -6,7 +6,7 @@ public class HandlersFactory
     {
         ConcurrentBag<ICalculationHandler> handlers =
         [
-            new ProcessingLocationsHandler(),
+            //new ProcessingLocationsHandler(),
             new PostProcessingTurnInfoUpdateHandler(),
             new PreProcessingModulesReloadingHandler()
         ];

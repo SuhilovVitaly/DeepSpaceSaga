@@ -9,12 +9,12 @@ public class LocalGameServer : IGameServer
     private readonly LocalGameServerOptions _options;
     private readonly ThreadSafeExecutor _executor = new();
     private readonly IServerMetrics _metrics;
-    private SessionContext _sessionContext;
+    private IFlowContext _sessionContext;
     private CancellationTokenSource _cancellationTokenSource = new();
 
-    private static readonly ILog Logger = LogManager.GetLogger(MethodBase.GetCurrentMethod()?.DeclaringType);
+    private static readonly ILog Logger = LogManager.GetLogger(typeof(LocalGameServer));
 
-    public SessionContext SessionContext 
+    public IFlowContext SessionContext 
     { 
         get => _sessionContext;
         private set => _sessionContext = value ?? throw new ArgumentNullException(nameof(value));
@@ -152,12 +152,17 @@ public class LocalGameServer : IGameServer
     {
         _executor.ExecuteWithLock(() =>
         {
-            SessionContext = TurnExecutor.Execute(SessionContext, HandlersTickInitialization());
+            SessionContext = TurnExecutor.ExecuteTick(SessionContext);
             return SessionContext;
         }, "ExecutionTick");
     }
 
     internal void Execution()
+    {
+
+    }
+
+    internal void ExecutionX()
     {
         _executor.ExecuteWithLock(() =>
         {

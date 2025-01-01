@@ -4,9 +4,14 @@ public class TurnExecutor
 {
     private static readonly ILog _log = LogManager.GetLogger(typeof(TurnExecutor));
 
-    public static SessionContext Execute(SessionContext context, ConcurrentBag<ICalculationHandler> handlers)
+    public static IFlowContext ExecuteTick(IFlowContext context)
+    {        
+        return FlowTickExecutor.ExecuteTick(context);
+    }
+
+    public static IFlowContext Execute(IFlowContext context, ConcurrentBag<ICalculationHandler> handlers)
     {
-        var processingSession = new SessionContext(
+        IFlowContext processingSession = new SessionContext(
             context.Session.Copy(),
             context.EventsSystem.Clone(),
             context.Metrics,
@@ -33,29 +38,29 @@ public class TurnExecutor
         return processingSession;
     }
 
-    public static SessionContext TurnExecution(SessionContext context, ConcurrentBag<ICalculationHandler> handlers)
+    public static IFlowContext TurnExecution(IFlowContext context, ConcurrentBag<ICalculationHandler> handlers)
     {
         _log.Debug($"Starting turn calculation PreProcessing for session turn {context.Session.Metrics.TurnTick}");
 
         // TODO: Move to extantion
-        foreach (var handler in handlers.GeHandlers(HandlerType.PreProcessing))
-        {
-            context = handler.Handle(context);
-        }
+        //foreach (var handler in handlers.GeHandlers(HandlerType.PreProcessing))
+        //{
+        //    context = handler.Handle(context);
+        //}
 
-        _log.Debug($"Starting turn calculation Processing for session turn {context.Session.Metrics.TurnTick}");
+        //_log.Debug($"Starting turn calculation Processing for session turn {context.Session.Metrics.TurnTick}");
 
-        foreach (var handler in handlers.GeHandlers(HandlerType.Processing))
-        {
-            context = handler.Handle(context);
-        }
+        //foreach (var handler in handlers.GeHandlers(HandlerType.Processing))
+        //{
+        //    context = handler.Handle(context);
+        //}
 
-        _log.Debug($"Starting turn calculation PostProcessing for session turn {context.Session.Metrics.TurnTick}");
+        //_log.Debug($"Starting turn calculation PostProcessing for session turn {context.Session.Metrics.TurnTick}");
 
-        foreach (var handler in handlers.GeHandlers(HandlerType.PostProcessing))
-        {
-            context = handler.Handle(context);
-        }
+        //foreach (var handler in handlers.GeHandlers(HandlerType.PostProcessing))
+        //{
+        //    context = handler.Handle(context);
+        //}
 
         return context;
     }

@@ -1,12 +1,8 @@
 ﻿namespace DeepSpaceSaga.Server.GameLoop.Calculation.Handlers.Processing;
 
-public class ProcessingLocationsHandler : BaseHandler, ICalculationHandler
+public class ProcessingLocationsHandler(IFlowContext context) : FlowStepBase<IFlowContext, IFlowContext>(context)
 {
-    public int Order => 2;
-
-    public HandlerType Type => HandlerType.Processing;
-
-    public SessionContext Handle(SessionContext context)
+    public override IFlowContext Execute(IFlowContext flowContext)
     {
         foreach (var celestialObject in context.Session.SpaceMap.GetCelestialObjects())
         {
@@ -16,7 +12,7 @@ public class ProcessingLocationsHandler : BaseHandler, ICalculationHandler
         return context;
     }
 
-    private void RecalculateOneTickObjectLocation(SessionContext context, ICelestialObject celestialObject)
+    private void RecalculateOneTickObjectLocation(IFlowContext context, ICelestialObject celestialObject)
     {
         double tickSpeed = celestialObject.Speed / ( 1000 / context.Settings.TickInterval);
 
@@ -27,5 +23,17 @@ public class ProcessingLocationsHandler : BaseHandler, ICalculationHandler
 
         celestialObject.PositionX = position.X;
         celestialObject.PositionY = position.Y;
+    }    
+}
+
+public static partial class FlowExtensions
+{
+    public static IFlowStep<IFlowContext, IFlowContext> ProcessingLocations(this IFlowStep<IFlowContext, IFlowContext> step)
+    {
+        var factory = FlowStepFactory.Instance;
+        var result = step.Execute(step.FlowContext);
+        return factory.CreateStep<ProcessingLocationsHandler>(result);
     }
 }
+
+
