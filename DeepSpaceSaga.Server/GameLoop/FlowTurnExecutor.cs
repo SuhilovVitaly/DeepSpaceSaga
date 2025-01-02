@@ -16,22 +16,22 @@ public class FlowTurnExecutor
 
         var result = flowManager
             .Initialize()
-            // Pre Processing flow
+            // ---------------------------------------------- Pre Processing flow
             .PreProcessingValidateInput()
             .PreProcessingContentGeneration()
             .PreProcessingModulesEnabling()
             .PreProcessingModulesReloading()
-            .PreProcessingScan()            
-            // Processing flow
-            .ProcessingLocations()
-            .ProcessingCommandCleaner()
+            .PreProcessingScan()
+            // ---------------------------------------------- Processing flow
+            .ProcessingLocations()            
             .ProcessingContentGeneration()
             .ProcessingEventAcknowledgement()
             .ProcessingMiningOperations()
             .ProcessingModuleActivation()
             .ProcessingNavigation()
             .ProcessingScan()
-            // Post Processing flow
+            .ProcessingCommandCleaner()
+            // ---------------------------------------------- Post Processing flow
             .PostProcessingTurnInfoUpdate()
             .PostProcessingCommandCleaner()
             .PostProcessingFinishFlow();
