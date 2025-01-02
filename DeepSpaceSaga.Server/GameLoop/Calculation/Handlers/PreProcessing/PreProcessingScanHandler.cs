@@ -1,12 +1,14 @@
 ﻿namespace DeepSpaceSaga.Server.Calculation.DataPreProcessing;
 
-internal class PreProcessingScanHandler : BaseHandler, ICalculationHandler
+public class PreProcessingScanHandler(IFlowContext context) : FlowStepBase<IFlowContext, IFlowContext>(context)
 {
-    public int Order => 2;
+    public override IFlowContext Execute(IFlowContext flowContext)
+    {
+        flowContext = Handle(flowContext);
+        return flowContext;
+    }
 
-    public HandlerType Type => HandlerType.PreProcessing;
-
-    public SessionContext Handle(SessionContext sessionContext)
+    public IFlowContext Handle(IFlowContext sessionContext)
     {
         var spacecraft = sessionContext.Session.GetPlayerSpaceShip();
 
@@ -66,4 +68,20 @@ internal class PreProcessingScanHandler : BaseHandler, ICalculationHandler
 
         return sessionContext;
     }    
+}
+
+public static class PreProcessingScanHandlerFlowExtensions
+{
+    public static IFlowStep<IFlowContext, IFlowContext> PreProcessingScan(this IFlowContext context)
+    {
+        var factory = FlowStepFactory.Instance;
+        return factory.CreateStep<PreProcessingScanHandler>(context);
+    }
+
+    public static IFlowStep<IFlowContext, IFlowContext> PreProcessingScan(this IFlowStep<IFlowContext, IFlowContext> step)
+    {
+        var factory = FlowStepFactory.Instance;
+        var result = step.Execute(step.FlowContext);
+        return factory.CreateStep<PreProcessingScanHandler>(result);
+    }
 }

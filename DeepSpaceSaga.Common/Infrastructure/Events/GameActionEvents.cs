@@ -4,6 +4,6 @@ public class GameActionEvents(IEnumerable<GameActionEvent> objects) : List<GameA
 {
     public IGameActionEvents Clone()
     {
-        return null;
+        return new GameActionEvents(objects.Copy());
     }
 }

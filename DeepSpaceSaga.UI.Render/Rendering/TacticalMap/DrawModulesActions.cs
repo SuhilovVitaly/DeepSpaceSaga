@@ -39,9 +39,11 @@ internal class DrawModulesActions
         }
 
         var spacecraftLocation = UiTools.ToScreenCoordinates(screenInfo, spacecraft.GetLocation());
-        var targetLocation = UiTools.ToScreenCoordinates(screenInfo, session.GetCelestialObject(module.TargetId).GetLocation());
+        var target = session.GetCelestialObject(module.TargetId);
 
-        if (targetLocation is null) return;
+        if (target == null) { return; }
+
+        var targetLocation = UiTools.ToScreenCoordinates(screenInfo, target.GetLocation());
 
         var direction = GeometryTools.Azimuth(spacecraftLocation, targetLocation);
         var direction1 = GeometryTools.Azimuth(targetLocation, spacecraftLocation);
@@ -72,7 +74,12 @@ internal class DrawModulesActions
     private static void DrawSpaceScanner(IScreenInfo screenInfo, GameSession session, IModule module, ISpacecraft spacecraft)
     {
         var spacecraftLocation = UiTools.ToScreenCoordinates(screenInfo, spacecraft.GetLocation());
-        var targetLocation = UiTools.ToScreenCoordinates(screenInfo, session.GetCelestialObject(module.TargetId).GetLocation());
+        var target = session.GetCelestialObject(module.TargetId);
+
+        if (target == null) { return; }
+
+        var targetLocation = UiTools.ToScreenCoordinates(screenInfo, target.GetLocation());        
+
         var direction = GeometryTools.Azimuth(spacecraftLocation, targetLocation);
         var direction1 = GeometryTools.Azimuth(targetLocation, spacecraftLocation);
 

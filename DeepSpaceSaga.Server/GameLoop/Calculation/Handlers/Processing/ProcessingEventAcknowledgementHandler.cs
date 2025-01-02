@@ -1,12 +1,14 @@
 ﻿namespace DeepSpaceSaga.Server.GameLoop.Calculation.Handlers.Processing;
 
-public class ProcessingEventAcknowledgement : BaseHandler, ICalculationHandler
+public class ProcessingEventAcknowledgementHandler(IFlowContext context) : FlowStepBase<IFlowContext, IFlowContext>(context)
 {
-    public int Order => 16;
+    public override IFlowContext Execute(IFlowContext flowContext)
+    {
+        flowContext = Handle(flowContext);
+        return flowContext;
+    }
 
-    public HandlerType Type => HandlerType.Processing;
-
-    public SessionContext Handle(SessionContext context)
+    public IFlowContext Handle(IFlowContext context)
     {
         foreach (Command command in context.EventsSystem.Commands.
             Where(x => x.Status == CommandStatus.Process && x.Category == CommandCategory.EventAcknowledgement))
@@ -17,7 +19,7 @@ public class ProcessingEventAcknowledgement : BaseHandler, ICalculationHandler
         return context;
     }
 
-    internal SessionContext Run(SessionContext sessionContext, ICommand command)
+    internal IFlowContext Run(IFlowContext sessionContext, ICommand command)
     {
         sessionContext.Metrics.Add(Metrics.ProcessingNavigationCommand);
         
@@ -38,12 +40,12 @@ public class ProcessingEventAcknowledgement : BaseHandler, ICalculationHandler
         return sessionContext;
     }     
 
-    private void EventReceipt(SessionContext sessionContext, ICelestialObject currentCelestialObject, ICommand command)
+    private void EventReceipt(IFlowContext sessionContext, ICelestialObject currentCelestialObject, ICommand command)
     {
         command.Status = CommandStatus.PostProcess;
     }
 
-    private void AddToJournal(SessionContext sessionContext, EventType type, string text)
+    private void AddToJournal(IFlowContext sessionContext, EventType type, string text)
     {
         if (sessionContext?.Session?.Logbook == null)
             throw new ArgumentNullException(nameof(sessionContext), "Session or Logbook is null");
@@ -55,5 +57,21 @@ public class ProcessingEventAcknowledgement : BaseHandler, ICalculationHandler
             Type = type,
             Text = text
         });
+    }
+}
+
+public static class ProcessingEventAcknowledgementHandlerFlowExtensions
+{
+    public static IFlowStep<IFlowContext, IFlowContext> ProcessingEventAcknowledgement(this IFlowContext context)
+    {
+        var factory = FlowStepFactory.Instance;
+        return factory.CreateStep<ProcessingEventAcknowledgementHandler>(context);
+    }
+
+    public static IFlowStep<IFlowContext, IFlowContext> ProcessingEventAcknowledgement(this IFlowStep<IFlowContext, IFlowContext> step)
+    {
+        var factory = FlowStepFactory.Instance;
+        var result = step.Execute(step.FlowContext);
+        return factory.CreateStep<ProcessingEventAcknowledgementHandler>(result);
     }
 }

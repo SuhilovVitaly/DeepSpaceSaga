@@ -1,12 +1,14 @@
 ﻿namespace DeepSpaceSaga.Server.GameLoop.Calculation.Handlers.Processing;
 
-public class ProcessingNavigationHandler : BaseHandler, ICalculationHandler
+public class ProcessingNavigationHandler(IFlowContext context) : FlowStepBase<IFlowContext, IFlowContext>(context)
 {
-    public int Order => 4;
+    public override IFlowContext Execute(IFlowContext flowContext)
+    {
+        flowContext = Handle(flowContext);
+        return flowContext;
+    }
 
-    public HandlerType Type => HandlerType.Processing;
-
-    public SessionContext Handle(SessionContext context)
+    public IFlowContext Handle(IFlowContext context)
     {
         foreach (Command command in context.EventsSystem.Commands.
             Where(x => x.Status == CommandStatus.Process && x.Category == CommandCategory.Navigation))
@@ -17,7 +19,7 @@ public class ProcessingNavigationHandler : BaseHandler, ICalculationHandler
         return context;
     }
 
-    internal SessionContext Run(SessionContext sessionContext, Command command)
+    internal IFlowContext Run(IFlowContext sessionContext, Command command)
     {
         sessionContext.Metrics.Add(Metrics.ProcessingNavigationCommand);
         
@@ -68,7 +70,7 @@ public class ProcessingNavigationHandler : BaseHandler, ICalculationHandler
         return sessionContext;
     }     
 
-    private void SyncDirectionWithTarget(SessionContext sessionContext, ICelestialObject currentCelestialObject, Command command)
+    private void SyncDirectionWithTarget(IFlowContext sessionContext, ICelestialObject currentCelestialObject, Command command)
     {
         var targetCelestialObject = sessionContext.Session.GetCelestialObject(command.TargetCelestialObjectId);
         var spacecraft = currentCelestialObject as ISpacecraft ??
@@ -106,7 +108,7 @@ public class ProcessingNavigationHandler : BaseHandler, ICalculationHandler
         }
     }
 
-    private void SyncSpeedWithTarget(SessionContext sessionContext, ICelestialObject currentCelestialObject, Command command)
+    private void SyncSpeedWithTarget(IFlowContext sessionContext, ICelestialObject currentCelestialObject, Command command)
     {
         var targetCelestialObject = sessionContext.Session.GetCelestialObject(command.TargetCelestialObjectId);
         var spacecraft = currentCelestialObject as ISpacecraft ?? 
@@ -146,7 +148,7 @@ public class ProcessingNavigationHandler : BaseHandler, ICalculationHandler
         }
     }
 
-    private void FullSpeed(SessionContext sessionContext, ICelestialObject celestialObject, Command command)
+    private void FullSpeed(IFlowContext sessionContext, ICelestialObject celestialObject, Command command)
     {
         var spacecraft = celestialObject.ToSpaceship();
 
@@ -156,7 +158,7 @@ public class ProcessingNavigationHandler : BaseHandler, ICalculationHandler
         module.IsCalculated = spacecraft.Speed >= spacecraft.MaxSpeed;
     }
 
-    private void FullStop(SessionContext sessionContext, ICelestialObject celestialObject, Command command)
+    private void FullStop(IFlowContext sessionContext, ICelestialObject celestialObject, Command command)
     {
         var spacecraft = celestialObject.ToSpaceship();
 
@@ -166,17 +168,17 @@ public class ProcessingNavigationHandler : BaseHandler, ICalculationHandler
         module.IsCalculated = spacecraft.Speed <= 0;
     }
 
-    private void DecreaseShipSpeed(SessionContext sessionContext, ICelestialObject celestialObject, Command command)
+    private void DecreaseShipSpeed(IFlowContext sessionContext, ICelestialObject celestialObject, Command command)
     {
         celestialObject.ToSpaceship().ChangeVelocity(-0.5);
     }
 
-    private void IncreaseShipSpeed(SessionContext sessionContext, ICelestialObject celestialObject, Command command)
+    private void IncreaseShipSpeed(IFlowContext sessionContext, ICelestialObject celestialObject, Command command)
     {
         celestialObject.ToSpaceship().ChangeVelocity(0.5);
     }
 
-    private void RotateToTarget(SessionContext sessionContext, ICelestialObject currentCelestialObject, Command command)
+    private void RotateToTarget(IFlowContext sessionContext, ICelestialObject currentCelestialObject, Command command)
     {
         var target = sessionContext.Session.GetCelestialObject(command.TargetCelestialObjectId);
 
@@ -209,7 +211,7 @@ public class ProcessingNavigationHandler : BaseHandler, ICalculationHandler
 
     }
 
-    private void TurnLeft(SessionContext sessionContext, ICelestialObject celestialObject, Command command)
+    private void TurnLeft(IFlowContext sessionContext, ICelestialObject celestialObject, Command command)
     {
         var spacecraft = celestialObject.ToSpaceship();
 
@@ -221,9 +223,6 @@ public class ProcessingNavigationHandler : BaseHandler, ICalculationHandler
         double directionAfterManeuver = (directionBeforeManeuver - spacecraft.Agility).To360Degrees();
 
         spacecraft.SetDirection(directionAfterManeuver);
-
-        _log.Info($"[Navigation][TurnLeft][{sessionContext.Session.Metrics.TurnsTicks}] {spacecraft.Id} DB:{directionBeforeManeuver} DA:{directionAfterManeuver}");
-        //module.Reload();
     }
 
     private void TurnRight(ICelestialObject celestialObject, Command command)
@@ -240,7 +239,7 @@ public class ProcessingNavigationHandler : BaseHandler, ICalculationHandler
         //module.Reload();
     }
 
-    private void AddToJournal(SessionContext sessionContext, Command command, ICelestialObject celestialObject)
+    private void AddToJournal(IFlowContext sessionContext, Command command, ICelestialObject celestialObject)
     {
         sessionContext.Metrics.Add(Metrics.MessageAddedToJournal);
 
@@ -251,5 +250,21 @@ public class ProcessingNavigationHandler : BaseHandler, ICalculationHandler
                 Type = Common.Universe.Audit.EventType.NavigationManeuver,
                 Text = "Navigation: " + command.Type.GetDescription() + $" {celestialObject.Direction}"
             });
+    }
+}
+
+public static class ProcessingNavigationHandlerFlowExtensions
+{
+    public static IFlowStep<IFlowContext, IFlowContext> ProcessingNavigation(this IFlowContext context)
+    {
+        var factory = FlowStepFactory.Instance;
+        return factory.CreateStep<ProcessingNavigationHandler>(context);
+    }
+
+    public static IFlowStep<IFlowContext, IFlowContext> ProcessingNavigation(this IFlowStep<IFlowContext, IFlowContext> step)
+    {
+        var factory = FlowStepFactory.Instance;
+        var result = step.Execute(step.FlowContext);
+        return factory.CreateStep<ProcessingNavigationHandler>(result);
     }
 }

@@ -1,23 +1,14 @@
 ﻿namespace DeepSpaceSaga.Server.GameLoop.Calculation.Handlers.PostProcessing;
 
-public class PostProcessingCommandCleanerHandler : BaseHandler, ICalculationHandler
+public class PostProcessingCommandCleanerHandler(IFlowContext context) : FlowStepBase<IFlowContext, IFlowContext>(context)
 {
-    /// <summary>
-    /// Defines the order of handler execution
-    /// </summary>
-    public int Order => int.MaxValue;
+    public override IFlowContext Execute(IFlowContext flowContext)
+    {
+        flowContext = Handle(flowContext);
+        return flowContext;
+    }
 
-    /// <summary>
-    /// Type of the handler
-    /// </summary>
-    public HandlerType Type => HandlerType.PostProcessing;
-
-    /// <summary>
-    /// Processes the session context
-    /// </summary>
-    /// <param name="context">Session context</param>
-    /// <returns>Processed session context</returns>
-    public SessionContext Handle(SessionContext context)
+    public IFlowContext Handle(IFlowContext context)
     {
         var finishedCommands = FinishedCommands(context.EventsSystem);
 
@@ -62,5 +53,21 @@ public class PostProcessingCommandCleanerHandler : BaseHandler, ICalculationHand
             eventsSystem.Commands.Where(cmd => cmd.Status == CommandStatus.PostProcess));
 
         return result;
+    }
+}
+
+public static class PostProcessingCommandCleanerHandlerFlowExtensions
+{
+    public static IFlowStep<IFlowContext, IFlowContext> PostProcessingCommandCleaner(this IFlowContext context)
+    {
+        var factory = FlowStepFactory.Instance;
+        return factory.CreateStep<PostProcessingCommandCleanerHandler>(context);
+    }
+
+    public static IFlowStep<IFlowContext, IFlowContext> PostProcessingCommandCleaner(this IFlowStep<IFlowContext, IFlowContext> step)
+    {
+        var factory = FlowStepFactory.Instance;
+        var result = step.Execute(step.FlowContext);
+        return factory.CreateStep<PostProcessingCommandCleanerHandler>(result);
     }
 }

@@ -11,7 +11,7 @@ public class GameEventsSystem(IServerMetrics metrics, IGameActionEvents actions)
         var duplicate = new GameEventsSystem(metrics, actions)
         {
             Commands = new ConcurrentQueue<ICommand>(),
-            Actions = Actions.Clone()
+            Actions = Actions == null ? new GameActionEvents([]) : Actions.Clone()
         };
 
         foreach (var command in Commands)

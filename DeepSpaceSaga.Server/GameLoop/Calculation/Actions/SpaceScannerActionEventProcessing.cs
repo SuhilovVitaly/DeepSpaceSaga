@@ -1,10 +1,8 @@
-﻿using DeepSpaceSaga.Common.Infrastructure.Commands;
-
-namespace DeepSpaceSaga.Server.GameLoop.Calculation.Actions;
+﻿namespace DeepSpaceSaga.Server.GameLoop.Calculation.Actions;
 
 public class ActionScanFinished
 {
-    public static SessionContext Execute(SessionContext sessionContext, ISpacecraft spacecraft, ICelestialObject target, IModule module)
+    public static IFlowContext Execute(IFlowContext sessionContext, ISpacecraft spacecraft, ICelestialObject target, IModule module)
     {
         var command = new Command
         {

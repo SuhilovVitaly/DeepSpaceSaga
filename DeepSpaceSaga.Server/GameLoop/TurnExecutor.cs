@@ -6,10 +6,10 @@ public class TurnExecutor
 
     public static IFlowContext ExecuteTick(IFlowContext context)
     {        
-        return FlowTickExecutor.ExecuteTick(context);
+        return FlowTickExecutor.Execute(context);
     }
 
-    public static IFlowContext Execute(IFlowContext context, ConcurrentBag<ICalculationHandler> handlers)
+    public static IFlowContext Execute(IFlowContext context)
     {
         IFlowContext processingSession = new SessionContext(
             context.Session.Copy(),
@@ -24,7 +24,7 @@ public class TurnExecutor
         {
             var stopwatch = Stopwatch.StartNew();
 
-            processingSession = TurnExecution(context, handlers);
+            processingSession = FlowTurnExecutor.Execute(context);
 
             stopwatch.Stop();
 
@@ -36,32 +36,5 @@ public class TurnExecutor
         }        
 
         return processingSession;
-    }
-
-    public static IFlowContext TurnExecution(IFlowContext context, ConcurrentBag<ICalculationHandler> handlers)
-    {
-        _log.Debug($"Starting turn calculation PreProcessing for session turn {context.Session.Metrics.TurnTick}");
-
-        // TODO: Move to extantion
-        //foreach (var handler in handlers.GeHandlers(HandlerType.PreProcessing))
-        //{
-        //    context = handler.Handle(context);
-        //}
-
-        //_log.Debug($"Starting turn calculation Processing for session turn {context.Session.Metrics.TurnTick}");
-
-        //foreach (var handler in handlers.GeHandlers(HandlerType.Processing))
-        //{
-        //    context = handler.Handle(context);
-        //}
-
-        //_log.Debug($"Starting turn calculation PostProcessing for session turn {context.Session.Metrics.TurnTick}");
-
-        //foreach (var handler in handlers.GeHandlers(HandlerType.PostProcessing))
-        //{
-        //    context = handler.Handle(context);
-        //}
-
-        return context;
     }
 }

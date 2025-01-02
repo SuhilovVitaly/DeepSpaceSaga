@@ -1,12 +1,14 @@
 ﻿namespace DeepSpaceSaga.Server.GameLoop.Calculation.Handlers.Processing;
 
-public class ProcessingModuleActivationHandler : BaseHandler, ICalculationHandler
+public class ProcessingModuleActivationHandler(IFlowContext context) : FlowStepBase<IFlowContext, IFlowContext>(context)
 {
-    public int Order => int.MaxValue - 100;
+    public override IFlowContext Execute(IFlowContext flowContext)
+    {
+        flowContext = Handle(flowContext);
+        return flowContext;
+    }
 
-    public HandlerType Type => HandlerType.Processing;
-
-    public SessionContext Handle(SessionContext context)
+    public IFlowContext Handle(IFlowContext context)
     {
         var spacecraft = context.Session.GetPlayerSpaceShip();
 
@@ -24,5 +26,21 @@ public class ProcessingModuleActivationHandler : BaseHandler, ICalculationHandle
         }
 
         return context;
+    }
+}
+
+public static class ProcessingModuleActivationHandlerFlowExtensions
+{
+    public static IFlowStep<IFlowContext, IFlowContext> ProcessingModuleActivation(this IFlowContext context)
+    {
+        var factory = FlowStepFactory.Instance;
+        return factory.CreateStep<ProcessingModuleActivationHandler>(context);
+    }
+
+    public static IFlowStep<IFlowContext, IFlowContext> ProcessingModuleActivation(this IFlowStep<IFlowContext, IFlowContext> step)
+    {
+        var factory = FlowStepFactory.Instance;
+        var result = step.Execute(step.FlowContext);
+        return factory.CreateStep<ProcessingModuleActivationHandler>(result);
     }
 }

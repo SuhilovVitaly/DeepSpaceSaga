@@ -1,6 +1,6 @@
 ﻿namespace DeepSpaceSaga.Server.GameLoop;
 
-public class FlowTickExecutor
+public class FlowTurnExecutor
 {
     public static IFlowContext Execute(IFlowContext context)
     {

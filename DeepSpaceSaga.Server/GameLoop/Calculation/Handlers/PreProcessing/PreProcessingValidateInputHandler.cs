@@ -5,7 +5,7 @@ public class PreProcessingValidateInputHandler(IFlowContext context) : FlowStepB
     public override IFlowContext Execute(IFlowContext flowContext)
     {        
         // TODO: Validate context
-        return context;
+        return flowContext;
     }
 
 }

@@ -1,14 +1,14 @@
-﻿using DeepSpaceSaga.Common.Infrastructure.Commands;
+﻿namespace DeepSpaceSaga.Server.GameLoop.Calculation.Handlers.PreProcessing;
 
-namespace DeepSpaceSaga.Server.GameLoop.Calculation.Handlers.PreProcessing;
-
-public class PreProcessingModulesEnablingHandler : BaseHandler, ICalculationHandler
+public class PreProcessingModulesEnablingHandler(IFlowContext context) : FlowStepBase<IFlowContext, IFlowContext>(context)
 {
-    public int Order => 4;
+    public override IFlowContext Execute(IFlowContext flowContext)
+    {
+        flowContext = Handle(flowContext);
+        return flowContext;
+    }
 
-    public HandlerType Type => HandlerType.PreProcessing;
-
-    public SessionContext Handle(SessionContext sessionContext)
+    private IFlowContext Handle(IFlowContext sessionContext)
     {
         if (sessionContext == null)
             throw new ArgumentNullException(nameof(sessionContext));
@@ -30,5 +30,21 @@ public class PreProcessingModulesEnablingHandler : BaseHandler, ICalculationHand
         }
 
         return sessionContext;
+    }
+}
+
+public static class PreProcessingModulesEnablingHandlerFlowExtensions
+{
+    public static IFlowStep<IFlowContext, IFlowContext> PreProcessingModulesEnabling(this IFlowContext context)
+    {
+        var factory = FlowStepFactory.Instance;
+        return factory.CreateStep<PreProcessingModulesEnablingHandler>(context);
+    }
+
+    public static IFlowStep<IFlowContext, IFlowContext> PreProcessingModulesEnabling(this IFlowStep<IFlowContext, IFlowContext> step)
+    {
+        var factory = FlowStepFactory.Instance;
+        var result = step.Execute(step.FlowContext);
+        return factory.CreateStep<PreProcessingModulesEnablingHandler>(result);
     }
 }

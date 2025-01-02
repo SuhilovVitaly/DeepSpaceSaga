@@ -1,17 +1,13 @@
-﻿using DeepSpaceSaga.Common.Universe.Entities.CelestialObjects.Containers;
-using DeepSpaceSaga.Common.Universe.Items;
-using DeepSpaceSaga.Common.Universe.Items.Ore;
-
-namespace DeepSpaceSaga.Server.GameLoop.Calculation.Actions.Mining;
+﻿namespace DeepSpaceSaga.Server.GameLoop.Calculation.Actions.Mining;
 
 public class GenerateAsteroidHarcestResult
 {
-    public static SessionContext Execute(SessionContext sessionContext, ICommand command)
+    public static IFlowContext Execute(IFlowContext sessionContext, ICommand command)
     {
         return new GenerateAsteroidHarcestResult().Run(sessionContext, command);
     }
 
-    public SessionContext Run(SessionContext sessionContext, ICommand command)
+    public IFlowContext Run(IFlowContext sessionContext, ICommand command)
     {
         var sourceCelestialObject = sessionContext.Session.GetCelestialObject(command.CelestialObjectId);
         var targetCelestialObject = sessionContext.Session.GetCelestialObject(command.TargetCelestialObjectId);
@@ -33,7 +29,7 @@ public class GenerateAsteroidHarcestResult
         return sessionContext;
     }
 
-    private IContainer GenerateContainer(SessionContext sessionContext, ICelestialObject sourceCelestialObject, ICelestialObject targetCelestialObject)
+    private IContainer GenerateContainer(IFlowContext sessionContext, ICelestialObject sourceCelestialObject, ICelestialObject targetCelestialObject)
     {
         IContainer container = new OreContainer
         {
@@ -52,7 +48,7 @@ public class GenerateAsteroidHarcestResult
         return container;
     }
 
-    private List<ICoreItem> GenerateOreItems(SessionContext sessionContext, ICelestialObject sourceCelestialObject, ICelestialObject targetCelestialObject)
+    private List<ICoreItem> GenerateOreItems(IFlowContext sessionContext, ICelestialObject sourceCelestialObject, ICelestialObject targetCelestialObject)
     {
         var result = new List<ICoreItem>();
 

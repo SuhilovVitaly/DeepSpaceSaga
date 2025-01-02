@@ -50,8 +50,6 @@ public class LocalGameServer : IGameServer
             randomizer,
             _options);
 
-        HandlersTurnInitialization();
-
         _engine.OnTickExecute += TickExecute;
         _engine.OnTurnExecute += TurnExecute;
     }
@@ -68,13 +66,7 @@ public class LocalGameServer : IGameServer
             metrics,
             randomizer,
             new LocalGameServerOptions());
-
-        HandlersTurnInitialization();
     }
-
-    private ConcurrentBag<ICalculationHandler> HandlersTurnInitialization() => HandlersFactory.GetTurnHandlers();
-
-    private ConcurrentBag<ICalculationHandler> HandlersTickInitialization() => HandlersFactory.GetTickHandlers();
 
     public GameSession GetSession()
     {
@@ -111,8 +103,6 @@ public class LocalGameServer : IGameServer
         await Task.CompletedTask;
     }
 
-    private bool _isCalculationInProgress = false;
-
     private void TurnExecute()
     {
         TurnExecute(_cancellationTokenSource.Token);
@@ -123,8 +113,6 @@ public class LocalGameServer : IGameServer
     {
         if (cancellationToken.IsCancellationRequested || SessionContext.Session.State.IsPaused) 
             return;
-
-        HandlersTurnInitialization();
 
         Execution();
     }
@@ -141,12 +129,8 @@ public class LocalGameServer : IGameServer
         if (cancellationToken.IsCancellationRequested || SessionContext.Session.State.IsPaused)
             return;
 
-        HandlersTickInitialization();
-
-        ExecutionTick();
+        //ExecutionTick();
     }
-
-    private readonly object _calculationLock = new object();
 
     internal void ExecutionTick()
     {
@@ -159,14 +143,9 @@ public class LocalGameServer : IGameServer
 
     internal void Execution()
     {
-
-    }
-
-    internal void ExecutionX()
-    {
         _executor.ExecuteWithLock(() =>
         {
-            SessionContext = TurnExecutor.Execute(SessionContext, HandlersTurnInitialization());
+            SessionContext = TurnExecutor.Execute(SessionContext);
             return SessionContext;
         }, "Execution");
     }

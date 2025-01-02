@@ -1,12 +1,14 @@
 ﻿namespace DeepSpaceSaga.Server.GameLoop.Calculation.Handlers.Processing;
 
-public class ProcessingMiningOperationsHandler : BaseHandler, ICalculationHandler
+public class ProcessingMiningOperationsHandler(IFlowContext context) : FlowStepBase<IFlowContext, IFlowContext>(context)
 {
-    public int Order => 3;
+    public override IFlowContext Execute(IFlowContext flowContext)
+    {
+        flowContext = Handle(flowContext);
+        return flowContext;
+    }
 
-    public HandlerType Type => HandlerType.Processing;
-
-    public SessionContext Handle(SessionContext context)
+    public IFlowContext Handle(IFlowContext context)
     {
         foreach (Command command in context.EventsSystem.Commands.GetCommandsByCategory(CommandStatus.Process, CommandCategory.Mining))
         {
@@ -16,7 +18,7 @@ public class ProcessingMiningOperationsHandler : BaseHandler, ICalculationHandle
         return context;
     }
 
-    public SessionContext Run(SessionContext sessionContext, Command command)
+    public IFlowContext Run(IFlowContext sessionContext, Command command)
     {
         sessionContext.Metrics.Add(Metrics.ProcessingMiningCommand);
 
@@ -36,7 +38,7 @@ public class ProcessingMiningOperationsHandler : BaseHandler, ICalculationHandle
         return sessionContext;
     }
 
-    private void DestroyAsteroid(SessionContext sessionContext, ICommand command)
+    private void DestroyAsteroid(IFlowContext sessionContext, ICommand command)
     {
         var targetCelestialObject = sessionContext.Session.GetCelestialObject(command.TargetCelestialObjectId);
 
@@ -45,7 +47,7 @@ public class ProcessingMiningOperationsHandler : BaseHandler, ICalculationHandle
         AddToJournal(sessionContext, EventType.AsteroidHarvestDestroy, $"Asteroid '{targetCelestialObject.Name}' destroyed");
     }
 
-    private void Result(SessionContext sessionContext, ICommand command)
+    private void Result(IFlowContext sessionContext, ICommand command)
     {
         var moduleCelestialObject = sessionContext.Session.GetCelestialObject(command.CelestialObjectId);
         var targetCelestialObject = sessionContext.Session.GetCelestialObject(command.TargetCelestialObjectId);
@@ -67,7 +69,7 @@ public class ProcessingMiningOperationsHandler : BaseHandler, ICalculationHandle
                 ));
     }
 
-    private void Harvest(SessionContext sessionContext, Command command)
+    private void Harvest(IFlowContext sessionContext, Command command)
     {
         var moduleCelestialObject = sessionContext.Session.GetCelestialObject(command.CelestialObjectId);
         var targetCelestialObject = sessionContext.Session.GetCelestialObject(command.TargetCelestialObjectId);
@@ -97,7 +99,7 @@ public class ProcessingMiningOperationsHandler : BaseHandler, ICalculationHandle
         }
     }
 
-    private void AddToJournal(SessionContext sessionContext, EventType type, string text)
+    private void AddToJournal(IFlowContext sessionContext, EventType type, string text)
     {
         if (sessionContext?.Session?.Logbook == null)
             throw new ArgumentNullException(nameof(sessionContext), "Session or Logbook is null");
@@ -109,5 +111,21 @@ public class ProcessingMiningOperationsHandler : BaseHandler, ICalculationHandle
                 Type = type,
                 Text = text
             });
+    }
+}
+
+public static class ProcessingMiningOperationsHandlerFlowExtensions
+{
+    public static IFlowStep<IFlowContext, IFlowContext> ProcessingMiningOperations(this IFlowContext context)
+    {
+        var factory = FlowStepFactory.Instance;
+        return factory.CreateStep<ProcessingMiningOperationsHandler>(context);
+    }
+
+    public static IFlowStep<IFlowContext, IFlowContext> ProcessingMiningOperations(this IFlowStep<IFlowContext, IFlowContext> step)
+    {
+        var factory = FlowStepFactory.Instance;
+        var result = step.Execute(step.FlowContext);
+        return factory.CreateStep<ProcessingMiningOperationsHandler>(result);
     }
 }

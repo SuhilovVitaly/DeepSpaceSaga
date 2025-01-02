@@ -29,6 +29,19 @@ public class FlowStepFactory
     {
         RegisterStep<ProcessingLocationsHandler, IFlowContext, IFlowContext>();
         RegisterStep<PreProcessingValidateInputHandler, IFlowContext, IFlowContext>();
+        RegisterStep<PreProcessingContentGenerationHandler, IFlowContext, IFlowContext>();
+        RegisterStep<PreProcessingModulesEnablingHandler, IFlowContext, IFlowContext>();
+        RegisterStep<PreProcessingModulesReloadingHandler, IFlowContext, IFlowContext>();
+        RegisterStep<PreProcessingScanHandler, IFlowContext, IFlowContext>();
+        RegisterStep<ProcessingCommandCleanerHandler, IFlowContext, IFlowContext>();
+        RegisterStep<ProcessingContentGenerationHandler, IFlowContext, IFlowContext>();
+        RegisterStep<ProcessingEventAcknowledgementHandler, IFlowContext, IFlowContext>();
+        RegisterStep<ProcessingMiningOperationsHandler, IFlowContext, IFlowContext>();
+        RegisterStep<ProcessingModuleActivationHandler, IFlowContext, IFlowContext>();
+        RegisterStep<ProcessingNavigationHandler, IFlowContext, IFlowContext>();
+        RegisterStep<ProcessingScanHandler, IFlowContext, IFlowContext>();
+        RegisterStep<PostProcessingTurnInfoUpdateHandler, IFlowContext, IFlowContext>();
+        RegisterStep<PostProcessingCommandCleanerHandler, IFlowContext, IFlowContext>();
         RegisterStep<PostProcessingFinishFlowStage, IFlowContext, IFlowContext>();
 
         //

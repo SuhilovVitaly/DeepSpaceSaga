@@ -1,12 +1,14 @@
 ﻿namespace DeepSpaceSaga.Server.GameLoop.Calculation.Handlers.PreProcessing;
 
-public class PreProcessingModulesReloadingHandler : BaseHandler, ICalculationHandler
+public class PreProcessingModulesReloadingHandler(IFlowContext context) : FlowStepBase<IFlowContext, IFlowContext>(context)
 {
-    public int Order => 3;
+    public override IFlowContext Execute(IFlowContext flowContext)
+    {
+        flowContext = Handle(flowContext);
+        return flowContext;
+    }
 
-    public HandlerType Type => HandlerType.PreProcessing;
-
-    public SessionContext Handle(SessionContext sessionContext)
+    public IFlowContext Handle(IFlowContext sessionContext)
     {
         var spacecraft = sessionContext.Session.GetPlayerSpaceShip();
 
@@ -24,5 +26,21 @@ public class PreProcessingModulesReloadingHandler : BaseHandler, ICalculationHan
         }
 
         return sessionContext;
+    }
+}
+
+public static class PreProcessingModulesReloadingHandlerFlowExtensions
+{
+    public static IFlowStep<IFlowContext, IFlowContext> PreProcessingModulesReloading(this IFlowContext context)
+    {
+        var factory = FlowStepFactory.Instance;
+        return factory.CreateStep<PreProcessingModulesReloadingHandler>(context);
+    }
+
+    public static IFlowStep<IFlowContext, IFlowContext> PreProcessingModulesReloading(this IFlowStep<IFlowContext, IFlowContext> step)
+    {
+        var factory = FlowStepFactory.Instance;
+        var result = step.Execute(step.FlowContext);
+        return factory.CreateStep<PreProcessingModulesReloadingHandler>(result);
     }
 }

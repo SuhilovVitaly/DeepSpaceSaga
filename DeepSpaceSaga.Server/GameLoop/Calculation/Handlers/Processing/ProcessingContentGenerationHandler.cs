@@ -1,12 +1,14 @@
 ﻿namespace DeepSpaceSaga.Server.GameLoop.Calculation.Handlers.Processing;
 
-internal class ProcessingContentGenerationHandler : BaseHandler, ICalculationHandler
+internal class ProcessingContentGenerationHandler(IFlowContext context) : FlowStepBase<IFlowContext, IFlowContext>(context)
 {
-    public int Order => 1;
+    public override IFlowContext Execute(IFlowContext flowContext)
+    {
+        flowContext = Handle(flowContext);
+        return flowContext;
+    }
 
-    public HandlerType Type => HandlerType.Processing;
-
-    public SessionContext Handle(SessionContext context)
+    public IFlowContext Handle(IFlowContext context)
     {
         foreach (ICommand command in context.EventsSystem.Commands.GetCommandsByCategory(CommandStatus.Process, CommandCategory.ContentGeneration))
         {
@@ -16,7 +18,7 @@ internal class ProcessingContentGenerationHandler : BaseHandler, ICalculationHan
         return context;
     }
 
-    public SessionContext Run(SessionContext sessionContext, ICommand command)
+    public IFlowContext Run(IFlowContext sessionContext, ICommand command)
     {
         var currentCelestialObject = command.CelestialObjectId > 0 ? sessionContext.Session.GetCelestialObject(command.CelestialObjectId) : null;
 
@@ -33,7 +35,7 @@ internal class ProcessingContentGenerationHandler : BaseHandler, ICalculationHan
         return sessionContext;
     }
 
-    private ICelestialObject CelestialMaplestialObjectGeneration(SessionContext sessionContext, ICommand command)
+    private ICelestialObject CelestialMaplestialObjectGeneration(IFlowContext sessionContext, ICommand command)
     {
         var scannerModule = sessionContext.Session.GetPlayerSpaceShip().GetModules(Category.SpaceScanner).FirstOrDefault() as IScanner;
 
@@ -52,7 +54,7 @@ internal class ProcessingContentGenerationHandler : BaseHandler, ICalculationHan
         return asteroid;
     }
 
-    private void AddToJournal(SessionContext sessionContext, ICommand command, ICelestialObject celestialObject)
+    private void AddToJournal(IFlowContext sessionContext, ICommand command, ICelestialObject celestialObject)
     {
         sessionContext.Metrics.Add(Metrics.MessageAddedToJournal);
 
@@ -63,5 +65,21 @@ internal class ProcessingContentGenerationHandler : BaseHandler, ICalculationHan
                 Type = EventType.DetectCelestialObject,
                 Text = command.Type.GetDescription() + $" [{Math.Round(celestialObject.PositionX, 0)}:{Math.Round(celestialObject.PositionY, 0)}] {celestialObject.Direction}"
             });
+    }
+}
+
+public static class ProcessingContentGenerationHandlerFlowExtensions
+{
+    public static IFlowStep<IFlowContext, IFlowContext> ProcessingContentGeneration(this IFlowContext context)
+    {
+        var factory = FlowStepFactory.Instance;
+        return factory.CreateStep<ProcessingContentGenerationHandler>(context);
+    }
+
+    public static IFlowStep<IFlowContext, IFlowContext> ProcessingContentGeneration(this IFlowStep<IFlowContext, IFlowContext> step)
+    {
+        var factory = FlowStepFactory.Instance;
+        var result = step.Execute(step.FlowContext);
+        return factory.CreateStep<ProcessingContentGenerationHandler>(result);
     }
 }

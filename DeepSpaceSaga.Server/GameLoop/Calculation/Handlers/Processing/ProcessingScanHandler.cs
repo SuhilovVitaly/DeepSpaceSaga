@@ -1,12 +1,14 @@
 ﻿namespace DeepSpaceSaga.Server.GameLoop.Calculation.Handlers.Processing;
 
-public class ProcessingScanHandler : BaseHandler, ICalculationHandler
+public class ProcessingScanHandler(IFlowContext context) : FlowStepBase<IFlowContext, IFlowContext>(context)
 {
-    public int Order => 5;
+    public override IFlowContext Execute(IFlowContext flowContext)
+    {
+        flowContext = Handle(flowContext);
+        return flowContext;
+    }
 
-    public HandlerType Type => HandlerType.Processing;
-
-    public SessionContext Handle(SessionContext context)
+    public IFlowContext Handle(IFlowContext context)
     {
         ArgumentNullException.ThrowIfNull(context);
         ArgumentNullException.ThrowIfNull(context.EventsSystem);
@@ -20,7 +22,7 @@ public class ProcessingScanHandler : BaseHandler, ICalculationHandler
         return context;
     }
 
-    public SessionContext Run(SessionContext sessionContext, Command command)
+    public IFlowContext Run(IFlowContext sessionContext, Command command)
     {
         var currentCelestialObject = sessionContext.Session.GetCelestialObject(command.CelestialObjectId);
         if (currentCelestialObject == null)
@@ -40,7 +42,7 @@ public class ProcessingScanHandler : BaseHandler, ICalculationHandler
         return sessionContext;
     }
 
-    private void PreScanCelestialObjectFinished(SessionContext sessionContext, ICelestialObject celestialObject, Command command)
+    private void PreScanCelestialObjectFinished(IFlowContext sessionContext, ICelestialObject celestialObject, Command command)
     {
         if (celestialObject == null)
             throw new ArgumentNullException(nameof(celestialObject));
@@ -64,7 +66,7 @@ public class ProcessingScanHandler : BaseHandler, ICalculationHandler
         AddToJournal(sessionContext, EventType.CelestialObjectIdentified, $"Celestial Object '{target.Name}' Identified");
     }
 
-    private void PreScanCelestialObject(SessionContext sessionContext, ICelestialObject celestialObject, Command command)
+    private void PreScanCelestialObject(IFlowContext sessionContext, ICelestialObject celestialObject, Command command)
     {
         if (celestialObject == null)
             throw new ArgumentNullException(nameof(celestialObject));
@@ -91,7 +93,7 @@ public class ProcessingScanHandler : BaseHandler, ICalculationHandler
         }
     }
 
-    private void AddToJournal(SessionContext sessionContext, EventType type, string text)
+    private void AddToJournal(IFlowContext sessionContext, EventType type, string text)
     {
         if (sessionContext?.Session?.Logbook == null)
             throw new ArgumentNullException(nameof(sessionContext), "Session or Logbook is null");
@@ -103,5 +105,21 @@ public class ProcessingScanHandler : BaseHandler, ICalculationHandler
             Type = type,
             Text = text
         });
+    }
+}
+
+public static class ProcessingScanHandlerFlowExtensions
+{
+    public static IFlowStep<IFlowContext, IFlowContext> ProcessingScan(this IFlowContext context)
+    {
+        var factory = FlowStepFactory.Instance;
+        return factory.CreateStep<ProcessingScanHandler>(context);
+    }
+
+    public static IFlowStep<IFlowContext, IFlowContext> ProcessingScan(this IFlowStep<IFlowContext, IFlowContext> step)
+    {
+        var factory = FlowStepFactory.Instance;
+        var result = step.Execute(step.FlowContext);
+        return factory.CreateStep<ProcessingScanHandler>(result);
     }
 }

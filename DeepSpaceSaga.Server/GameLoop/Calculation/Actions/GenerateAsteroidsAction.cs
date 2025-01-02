@@ -1,24 +1,22 @@
-﻿using DeepSpaceSaga.Common.Infrastructure.Commands;
-
-namespace DeepSpaceSaga.Server.GameLoop.Calculation.Actions;
+﻿namespace DeepSpaceSaga.Server.GameLoop.Calculation.Actions;
 
 public class GenerateAsteroidsAction
 {
     private const int DICE_MAX_VALUE = 1000;
 
-    public static SessionContext Execute(SessionContext sessionContext)
+    public static IFlowContext Execute(IFlowContext sessionContext)
     {
         return new GenerateAsteroidsAction().Run(sessionContext);
     }
 
-    public SessionContext Run(SessionContext sessionContext)
+    public IFlowContext Run(IFlowContext sessionContext)
     {
         RandomAsteroidGenerate(sessionContext);
 
         return sessionContext;
     }
 
-    internal void RandomAsteroidGenerate(SessionContext sessionContext)
+    internal void RandomAsteroidGenerate(IFlowContext sessionContext)
     {
 
         var baseGenerationChance = sessionContext.Session.Settings.AsteroidGenerationRatio;

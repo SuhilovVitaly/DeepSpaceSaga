@@ -3,25 +3,27 @@
 /// <summary>
 /// Handler for pre-processing content generation
 /// </summary>
-public class PreProcessingContentGenerationHandler : BaseHandler, ICalculationHandler
+public class PreProcessingContentGenerationHandler(IFlowContext context) : FlowStepBase<IFlowContext, IFlowContext>(context)
 {
-    /// <summary>
-    /// Execution order of the handler
-    /// </summary>
-    public int Order => 5;
-
-    /// <summary>
-    /// Type of the handler
-    /// </summary>
-    public HandlerType Type => HandlerType.PreProcessing;
-
-    /// <summary>
-    /// Processes the session context by generating required content
-    /// </summary>
-    /// <param name="sessionContext">Current session context</param>
-    /// <returns>Processed session context</returns>
-    public SessionContext Handle(SessionContext sessionContext)
+    public override IFlowContext Execute(IFlowContext flowContext)
     {
-        return GenerateAsteroidsAction.Execute(sessionContext);
+        flowContext = GenerateAsteroidsAction.Execute(flowContext);
+        return flowContext;
+    }
+}
+
+public static class PreProcessingContentGenerationHandlerFlowExtensions
+{
+    public static IFlowStep<IFlowContext, IFlowContext> PreProcessingContentGeneration(this IFlowContext context)
+    {
+        var factory = FlowStepFactory.Instance;
+        return factory.CreateStep<PreProcessingContentGenerationHandler>(context);
+    }
+
+    public static IFlowStep<IFlowContext, IFlowContext> PreProcessingContentGeneration(this IFlowStep<IFlowContext, IFlowContext> step)
+    {
+        var factory = FlowStepFactory.Instance;
+        var result = step.Execute(step.FlowContext);
+        return factory.CreateStep<PreProcessingContentGenerationHandler>(result);
     }
 }

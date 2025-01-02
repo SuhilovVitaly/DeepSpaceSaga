@@ -28,6 +28,12 @@ public class ProcessingLocationsHandler(IFlowContext context) : FlowStepBase<IFl
 
 public static class ProcessingLocationsFlowExtensions
 {
+    public static IFlowStep<IFlowContext, IFlowContext> ProcessingLocations(this IFlowContext context)
+    {
+        var factory = FlowStepFactory.Instance;
+        return factory.CreateStep<ProcessingLocationsHandler>(context);
+    }
+
     public static IFlowStep<IFlowContext, IFlowContext> ProcessingLocations(this IFlowStep<IFlowContext, IFlowContext> step)
     {
         var factory = FlowStepFactory.Instance;
