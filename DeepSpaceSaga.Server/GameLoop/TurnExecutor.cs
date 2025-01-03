@@ -24,7 +24,7 @@ public class TurnExecutor
         {
             var stopwatch = Stopwatch.StartNew();
 
-            processingSession = FlowTurnExecutor.Execute(context);
+            processingSession = FlowTurnExecutor.Execute(processingSession);
 
             stopwatch.Stop();
 
