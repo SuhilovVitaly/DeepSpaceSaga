@@ -16,6 +16,8 @@ public class ProcessingLocationsHandler(IFlowContext context) : FlowStepBase<IFl
     {
         double tickSpeed = celestialObject.Speed / ( 1000 / context.Settings.TickInterval);
 
+        tickSpeed *= context.Session.State.Speed;
+
         var position = GeometryTools.Move(
             celestialObject.GetLocation(),
             tickSpeed,

@@ -35,7 +35,6 @@ public class FlowStepFactory
         RegisterStep<PreProcessingScanHandler, IFlowContext, IFlowContext>();
         RegisterStep<ProcessingCommandCleanerHandler, IFlowContext, IFlowContext>();
         RegisterStep<ProcessingContentGenerationHandler, IFlowContext, IFlowContext>();
-        RegisterStep<ProcessingEventAcknowledgementHandler, IFlowContext, IFlowContext>();
         RegisterStep<ProcessingMiningOperationsHandler, IFlowContext, IFlowContext>();
         RegisterStep<ProcessingModuleActivationHandler, IFlowContext, IFlowContext>();
         RegisterStep<ProcessingNavigationHandler, IFlowContext, IFlowContext>();
@@ -43,13 +42,5 @@ public class FlowStepFactory
         RegisterStep<PostProcessingTurnInfoUpdateHandler, IFlowContext, IFlowContext>();
         RegisterStep<PostProcessingCommandCleanerHandler, IFlowContext, IFlowContext>();
         RegisterStep<PostProcessingFinishFlowStage, IFlowContext, IFlowContext>();
-
-        //
-        //RegisterStep<ProcessDataStep, FlowContext, FlowContext>();
-        //RegisterStep<GetPostProcessingStep, FlowContext, FlowContext>();
-        //RegisterStep<GetProcessingStep, FlowContext, FlowContext>();
-        //RegisterStep<GetAwaiterStep, FlowContext, FlowContext>();
-        //RegisterStep<PreProcessongStep, FlowContext, FlowContext>();
-        //RegisterStep<FinishFlowStep, FlowContext, FlowContext>();
     }
 }

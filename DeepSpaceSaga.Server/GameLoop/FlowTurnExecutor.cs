@@ -25,7 +25,6 @@ public class FlowTurnExecutor
             // ---------------------------------------------- Processing flow
             .ProcessingLocations()            
             .ProcessingContentGeneration()
-            .ProcessingEventAcknowledgement()
             .ProcessingMiningOperations()
             .ProcessingModuleActivation()
             .ProcessingNavigation()

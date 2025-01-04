@@ -1,7 +1,4 @@
-﻿using DeepSpaceSaga.Common.Universe.Entities.CelestialObjects.Spacecrafts;
-using DeepSpaceSaga.UI.Screens.MainGameScreen;
-
-namespace DeepSpaceSaga.UI;
+﻿namespace DeepSpaceSaga.UI;
 
 public partial class Form1 : Form
 {
@@ -35,12 +32,8 @@ public partial class Form1 : Form
         Global.GameManager.EventController.OnHideCelestialObject += Event_HideCelestialObject;
         Global.GameManager.EventController.OnSelectCelestialObject += Event_SelectCelestialObject;
         Global.GameManager.EventController.OnUnselectCelestialObject += Event_UnselectCelestialObject;
-        Global.GameManager.EventController.OnRefreshData += Event_WorkerRefreshData;
-    }
 
-    private void Event_WorkerRefreshData(GameSession session)
-    {
-        GameEventsHandker.Execute(session, this);
+        Global.GameManager.EventController.SetMainGameScreenReference(this);
     }
 
     private void Event_UnselectCelestialObject(ICelestialObject @object)
@@ -205,13 +198,6 @@ public partial class Form1 : Form
 
         if (spacecraft is null) return;
 
-        Global.GameManager.ExecuteCommandAsync(new Command
-        {
-            Category = CommandCategory.EventAcknowledgement,
-            Type = CommandTypes.EventReceipt,
-            IsOneTimeCommand = true,
-            CelestialObjectId = spacecraft.Id,
-            TriggerCommand = gameActionEvent?.TriggerCommand?.Copy()
-        });
+        
     }
 }

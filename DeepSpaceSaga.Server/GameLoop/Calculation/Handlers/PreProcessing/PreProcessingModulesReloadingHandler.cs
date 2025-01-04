@@ -12,17 +12,16 @@ public class PreProcessingModulesReloadingHandler(IFlowContext context) : FlowSt
     {
         var spacecraft = sessionContext.Session.GetPlayerSpaceShip();
 
-        foreach (var moudle in spacecraft.Modules)
+        foreach (var module in spacecraft.Modules)
         {
-            if (moudle.IsReloaded == false)
-            {
-                moudle.Reload(sessionContext.Settings.RatePerSecond());
+            if(module.IsReloaded) continue;
+            
+            module.Reload(sessionContext.Settings.RatePerSecond() * sessionContext.Session.State.Speed);
 
-                if (moudle.IsReloaded)
-                {
-                    sessionContext.EventsSystem.ProcessModuleResults(spacecraft, moudle);
-                }
-            }
+            if (module.IsReloaded)
+            {
+                sessionContext.EventsSystem.ProcessModuleResults(spacecraft, module);
+            }            
         }
 
         return sessionContext;

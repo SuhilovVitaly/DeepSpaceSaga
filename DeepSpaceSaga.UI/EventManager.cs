@@ -10,10 +10,10 @@ public class EventManager
     public event Action<ICelestialObject>? OnShowCelestialObject;
     public event Action<ICelestialObject>? OnHideCelestialObject;
 
-    private static readonly ILog Logger = LogManager.GetLogger(MethodBase.GetCurrentMethod()?.DeclaringType);
+    private static readonly ILog Logger = LogManager.GetLogger(typeof(EventManager));
 
     private SpaceMapEventHandler MapEventHandler { get; set; }
-
+    private Form1 _screenTacticalMap;
     private Worker Worker;
 
     public EventManager(GenerationTool randomizer)
@@ -42,6 +42,11 @@ public class EventManager
         Logger.Info("The object has been successfully initialized.");
     }
 
+    public void SetMainGameScreenReference(Form1 screenTacticalMap)
+    {
+        _screenTacticalMap = screenTacticalMap;
+    }
+
     private async Task InitializeAsync()
     {
         await Worker.Initialize();
@@ -59,7 +64,27 @@ public class EventManager
 
     private void Worker_RefreshData(GameSession gameSession)
     {
-        OnRefreshData?.Invoke(gameSession);
+        ArgumentNullException.ThrowIfNull(gameSession);
+
+        try
+        {
+            // Notify subscribers about data refresh
+            OnRefreshData?.Invoke(gameSession);
+
+            if (gameSession.State.IsPaused)
+                return;
+
+            // Process game events if any exist
+            if (gameSession.Events?.Any() == true && _screenTacticalMap != null)
+            {
+                GameEventsHandker.Execute(gameSession, _screenTacticalMap);
+            }
+        }
+        catch (Exception ex)
+        {
+            Logger.Error($"Failed to process game session: {ex.Message}");
+            throw;
+        }
     }
 
     public void TacticalMapMouseMove(SpaceMapPoint coordinates)

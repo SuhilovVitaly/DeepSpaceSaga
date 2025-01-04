@@ -15,6 +15,10 @@ public static class PreProcessingValidateInputFlowExtensions
     public static IFlowStep<IFlowContext, IFlowContext> PreProcessingValidateInput(this IFlowContext context)
     {
         var factory = FlowStepFactory.Instance;
+
+        // Clear UI events before turn calculation
+        context.Session.Events = new GameActionEvents([]);
+
         return factory.CreateStep<PreProcessingValidateInputHandler>(context);
     }
 }

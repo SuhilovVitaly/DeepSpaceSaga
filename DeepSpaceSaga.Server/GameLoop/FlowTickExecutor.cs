@@ -26,7 +26,6 @@ public class FlowTickExecutor
             .ProcessingLocations()
             .ProcessingCommandCleaner()
             .ProcessingContentGeneration()
-            .ProcessingEventAcknowledgement()
             .ProcessingMiningOperations()
             .ProcessingModuleActivation()
             .ProcessingNavigation()

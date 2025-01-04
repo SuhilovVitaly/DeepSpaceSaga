@@ -16,24 +16,20 @@ public class TurnExecutor
             context.EventsSystem.Clone(),
             context.Metrics,
             context.Randomizer,
-            context.Settings);
+            context.Settings);        
 
-        context.Session.Events = new GameActionEvents([]);
+        var stopwatch = Stopwatch.StartNew();
 
-        for (var i = 0; i < processingSession.Session.State.Speed; i++)
-        {
-            var stopwatch = Stopwatch.StartNew();
+        processingSession = FlowTurnExecutor.Execute(processingSession);
 
-            processingSession = FlowTurnExecutor.Execute(processingSession);
+        stopwatch.Stop();
 
-            stopwatch.Stop();
+        double milliseconds = stopwatch.ElapsedTicks * 1000.0 / Stopwatch.Frequency;
 
-            double milliseconds = stopwatch.ElapsedTicks * 1000.0 / Stopwatch.Frequency;
+        context.Metrics.AddMilliseconds(Metrics.CalculationTurnAvg, milliseconds);
 
-            context.Metrics.AddMilliseconds(Metrics.CalculationTurnAvg, milliseconds);
-
-            _log.Debug($"Calculation is {stopwatch.ElapsedTicks} Avg is {context.Metrics.GetAverageMillisecondst(Metrics.CalculationTurnAvg)}");
-        }        
+        _log.Debug($"Calculation is {stopwatch.ElapsedTicks} Avg is {context.Metrics.GetAverageMillisecondst(Metrics.CalculationTurnAvg)}");
+     
 
         return processingSession;
     }
