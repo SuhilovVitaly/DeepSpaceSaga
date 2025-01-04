@@ -39,6 +39,7 @@
             // 
             panel1.BackColor = Color.Black;
             panel1.Dock = DockStyle.Bottom;
+            panel1.Enabled = false;
             panel1.Location = new Point(0, 262);
             panel1.Name = "panel1";
             panel1.Size = new Size(417, 36);
@@ -53,6 +54,7 @@
             Name = "SpacecraftCargo";
             Size = new Size(417, 298);
             Title = "Spacecraft Cargo";
+            Resize += SpacecraftCargo_Resize;
             Controls.SetChildIndex(crlCloseButton, 0);
             Controls.SetChildIndex(panel1, 0);
             ResumeLayout(false);

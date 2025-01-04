@@ -40,7 +40,7 @@ partial class ControlWindow
         crlTitleBar.BackColor = Color.Black;
         crlTitleBar.Location = new Point(0, 0);
         crlTitleBar.Name = "crlTitleBar";
-        crlTitleBar.Size = new Size(1600, 38);
+        crlTitleBar.Size = new Size(592, 38);
         crlTitleBar.TabIndex = 0;
         crlTitleBar.TabStop = false;
         // 
@@ -52,7 +52,7 @@ partial class ControlWindow
         crlWindowTitle.ForeColor = Color.WhiteSmoke;
         crlWindowTitle.Location = new Point(13, 7);
         crlWindowTitle.Name = "crlWindowTitle";
-        crlWindowTitle.Size = new Size(1552, 25);
+        crlWindowTitle.Size = new Size(544, 25);
         crlWindowTitle.TabIndex = 1;
         crlWindowTitle.Text = "Window Title";
         // 
@@ -63,7 +63,7 @@ partial class ControlWindow
         crlCloseButton.Cursor = Cursors.Hand;
         crlCloseButton.Font = new Font("Cambria", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
         crlCloseButton.ForeColor = Color.WhiteSmoke;
-        crlCloseButton.Location = new Point(1571, 7);
+        crlCloseButton.Location = new Point(563, 7);
         crlCloseButton.Name = "crlCloseButton";
         crlCloseButton.Size = new Size(19, 25);
         crlCloseButton.TabIndex = 2;
@@ -80,7 +80,7 @@ partial class ControlWindow
         Controls.Add(crlWindowTitle);
         Controls.Add(crlTitleBar);
         Name = "ControlWindow";
-        Size = new Size(1600, 182);
+        Size = new Size(592, 182);
         ((ISupportInitialize)crlTitleBar).EndInit();
         ResumeLayout(false);
     }

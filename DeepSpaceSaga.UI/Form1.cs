@@ -230,11 +230,5 @@ public partial class Form1 : Form
         Global.GameManager.EventController.Pause();
         controlSpacecraftCargo.BringToFront();
         controlSpacecraftCargo.Visible = true;
-
-        foreach (var control in panel1.Controls)
-        {
-            var x = control.GetType();
-        }
-
     }
 }

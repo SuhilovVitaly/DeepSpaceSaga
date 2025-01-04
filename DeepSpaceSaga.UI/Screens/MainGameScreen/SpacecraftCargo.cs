@@ -7,6 +7,8 @@ public partial class SpacecraftCargo : ControlWindow
         InitializeComponent();
         // Subscribe to panel's paint event
         panel1.Paint += Panel1_Paint;
+
+        IsResizible = true;
     }
 
     public void ShowCargo()
@@ -63,5 +65,10 @@ public partial class SpacecraftCargo : ControlWindow
     protected override void OnPaint(PaintEventArgs e)
     {
         base.OnPaint(e);
+    }
+
+    private void SpacecraftCargo_Resize(object sender, EventArgs e)
+    {
+        Invalidate();
     }
 }
