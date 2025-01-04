@@ -218,11 +218,15 @@ public partial class Form1 : Form
             //TargetObjectId
         };
 
-        
+
         //controlItemsContainer.ShowContainer(gameActionEvent, session);
         controlSpacecraftCargo.Visible = false;
-        controlSpacecraftCargo.Location = new Point(600, 600);
+        if (controlSpacecraftCargo.Location == new Point(0, 0))
+        {
+            controlSpacecraftCargo.Location = new Point((Width / 2) - controlSpacecraftCargo.Width / 2, (Height / 2) - controlSpacecraftCargo.Height / 2);           
+        }
         
+        controlSpacecraftCargo.ShowCargo();
         Global.GameManager.EventController.Pause();
         controlSpacecraftCargo.BringToFront();
         controlSpacecraftCargo.Visible = true;
