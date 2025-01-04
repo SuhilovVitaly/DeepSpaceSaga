@@ -17,14 +17,14 @@ public interface IModule : ICoreItem
     int Slot { get; set; }
 
     #region Reloading
-
+    int LastReloadTurn { get; set; }
     bool IsReloaded { get; }
     double ReloadTime { get; set; }
     double Reloading { get; set; }
 
     #endregion
 
-    void Reload(double progress);
+    void Reload(double progress, int turn = 0);
 
     void Execute();
 }

@@ -21,6 +21,7 @@ public class FlowTickExecutor
             .PreProcessingContentGeneration()
             .PreProcessingModulesEnabling()
             .PreProcessingModulesReloading()
+            .PreProcessingModulesReloadEvent()
             .PreProcessingScan()            
             // Processing flow
             .ProcessingLocations()

@@ -16,12 +16,7 @@ public class PreProcessingModulesReloadingHandler(IFlowContext context) : FlowSt
         {
             if(module.IsReloaded) continue;
             
-            module.Reload(sessionContext.Settings.RatePerSecond() * sessionContext.Session.State.Speed);
-
-            if (module.IsReloaded)
-            {
-                sessionContext.EventsSystem.ProcessModuleResults(spacecraft, module);
-            }            
+            module.Reload(sessionContext.Settings.RatePerSecond() * sessionContext.Session.State.Speed, sessionContext.Session.Metrics.TurnsTicks);          
         }
 
         return sessionContext;

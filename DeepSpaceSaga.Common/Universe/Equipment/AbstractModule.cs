@@ -9,6 +9,7 @@ public abstract class AbstractModule : AbstractItem
     public bool IsActive { get; set; }
     public int Slot { get; set; }
     public double ReloadTime { get; set; }
+    public int LastReloadTurn { get; set; }
     public double Reloading { get; set; } 
     public bool IsReloaded { get; set; } 
 
@@ -22,13 +23,14 @@ public abstract class AbstractModule : AbstractItem
         IsReloaded = false;
     }
 
-    public void Reload(double progress)
+    public void Reload(double progress, int turn = 0)
     {
         Reloading += progress;
 
         if(Reloading >= ReloadTime)
         {
             _log.Info($"Module [{Id}][{Name}] Finish execution");
+            LastReloadTurn = turn;
             IsReloaded = true;
         }
     }

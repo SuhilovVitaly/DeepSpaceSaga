@@ -32,6 +32,7 @@ public class FlowStepFactory
         RegisterStep<PreProcessingContentGenerationHandler, IFlowContext, IFlowContext>();
         RegisterStep<PreProcessingModulesEnablingHandler, IFlowContext, IFlowContext>();
         RegisterStep<PreProcessingModulesReloadingHandler, IFlowContext, IFlowContext>();
+        RegisterStep<PreProcessingModulesReloadEventHandler, IFlowContext, IFlowContext>();
         RegisterStep<PreProcessingScanHandler, IFlowContext, IFlowContext>();
         RegisterStep<ProcessingCommandCleanerHandler, IFlowContext, IFlowContext>();
         RegisterStep<ProcessingContentGenerationHandler, IFlowContext, IFlowContext>();
