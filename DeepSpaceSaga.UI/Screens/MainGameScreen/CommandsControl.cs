@@ -1,6 +1,4 @@
-﻿using DeepSpaceSaga.Common.Infrastructure.Commands;
-
-namespace DeepSpaceSaga.UI.Screens.MainGameScreen;
+﻿namespace DeepSpaceSaga.UI.Screens.MainGameScreen;
 
 public partial class CommandsControl : UserControl
 {
@@ -13,6 +11,11 @@ public partial class CommandsControl : UserControl
         if (Global.GameManager == null) return;
 
         Global.GameManager.EventController.OnRefreshData += Worker_RefreshData;
+
+        button14.Enabled = true;
+        button14.BackColor = Color.Black;
+
+        button14.Image = Image.FromFile(@"Images/Toolbar/Cargo.png");
 
         DisableCommands();
     }
@@ -27,7 +30,7 @@ public partial class CommandsControl : UserControl
         DisableCommand(commandRotateToTarget);
         DisableCommand(commandSyncSpeedWithTarget);
         DisableCommand(commandSyncDirectionWithTarget);
-        DisableCommand(commandHarvestAsteroid);        
+        DisableCommand(commandHarvestAsteroid);
     }
 
     private void ModulesByRangeEnable(int id)
@@ -42,17 +45,17 @@ public partial class CommandsControl : UserControl
             return;
         }
 
-        if(target.Types != CelestialObjectTypes.Asteroid) 
+        if (target.Types != CelestialObjectTypes.Asteroid)
         {
             DisableCommand(commandHarvestAsteroid);
             return;
         }
 
         var distance = GeometryTools.Distance(spacecraft.GetLocation(), target.GetLocation());
-        
+
         // Harvest asteroid
         var module = spacecraft.Module(Common.Universe.Equipment.Category.MiningLaser) as IMiningLaser;
-        
+
         if (distance <= module.MiningRange)
         {
             if (commandHarvestAsteroid.Enabled == false)
@@ -191,5 +194,10 @@ public partial class CommandsControl : UserControl
         };
 
         _ = Global.GameManager.ExecuteCommandAsync(command);
+    }
+
+    private void button14_Click(object sender, EventArgs e)
+    {
+
     }
 }

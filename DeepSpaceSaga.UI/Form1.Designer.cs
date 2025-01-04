@@ -28,16 +28,17 @@
         /// </summary>
         private void InitializeComponent()
         {
-            crlTacticalMap = new Screens.MainGameScreen.StellarTacticalMap();
-            spacecraftTelemetryControl1 = new Screens.MainGameScreen.SpacecraftTelemetryControl();
-            crlActiveCelestialObjectInfo = new Screens.MainGameScreen.CelestialObjectInfo();
-            crlSelectedCelestialObjectInfo = new Screens.MainGameScreen.CelestialObjectInfo();
+            crlTacticalMap = new StellarTacticalMap();
+            spacecraftTelemetryControl1 = new SpacecraftTelemetryControl();
+            crlActiveCelestialObjectInfo = new CelestialObjectInfo();
+            crlSelectedCelestialObjectInfo = new CelestialObjectInfo();
             button1 = new Button();
-            crlCommands = new Screens.MainGameScreen.CommandsControl();
-            gameSpeedControl1 = new Screens.MainGameScreen.GameSpeedControl();
+            crlCommands = new CommandsControl();
+            gameSpeedControl1 = new GameSpeedControl();
             panel1 = new Panel();
-            gameSessionInformation2 = new Screens.MainGameScreen.GameSessionInformation();
-            logbookControl2 = new Screens.MainGameScreen.LogbookControl();
+            CommandOpenCargo = new Screens.CommonControls.ToolbarButton();
+            gameSessionInformation2 = new GameSessionInformation();
+            logbookControl2 = new LogbookControl();
             panel1.SuspendLayout();
             SuspendLayout();
             // 
@@ -110,6 +111,7 @@
             // panel1
             // 
             panel1.BorderStyle = BorderStyle.FixedSingle;
+            panel1.Controls.Add(CommandOpenCargo);
             panel1.Controls.Add(gameSessionInformation2);
             panel1.Controls.Add(logbookControl2);
             panel1.Controls.Add(gameSpeedControl1);
@@ -124,6 +126,17 @@
             panel1.Name = "panel1";
             panel1.Size = new Size(2624, 1105);
             panel1.TabIndex = 1;
+            // 
+            // CommandOpenCargo
+            // 
+            CommandOpenCargo.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            CommandOpenCargo.BackColor = Color.Black;
+            CommandOpenCargo.BackgroundImageLayout = ImageLayout.Center;
+            CommandOpenCargo.Location = new Point(279, 903);
+            CommandOpenCargo.Name = "CommandOpenCargo";
+            CommandOpenCargo.Size = new Size(80, 80);
+            CommandOpenCargo.TabIndex = 22;
+            CommandOpenCargo.Click += Event_OpenSpacecraftCargo;
             // 
             // gameSessionInformation2
             // 
@@ -180,5 +193,6 @@
         private Panel panel1;
         private Screens.MainGameScreen.LogbookControl logbookControl2;
         private Screens.MainGameScreen.GameSessionInformation gameSessionInformation2;
+        private Screens.CommonControls.ToolbarButton CommandOpenCargo;
     }
 }

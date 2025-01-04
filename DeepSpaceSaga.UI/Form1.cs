@@ -4,7 +4,8 @@ public partial class Form1 : Form
 {
     private static readonly ILog Logger = LogManager.GetLogger(MethodBase.GetCurrentMethod()?.DeclaringType);
 
-    private ItemsContainer controlItemsContainer;
+    private ItemsContainer controlItemsContainer = new ItemsContainer();
+    private SpacecraftCargo controlSpacecraftCargo = new SpacecraftCargo();
 
     public Form1()
     {
@@ -17,7 +18,10 @@ public partial class Form1 : Form
         KeyPreview = true;
         KeyDown += Window_KeyDown;
 
-        if (Global.GameManager == null) return;        
+        if (Global.GameManager == null) return;
+
+        panel1.Controls.Add(controlItemsContainer);
+        panel1.Controls.Add(controlSpacecraftCargo);
 
         var selectedScreen = Screen.AllScreens[Global.ScreenData.MonitorId];
 
@@ -26,7 +30,7 @@ public partial class Form1 : Form
         Width = (int)Global.ScreenData.Width;
         Height = (int)Global.ScreenData.Height;
 
-        crlCommands.Location = new Point((Width / 2) - crlCommands.Width / 2, crlCommands.Location.Y); 
+        crlCommands.Location = new Point((Width / 2) - crlCommands.Width / 2, crlCommands.Location.Y);
 
         Global.GameManager.EventController.OnShowCelestialObject += Event_ShowCelestialObject;
         Global.GameManager.EventController.OnHideCelestialObject += Event_HideCelestialObject;
@@ -113,7 +117,7 @@ public partial class Form1 : Form
         switch (e.KeyCode)
         {
             case Keys.Space:
-                if(session.State.IsPaused)
+                if (session.State.IsPaused)
                 {
                     Global.GameManager.EventController.Resume();
                 }
@@ -150,7 +154,8 @@ public partial class Form1 : Form
 
             case Keys.A:
                 if (session.State.IsPaused) return;
-                await Global.GameManager.ExecuteCommandAsync(new Command{
+                await Global.GameManager.ExecuteCommandAsync(new Command
+                {
                     Category = CommandCategory.Navigation,
                     Type = CommandTypes.TurnLeft,
                     IsOneTimeCommand = true,
@@ -175,7 +180,7 @@ public partial class Form1 : Form
 
     public void OpenCargoUI(GameActionEvent gameActionEvent)
     {
-        CrossThreadExtensions.PerformSafely(this, EventOpenCargoUI, gameActionEvent);        
+        CrossThreadExtensions.PerformSafely(this, EventOpenCargoUI, gameActionEvent);
     }
 
     public void EventOpenCargoUI(GameActionEvent gameActionEvent)
@@ -184,11 +189,11 @@ public partial class Form1 : Form
 
         var session = Global.GameManager.GetSession();
 
-        controlItemsContainer = new ItemsContainer();
+        
         controlItemsContainer.ShowContainer(gameActionEvent, session);
         controlItemsContainer.Visible = false;
         controlItemsContainer.Location = new Point(600, 600);
-        panel1.Controls.Add(controlItemsContainer);
+        
         Logger.Info($"Event id: {gameActionEvent.Id} ");
         Global.GameManager.EventController.Pause();
         controlItemsContainer.BringToFront();
@@ -197,7 +202,35 @@ public partial class Form1 : Form
         var spacecraft = session.GetCelestialObject((long)gameActionEvent.CelestialObjectId) as ISpacecraft;
 
         if (spacecraft is null) return;
+    }
+
+    private void Event_OpenSpacecraftCargo(object sender, EventArgs e)
+    {
+        var session = Global.GameManager.GetSession();
+
+        var spacecraft = session.GetPlayerSpaceShip();
+
+        if (spacecraft is null) return;
+
+        var gameActionEvent = new GameActionEvent
+        {
+            CelestialObjectId = spacecraft.Id,
+            //TargetObjectId
+        };
 
         
+        //controlItemsContainer.ShowContainer(gameActionEvent, session);
+        controlSpacecraftCargo.Visible = false;
+        controlSpacecraftCargo.Location = new Point(600, 600);
+        
+        Global.GameManager.EventController.Pause();
+        controlSpacecraftCargo.BringToFront();
+        controlSpacecraftCargo.Visible = true;
+
+        foreach (var control in panel1.Controls)
+        {
+            var x = control.GetType();
+        }
+
     }
 }

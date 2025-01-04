@@ -266,11 +266,11 @@
             // 
             // button14
             // 
-            button14.BackColor = Color.FromArgb(64, 64, 64);
-            button14.Enabled = false;
+            button14.BackColor = Color.Black;
+            button14.Cursor = Cursors.Hand;
             button14.FlatAppearance.BorderSize = 0;
-            button14.FlatAppearance.MouseDownBackColor = Color.Gray;
-            button14.FlatAppearance.MouseOverBackColor = Color.Silver;
+            button14.FlatAppearance.MouseDownBackColor = Color.Black;
+            button14.FlatAppearance.MouseOverBackColor = Color.Black;
             button14.FlatStyle = FlatStyle.Flat;
             button14.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             button14.ForeColor = Color.DimGray;
@@ -279,6 +279,7 @@
             button14.Size = new Size(66, 51);
             button14.TabIndex = 13;
             button14.UseVisualStyleBackColor = false;
+            button14.Click += button14_Click;
             // 
             // CommandsControl
             // 
