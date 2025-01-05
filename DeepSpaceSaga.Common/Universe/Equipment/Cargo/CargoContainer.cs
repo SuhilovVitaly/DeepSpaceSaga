@@ -7,11 +7,8 @@ public class CargoContainer : AbstractModule, IModule, ICargoContainer
     public double Capacity { get; set; } = 0;
     public double MaxCapacity { get; set; } = 0;
     public double ActivationCost { get; set; } = 0;
-
-    public IEnumerable<ICoreItem> Items()
-    {
-        throw new NotImplementedException();
-    }
+    public List<ICoreItem> Items  { get; private set; } = new List<ICoreItem>();
+    
 
     public Command Show()
     {
@@ -29,5 +26,9 @@ public class CargoContainer : AbstractModule, IModule, ICargoContainer
         _log.Info($"Created command for module {Id}");
 
         return command;
+    }
+    public void AddItem(ICoreItem item)
+    {
+        Items.Add(item);
     }
 }

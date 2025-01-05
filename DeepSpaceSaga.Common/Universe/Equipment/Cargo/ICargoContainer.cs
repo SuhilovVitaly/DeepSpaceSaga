@@ -6,5 +6,7 @@ public interface ICargoContainer : IModule
     double Capacity { get; set; }
     double MaxCapacity { get; set; }
     Command Show();
-    IEnumerable<ICoreItem> Items();
+    List<ICoreItem> Items { get; }
+
+    void AddItem(ICoreItem item);
 }

@@ -22,7 +22,16 @@ internal class SpacecraftGenerator
         spaceship.Modules.Add(PropulsionModulesGenerator.CreateMicroWarpDrive(randomizer, spaceship.Id, "PMV5002"));
         spaceship.Modules.Add(GeneralModuleGenerator.CreateSpaceScanner(randomizer, spaceship.Id, "SCR5001"));
         spaceship.Modules.Add(MiningModulesGenerator.CreateMiningLaser(randomizer, spaceship.Id, "MLC8002"));
-        spaceship.Modules.Add(CargoModulesGenerator.Create(randomizer, spaceship.Id, "CCT9008"));
+
+        var cargo = CargoModulesGenerator.Create(randomizer, spaceship.Id, "CCT9008") as ICargoContainer;
+
+        if(cargo != null)
+        {
+            cargo.AddItem(new Pombesit(100));
+            cargo.AddItem(new IronOre(20));
+
+            spaceship.Modules.Add(cargo);
+        }            
 
         return spaceship;
     }

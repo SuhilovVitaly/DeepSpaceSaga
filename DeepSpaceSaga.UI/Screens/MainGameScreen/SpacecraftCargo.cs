@@ -1,6 +1,6 @@
 ﻿namespace DeepSpaceSaga.UI.Screens.MainGameScreen;
 
-public partial class SpacecraftCargo : ControlWindow
+public partial class SpacecraftCargo : UserControl
 {
     public SpacecraftCargo()
     {
@@ -8,7 +8,10 @@ public partial class SpacecraftCargo : ControlWindow
         // Subscribe to panel's paint event
         panel1.Paint += Panel1_Paint;
 
-        IsResizible = true;
+        //IsResizible = true;
+
+        Width = 1448;
+        Height = 811;
     }
 
     public void ShowCargo()
@@ -65,6 +68,20 @@ public partial class SpacecraftCargo : ControlWindow
     protected override void OnPaint(PaintEventArgs e)
     {
         base.OnPaint(e);
+
+       
+        string imagePath = "D:\\DSS\\Toolbar\\WindowExample.png";
+
+        // Load the image from the file
+        using (var image = Image.FromFile(imagePath))
+        {
+            // Define the fixed size for the image
+            int fixedWidth = 1448; // Set your desired width
+            int fixedHeight = 811; // Set your desired height
+
+            // Draw the image at the specified location with fixed size
+            e.Graphics.DrawImage(image, new Rectangle(0, 0, fixedWidth, fixedHeight));
+        }
     }
 
     private void SpacecraftCargo_Resize(object sender, EventArgs e)

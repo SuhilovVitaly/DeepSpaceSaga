@@ -1,11 +1,13 @@
-﻿namespace DeepSpaceSaga.UI;
+﻿using DeepSpaceSaga.UI.Screens.MainGameScreen;
+
+namespace DeepSpaceSaga.UI;
 
 public partial class Form1 : Form
 {
     private static readonly ILog Logger = LogManager.GetLogger(MethodBase.GetCurrentMethod()?.DeclaringType);
 
     private ItemsContainer controlItemsContainer = new ItemsContainer();
-    private SpacecraftCargo controlSpacecraftCargo = new SpacecraftCargo();
+    private ScreenItemsTransfer controlSpacecraftCargo = new ScreenItemsTransfer();
 
     public Form1()
     {
@@ -218,15 +220,16 @@ public partial class Form1 : Form
             //TargetObjectId
         };
 
-
-        //controlItemsContainer.ShowContainer(gameActionEvent, session);
         controlSpacecraftCargo.Visible = false;
         if (controlSpacecraftCargo.Location == new Point(0, 0))
         {
             controlSpacecraftCargo.Location = new Point((Width / 2) - controlSpacecraftCargo.Width / 2, (Height / 2) - controlSpacecraftCargo.Height / 2);           
         }
-        
-        controlSpacecraftCargo.ShowCargo();
+
+        var cargo = spacecraft.GetModules(Common.Universe.Equipment.Category.CargoUnit).FirstOrDefault();
+
+        controlSpacecraftCargo.ShowTransfer(spacecraft, cargo.Id, spacecraft.Id, session);
+
         Global.GameManager.EventController.Pause();
         controlSpacecraftCargo.BringToFront();
         controlSpacecraftCargo.Visible = true;

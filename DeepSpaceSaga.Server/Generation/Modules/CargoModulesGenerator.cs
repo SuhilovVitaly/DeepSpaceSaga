@@ -13,6 +13,7 @@ public class CargoModulesGenerator
         switch (id)
         {
             case "CCT9008":
+                resultModule.Category = Category.CargoUnit;
                 resultModule.ActivationCost = 0;
                 resultModule.Power = 200;
                 resultModule.ReloadTime = 0;

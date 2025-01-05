@@ -33,7 +33,7 @@
             // 
             // crlCloseButton
             // 
-            crlCloseButton.Location = new Point(390, 7);
+            //crlCloseButton.Location = new Point(390, 7);
             // 
             // panel1
             // 
@@ -53,9 +53,9 @@
             DoubleBuffered = true;
             Name = "SpacecraftCargo";
             Size = new Size(417, 298);
-            Title = "Spacecraft Cargo";
+            //Title = "Spacecraft Cargo";
             Resize += SpacecraftCargo_Resize;
-            Controls.SetChildIndex(crlCloseButton, 0);
+            //Controls.SetChildIndex(crlCloseButton, 0);
             Controls.SetChildIndex(panel1, 0);
             ResumeLayout(false);
         }
