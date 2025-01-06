@@ -28,7 +28,10 @@ internal class SpacecraftGenerator
         if(cargo != null)
         {
             cargo.AddItem(new Pombesit(100));
-            cargo.AddItem(new IronOre(20));
+            for (int i = 0; i < 3; i++)
+            {
+                cargo.AddItem(new IronOre(20 * i));
+            }            
 
             spaceship.Modules.Add(cargo);
         }            

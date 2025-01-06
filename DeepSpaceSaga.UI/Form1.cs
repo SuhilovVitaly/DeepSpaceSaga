@@ -218,6 +218,7 @@ public partial class Form1 : Form
         {
             CelestialObjectId = spacecraft.Id,
             //TargetObjectId
+
         };
 
         controlSpacecraftCargo.Visible = false;

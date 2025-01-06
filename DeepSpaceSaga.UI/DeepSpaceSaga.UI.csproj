@@ -68,6 +68,9 @@
     <None Update="Images\Layers\Tactical\spacecraft.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Images\Ore\Iron.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Images\Ore\Pombesit.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
