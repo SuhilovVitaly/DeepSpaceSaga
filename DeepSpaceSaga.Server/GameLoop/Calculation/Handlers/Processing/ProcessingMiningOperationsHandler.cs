@@ -1,4 +1,6 @@
-﻿namespace DeepSpaceSaga.Server.GameLoop.Calculation.Handlers.Processing;
+﻿using System.ComponentModel;
+
+namespace DeepSpaceSaga.Server.GameLoop.Calculation.Handlers.Processing;
 
 public class ProcessingMiningOperationsHandler(IFlowContext context) : FlowStepBase<IFlowContext, IFlowContext>(context)
 {
@@ -72,8 +74,12 @@ public class ProcessingMiningOperationsHandler(IFlowContext context) : FlowStepB
         }
         else
         {
+            asteroid.CoreContainer.AddItems(GenerateAsteroidHarcestResult.Execute(sessionContext, command));
+
             AddToJournal(sessionContext, EventType.AsteroidHarvestShowResults, $"Asteroid '{asteroid?.Name}' Harvest Results");
-            GenerateAsteroidHarcestResult.Execute(sessionContext, command);
+
+            var uiEvent = EventsFactory.CreateEvent(sessionContext.Randomizer, command, module, asteroid, spacecraft);
+            sessionContext.Session.Events.Add(uiEvent);
         }
     }
 

@@ -1,4 +1,8 @@
-﻿namespace DeepSpaceSaga.UI;
+﻿using DeepSpaceSaga.Common.Infrastructure.Commands;
+using DeepSpaceSaga.Common.Universe.Entities.CelestialObjects.Asteroids;
+using DeepSpaceSaga.Server;
+
+namespace DeepSpaceSaga.UI;
 
 public partial class Form1 : Form
 {
@@ -180,7 +184,16 @@ public partial class Form1 : Form
 
     public void OpenCargoUI(GameActionEvent gameActionEvent)
     {
-        CrossThreadExtensions.PerformSafely(this, EventOpenCargoUI, gameActionEvent);
+        try
+        {
+            CrossThreadExtensions.PerformSafely(this, EventOpenCargoUI, gameActionEvent);
+        }
+        catch (Exception ex)
+        {
+
+            throw;
+        }
+        
     }
 
     public void EventOpenCargoUI(GameActionEvent gameActionEvent)
@@ -189,48 +202,44 @@ public partial class Form1 : Form
 
         var session = Global.GameManager.GetSession();
 
-        
-        controlItemsContainer.ShowContainer(gameActionEvent, session);
-        controlItemsContainer.Visible = false;
-        controlItemsContainer.Location = new Point(600, 600);
-        
-        Logger.Info($"Event id: {gameActionEvent.Id} ");
-        Global.GameManager.EventController.Pause();
-        controlItemsContainer.BringToFront();
-        controlItemsContainer.Visible = true;
-
-        var spacecraft = session.GetCelestialObject((long)gameActionEvent.CelestialObjectId) as ISpacecraft;
-
-        if (spacecraft is null) return;
-    }
-
-    private void Event_OpenSpacecraftCargo(object sender, EventArgs e)
-    {
-        var session = Global.GameManager.GetSession();
-
         var spacecraft = session.GetPlayerSpaceShip();
-
-        if (spacecraft is null) return;
-
-        var gameActionEvent = new GameActionEvent
-        {
-            CelestialObjectId = spacecraft.Id,
-            //TargetObjectId
-
-        };
 
         controlItemsTransfer.Visible = false;
         if (controlItemsTransfer.Location == new Point(0, 0))
         {
-            controlItemsTransfer.Location = new Point((Width / 2) - controlItemsTransfer.Width / 2, (Height / 2) - controlItemsTransfer.Height / 2);           
+            controlItemsTransfer.Location = new Point((Width / 2) - controlItemsTransfer.Width / 2, (Height / 2) - controlItemsTransfer.Height / 2);
         }
-
         var cargo = spacecraft.GetModules(Common.Universe.Equipment.Category.CargoUnit).FirstOrDefault();
 
-        controlItemsTransfer.ShowTransfer(spacecraft, cargo.Id, spacecraft.Id, session);
+        var targetObject = session.GetCelestialObject((long)gameActionEvent.TargetObjectId) as IAsteroid;
+        // TODO: Extract CargoContainer by type
+        controlItemsTransfer.ShowTransfer(spacecraft, cargo.Id, spacecraft.Id, session, targetObject, targetObject.CoreContainer);
 
         Global.GameManager.EventController.Pause();
         controlItemsTransfer.BringToFront();
         controlItemsTransfer.Visible = true;
+    }
+
+    private void Event_OpenSpacecraftCargo(object sender, EventArgs e)
+    {
+        //var session = Global.GameManager.GetSession();
+
+        //var spacecraft = session.GetPlayerSpaceShip();
+
+        //if (spacecraft is null) return;
+
+        //controlItemsTransfer.Visible = false;
+        //if (controlItemsTransfer.Location == new Point(0, 0))
+        //{
+        //    controlItemsTransfer.Location = new Point((Width / 2) - controlItemsTransfer.Width / 2, (Height / 2) - controlItemsTransfer.Height / 2);           
+        //}
+
+        //var cargo = spacecraft.GetModules(Common.Universe.Equipment.Category.CargoUnit).FirstOrDefault();
+
+        //controlItemsTransfer.ShowTransfer(spacecraft, cargo.Id, spacecraft.Id, session);
+
+        //Global.GameManager.EventController.Pause();
+        //controlItemsTransfer.BringToFront();
+        //controlItemsTransfer.Visible = true;
     }
 }

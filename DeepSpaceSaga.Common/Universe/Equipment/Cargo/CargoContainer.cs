@@ -31,4 +31,9 @@ public class CargoContainer : AbstractModule, IModule, ICargoContainer
     {
         Items.Add(item);
     }
+
+    public void AddItems(List<ICoreItem> items)
+    {
+        Items.AddRange(items);
+    }
 }

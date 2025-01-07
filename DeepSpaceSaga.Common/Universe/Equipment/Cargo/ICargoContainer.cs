@@ -9,4 +9,5 @@ public interface ICargoContainer : IModule
     List<ICoreItem> Items { get; }
 
     void AddItem(ICoreItem item);
+    void AddItems(List<ICoreItem> items);
 }

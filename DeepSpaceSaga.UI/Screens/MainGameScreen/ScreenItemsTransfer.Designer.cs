@@ -34,7 +34,6 @@
             pictureBox4 = new PictureBox();
             crlNameSourceCelestialObject = new Label();
             crlNameTargetCelestialObject = new Label();
-            label3 = new Label();
             crlSourceCargoContainerCapacity = new Label();
             pictureBox13 = new PictureBox();
             pictureBox1 = new PictureBox();
@@ -44,7 +43,7 @@
             pictureBox10 = new PictureBox();
             pictureBox9 = new PictureBox();
             cargoContainerTarget = new CargoContainer();
-            cargoContainer1 = new CargoContainer();
+            cargoContainerSource = new CargoContainer();
             ((ISupportInitialize)pictureBox2).BeginInit();
             ((ISupportInitialize)pictureBox3).BeginInit();
             ((ISupportInitialize)pictureBox4).BeginInit();
@@ -71,6 +70,7 @@
             pictureBox3.Location = new Point(42, 54);
             pictureBox3.Name = "pictureBox3";
             pictureBox3.Size = new Size(90, 90);
+            pictureBox3.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox3.TabIndex = 4;
             pictureBox3.TabStop = false;
             // 
@@ -80,6 +80,7 @@
             pictureBox4.Location = new Point(1090, 54);
             pictureBox4.Name = "pictureBox4";
             pictureBox4.Size = new Size(90, 90);
+            pictureBox4.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox4.TabIndex = 5;
             pictureBox4.TabStop = false;
             // 
@@ -103,16 +104,6 @@
             crlNameTargetCelestialObject.TabIndex = 7;
             crlNameTargetCelestialObject.Text = "Target Container Name";
             crlNameTargetCelestialObject.TextAlign = ContentAlignment.TopRight;
-            // 
-            // label3
-            // 
-            label3.Font = new Font("Verdana", 7.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label3.ForeColor = Color.WhiteSmoke;
-            label3.Location = new Point(138, 115);
-            label3.Name = "label3";
-            label3.Size = new Size(404, 29);
-            label3.TabIndex = 6;
-            label3.Text = "Capacity ( Free/Full )";
             // 
             // crlSourceCargoContainerCapacity
             // 
@@ -206,14 +197,14 @@
             cargoContainerTarget.Size = new Size(403, 476);
             cargoContainerTarget.TabIndex = 17;
             // 
-            // cargoContainer1
+            // cargoContainerSource
             // 
-            cargoContainer1.BackColor = Color.Black;
-            cargoContainer1.BorderStyle = BorderStyle.FixedSingle;
-            cargoContainer1.Location = new Point(42, 156);
-            cargoContainer1.Name = "cargoContainer1";
-            cargoContainer1.Size = new Size(403, 476);
-            cargoContainer1.TabIndex = 18;
+            cargoContainerSource.BackColor = Color.Black;
+            cargoContainerSource.BorderStyle = BorderStyle.FixedSingle;
+            cargoContainerSource.Location = new Point(42, 156);
+            cargoContainerSource.Name = "cargoContainerSource";
+            cargoContainerSource.Size = new Size(403, 476);
+            cargoContainerSource.TabIndex = 18;
             // 
             // ScreenItemsTransfer
             // 
@@ -221,7 +212,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.Black;
             BorderStyle = BorderStyle.FixedSingle;
-            Controls.Add(cargoContainer1);
+            Controls.Add(cargoContainerSource);
             Controls.Add(pictureBox9);
             Controls.Add(pictureBox13);
             Controls.Add(pictureBox10);
@@ -230,7 +221,6 @@
             Controls.Add(pictureBox11);
             Controls.Add(crlSourceCargoContainerCapacity);
             Controls.Add(crlNameTargetCelestialObject);
-            Controls.Add(label3);
             Controls.Add(crlNameSourceCelestialObject);
             Controls.Add(pictureBox4);
             Controls.Add(pictureBox3);
@@ -257,7 +247,6 @@
         private PictureBox pictureBox4;
         private Label crlNameSourceCelestialObject;
         private Label crlNameTargetCelestialObject;
-        private Label label3;
         private Label crlSourceCargoContainerCapacity;
         private PictureBox pictureBox13;
         private PictureBox pictureBox1;
@@ -267,6 +256,6 @@
         private PictureBox pictureBox10;
         private PictureBox pictureBox9;
         private CargoContainer cargoContainerTarget;
-        private CargoContainer cargoContainer1;
+        private CargoContainer cargoContainerSource;
     }
 }

@@ -7,15 +7,21 @@ public partial class ScreenItemsTransfer : UserControl
         InitializeComponent();
     }
 
-    public void ShowTransfer(ISpacecraft spacecraft, int cargoId, int sourceId, GameSession session)
+    public void ShowTransfer(ISpacecraft spacecraft, int cargoId, int sourceId, GameSession session, ICelestialObject targetObject, ICargoContainer targetContainer)
     {
         var cargo = spacecraft.GetModule(cargoId) as ICargoContainer;
 
         crlNameTargetCelestialObject.Text = spacecraft.Name;
+        crlNameSourceCelestialObject.Text = targetObject.Name;
+
         crlNameSourceCargoContainer.Text = cargo.Name;
         crlSourceCargoContainerCapacity.Text = $"Capacity ( {cargo.Capacity} / {cargo.MaxCapacity} )";
 
         cargoContainerTarget.UpdateView(cargo.Items);
+        cargoContainerSource.UpdateView(targetContainer.Items);
+
+        pictureBox3.Image = ImageLoader.LoadLayersTacticalImage("asteroid");
+        pictureBox4.Image = ImageLoader.LoadLayersTacticalImage("spacecraft");
     }
 
     private void pictureBox13_Click(object sender, EventArgs e)
