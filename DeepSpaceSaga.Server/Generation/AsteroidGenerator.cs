@@ -20,7 +20,8 @@ internal class AsteroidGenerator
                 Speed = speed,
                 Types = CelestialObjectTypes.Asteroid,
                 IsPreScanned = isPreScanned,
-                Size = generationTool.GetFloat(350)
+                Size = generationTool.GetFloat(350),
+                CoreContainer = new CargoContainer()
             };
 
             return asteroid;

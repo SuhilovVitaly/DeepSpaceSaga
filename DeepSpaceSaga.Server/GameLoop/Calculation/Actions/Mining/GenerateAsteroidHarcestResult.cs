@@ -20,9 +20,9 @@ public class GenerateAsteroidHarcestResult
 
         container.Items.AddRange(ore);
 
-        sessionContext.Session.SpaceMap.Add((ICelestialObject)container);
+        sessionContext.Session.SpaceMap.Add(container);
 
-        var uiEvent = EventsFactory.CreateEvent(sessionContext.Randomizer, command, module, (ICelestialObject)container, sourceCelestialObject);
+        var uiEvent = EventsFactory.CreateEvent(sessionContext.Randomizer, command, module, container, sourceCelestialObject);
         uiEvent.CalculationTurnId = sessionContext.Session.Metrics.TurnTick;
         sessionContext.Session.Events.Add(uiEvent);
 

@@ -10,7 +10,6 @@ global using DeepSpaceSaga.Common.Universe.Entities.CelestialObjects.Spacecrafts
 global using DeepSpaceSaga.Common.Tools;
 global using DeepSpaceSaga.Common.Layers;
 global using DeepSpaceSaga.Common.Settings;
-global using Newtonsoft.Json.Linq;
 global using DeepSpaceSaga.Common.Infrastructure.Commands;
 global using DeepSpaceSaga.Common.Universe.Equipment;
 global using DeepSpaceSaga.Common.Universe.Audit;
@@ -21,3 +20,4 @@ global using log4net;
 global using Newtonsoft.Json;
 global using DeepSpaceSaga.Common.Universe.Items; 
 global using DeepSpaceSaga.Common.Infrastructure.Events;
+global using DeepSpaceSaga.Common.Universe.Equipment.Mining;

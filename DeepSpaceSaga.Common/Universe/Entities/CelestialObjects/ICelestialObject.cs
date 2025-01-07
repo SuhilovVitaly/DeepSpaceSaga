@@ -11,6 +11,6 @@
         double PositionY { get; set; }
         CelestialObjectTypes Types { get; set; }
         bool IsPreScanned { get; set; }
-        float Size { get; set; }
+        float Size { get; set; }        
     }
 }
