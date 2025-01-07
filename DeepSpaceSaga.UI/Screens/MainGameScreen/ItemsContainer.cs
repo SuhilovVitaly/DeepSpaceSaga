@@ -22,6 +22,8 @@ public partial class ItemsContainer : ControlWindow
 
     public void ShowContainer(GameActionEvent gameEvent, GameSession session)
     {
+        if(gameEvent is null) return;
+        
         var sourceCelestialObject = session.GetCelestialObject((long)gameEvent.CelestialObjectId);
         var oreContainer = session.GetCelestialObject((long)gameEvent.TargetObjectId) as Common.Universe.Entities.CelestialObjects.Containers.IContainer;
 
@@ -38,18 +40,26 @@ public partial class ItemsContainer : ControlWindow
 
     private void ShowItem(int currentItemNumber, ICoreItem item)
     {
-        var image = "Images/" + item.Image.Replace(".", "/") + ".png";
-
+        var imagePath = Path.Combine("Images", item.Image.Replace(".", "/") + ".png");
+        
         switch (currentItemNumber)
         {
             case 1:
-                pictureBox1.Image = Image.FromFile(image);
+                using (var newImage = Image.FromFile(imagePath))
+                {
+                    pictureBox1.Image?.Dispose();
+                    pictureBox1.Image = newImage.Clone() as Image;
+                }
                 pictureBox1.Visible = true;
                 label1.Text = item.Volume.ToString();
                 label1.Visible = true;
                 break;
             case 2:
+                // TODO: Implement case 2 or remove if not needed
                 break;
+            default:
+                // Consider handling unexpected item numbers
+                throw new ArgumentException($"Unexpected item number: {currentItemNumber}");
         }
     }
 }

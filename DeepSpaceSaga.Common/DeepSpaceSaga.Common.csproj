@@ -13,7 +13,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Universe\Entities\CelestialObjects\Asteroids\" />
     <Folder Include="Universe\Entities\CelestialObjects\Wrecks\" />
   </ItemGroup>
 

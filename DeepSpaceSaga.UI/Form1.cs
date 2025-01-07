@@ -1,13 +1,11 @@
-﻿using DeepSpaceSaga.UI.Screens.MainGameScreen;
-
-namespace DeepSpaceSaga.UI;
+﻿namespace DeepSpaceSaga.UI;
 
 public partial class Form1 : Form
 {
     private static readonly ILog Logger = LogManager.GetLogger(MethodBase.GetCurrentMethod()?.DeclaringType);
 
     private ItemsContainer controlItemsContainer = new ItemsContainer();
-    private ScreenItemsTransfer controlSpacecraftCargo = new ScreenItemsTransfer();
+    private ScreenItemsTransfer controlItemsTransfer = new ScreenItemsTransfer();
 
     public Form1()
     {
@@ -23,7 +21,7 @@ public partial class Form1 : Form
         if (Global.GameManager == null) return;
 
         panel1.Controls.Add(controlItemsContainer);
-        panel1.Controls.Add(controlSpacecraftCargo);
+        panel1.Controls.Add(controlItemsTransfer);
 
         var selectedScreen = Screen.AllScreens[Global.ScreenData.MonitorId];
 
@@ -221,18 +219,18 @@ public partial class Form1 : Form
 
         };
 
-        controlSpacecraftCargo.Visible = false;
-        if (controlSpacecraftCargo.Location == new Point(0, 0))
+        controlItemsTransfer.Visible = false;
+        if (controlItemsTransfer.Location == new Point(0, 0))
         {
-            controlSpacecraftCargo.Location = new Point((Width / 2) - controlSpacecraftCargo.Width / 2, (Height / 2) - controlSpacecraftCargo.Height / 2);           
+            controlItemsTransfer.Location = new Point((Width / 2) - controlItemsTransfer.Width / 2, (Height / 2) - controlItemsTransfer.Height / 2);           
         }
 
         var cargo = spacecraft.GetModules(Common.Universe.Equipment.Category.CargoUnit).FirstOrDefault();
 
-        controlSpacecraftCargo.ShowTransfer(spacecraft, cargo.Id, spacecraft.Id, session);
+        controlItemsTransfer.ShowTransfer(spacecraft, cargo.Id, spacecraft.Id, session);
 
         Global.GameManager.EventController.Pause();
-        controlSpacecraftCargo.BringToFront();
-        controlSpacecraftCargo.Visible = true;
+        controlItemsTransfer.BringToFront();
+        controlItemsTransfer.Visible = true;
     }
 }
