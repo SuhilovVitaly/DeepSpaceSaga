@@ -18,6 +18,15 @@ public partial class CommandsControl : UserControl
         button14.Image = Image.FromFile(@"Images/Toolbar/Cargo.png");
 
         DisableCommands();
+
+
+        foreach (Control control in this.Controls)
+        {
+            if (control is Button)
+            {
+                control.Click += (s, ev) => this.ActiveControl = null; 
+            }
+        }
     }
 
     private void Worker_RefreshData(GameSession session)
@@ -31,6 +40,7 @@ public partial class CommandsControl : UserControl
         DisableCommand(commandSyncSpeedWithTarget);
         DisableCommand(commandSyncDirectionWithTarget);
         DisableCommand(commandHarvestAsteroid);
+        DisableCommand(commandOpenContainer);
     }
 
     private void ModulesByRangeEnable(int id)
@@ -48,6 +58,7 @@ public partial class CommandsControl : UserControl
         if (target.Types != CelestialObjectTypes.Asteroid)
         {
             DisableCommand(commandHarvestAsteroid);
+            DisableCommand(commandOpenContainer);
             return;
         }
 
@@ -62,6 +73,11 @@ public partial class CommandsControl : UserControl
             {
                 EnableCommand(commandHarvestAsteroid);
             }
+
+            if (commandOpenContainer.Enabled == false)
+            {
+                EnableCommand(commandOpenContainer);
+            }
         }
         else
         {
@@ -69,11 +85,17 @@ public partial class CommandsControl : UserControl
             {
                 DisableCommand(commandHarvestAsteroid);
             }
+
+            if (commandOpenContainer.Enabled == true)
+            {
+                DisableCommand(commandOpenContainer);
+            }
         }
     }
 
     private void RefreshControls(GameSession manager)
     {
+
         if (Global.GameManager.OuterSpace.SelectedObjectId == 0)
         {
             DisableCommands();
@@ -110,6 +132,8 @@ public partial class CommandsControl : UserControl
 
     private void Event_SyncSpeedWithTarget(object sender, EventArgs e)
     {
+        ActiveControl = null;
+
         var spacecraft = Global.GameManager.GetPlayerSpacecraft();
 
         _ = Global.GameManager.ExecuteCommandAsync(new Command
@@ -120,10 +144,14 @@ public partial class CommandsControl : UserControl
             TargetCelestialObjectId = _selectedCelestialObjectId,
             ModuleId = spacecraft.Module(Common.Universe.Equipment.Category.Propulsion).Id
         });
+
+        Focus();
     }
 
     private void Event_RotateToTarget(object sender, EventArgs e)
     {
+        ActiveControl = null;
+
         var spacecraft = Global.GameManager.GetPlayerSpacecraft();
 
         _ = Global.GameManager.ExecuteCommandAsync(new Command
@@ -134,10 +162,14 @@ public partial class CommandsControl : UserControl
             TargetCelestialObjectId = _selectedCelestialObjectId,
             ModuleId = spacecraft.Module(Common.Universe.Equipment.Category.Propulsion).Id
         });
+
+        Focus();
     }
 
     private void crlFullSpeed_Click(object sender, EventArgs e)
     {
+        ActiveControl = null;
+
         var spacecraft = Global.GameManager.GetPlayerSpacecraft();
 
         _ = Global.GameManager.ExecuteCommandAsync(new Command
@@ -149,10 +181,14 @@ public partial class CommandsControl : UserControl
             CelestialObjectId = spacecraft.Id,
             ModuleId = spacecraft.Module(Common.Universe.Equipment.Category.Propulsion).Id
         });
+
+        Focus();
     }
 
     private void crlFullStop_Click(object sender, EventArgs e)
     {
+        ActiveControl = null;
+
         var spacecraft = Global.GameManager.GetPlayerSpacecraft();
 
         _ = Global.GameManager.ExecuteCommandAsync(new Command
@@ -164,10 +200,14 @@ public partial class CommandsControl : UserControl
             CelestialObjectId = spacecraft.Id,
             ModuleId = spacecraft.Module(Common.Universe.Equipment.Category.Propulsion).Id
         });
+
+        Focus();
     }
 
     private void Event_SyncDirectionWithTarget(object sender, EventArgs e)
     {
+        ActiveControl = null;
+
         var spacecraft = Global.GameManager.GetPlayerSpacecraft();
 
         _ = Global.GameManager.ExecuteCommandAsync(new Command
@@ -178,10 +218,14 @@ public partial class CommandsControl : UserControl
             TargetCelestialObjectId = _selectedCelestialObjectId,
             ModuleId = spacecraft.Module(Common.Universe.Equipment.Category.Propulsion).Id
         });
+
+        Focus();
     }
 
     private void Event_HarvestAsteroid(object sender, EventArgs e)
     {
+        ActiveControl = null;
+
         var spacecraft = Global.GameManager.GetPlayerSpacecraft();
 
         var command = new Command
@@ -194,10 +238,31 @@ public partial class CommandsControl : UserControl
         };
 
         _ = Global.GameManager.ExecuteCommandAsync(command);
+
+        Focus();
     }
 
     private void button14_Click(object sender, EventArgs e)
     {
+        ActiveControl = null;
 
+        Focus();
+    }
+
+    private void Event_OpenContainer(object sender, EventArgs e)
+    {
+        ActiveControl = null;
+
+        var eventMessage = new GameActionEvent
+        {
+            Id = IdGenerator.GetNextId(),
+            CelestialObjectId =Global.GameManager.GetPlayerSpacecraft().Id,
+            TargetObjectId = Global.GameManager.OuterSpace.SelectedObjectId
+        };
+
+
+        Global.GameManager.EventController.ItemsTransferScreenShow(eventMessage);
+
+        Focus();
     }
 }

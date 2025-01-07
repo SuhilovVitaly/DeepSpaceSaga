@@ -40,7 +40,7 @@
             button10 = new Button();
             commandRotateToTarget = new Button();
             commandHarvestAsteroid = new Button();
-            button13 = new Button();
+            commandOpenContainer = new Button();
             button14 = new Button();
             SuspendLayout();
             // 
@@ -58,6 +58,7 @@
             commandSyncSpeedWithTarget.Name = "commandSyncSpeedWithTarget";
             commandSyncSpeedWithTarget.Size = new Size(66, 51);
             commandSyncSpeedWithTarget.TabIndex = 0;
+            commandSyncSpeedWithTarget.TabStop = false;
             commandSyncSpeedWithTarget.Text = "SYNC V";
             commandSyncSpeedWithTarget.UseVisualStyleBackColor = false;
             commandSyncSpeedWithTarget.Click += Event_SyncSpeedWithTarget;
@@ -76,6 +77,7 @@
             button2.Name = "button2";
             button2.Size = new Size(66, 51);
             button2.TabIndex = 1;
+            button2.TabStop = false;
             button2.UseVisualStyleBackColor = false;
             // 
             // crlFullSpeed
@@ -92,6 +94,7 @@
             crlFullSpeed.Name = "crlFullSpeed";
             crlFullSpeed.Size = new Size(66, 51);
             crlFullSpeed.TabIndex = 2;
+            crlFullSpeed.TabStop = false;
             crlFullSpeed.Text = "FSP";
             crlFullSpeed.UseVisualStyleBackColor = false;
             crlFullSpeed.Click += crlFullSpeed_Click;
@@ -110,6 +113,7 @@
             button4.Name = "button4";
             button4.Size = new Size(66, 51);
             button4.TabIndex = 3;
+            button4.TabStop = false;
             button4.UseVisualStyleBackColor = false;
             // 
             // commandSyncDirectionWithTarget
@@ -126,6 +130,7 @@
             commandSyncDirectionWithTarget.Name = "commandSyncDirectionWithTarget";
             commandSyncDirectionWithTarget.Size = new Size(66, 51);
             commandSyncDirectionWithTarget.TabIndex = 4;
+            commandSyncDirectionWithTarget.TabStop = false;
             commandSyncDirectionWithTarget.Text = "SYNC D";
             commandSyncDirectionWithTarget.UseVisualStyleBackColor = false;
             commandSyncDirectionWithTarget.Click += Event_SyncDirectionWithTarget;
@@ -144,6 +149,7 @@
             button6.Name = "button6";
             button6.Size = new Size(66, 51);
             button6.TabIndex = 5;
+            button6.TabStop = false;
             button6.UseVisualStyleBackColor = false;
             // 
             // button7
@@ -160,6 +166,7 @@
             button7.Name = "button7";
             button7.Size = new Size(66, 51);
             button7.TabIndex = 6;
+            button7.TabStop = false;
             button7.UseVisualStyleBackColor = false;
             // 
             // button8
@@ -176,6 +183,7 @@
             button8.Name = "button8";
             button8.Size = new Size(66, 51);
             button8.TabIndex = 7;
+            button8.TabStop = false;
             button8.UseVisualStyleBackColor = false;
             // 
             // crlFullStop
@@ -192,6 +200,7 @@
             crlFullStop.Name = "crlFullStop";
             crlFullStop.Size = new Size(66, 51);
             crlFullStop.TabIndex = 8;
+            crlFullStop.TabStop = false;
             crlFullStop.Text = "FST";
             crlFullStop.UseVisualStyleBackColor = false;
             crlFullStop.Click += crlFullStop_Click;
@@ -210,6 +219,7 @@
             button10.Name = "button10";
             button10.Size = new Size(66, 51);
             button10.TabIndex = 9;
+            button10.TabStop = false;
             button10.UseVisualStyleBackColor = false;
             // 
             // commandRotateToTarget
@@ -226,6 +236,7 @@
             commandRotateToTarget.Name = "commandRotateToTarget";
             commandRotateToTarget.Size = new Size(66, 51);
             commandRotateToTarget.TabIndex = 10;
+            commandRotateToTarget.TabStop = false;
             commandRotateToTarget.Text = "ROTT";
             commandRotateToTarget.UseVisualStyleBackColor = false;
             commandRotateToTarget.Click += Event_RotateToTarget;
@@ -244,25 +255,29 @@
             commandHarvestAsteroid.Name = "commandHarvestAsteroid";
             commandHarvestAsteroid.Size = new Size(66, 51);
             commandHarvestAsteroid.TabIndex = 11;
+            commandHarvestAsteroid.TabStop = false;
             commandHarvestAsteroid.Text = "HRVS";
             commandHarvestAsteroid.UseVisualStyleBackColor = false;
             commandHarvestAsteroid.Click += Event_HarvestAsteroid;
             // 
-            // button13
+            // commandOpenContainer
             // 
-            button13.BackColor = Color.FromArgb(64, 64, 64);
-            button13.Enabled = false;
-            button13.FlatAppearance.BorderSize = 0;
-            button13.FlatAppearance.MouseDownBackColor = Color.Gray;
-            button13.FlatAppearance.MouseOverBackColor = Color.Silver;
-            button13.FlatStyle = FlatStyle.Flat;
-            button13.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            button13.ForeColor = Color.DimGray;
-            button13.Location = new Point(363, 60);
-            button13.Name = "button13";
-            button13.Size = new Size(66, 51);
-            button13.TabIndex = 12;
-            button13.UseVisualStyleBackColor = false;
+            commandOpenContainer.BackColor = Color.FromArgb(64, 64, 64);
+            commandOpenContainer.Enabled = false;
+            commandOpenContainer.FlatAppearance.BorderSize = 0;
+            commandOpenContainer.FlatAppearance.MouseDownBackColor = Color.Gray;
+            commandOpenContainer.FlatAppearance.MouseOverBackColor = Color.Silver;
+            commandOpenContainer.FlatStyle = FlatStyle.Flat;
+            commandOpenContainer.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            commandOpenContainer.ForeColor = Color.DimGray;
+            commandOpenContainer.Location = new Point(363, 60);
+            commandOpenContainer.Name = "commandOpenContainer";
+            commandOpenContainer.Size = new Size(66, 51);
+            commandOpenContainer.TabIndex = 12;
+            commandOpenContainer.TabStop = false;
+            commandOpenContainer.Text = "OCON";
+            commandOpenContainer.UseVisualStyleBackColor = false;
+            commandOpenContainer.Click += Event_OpenContainer;
             // 
             // button14
             // 
@@ -278,8 +293,8 @@
             button14.Name = "button14";
             button14.Size = new Size(66, 51);
             button14.TabIndex = 13;
+            button14.TabStop = false;
             button14.UseVisualStyleBackColor = false;
-            button14.Click += button14_Click;
             // 
             // CommandsControl
             // 
@@ -287,7 +302,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(12, 12, 12);
             Controls.Add(button14);
-            Controls.Add(button13);
+            Controls.Add(commandOpenContainer);
             Controls.Add(commandHarvestAsteroid);
             Controls.Add(commandRotateToTarget);
             Controls.Add(button10);
@@ -320,7 +335,7 @@
         private Button button10;
         private Button commandRotateToTarget;
         private Button commandHarvestAsteroid;
-        private Button button13;
+        private Button commandOpenContainer;
         private Button button14;
     }
 }

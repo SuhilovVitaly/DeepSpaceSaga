@@ -62,6 +62,11 @@ public class EventManager
         OnInitializeData?.Invoke(gameSession);
     }
 
+    public void ItemsTransferScreenShow(GameActionEvent gameEvent)
+    {
+        _screenTacticalMap.OpenCargoUI(gameEvent.Copy());
+    }
+
     private void Worker_RefreshData(GameSession gameSession)
     {
         ArgumentNullException.ThrowIfNull(gameSession);

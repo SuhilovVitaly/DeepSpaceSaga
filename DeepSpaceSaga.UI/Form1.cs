@@ -198,7 +198,7 @@ public partial class Form1 : Form
 
     public void EventOpenCargoUI(GameActionEvent gameActionEvent)
     {
-        if (Global.GameManager.GetSession().State.IsPaused) return;
+        //if (Global.GameManager.GetSession().State.IsPaused) return;
 
         var session = Global.GameManager.GetSession();
 
