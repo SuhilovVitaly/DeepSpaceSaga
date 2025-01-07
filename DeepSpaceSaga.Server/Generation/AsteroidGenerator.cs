@@ -8,10 +8,11 @@ internal class AsteroidGenerator
     {
         try
         {
-            ICelestialObject asteroid = new BaseAsteroid
+            var maxDrillAttempts = generationTool.GetInteger(0, 3);
+
+            ICelestialObject asteroid = new BaseAsteroid(maxDrillAttempts)
             {
                 Id = generationTool.GetId(),
-                RemainingDrillAttempts = generationTool.GetInteger(0, 3),
                 OwnerId = 0,
                 Name = name,
                 Direction = direction,

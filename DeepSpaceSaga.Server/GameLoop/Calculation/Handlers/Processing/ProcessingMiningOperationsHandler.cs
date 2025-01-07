@@ -49,24 +49,32 @@ public class ProcessingMiningOperationsHandler(IFlowContext context) : FlowStepB
 
     private void Result(IFlowContext sessionContext, ICommand command)
     {
-        var moduleCelestialObject = sessionContext.Session.GetCelestialObject(command.CelestialObjectId);
-        var targetCelestialObject = sessionContext.Session.GetCelestialObject(command.TargetCelestialObjectId);
+        var spacecraft = sessionContext.Session.GetCelestialObject(command.CelestialObjectId);
+        var asteroid = sessionContext.Session.GetCelestialObject(command.TargetCelestialObjectId) as IAsteroid;
 
-        var module = moduleCelestialObject.ToSpaceship().GetModule(command.ModuleId) as IMiningLaser;
-
-        GenerateAsteroidHarcestResult.Execute(sessionContext, command);
+        var module = spacecraft.ToSpaceship().GetModule(command.ModuleId) as IMiningLaser;        
 
         command.Status = CommandStatus.PostProcess;
 
-        AddToJournal(sessionContext, EventType.AsteroidHarvestShowResults, $"Asteroid '{targetCelestialObject.Name}' Harvest Results");
-        
-        DestroyAsteroid(sessionContext,
-            CommandsFactory.CreateCommand(
-                sessionContext.Randomizer, 
-                CommandTypes.MiningOperationsDestroyAsteroid, 
-                module, 
-                targetCelestialObject, moduleCelestialObject
-                ));
+        asteroid?.Drill();        
+
+        if (asteroid.RemainingDrillAttempts <= 0)
+        {
+            DestroyAsteroid(sessionContext,
+                CommandsFactory.CreateCommand(
+                    sessionContext.Randomizer,
+                    CommandTypes.MiningOperationsDestroyAsteroid,
+                    module,
+                    asteroid, spacecraft
+                    ));
+
+            AddToJournal(sessionContext, EventType.AsteroidHarvestDestroy, $"Asteroid '{asteroid?.Name}' destroyed");
+        }
+        else
+        {
+            AddToJournal(sessionContext, EventType.AsteroidHarvestShowResults, $"Asteroid '{asteroid?.Name}' Harvest Results");
+            GenerateAsteroidHarcestResult.Execute(sessionContext, command);
+        }
     }
 
     private void Harvest(IFlowContext sessionContext, Command command)
