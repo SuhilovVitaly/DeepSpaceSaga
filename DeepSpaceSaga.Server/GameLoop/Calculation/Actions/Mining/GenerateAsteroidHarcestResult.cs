@@ -22,7 +22,7 @@ public class GenerateAsteroidHarcestResult
     {
         var result = new List<ICoreItem>();
 
-        var ore = new Pombesit(sessionContext.Randomizer.GetInteger(0,4));
+        var ore = new Pombesit(sessionContext.Randomizer.GetInteger(1,4));
 
         result.Add(ore);
 
@@ -33,7 +33,7 @@ public class GenerateAsteroidHarcestResult
     {
         var result = new List<ICoreItem>();
 
-        var ore = new IronOre(sessionContext.Randomizer.GetInteger(0, 3));
+        var ore = new IronOre(sessionContext.Randomizer.GetInteger(1, 3));
 
         result.Add(ore);
 
