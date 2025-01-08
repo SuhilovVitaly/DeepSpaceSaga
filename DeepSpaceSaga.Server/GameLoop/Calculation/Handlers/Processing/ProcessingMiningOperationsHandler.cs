@@ -1,6 +1,4 @@
-﻿using System.ComponentModel;
-
-namespace DeepSpaceSaga.Server.GameLoop.Calculation.Handlers.Processing;
+﻿namespace DeepSpaceSaga.Server.GameLoop.Calculation.Handlers.Processing;
 
 public class ProcessingMiningOperationsHandler(IFlowContext context) : FlowStepBase<IFlowContext, IFlowContext>(context)
 {

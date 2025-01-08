@@ -24,7 +24,8 @@ public class FlowTurnExecutor
             .PreProcessingModulesReloadEvent()
             .PreProcessingScan()
             // ---------------------------------------------- Processing flow
-            .ProcessingLocations()            
+            .ProcessingLocations()     
+            .ProcessingItemsTransfer()
             .ProcessingContentGeneration()
             .ProcessingMiningOperations()
             .ProcessingModuleActivation()

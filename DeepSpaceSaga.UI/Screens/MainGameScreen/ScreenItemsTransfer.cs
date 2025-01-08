@@ -1,6 +1,4 @@
-﻿using DeepSpaceSaga.Common.Infrastructure.Commands.CargoOperations;
-
-namespace DeepSpaceSaga.UI.Screens.MainGameScreen;
+﻿namespace DeepSpaceSaga.UI.Screens.MainGameScreen;
 
 public partial class ScreenItemsTransfer : UserControl
 {
@@ -18,13 +16,15 @@ public partial class ScreenItemsTransfer : UserControl
     }
     public void ShowTransfer(ISpacecraft spacecraft, int cargoId, int sourceId, GameSession session, ICelestialObject targetObject, ICargoContainer targetContainer)
     {
-        _commands = new List<ICommand>();
+        _commands = new List<ICommand>();        
 
         RefreshTransfer(spacecraft, cargoId, sourceId, session, targetObject, targetContainer);
     }
 
     private void RefreshTransfer(ISpacecraft spacecraft, int cargoId, int sourceId, GameSession session, ICelestialObject targetObject, ICargoContainer targetContainer)
     {
+        cargoContainerSource.OnItemClick -= Event_SelectItem;
+
         _targetContainer = targetContainer;
         _spacecraft = spacecraft;
         _cargoId = cargoId;
@@ -55,7 +55,7 @@ public partial class ScreenItemsTransfer : UserControl
         _targetContainer.RemoveItem(item);
         cargo.AddItem(item);
 
-        _commands.Add(GenerateCommand(_spacecraft, _targetContainer.Id, item.Id));
+        _commands.Add(GenerateCommand(_spacecraft, _targetObject.Id, _targetContainer.Id, item.Id));
 
         RefreshTransfer(_spacecraft, _cargoId, _sourceId, _gameSession, _targetObject, _targetContainer);
     }
@@ -75,13 +75,14 @@ public partial class ScreenItemsTransfer : UserControl
         }
     }
 
-    private ICommand GenerateCommand(ISpacecraft spacecraft, int inputModuleId, int inputItemId)
+    private ICommand GenerateCommand(ISpacecraft spacecraft, int inputObjectId, int inputModuleId, int inputItemId)
     {
         return new CargoOperationsCommand
         {
             Category = CommandCategory.CargoOperations,
             Type = CommandTypes.CargoOperationsTransfer,
             IsOneTimeCommand = true,
+            TargetCelestialObjectId = inputObjectId,
             CelestialObjectId = spacecraft.Id,
             ModuleId = spacecraft.Module(Common.Universe.Equipment.Category.CargoUnit).Id,
             InputItemId = inputItemId,

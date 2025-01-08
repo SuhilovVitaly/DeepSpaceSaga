@@ -10,4 +10,5 @@ public interface ICargoContainer : IModule
     void AddItem(ICoreItem item);
     void AddItems(List<ICoreItem> items);
     void RemoveItem(ICoreItem item);
+    ICoreItem GetItemById(int itemId);
 }

@@ -43,5 +43,6 @@ public class FlowStepFactory
         RegisterStep<PostProcessingTurnInfoUpdateHandler, IFlowContext, IFlowContext>();
         RegisterStep<PostProcessingCommandCleanerHandler, IFlowContext, IFlowContext>();
         RegisterStep<PostProcessingFinishFlowStage, IFlowContext, IFlowContext>();
+        RegisterStep<ProcessingItemsTransferHandler, IFlowContext, IFlowContext>();
     }
 }

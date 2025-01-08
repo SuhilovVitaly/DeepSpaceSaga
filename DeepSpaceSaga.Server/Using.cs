@@ -31,6 +31,6 @@ global using LanguageExt.Pipes;
 global using DeepSpaceSaga.Common.Universe.Entities.CelestialObjects.Asteroids;
 global using DeepSpaceSaga.Server.GameLoop.Calculation.Actions.Mining;
 global using DeepSpaceSaga.Server.GameLoop.Flow;
-global using DeepSpaceSaga.Common.Universe.Entities.CelestialObjects.Containers;
+global using DeepSpaceSaga.Common.Infrastructure.Commands.CargoOperations;
 global using DeepSpaceSaga.Common.Universe.Items;
 global using DeepSpaceSaga.Common.Universe.Items.Ore;

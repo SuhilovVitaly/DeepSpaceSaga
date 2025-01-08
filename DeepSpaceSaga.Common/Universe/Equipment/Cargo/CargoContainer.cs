@@ -44,4 +44,15 @@ public class CargoContainer : AbstractModule, IModule, ICargoContainer
             Items.Remove(itemToRemove);
         }
     }
+
+    public ICoreItem GetItemById(int itemId)
+    {
+        var item = Items.FirstOrDefault(x => x.Id == itemId);
+        if (item != null)
+        {
+            return item;
+        }
+
+        throw new Exception($"Item with id {itemId} not found");
+    }
 }
