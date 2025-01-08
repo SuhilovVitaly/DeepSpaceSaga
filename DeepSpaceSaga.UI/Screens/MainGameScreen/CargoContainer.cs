@@ -2,14 +2,30 @@
 
 public partial class CargoContainer : UserControl
 {
+    public event Action<ICoreItem>? OnItemClick;
+
     public CargoContainer()
     {
         InitializeComponent();
     }
 
-    public void UpdateView(List<ICoreItem> items)
+    private void ClearControls()
     {
+        // Unsubscribe from events and dispose controls
+        foreach (Control control in Controls)
+        {
+            if (control is CargoItem cargoItem)
+            {
+                cargoItem.Click -= (sender, e) => CargoItemClickEvent(cargoItem.CoreItem);
+                cargoItem.Dispose();
+            }
+        }
         Controls.Clear();
+    }
+
+    public void UpdateView(List<ICoreItem> items, bool isMovebleItems = false)
+    {
+        ClearControls();
 
         var leftMargin = 3;
         var toptMargin = 3;
@@ -35,6 +51,8 @@ public partial class CargoContainer : UserControl
                 BorderStyle = BorderStyle.FixedSingle,
             };
 
+            newItem.Click += (sender, e) => CargoItemClickEvent(newItem.CoreItem);
+
             currentRow++;
 
             if (currentRow >= maxRowSize)
@@ -49,6 +67,11 @@ public partial class CargoContainer : UserControl
         }
 
         Invalidate();
+    }
+
+    private void CargoItemClickEvent(ICoreItem item)
+    {
+        OnItemClick?.Invoke(item);
     }
 
     private void CargoContainer_Paint(object sender, PaintEventArgs e)

@@ -7,8 +7,7 @@ public class CargoContainer : AbstractModule, IModule, ICargoContainer
     public double Capacity { get; set; } = 0;
     public double MaxCapacity { get; set; } = 0;
     public double ActivationCost { get; set; } = 0;
-    public List<ICoreItem> Items  { get; private set; } = new List<ICoreItem>();
-    
+    public List<ICoreItem> Items  { get; private set; } = new List<ICoreItem>();    
 
     public Command Show()
     {
@@ -35,5 +34,14 @@ public class CargoContainer : AbstractModule, IModule, ICargoContainer
     public void AddItems(List<ICoreItem> items)
     {
         Items.AddRange(items);
+    }
+
+    public void RemoveItem(ICoreItem item)
+    {
+        var itemToRemove = Items.FirstOrDefault(x => x.Id == item.Id);
+        if (itemToRemove != null)
+        {
+            Items.Remove(itemToRemove);
+        }
     }
 }
