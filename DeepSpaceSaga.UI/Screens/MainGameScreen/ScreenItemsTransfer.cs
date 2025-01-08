@@ -1,4 +1,6 @@
-﻿namespace DeepSpaceSaga.UI.Screens.MainGameScreen;
+﻿using DeepSpaceSaga.Common.Infrastructure.Commands.CargoOperations;
+
+namespace DeepSpaceSaga.UI.Screens.MainGameScreen;
 
 public partial class ScreenItemsTransfer : UserControl
 {
@@ -8,13 +10,20 @@ public partial class ScreenItemsTransfer : UserControl
     private int _cargoId;
     private int _sourceId;
     private GameSession _gameSession;
+    private List<ICommand> _commands;
 
     public ScreenItemsTransfer()
     {
         InitializeComponent();
     }
-
     public void ShowTransfer(ISpacecraft spacecraft, int cargoId, int sourceId, GameSession session, ICelestialObject targetObject, ICargoContainer targetContainer)
+    {
+        _commands = new List<ICommand>();
+
+        RefreshTransfer(spacecraft, cargoId, sourceId, session, targetObject, targetContainer);
+    }
+
+    private void RefreshTransfer(ISpacecraft spacecraft, int cargoId, int sourceId, GameSession session, ICelestialObject targetObject, ICargoContainer targetContainer)
     {
         _targetContainer = targetContainer;
         _spacecraft = spacecraft;
@@ -46,11 +55,18 @@ public partial class ScreenItemsTransfer : UserControl
         _targetContainer.RemoveItem(item);
         cargo.AddItem(item);
 
-        ShowTransfer(_spacecraft, _cargoId, _sourceId, _gameSession, _targetObject, _targetContainer);
+        _commands.Add(GenerateCommand(_spacecraft, _targetContainer.Id, item.Id));
+
+        RefreshTransfer(_spacecraft, _cargoId, _sourceId, _gameSession, _targetObject, _targetContainer);
     }
 
-    private void pictureBox13_Click(object sender, EventArgs e)
+    private void Event_CloseScreenAndSendCommands(object sender, EventArgs e)
     {
+        foreach (var command in _commands)
+        {
+            _ = Global.GameManager.ExecuteCommandAsync(command);
+        }
+
         Visible = false;
 
         if (Global.GameManager.GetSession().State.IsPaused)
@@ -59,8 +75,17 @@ public partial class ScreenItemsTransfer : UserControl
         }
     }
 
-    private void pictureBox11_Click(object sender, EventArgs e)
+    private ICommand GenerateCommand(ISpacecraft spacecraft, int inputModuleId, int inputItemId)
     {
-
+        return new CargoOperationsCommand
+        {
+            Category = CommandCategory.CargoOperations,
+            Type = CommandTypes.CargoOperationsTransfer,
+            IsOneTimeCommand = true,
+            CelestialObjectId = spacecraft.Id,
+            ModuleId = spacecraft.Module(Common.Universe.Equipment.Category.CargoUnit).Id,
+            InputItemId = inputItemId,
+            InputModuleId = inputModuleId
+        };
     }
 }

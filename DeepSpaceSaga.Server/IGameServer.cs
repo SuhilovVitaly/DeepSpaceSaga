@@ -8,6 +8,6 @@ public interface IGameServer
     void PauseSession();
     Task SessionInitialization(int sessionId = -1);
     GameSession GetSession();
-    Task AddCommand(Command command);
+    Task AddCommand(ICommand command);
     void SetGameSpeed(int speed);
 }

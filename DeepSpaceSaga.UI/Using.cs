@@ -25,3 +25,4 @@ global using DeepSpaceSaga.Common.Infrastructure.Events;
 global using DeepSpaceSaga.Common.Universe.Items;
 global using DeepSpaceSaga.UI.Screens.MainGameScreen; 
 global using DeepSpaceSaga.UI;
+global using DeepSpaceSaga.Common.Universe.Entities.CelestialObjects.Asteroids;

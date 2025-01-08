@@ -47,7 +47,7 @@ public class GameManager : IDisposable
         return EventController.GetSession();
     }
 
-    public async Task ExecuteCommandAsync(Command command)
+    public async Task ExecuteCommandAsync(ICommand command)
     {
         await EventController.ExecuteCommandAsync(command);
     }

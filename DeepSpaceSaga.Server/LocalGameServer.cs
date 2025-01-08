@@ -150,7 +150,7 @@ public class LocalGameServer : IGameServer
         }, "Execution");
     }
 
-    public async Task AddCommand(Command command)
+    public async Task AddCommand(ICommand command)
     {
         try
         {

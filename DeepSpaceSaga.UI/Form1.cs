@@ -1,8 +1,4 @@
-﻿using DeepSpaceSaga.Common.Infrastructure.Commands;
-using DeepSpaceSaga.Common.Universe.Entities.CelestialObjects.Asteroids;
-using DeepSpaceSaga.Server;
-
-namespace DeepSpaceSaga.UI;
+﻿namespace DeepSpaceSaga.UI;
 
 public partial class Form1 : Form
 {

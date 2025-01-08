@@ -134,7 +134,7 @@ public class EventManager
         Worker.SetGameSpeed(speed);
     }
 
-    public async Task ExecuteCommandAsync(Command command)
+    public async Task ExecuteCommandAsync(ICommand command)
     {
         await Worker.SendCommandAsync(command);
     }

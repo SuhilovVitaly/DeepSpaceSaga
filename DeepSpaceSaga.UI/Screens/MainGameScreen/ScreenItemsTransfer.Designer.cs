@@ -35,7 +35,6 @@
             crlNameSourceCelestialObject = new Label();
             crlNameTargetCelestialObject = new Label();
             crlSourceCargoContainerCapacity = new Label();
-            pictureBox13 = new PictureBox();
             pictureBox1 = new PictureBox();
             crlNameSourceCargoContainer = new Label();
             pictureBox11 = new PictureBox();
@@ -44,10 +43,10 @@
             pictureBox9 = new PictureBox();
             cargoContainerTarget = new CargoContainer();
             cargoContainerSource = new CargoContainer();
+            commandCloseScreen = new Button();
             ((ISupportInitialize)pictureBox2).BeginInit();
             ((ISupportInitialize)pictureBox3).BeginInit();
             ((ISupportInitialize)pictureBox4).BeginInit();
-            ((ISupportInitialize)pictureBox13).BeginInit();
             ((ISupportInitialize)pictureBox1).BeginInit();
             ((ISupportInitialize)pictureBox11).BeginInit();
             ((ISupportInitialize)pictureBox12).BeginInit();
@@ -116,18 +115,6 @@
             crlSourceCargoContainerCapacity.Text = "Capacity ( Free/Full )";
             crlSourceCargoContainerCapacity.TextAlign = ContentAlignment.TopRight;
             // 
-            // pictureBox13
-            // 
-            pictureBox13.BackColor = Color.Transparent;
-            pictureBox13.Cursor = Cursors.Hand;
-            pictureBox13.Image = (Image)resources.GetObject("pictureBox13.Image");
-            pictureBox13.Location = new Point(1200, 3);
-            pictureBox13.Name = "pictureBox13";
-            pictureBox13.Size = new Size(29, 29);
-            pictureBox13.TabIndex = 9;
-            pictureBox13.TabStop = false;
-            pictureBox13.Click += pictureBox13_Click;
-            // 
             // pictureBox1
             // 
             pictureBox1.Dock = DockStyle.Top;
@@ -158,7 +145,6 @@
             pictureBox11.Size = new Size(36, 31);
             pictureBox11.TabIndex = 14;
             pictureBox11.TabStop = false;
-            pictureBox11.Click += pictureBox11_Click;
             // 
             // pictureBox12
             // 
@@ -206,15 +192,25 @@
             cargoContainerSource.Size = new Size(403, 476);
             cargoContainerSource.TabIndex = 18;
             // 
+            // commandCloseScreen
+            // 
+            commandCloseScreen.Location = new Point(547, 603);
+            commandCloseScreen.Name = "commandCloseScreen";
+            commandCloseScreen.Size = new Size(136, 29);
+            commandCloseScreen.TabIndex = 19;
+            commandCloseScreen.Text = "button1";
+            commandCloseScreen.UseVisualStyleBackColor = true;
+            commandCloseScreen.Click += Event_CloseScreenAndSendCommands;
+            // 
             // ScreenItemsTransfer
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.Black;
             BorderStyle = BorderStyle.FixedSingle;
+            Controls.Add(commandCloseScreen);
             Controls.Add(cargoContainerSource);
             Controls.Add(pictureBox9);
-            Controls.Add(pictureBox13);
             Controls.Add(pictureBox10);
             Controls.Add(pictureBox12);
             Controls.Add(crlNameSourceCargoContainer);
@@ -232,7 +228,6 @@
             ((ISupportInitialize)pictureBox2).EndInit();
             ((ISupportInitialize)pictureBox3).EndInit();
             ((ISupportInitialize)pictureBox4).EndInit();
-            ((ISupportInitialize)pictureBox13).EndInit();
             ((ISupportInitialize)pictureBox1).EndInit();
             ((ISupportInitialize)pictureBox11).EndInit();
             ((ISupportInitialize)pictureBox12).EndInit();
@@ -248,7 +243,6 @@
         private Label crlNameSourceCelestialObject;
         private Label crlNameTargetCelestialObject;
         private Label crlSourceCargoContainerCapacity;
-        private PictureBox pictureBox13;
         private PictureBox pictureBox1;
         private Label crlNameSourceCargoContainer;
         private PictureBox pictureBox11;
@@ -257,5 +251,6 @@
         private PictureBox pictureBox9;
         private CargoContainer cargoContainerTarget;
         private CargoContainer cargoContainerSource;
+        private Button commandCloseScreen;
     }
 }

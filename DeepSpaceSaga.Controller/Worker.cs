@@ -6,7 +6,7 @@ public interface IWorker
     void Resume();
     void Pause();
     GameSession GetGameSession();
-    Task SendCommandAsync(Command command, CancellationToken cancellationToken = default);
+    Task SendCommandAsync(ICommand command, CancellationToken cancellationToken = default);
     void SetGameSpeed(int speed);
 }
 
@@ -65,7 +65,7 @@ public class Worker : IWorker
         }
     }
 
-    public async Task SendCommandAsync(Command command, CancellationToken cancellationToken = default)
+    public async Task SendCommandAsync(ICommand command, CancellationToken cancellationToken = default)
     {
         try
         {

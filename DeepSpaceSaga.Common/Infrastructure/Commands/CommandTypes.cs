@@ -46,7 +46,8 @@ public enum CommandTypes
     MiningOperationsHarvest = 8001,
     MiningOperationsResult = 8010,
     MiningOperationsDestroyAsteroid = 8020,
-    CargoOperationsShow = 9001
+    CargoOperationsShow = 9001,
+    CargoOperationsTransfer = 9005
 }
 
 public static class CommandTypesExtensions
