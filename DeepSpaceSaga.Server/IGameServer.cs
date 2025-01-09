@@ -10,4 +10,6 @@ public interface IGameServer
     GameSession GetSession();
     Task AddCommand(ICommand command);
     void SetGameSpeed(int speed);
+    void QuickSave();
+    void QuickLoad();
 }

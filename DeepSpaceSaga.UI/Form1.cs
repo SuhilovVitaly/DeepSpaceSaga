@@ -189,7 +189,7 @@ public partial class Form1 : Form
 
             throw;
         }
-        
+
     }
 
     public void EventOpenCargoUI(GameActionEvent gameActionEvent)
@@ -237,5 +237,15 @@ public partial class Form1 : Form
         //Global.GameManager.EventController.Pause();
         //controlItemsTransfer.BringToFront();
         //controlItemsTransfer.Visible = true;
+    }
+
+    private void crlQuickSave_Click(object sender, EventArgs e)
+    {
+        Global.GameManager.EventController.Save();
+    }
+
+    private void crlQuickLoad_Click(object sender, EventArgs e)
+    {
+        Global.GameManager.EventController.Load();
     }
 }

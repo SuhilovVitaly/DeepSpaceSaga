@@ -8,6 +8,8 @@ public interface IWorker
     GameSession GetGameSession();
     Task SendCommandAsync(ICommand command, CancellationToken cancellationToken = default);
     void SetGameSpeed(int speed);
+    void Save();
+    void Load();
 }
 
 public class Worker : IWorker
@@ -106,5 +108,15 @@ public class Worker : IWorker
         {
             _gameServer.ResumeSession();
         }
+    }
+
+    public void Save()
+    {
+        _gameServer.QuickSave();
+    }
+
+    public void Load()
+    {
+        _gameServer.QuickLoad();
     }
 }

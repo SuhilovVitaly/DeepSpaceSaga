@@ -36,6 +36,8 @@
             crlCommands = new CommandsControl();
             gameSpeedControl1 = new GameSpeedControl();
             panel1 = new Panel();
+            crlQuickLoad = new Button();
+            crlQuickSave = new Button();
             CommandOpenCargo = new Screens.CommonControls.ToolbarButton();
             gameSessionInformation2 = new GameSessionInformation();
             logbookControl2 = new LogbookControl();
@@ -111,6 +113,8 @@
             // panel1
             // 
             panel1.BorderStyle = BorderStyle.FixedSingle;
+            panel1.Controls.Add(crlQuickLoad);
+            panel1.Controls.Add(crlQuickSave);
             panel1.Controls.Add(CommandOpenCargo);
             panel1.Controls.Add(gameSessionInformation2);
             panel1.Controls.Add(logbookControl2);
@@ -126,6 +130,30 @@
             panel1.Name = "panel1";
             panel1.Size = new Size(2624, 1105);
             panel1.TabIndex = 1;
+            // 
+            // crlQuickLoad
+            // 
+            crlQuickLoad.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            crlQuickLoad.Location = new Point(279, 1035);
+            crlQuickLoad.Name = "crlQuickLoad";
+            crlQuickLoad.Size = new Size(94, 29);
+            crlQuickLoad.TabIndex = 24;
+            crlQuickLoad.TabStop = false;
+            crlQuickLoad.Text = "Quick load";
+            crlQuickLoad.UseVisualStyleBackColor = true;
+            crlQuickLoad.Click += crlQuickLoad_Click;
+            // 
+            // crlQuickSave
+            // 
+            crlQuickSave.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            crlQuickSave.Location = new Point(279, 1000);
+            crlQuickSave.Name = "crlQuickSave";
+            crlQuickSave.Size = new Size(94, 29);
+            crlQuickSave.TabIndex = 23;
+            crlQuickSave.TabStop = false;
+            crlQuickSave.Text = "Quick save";
+            crlQuickSave.UseVisualStyleBackColor = true;
+            crlQuickSave.Click += crlQuickSave_Click;
             // 
             // CommandOpenCargo
             // 
@@ -194,5 +222,7 @@
         private Screens.MainGameScreen.LogbookControl logbookControl2;
         private Screens.MainGameScreen.GameSessionInformation gameSessionInformation2;
         private Screens.CommonControls.ToolbarButton CommandOpenCargo;
+        private Button crlQuickSave;
+        private Button crlQuickLoad;
     }
 }

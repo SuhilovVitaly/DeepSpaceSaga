@@ -1,4 +1,6 @@
-﻿namespace DeepSpaceSaga.Server;
+﻿using DeepSpaceSaga.Server.SaveLoadSystem;
+
+namespace DeepSpaceSaga.Server;
 
 public class LocalGameServer : IGameServer
 {
@@ -188,5 +190,24 @@ public class LocalGameServer : IGameServer
     {
         _cancellationTokenSource.Cancel();
         _cancellationTokenSource.Dispose();
+    }
+
+    public void QuickSave()
+    {
+        _executor.ExecuteWithLock(() =>
+        {
+            _ = new SaveLoadManager().Save(SessionContext, "QuickSave.json");
+
+            return SessionContext;
+        }, "Execution");
+    }
+
+    public void QuickLoad()
+    {
+        _executor.ExecuteWithLock(() =>
+        {
+            SessionContext = new SaveLoadManager().Load("QuickSave.json");
+            return SessionContext;
+        }, "Execution");
     }
 }
