@@ -33,8 +33,23 @@ public class SaveLoadManager
         
         var saveData = new SaveData
         {
-            CelestialMap = context.Session.SpaceMap
+            CelestialMap = context.Session.SpaceMap.Copy()
         };
+
+        foreach (var celestialObject in saveData.CelestialMap)
+        {
+            var spacecraft = celestialObject as ISpacecraft;
+
+            if (spacecraft != null)
+            {
+                foreach (var module in spacecraft.Modules)
+                {
+                    module.Reloading = module.ReloadTime;
+                    module.IsActive = false;
+                    module.IsCalculated = false;
+                }
+            }
+        }
 
         var json = JsonConvert.SerializeObject(saveData, _jsonSettings);
         await File.WriteAllTextAsync(savePath, json);
