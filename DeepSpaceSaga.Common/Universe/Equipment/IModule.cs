@@ -18,7 +18,7 @@ public interface IModule : ICoreItem
 
     #region Reloading
     int LastReloadTurn { get; set; }
-    bool IsReloaded { get; }
+    bool IsReloaded { get; set; }
     double ReloadTime { get; set; }
     double Reloading { get; set; }
 

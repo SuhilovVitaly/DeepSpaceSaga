@@ -47,6 +47,7 @@ public class SaveLoadManager
                     module.Reloading = module.ReloadTime;
                     module.IsActive = false;
                     module.IsCalculated = false;
+                    module.TargetId = -1;
                 }
             }
         }
@@ -82,11 +83,23 @@ public class SaveLoadManager
 
             var metrics = new ServerMetrics();
 
-            foreach ( ICelestialObject celestialObject in saveData.CelestialMap)
+            foreach (var celestialObject in saveData.CelestialMap)
             {
+                var spacecraft = celestialObject as ISpacecraft;
 
+                if (spacecraft != null)
+                {
+                    foreach (var module in spacecraft.Modules)
+                    {
+                        module.Reloading = module.ReloadTime;
+                        module.IsActive = false;
+                        module.IsReloaded = true;
+                        module.IsCalculated = false;
+                        module.TargetId = -1;
+                        module.IsCalculated = true;
+                    }
+                }
             }
-
 
             var session = new SessionContext(
                 new GameSession(saveData.CelestialMap, new GameSessionsSettings()),
