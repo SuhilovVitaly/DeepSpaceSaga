@@ -5,6 +5,9 @@ public class GameManager : IDisposable
     public OuterSpace OuterSpace { get; set; } = new OuterSpace();
     private EventManager _eventManager { get; set; }
     private bool disposed;
+    private BackgroundScreen _screenBackground;
+    private MainMenuScreen _screenMenu;
+    private Form1 _screenTacticalGame;
 
     public EventManager EventController
     {
@@ -17,6 +20,35 @@ public class GameManager : IDisposable
         _eventManager = eventManager;
 
         SubscribeToEvents();
+    }
+
+    public void SetBackgroundScreenReference(BackgroundScreen screenBackground)
+    {
+        _screenBackground = screenBackground;
+        _screenBackground.FirstShown += (sender, e) =>
+        {
+            StartGameProcess();
+        };
+    }
+
+    public void SetMenuScreen(MainMenuScreen screenMenu)
+    {
+        _screenMenu = screenMenu;
+    }
+
+    public void SetTacticalGameScreen(Form1 screenTacticalGame)
+    {
+        _screenTacticalGame = screenTacticalGame;
+    }
+
+    public void ShowTacticalGameScreen()
+    {
+        _screenBackground.ShowChildForm(_screenTacticalGame);
+    }
+
+    private void StartGameProcess()
+    {
+        _screenBackground.ShowChildForm(_screenMenu);
     }
 
     private void SubscribeToEvents()

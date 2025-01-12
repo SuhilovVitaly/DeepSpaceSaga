@@ -1,7 +1,4 @@
-﻿using DeepSpaceSaga.UI.Render.Rendering.TacticalMap;
-using System;
-
-namespace DeepSpaceSaga.UI;
+﻿namespace DeepSpaceSaga.UI;
 
 public class GlobalResources : IDisposable
 {

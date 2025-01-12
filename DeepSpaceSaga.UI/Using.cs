@@ -27,3 +27,6 @@ global using DeepSpaceSaga.UI.Screens.MainGameScreen;
 global using DeepSpaceSaga.UI;
 global using DeepSpaceSaga.Common.Universe.Entities.CelestialObjects.Asteroids;
 global using DeepSpaceSaga.Common.Infrastructure.Commands.CargoOperations;
+global using DeepSpaceSaga.UI.Render.Rendering.TacticalMap;
+global using DeepSpaceSaga.UI.Screens.Background;
+global using DeepSpaceSaga.UI.Screens.MainMenu;

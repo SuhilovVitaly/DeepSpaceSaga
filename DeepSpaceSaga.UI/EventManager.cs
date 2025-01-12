@@ -14,6 +14,7 @@ public class EventManager
 
     private SpaceMapEventHandler MapEventHandler { get; set; }
     private Form1 _screenTacticalMap;
+    
     private Worker Worker;
 
     public EventManager(GenerationTool randomizer)
@@ -40,7 +41,7 @@ public class EventManager
         MapEventHandler.OnSelectCelestialObject += MapEventHandler_OnSelectCelestialObject;
 
         Logger.Info("The object has been successfully initialized.");
-    }
+    }    
 
     public void SetMainGameScreenReference(Form1 screenTacticalMap)
     {
