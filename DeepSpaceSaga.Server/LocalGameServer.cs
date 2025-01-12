@@ -196,7 +196,7 @@ public class LocalGameServer : IGameServer
     {
         _executor.ExecuteWithLock(() =>
         {
-            _ = new SaveLoadManager().Save(SessionContext, "QuickSave.json");
+            _ = new SaveLoadManager().Save(SessionContext.Session.SpaceMap, "QuickSave.json");
 
             return SessionContext;
         }, "Execution");

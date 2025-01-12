@@ -30,3 +30,5 @@ global using DeepSpaceSaga.UI.Screens.Background;
 global using DeepSpaceSaga.UI.Screens.MainMenu;
 global using DeepSpaceSaga.UI.Screens.CommonControls;
 global using DeepSpaceSaga.UI.Screens.SaveGame;
+global using DeepSpaceSaga.Server.SaveLoadSystem;
+global using DeepSpaceSaga.UI.Screens.SaveGame.ScreenControls;

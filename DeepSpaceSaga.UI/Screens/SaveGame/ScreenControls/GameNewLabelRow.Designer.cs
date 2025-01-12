@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             crlSaveGame = new Button();
-            textBox1 = new TextBox();
+            txtSaveName = new TextBox();
             SuspendLayout();
             // 
             // crlSaveGame
@@ -50,23 +50,23 @@
             crlSaveGame.UseVisualStyleBackColor = false;
             crlSaveGame.Click += Event_SaveGame;
             // 
-            // textBox1
+            // txtSaveName
             // 
-            textBox1.BackColor = Color.Black;
-            textBox1.Font = new Font("Verdana", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            textBox1.ForeColor = Color.WhiteSmoke;
-            textBox1.Location = new Point(14, 15);
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(652, 35);
-            textBox1.TabIndex = 5;
-            textBox1.Text = "New Save";
+            txtSaveName.BackColor = Color.Black;
+            txtSaveName.Font = new Font("Verdana", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            txtSaveName.ForeColor = Color.WhiteSmoke;
+            txtSaveName.Location = new Point(14, 15);
+            txtSaveName.Name = "txtSaveName";
+            txtSaveName.Size = new Size(652, 35);
+            txtSaveName.TabIndex = 5;
+            txtSaveName.Text = "New Save";
             // 
             // GameNewLabelRow
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.Black;
-            Controls.Add(textBox1);
+            Controls.Add(txtSaveName);
             Controls.Add(crlSaveGame);
             DoubleBuffered = true;
             Name = "GameNewLabelRow";
@@ -77,6 +77,6 @@
 
         #endregion
         private Button crlSaveGame;
-        private TextBox textBox1;
+        private TextBox txtSaveName;
     }
 }

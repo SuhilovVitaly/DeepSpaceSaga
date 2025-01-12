@@ -1,10 +1,9 @@
-﻿
-
-namespace DeepSpaceSaga.UI;
+﻿namespace DeepSpaceSaga.UI;
 
 public class GameManager : IDisposable
 {
     public OuterSpace OuterSpace { get; set; } = new OuterSpace();
+    public SaveLoadManager SaveLoadSystem { get; set; } = new SaveLoadManager();
     private EventManager _eventManager { get; set; }
     private bool disposed;
     private BackgroundScreen _screenBackground;
@@ -12,6 +11,7 @@ public class GameManager : IDisposable
     private GameMenuScreen _screenGameMenu;
     private SaveGameScreen _saveGameScreen;
     private TacticGameScreen _screenTacticalGame;
+
 
     public EventManager EventController
     {

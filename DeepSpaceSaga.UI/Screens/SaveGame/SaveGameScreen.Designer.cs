@@ -42,7 +42,7 @@
             button1.FlatStyle = FlatStyle.Flat;
             button1.Font = new Font("Verdana", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
             button1.ForeColor = Color.Gainsboro;
-            button1.Location = new Point(325, 561);
+            button1.Location = new Point(325, 538);
             button1.Name = "button1";
             button1.Size = new Size(150, 46);
             button1.TabIndex = 1;
@@ -53,7 +53,7 @@
             // gameNewLabelRow2
             // 
             gameNewLabelRow2.BackColor = Color.Black;
-            gameNewLabelRow2.Location = new Point(23, 485);
+            gameNewLabelRow2.Location = new Point(23, 421);
             gameNewLabelRow2.Name = "gameNewLabelRow2";
             gameNewLabelRow2.Size = new Size(755, 70);
             gameNewLabelRow2.TabIndex = 2;

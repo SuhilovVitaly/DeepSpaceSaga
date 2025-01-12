@@ -63,14 +63,19 @@ public partial class BackgroundScreen : Form
 
         // Check if form already exists in controls
         var existingForm = Controls.OfType<Form>().FirstOrDefault(f => f.GetType() == childForm.GetType());
-        
+
+        foreach (Form form in Controls.OfType<Form>())
+        {
+            if(form is TacticGameScreen == false)
+            {
+                form.Visible = false;
+            }            
+        }
+
         if (!isTransparent)
         {
             // Hide all other forms in non-transparent mode
-            foreach (Form form in Controls.OfType<Form>())
-            {
-                form.Visible = false;
-            }
+            
         }
         else
         {

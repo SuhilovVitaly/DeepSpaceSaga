@@ -2,6 +2,12 @@
 
 public partial class GameLabelRow : UserControl
 {
+    public string LabelText
+    {
+        get => label1.Text; // Get the current text of label1
+        set => label1.Text = value; // Set the text of label1
+    }
+    
     public GameLabelRow()
     {
         InitializeComponent();

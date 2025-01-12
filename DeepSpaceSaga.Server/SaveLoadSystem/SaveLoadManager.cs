@@ -27,13 +27,13 @@ public class SaveLoadManager
         Directory.CreateDirectory(_savesDirectory);
     }
 
-    public async Task Save(IFlowContext context, string saveFileName)
+    public async Task Save(CelestialMap spaceMap, string saveFileName)
     {
         var savePath = Path.Combine(_savesDirectory, saveFileName);
         
         var saveData = new SaveData
         {
-            CelestialMap = context.Session.SpaceMap.Copy()
+            CelestialMap = spaceMap.Copy()
         };
 
         foreach (var celestialObject in saveData.CelestialMap)
@@ -54,6 +54,22 @@ public class SaveLoadManager
 
         var json = JsonConvert.SerializeObject(saveData, _jsonSettings);
         await File.WriteAllTextAsync(savePath, json);
+    }
+
+    public List<string> GetAllSaves()
+    {
+        var result = new List<string>();
+
+        var files = Directory.GetFiles(_savesDirectory)
+            .OrderByDescending(f => File.GetLastWriteTime(f))
+            .ToList();
+
+        foreach (var file in files)
+        {
+            result.Add(Path.GetFileName(file).Replace(".json", ""));
+        }
+
+        return result;
     }
 
     public SessionContext Load(string saveFileName)
