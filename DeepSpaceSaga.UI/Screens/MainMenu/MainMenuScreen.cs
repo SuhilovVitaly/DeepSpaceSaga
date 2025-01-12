@@ -2,8 +2,6 @@
 
 public partial class MainMenuScreen : Form
 {
-    private const int BORDER_WIDTH = 2;
-
     public MainMenuScreen()
     {
         InitializeComponent();
@@ -14,12 +12,12 @@ public partial class MainMenuScreen : Form
         base.OnPaint(e);
 
         // Draw border
-        using Pen borderPen = new Pen(Color.FromArgb(32, 32, 32), BORDER_WIDTH);
+        using Pen borderPen = new Pen(UiConstants.FormBorderColor, UiConstants.FormBorderSize);
         Rectangle borderRect = new(
-            BORDER_WIDTH / 2,
-            BORDER_WIDTH / 2,
-            Width - BORDER_WIDTH,
-            Height - BORDER_WIDTH
+            UiConstants.FormBorderSize / 2,
+            UiConstants.FormBorderSize / 2,
+            Width - UiConstants.FormBorderSize,
+            Height - UiConstants.FormBorderSize
         );
         e.Graphics.DrawRectangle(borderPen, borderRect);
     }
@@ -32,5 +30,10 @@ public partial class MainMenuScreen : Form
     private void button2_Click(object sender, EventArgs e)
     {
         Global.GameManager.ShowTacticalGameScreen();
+    }
+
+    private void button3_Click(object sender, EventArgs e)
+    {
+        Global.GameManager.QuickLoad();
     }
 }

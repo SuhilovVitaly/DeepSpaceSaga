@@ -2,8 +2,6 @@
 
 public partial class BackgroundScreen : Form
 {
-    private const int BORDER_WIDTH = 2;
-
     // Add event that will fire only once when form is first shown
     public event EventHandler FirstShown;
     private bool _hasShown;
@@ -39,12 +37,12 @@ public partial class BackgroundScreen : Form
         base.OnPaint(e);
 
         // Draw border
-        using Pen borderPen = new Pen(Color.FromArgb(12, 12, 12), BORDER_WIDTH);
+        using Pen borderPen = new(UiConstants.FormBorderColor, UiConstants.FormBorderSize);
         Rectangle borderRect = new(
-            BORDER_WIDTH / 2,
-            BORDER_WIDTH / 2,
-            Width - BORDER_WIDTH,
-            Height - BORDER_WIDTH
+            UiConstants.FormBorderSize / 2,
+            UiConstants.FormBorderSize / 2,
+            Width - UiConstants.FormBorderSize,
+            Height - UiConstants.FormBorderSize
         );
         e.Graphics.DrawRectangle(borderPen, borderRect);
     }

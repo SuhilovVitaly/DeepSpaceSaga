@@ -9,6 +9,7 @@ public class EventManager
     public event Action<ICelestialObject>? OnUnselectCelestialObject;
     public event Action<ICelestialObject>? OnShowCelestialObject;
     public event Action<ICelestialObject>? OnHideCelestialObject;
+    public IGameServer GameServer { get; set; }
 
     private static readonly ILog Logger = LogManager.GetLogger(typeof(EventManager));
 
@@ -28,7 +29,9 @@ public class EventManager
         var settings = new LocalGameServerOptions();
         IGameEngine engine = new GameEngine(settings, metrics);
 
-        Worker = new Worker(new LocalGameServer(metrics, settings, new GameActionEvents(new List<GameActionEvent>()), engine, randomizer));
+        GameServer = new LocalGameServer(metrics, settings, new GameActionEvents(new List<GameActionEvent>()), engine, randomizer);
+
+        Worker = new Worker(GameServer);
         await InitializeAsync();
 
         Worker.OnGetDataFromServer += Worker_RefreshData;

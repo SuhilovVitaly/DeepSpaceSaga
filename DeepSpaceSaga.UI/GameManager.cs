@@ -99,6 +99,12 @@ public class GameManager : IDisposable
         }
     }
 
+    public void QuickLoad()
+    {
+        EventController.GameServer.QuickLoad();
+        _screenBackground.ShowChildForm(_screenTacticalGame);
+    }
+
     public void Dispose()
     {
         Dispose(true);

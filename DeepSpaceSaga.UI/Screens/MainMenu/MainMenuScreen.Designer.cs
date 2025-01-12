@@ -85,6 +85,7 @@
             button3.TabIndex = 0;
             button3.Text = "LOAD";
             button3.UseVisualStyleBackColor = false;
+            button3.Click += button3_Click;
             // 
             // MainMenuScreen
             // 
