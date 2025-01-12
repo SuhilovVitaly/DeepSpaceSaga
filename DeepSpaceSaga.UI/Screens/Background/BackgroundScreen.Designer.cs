@@ -36,7 +36,7 @@
             label1.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             label1.AutoSize = true;
             label1.ForeColor = Color.DarkOrange;
-            label1.Location = new Point(12, 421);
+            label1.Location = new Point(12, 901);
             label1.Name = "label1";
             label1.Size = new Size(50, 20);
             label1.TabIndex = 0;
@@ -46,8 +46,10 @@
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            BackgroundImageLayout = ImageLayout.None;
+            ClientSize = new Size(1921, 930);
             Controls.Add(label1);
+            DoubleBuffered = true;
             Name = "BackgroundScreen";
             Text = "BackgroundScreen";
             ResumeLayout(false);

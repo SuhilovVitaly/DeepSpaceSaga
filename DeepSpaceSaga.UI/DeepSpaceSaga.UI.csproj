@@ -71,6 +71,9 @@
     <None Update="Images\Layers\Tactical\spacecraft.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Images\MainMenuBackground.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Images\Ore\Iron.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

@@ -20,7 +20,7 @@ public partial class BackgroundScreen : Form
         Location = new Point(0, 0);
 
         // Subscribe to the Shown event
-        this.Shown += BackgroundScreen_Shown;
+        Shown += BackgroundScreen_Shown;
     }
 
     private void BackgroundScreen_Shown(object sender, EventArgs e)
@@ -35,6 +35,16 @@ public partial class BackgroundScreen : Form
     protected override void OnPaint(PaintEventArgs e)
     {
         base.OnPaint(e);
+
+        // Draw background image centered
+        string backgroundPath = Path.Combine("Images", "MainMenuBackground.jpg");
+        if (File.Exists(backgroundPath))
+        {
+            using var backgroundImage = Image.FromFile(backgroundPath);
+            int x = Width - backgroundImage.Width; // Right align image
+            int y = (Height - backgroundImage.Height) / 2; // Keep vertical centering
+            e.Graphics.DrawImage(backgroundImage, x, y);
+        }
 
         // Draw border
         using Pen borderPen = new(UiConstants.FormBorderColor, UiConstants.FormBorderSize);
