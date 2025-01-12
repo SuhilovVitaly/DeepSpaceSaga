@@ -21,4 +21,9 @@ public partial class GameNewLabelRow : UserControl
         );
         e.Graphics.DrawRectangle(borderPen, borderRect);
     }
+
+    private void Event_SaveGame(object sender, EventArgs e)
+    {
+
+    }
 }

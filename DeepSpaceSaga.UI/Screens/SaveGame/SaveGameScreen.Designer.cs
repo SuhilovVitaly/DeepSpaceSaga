@@ -29,10 +29,7 @@
         private void InitializeComponent()
         {
             button1 = new Button();
-            button2 = new Button();
-            button3 = new Button();
-            gameLabelRow2 = new ScreenControls.GameLabelRow();
-            gameNewLabelRow1 = new ScreenControls.GameNewLabelRow();
+            gameNewLabelRow2 = new ScreenControls.GameNewLabelRow();
             SuspendLayout();
             // 
             // button1
@@ -45,7 +42,7 @@
             button1.FlatStyle = FlatStyle.Flat;
             button1.Font = new Font("Verdana", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
             button1.ForeColor = Color.Gainsboro;
-            button1.Location = new Point(12, 561);
+            button1.Location = new Point(325, 561);
             button1.Name = "button1";
             button1.Size = new Size(150, 46);
             button1.TabIndex = 1;
@@ -53,67 +50,21 @@
             button1.UseVisualStyleBackColor = false;
             button1.Click += button1_Click;
             // 
-            // button2
+            // gameNewLabelRow2
             // 
-            button2.BackColor = Color.FromArgb(18, 18, 18);
-            button2.Cursor = Cursors.Hand;
-            button2.Enabled = false;
-            button2.FlatAppearance.BorderColor = Color.FromArgb(42, 42, 42);
-            button2.FlatAppearance.MouseDownBackColor = Color.FromArgb(78, 78, 78);
-            button2.FlatAppearance.MouseOverBackColor = Color.FromArgb(58, 58, 58);
-            button2.FlatStyle = FlatStyle.Flat;
-            button2.Font = new Font("Verdana", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            button2.ForeColor = Color.Gainsboro;
-            button2.Location = new Point(168, 561);
-            button2.Name = "button2";
-            button2.Size = new Size(150, 46);
-            button2.TabIndex = 2;
-            button2.Text = "DELETE";
-            button2.UseVisualStyleBackColor = false;
-            // 
-            // button3
-            // 
-            button3.BackColor = Color.FromArgb(18, 18, 18);
-            button3.Cursor = Cursors.Hand;
-            button3.FlatAppearance.BorderColor = Color.FromArgb(42, 42, 42);
-            button3.FlatAppearance.MouseDownBackColor = Color.FromArgb(78, 78, 78);
-            button3.FlatAppearance.MouseOverBackColor = Color.FromArgb(58, 58, 58);
-            button3.FlatStyle = FlatStyle.Flat;
-            button3.Font = new Font("Verdana", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            button3.ForeColor = Color.Gainsboro;
-            button3.Location = new Point(438, 561);
-            button3.Name = "button3";
-            button3.Size = new Size(150, 46);
-            button3.TabIndex = 3;
-            button3.Text = "SAVE";
-            button3.UseVisualStyleBackColor = false;
-            // 
-            // gameLabelRow2
-            // 
-            gameLabelRow2.BackColor = Color.Black;
-            gameLabelRow2.Location = new Point(50, 150);
-            gameLabelRow2.Name = "gameLabelRow2";
-            gameLabelRow2.Size = new Size(500, 70);
-            gameLabelRow2.TabIndex = 4;
-            // 
-            // gameNewLabelRow1
-            // 
-            gameNewLabelRow1.BackColor = Color.Black;
-            gameNewLabelRow1.Location = new Point(50, 50);
-            gameNewLabelRow1.Name = "gameNewLabelRow1";
-            gameNewLabelRow1.Size = new Size(500, 70);
-            gameNewLabelRow1.TabIndex = 5;
+            gameNewLabelRow2.BackColor = Color.Black;
+            gameNewLabelRow2.Location = new Point(23, 485);
+            gameNewLabelRow2.Name = "gameNewLabelRow2";
+            gameNewLabelRow2.Size = new Size(755, 70);
+            gameNewLabelRow2.TabIndex = 2;
             // 
             // SaveGameScreen
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.Black;
-            ClientSize = new Size(600, 619);
-            Controls.Add(gameNewLabelRow1);
-            Controls.Add(gameLabelRow2);
-            Controls.Add(button3);
-            Controls.Add(button2);
+            ClientSize = new Size(800, 619);
+            Controls.Add(gameNewLabelRow2);
             Controls.Add(button1);
             DoubleBuffered = true;
             FormBorderStyle = FormBorderStyle.None;
@@ -125,9 +76,8 @@
         #endregion
 
         private Button button1;
-        private Button button2;
-        private Button button3;
         private ScreenControls.GameLabelRow gameLabelRow2;
         private ScreenControls.GameNewLabelRow gameNewLabelRow1;
+        private ScreenControls.GameNewLabelRow gameNewLabelRow2;
     }
 }

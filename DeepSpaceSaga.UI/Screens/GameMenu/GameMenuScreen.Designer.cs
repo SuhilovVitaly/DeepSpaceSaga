@@ -45,7 +45,7 @@
             button1.FlatStyle = FlatStyle.Flat;
             button1.Font = new Font("Verdana", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
             button1.ForeColor = Color.Gainsboro;
-            button1.Location = new Point(225, 452);
+            button1.Location = new Point(325, 452);
             button1.Name = "button1";
             button1.Size = new Size(150, 46);
             button1.TabIndex = 0;
@@ -63,7 +63,7 @@
             button2.FlatStyle = FlatStyle.Flat;
             button2.Font = new Font("Verdana", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
             button2.ForeColor = Color.Gainsboro;
-            button2.Location = new Point(225, 140);
+            button2.Location = new Point(325, 140);
             button2.Name = "button2";
             button2.Size = new Size(150, 46);
             button2.TabIndex = 0;
@@ -81,7 +81,7 @@
             button3.FlatStyle = FlatStyle.Flat;
             button3.Font = new Font("Verdana", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
             button3.ForeColor = Color.Gainsboro;
-            button3.Location = new Point(225, 203);
+            button3.Location = new Point(325, 203);
             button3.Name = "button3";
             button3.Size = new Size(150, 46);
             button3.TabIndex = 0;
@@ -99,7 +99,7 @@
             button4.FlatStyle = FlatStyle.Flat;
             button4.Font = new Font("Verdana", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
             button4.ForeColor = Color.Gainsboro;
-            button4.Location = new Point(225, 267);
+            button4.Location = new Point(325, 267);
             button4.Name = "button4";
             button4.Size = new Size(150, 46);
             button4.TabIndex = 0;
@@ -116,7 +116,7 @@
             button5.FlatStyle = FlatStyle.Flat;
             button5.Font = new Font("Verdana", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
             button5.ForeColor = Color.Gainsboro;
-            button5.Location = new Point(225, 328);
+            button5.Location = new Point(325, 328);
             button5.Name = "button5";
             button5.Size = new Size(150, 46);
             button5.TabIndex = 0;
@@ -128,7 +128,7 @@
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.Black;
-            ClientSize = new Size(600, 619);
+            ClientSize = new Size(800, 619);
             Controls.Add(button5);
             Controls.Add(button4);
             Controls.Add(button3);
