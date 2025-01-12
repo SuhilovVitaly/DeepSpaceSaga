@@ -29,7 +29,8 @@ internal static class Program
 
         Global.GameManager.SetBackgroundScreenReference(backgroundScreen);
         Global.GameManager.SetMenuScreen(new MainMenuScreen());
-        Global.GameManager.SetTacticalGameScreen(new Form1());
+        Global.GameManager.SetGameMenuScreen(new GameMenuScreen());
+        Global.GameManager.SetTacticalGameScreen(new TacticGameScreen());
 
         Application.Run(backgroundScreen);
 

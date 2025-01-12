@@ -2,7 +2,7 @@
 
 public static class GameEventsHandker
 {
-    public static void Execute(GameSession session, Form1 tacticalScreen)
+    public static void Execute(GameSession session, TacticGameScreen tacticalScreen)
     {
         foreach (var gameEvent in session.Events)
         {

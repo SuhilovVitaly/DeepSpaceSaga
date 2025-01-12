@@ -1,8 +1,8 @@
 ﻿namespace DeepSpaceSaga.UI.Screens.MainMenu;
 
-public partial class MainMenuScreen : Form
+public partial class GameMenuScreen : Form
 {
-    public MainMenuScreen()
+    public GameMenuScreen()
     {
         InitializeComponent();
     }
@@ -24,8 +24,7 @@ public partial class MainMenuScreen : Form
 
     private void button1_Click(object sender, EventArgs e)
     {
-        Global.Cleanup();
-        Application.Exit();
+        Global.GameManager.ShowMenuScreen();
     }
 
     private void button2_Click(object sender, EventArgs e)

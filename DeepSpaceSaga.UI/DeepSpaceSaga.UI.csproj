@@ -30,6 +30,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Update="Screens\GameMenu\GameMenuScreen.cs">
+      <SubType>Form</SubType>
+    </Compile>
   </ItemGroup>
   
 

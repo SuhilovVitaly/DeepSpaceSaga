@@ -1,13 +1,13 @@
 ﻿namespace DeepSpaceSaga.UI;
 
-public partial class Form1 : Form
+public partial class TacticGameScreen : Form
 {
-    private static readonly ILog Logger = LogManager.GetLogger(MethodBase.GetCurrentMethod()?.DeclaringType);
+    private static readonly ILog Logger = LogManager.GetLogger(typeof(TacticGameScreen));
 
-    private ItemsContainer controlItemsContainer = new ItemsContainer();
-    private ScreenItemsTransfer controlItemsTransfer = new ScreenItemsTransfer();
+    private readonly ItemsContainer controlItemsContainer = new();
+    private readonly ScreenItemsTransfer controlItemsTransfer = new();
 
-    public Form1()
+    public TacticGameScreen()
     {
         InitializeComponent();
 
@@ -62,8 +62,7 @@ public partial class Form1 : Form
 
     private void button1_Click(object sender, EventArgs e)
     {
-        Global.Cleanup();
-        Application.Exit();
+        Global.GameManager.ShowGameMenuScreen();
     }
 
     private void button2_Click(object sender, EventArgs e)

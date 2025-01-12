@@ -1,6 +1,6 @@
 ﻿namespace DeepSpaceSaga.UI
 {
-    partial class Form1
+    partial class TacticGameScreen
     {
         /// <summary>
         ///  Required designer variable.

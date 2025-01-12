@@ -14,7 +14,7 @@ public class EventManager
     private static readonly ILog Logger = LogManager.GetLogger(typeof(EventManager));
 
     private SpaceMapEventHandler MapEventHandler { get; set; }
-    private Form1 _screenTacticalMap;
+    private TacticGameScreen _screenTacticalMap;
     
     private Worker Worker;
 
@@ -46,7 +46,7 @@ public class EventManager
         Logger.Info("The object has been successfully initialized.");
     }    
 
-    public void SetMainGameScreenReference(Form1 screenTacticalMap)
+    public void SetMainGameScreenReference(TacticGameScreen screenTacticalMap)
     {
         _screenTacticalMap = screenTacticalMap;
     }

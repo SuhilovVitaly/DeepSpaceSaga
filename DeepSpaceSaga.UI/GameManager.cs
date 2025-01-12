@@ -7,7 +7,8 @@ public class GameManager : IDisposable
     private bool disposed;
     private BackgroundScreen _screenBackground;
     private MainMenuScreen _screenMenu;
-    private Form1 _screenTacticalGame;
+    private GameMenuScreen _screenGameMenu;
+    private TacticGameScreen _screenTacticalGame;
 
     public EventManager EventController
     {
@@ -36,7 +37,22 @@ public class GameManager : IDisposable
         _screenMenu = screenMenu;
     }
 
-    public void SetTacticalGameScreen(Form1 screenTacticalGame)
+    public void ShowMenuScreen()
+    {
+        _screenBackground.ShowChildForm(_screenMenu);
+    }
+
+    public void SetGameMenuScreen(GameMenuScreen screenGameMenu)
+    {
+        _screenGameMenu = screenGameMenu;
+    }
+
+    public void ShowGameMenuScreen()
+    {
+        _screenBackground.ShowChildForm(_screenGameMenu);
+    }
+
+    public void SetTacticalGameScreen(TacticGameScreen screenTacticalGame)
     {
         _screenTacticalGame = screenTacticalGame;
     }
