@@ -1,6 +1,6 @@
-﻿namespace DeepSpaceSaga.UI.Screens.MainMenu
+﻿namespace DeepSpaceSaga.UI.Screens.SaveGame
 {
-    partial class GameMenuScreen
+    partial class SaveGameScreen
     {
         /// <summary>
         /// Required designer variable.
@@ -31,8 +31,8 @@
             button1 = new Button();
             button2 = new Button();
             button3 = new Button();
-            button4 = new Button();
-            button5 = new Button();
+            gameLabelRow2 = new ScreenControls.GameLabelRow();
+            gameNewLabelRow1 = new ScreenControls.GameNewLabelRow();
             SuspendLayout();
             // 
             // button1
@@ -45,10 +45,10 @@
             button1.FlatStyle = FlatStyle.Flat;
             button1.Font = new Font("Verdana", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
             button1.ForeColor = Color.Gainsboro;
-            button1.Location = new Point(225, 452);
+            button1.Location = new Point(12, 561);
             button1.Name = "button1";
             button1.Size = new Size(150, 46);
-            button1.TabIndex = 0;
+            button1.TabIndex = 1;
             button1.Text = "EXIT";
             button1.UseVisualStyleBackColor = false;
             button1.Click += button1_Click;
@@ -57,19 +57,19 @@
             // 
             button2.BackColor = Color.FromArgb(18, 18, 18);
             button2.Cursor = Cursors.Hand;
+            button2.Enabled = false;
             button2.FlatAppearance.BorderColor = Color.FromArgb(42, 42, 42);
             button2.FlatAppearance.MouseDownBackColor = Color.FromArgb(78, 78, 78);
             button2.FlatAppearance.MouseOverBackColor = Color.FromArgb(58, 58, 58);
             button2.FlatStyle = FlatStyle.Flat;
             button2.Font = new Font("Verdana", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
             button2.ForeColor = Color.Gainsboro;
-            button2.Location = new Point(225, 140);
+            button2.Location = new Point(168, 561);
             button2.Name = "button2";
             button2.Size = new Size(150, 46);
-            button2.TabIndex = 0;
-            button2.Text = "RESUME";
+            button2.TabIndex = 2;
+            button2.Text = "DELETE";
             button2.UseVisualStyleBackColor = false;
-            button2.Click += button2_Click;
             // 
             // button3
             // 
@@ -81,63 +81,44 @@
             button3.FlatStyle = FlatStyle.Flat;
             button3.Font = new Font("Verdana", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
             button3.ForeColor = Color.Gainsboro;
-            button3.Location = new Point(225, 203);
+            button3.Location = new Point(438, 561);
             button3.Name = "button3";
             button3.Size = new Size(150, 46);
-            button3.TabIndex = 0;
+            button3.TabIndex = 3;
             button3.Text = "SAVE";
             button3.UseVisualStyleBackColor = false;
-            button3.Click += Event_SaveGame;
             // 
-            // button4
+            // gameLabelRow2
             // 
-            button4.BackColor = Color.FromArgb(18, 18, 18);
-            button4.Cursor = Cursors.Hand;
-            button4.FlatAppearance.BorderColor = Color.FromArgb(42, 42, 42);
-            button4.FlatAppearance.MouseDownBackColor = Color.FromArgb(78, 78, 78);
-            button4.FlatAppearance.MouseOverBackColor = Color.FromArgb(58, 58, 58);
-            button4.FlatStyle = FlatStyle.Flat;
-            button4.Font = new Font("Verdana", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            button4.ForeColor = Color.Gainsboro;
-            button4.Location = new Point(225, 267);
-            button4.Name = "button4";
-            button4.Size = new Size(150, 46);
-            button4.TabIndex = 0;
-            button4.Text = "LOAD";
-            button4.UseVisualStyleBackColor = false;
+            gameLabelRow2.BackColor = Color.Black;
+            gameLabelRow2.Location = new Point(50, 150);
+            gameLabelRow2.Name = "gameLabelRow2";
+            gameLabelRow2.Size = new Size(500, 70);
+            gameLabelRow2.TabIndex = 4;
             // 
-            // button5
+            // gameNewLabelRow1
             // 
-            button5.BackColor = Color.FromArgb(18, 18, 18);
-            button5.Cursor = Cursors.Hand;
-            button5.FlatAppearance.BorderColor = Color.FromArgb(42, 42, 42);
-            button5.FlatAppearance.MouseDownBackColor = Color.FromArgb(78, 78, 78);
-            button5.FlatAppearance.MouseOverBackColor = Color.FromArgb(58, 58, 58);
-            button5.FlatStyle = FlatStyle.Flat;
-            button5.Font = new Font("Verdana", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            button5.ForeColor = Color.Gainsboro;
-            button5.Location = new Point(225, 328);
-            button5.Name = "button5";
-            button5.Size = new Size(150, 46);
-            button5.TabIndex = 0;
-            button5.Text = "SETTINGS";
-            button5.UseVisualStyleBackColor = false;
+            gameNewLabelRow1.BackColor = Color.Black;
+            gameNewLabelRow1.Location = new Point(50, 50);
+            gameNewLabelRow1.Name = "gameNewLabelRow1";
+            gameNewLabelRow1.Size = new Size(500, 70);
+            gameNewLabelRow1.TabIndex = 5;
             // 
-            // GameMenuScreen
+            // SaveGameScreen
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.Black;
             ClientSize = new Size(600, 619);
-            Controls.Add(button5);
-            Controls.Add(button4);
+            Controls.Add(gameNewLabelRow1);
+            Controls.Add(gameLabelRow2);
             Controls.Add(button3);
             Controls.Add(button2);
             Controls.Add(button1);
             DoubleBuffered = true;
             FormBorderStyle = FormBorderStyle.None;
-            Name = "GameMenuScreen";
-            Text = "MainMenuScreen";
+            Name = "SaveGameScreen";
+            Text = "SaveGameScreen";
             ResumeLayout(false);
         }
 
@@ -146,7 +127,7 @@
         private Button button1;
         private Button button2;
         private Button button3;
-        private Button button4;
-        private Button button5;
+        private ScreenControls.GameLabelRow gameLabelRow2;
+        private ScreenControls.GameNewLabelRow gameNewLabelRow1;
     }
 }

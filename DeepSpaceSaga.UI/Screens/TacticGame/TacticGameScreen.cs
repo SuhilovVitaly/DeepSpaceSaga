@@ -62,6 +62,7 @@ public partial class TacticGameScreen : Form
 
     private void button1_Click(object sender, EventArgs e)
     {
+        Global.GameManager.EventController.Pause();
         Global.GameManager.ShowGameMenuScreen();
     }
 

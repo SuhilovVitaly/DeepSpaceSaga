@@ -1,8 +1,8 @@
-﻿namespace DeepSpaceSaga.UI.Screens.MainMenu;
+﻿namespace DeepSpaceSaga.UI.Screens.SaveGame;
 
-public partial class GameMenuScreen : Form
+public partial class SaveGameScreen : Form
 {
-    public GameMenuScreen()
+    public SaveGameScreen()
     {
         InitializeComponent();
     }
@@ -24,21 +24,6 @@ public partial class GameMenuScreen : Form
 
     private void button1_Click(object sender, EventArgs e)
     {
-        Global.GameManager.ShowMenuScreen();
-    }
-
-    private void button2_Click(object sender, EventArgs e)
-    {
-        Global.GameManager.ShowTacticalGameScreen();
-    }
-
-    private void button3_Click(object sender, EventArgs e)
-    {
-        Global.GameManager.QuickLoad();
-    }
-
-    private void Event_SaveGame(object sender, EventArgs e)
-    {
-        Global.GameManager.ShowSaveGameScreen();
+        Global.GameManager.ShowGameMenuScreen();
     }
 }

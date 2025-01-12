@@ -1,4 +1,6 @@
-﻿namespace DeepSpaceSaga.UI;
+﻿using DeepSpaceSaga.UI.Screens.SaveGame;
+
+namespace DeepSpaceSaga.UI;
 
 public class GameManager : IDisposable
 {
@@ -8,6 +10,7 @@ public class GameManager : IDisposable
     private BackgroundScreen _screenBackground;
     private MainMenuScreen _screenMenu;
     private GameMenuScreen _screenGameMenu;
+    private SaveGameScreen _saveGameScreen;
     private TacticGameScreen _screenTacticalGame;
 
     public EventManager EventController
@@ -60,6 +63,16 @@ public class GameManager : IDisposable
     public void ShowTacticalGameScreen()
     {
         _screenBackground.ShowChildForm(_screenTacticalGame);
+    }
+
+    public void SetSaveGameScreen(SaveGameScreen saveGameScreen)
+    {
+        _saveGameScreen = saveGameScreen;
+    }
+
+    public void ShowSaveGameScreen()
+    {
+        _screenBackground.ShowChildForm(_saveGameScreen, true);
     }
 
     private void StartGameProcess()
