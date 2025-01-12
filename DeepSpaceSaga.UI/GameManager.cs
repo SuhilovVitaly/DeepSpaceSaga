@@ -49,7 +49,7 @@ public class GameManager : IDisposable
 
     public void ShowGameMenuScreen()
     {
-        _screenBackground.ShowChildForm(_screenGameMenu);
+        _screenBackground.ShowChildForm(_screenGameMenu, true);
     }
 
     public void SetTacticalGameScreen(TacticGameScreen screenTacticalGame)

@@ -30,3 +30,4 @@ global using DeepSpaceSaga.Common.Infrastructure.Commands.CargoOperations;
 global using DeepSpaceSaga.UI.Render.Rendering.TacticalMap;
 global using DeepSpaceSaga.UI.Screens.Background;
 global using DeepSpaceSaga.UI.Screens.MainMenu;
+global using DeepSpaceSaga.UI.Screens.CommonControls;

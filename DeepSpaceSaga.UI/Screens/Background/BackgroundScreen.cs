@@ -47,17 +47,31 @@ public partial class BackgroundScreen : Form
         e.Graphics.DrawRectangle(borderPen, borderRect);
     }
 
-    public void ShowChildForm(Form childForm)
+    public void ShowChildForm(Form childForm, bool isTransparent = false)
     {
         if (childForm == null) return;
 
         // Check if form already exists in controls
         var existingForm = Controls.OfType<Form>().FirstOrDefault(f => f.GetType() == childForm.GetType());
         
-        // Hide all other forms
-        foreach (Form form in Controls.OfType<Form>())
+        if (!isTransparent)
         {
-            form.Visible = false;
+            // Hide all other forms in non-transparent mode
+            foreach (Form form in Controls.OfType<Form>())
+            {
+                form.Visible = false;
+            }
+        }
+        else
+        {
+            TransparentPanel overlayPanel = new()
+            {
+                Size = this.Size,
+                Location = new Point(0, 0)
+            };
+
+            Controls.Add(overlayPanel);
+            overlayPanel.BringToFront();
         }
 
         if (existingForm != null)
@@ -80,9 +94,12 @@ public partial class BackgroundScreen : Form
             (Height - childForm.Height) / 2
         );
 
+
         Controls.Add(childForm);
         childForm.Show();
         childForm.BringToFront();
         childForm.Focus();
     }
 }
+
+
