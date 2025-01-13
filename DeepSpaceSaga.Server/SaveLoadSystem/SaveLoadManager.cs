@@ -27,6 +27,16 @@ public class SaveLoadManager
         Directory.CreateDirectory(_savesDirectory);
     }
 
+    public void  DeleteSave(string saveFileName)
+    {
+        var savePath = Path.Combine(_savesDirectory, saveFileName + ".json");
+
+        if (File.Exists(savePath))
+        {
+            File.Delete(savePath);
+        }
+    }
+
     public async Task Save(CelestialMap spaceMap, string saveFileName)
     {
         var savePath = Path.Combine(_savesDirectory, saveFileName);

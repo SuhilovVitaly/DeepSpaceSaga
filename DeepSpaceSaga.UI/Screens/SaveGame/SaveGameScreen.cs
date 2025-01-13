@@ -31,28 +31,50 @@ public partial class SaveGameScreen : Form
 
     private void SaveGameScreen_VisibleChanged(object sender, EventArgs e)
     {
-        if (this.Visible)
+        if (Visible)
         {
-            // Clear existing save controls
-            Controls.OfType<GameLabelRow>().ToList().ForEach(x => Controls.Remove(x));
-
-            int currentSave = 0;
-
-            foreach (var item in Global.GameManager.SaveLoadSystem.GetAllSaves())
-            {                
-                if (currentSave >= 5) break;
-
-                var saveControl = new GameLabelRow
-                {
-                    LabelText = item,
-                    Location = new Point(25, 70 * currentSave + 25),
-                    Visible = true,
-                };
-
-                Controls.Add(saveControl);
-
-                currentSave++;
-            }
+            ReDrawSaves();
         }
+    }
+
+    private void ReDrawSaves()
+    {
+        // Clear existing save controls
+        Controls.OfType<GameLabelRow>().ToList().ForEach(x => Controls.Remove(x));
+
+        int currentSave = 0;
+
+        foreach (var item in Global.GameManager.SaveLoadSystem.GetAllSaves())
+        {
+            if (currentSave >= 5) break;
+
+            var saveControl = new GameLabelRow
+            {
+                LabelText = item,
+                Location = new Point(25, 70 * currentSave + 25),
+                Visible = true,
+            };
+
+            saveControl.OnOverrideClicked += Event_Override;
+            saveControl.OnDeleteClicked += Event_Delete;
+
+            Controls.Add(saveControl);
+
+            currentSave++;
+        }
+    }
+
+    private void Event_Delete(object? sender, string saveName)
+    {
+        Global.GameManager.SaveLoadSystem.DeleteSave(saveName);
+
+        ReDrawSaves();
+    }
+
+    private void Event_Override(object? sender, string saveName)
+    {
+        Global.GameManager.SaveLoadSystem.Save(Global.GameManager.GetSession().SpaceMap, saveName + ".json");
+
+        Global.GameManager.ShowGameMenuScreen();
     }
 }

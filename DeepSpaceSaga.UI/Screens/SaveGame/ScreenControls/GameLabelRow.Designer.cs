@@ -28,27 +28,27 @@
         /// </summary>
         private void InitializeComponent()
         {
-            button3 = new Button();
+            cmdOverride = new Button();
             label1 = new Label();
-            button1 = new Button();
+            cmdDelete = new Button();
             SuspendLayout();
             // 
-            // button3
+            // cmdOverride
             // 
-            button3.BackColor = Color.FromArgb(18, 18, 18);
-            button3.Cursor = Cursors.Hand;
-            button3.FlatAppearance.BorderColor = Color.FromArgb(42, 42, 42);
-            button3.FlatAppearance.MouseDownBackColor = Color.FromArgb(78, 78, 78);
-            button3.FlatAppearance.MouseOverBackColor = Color.FromArgb(58, 58, 58);
-            button3.FlatStyle = FlatStyle.Flat;
-            button3.Font = new Font("Verdana", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            button3.ForeColor = Color.Gainsboro;
-            button3.Image = Properties.Resources.save;
-            button3.Location = new Point(632, 9);
-            button3.Name = "button3";
-            button3.Size = new Size(52, 52);
-            button3.TabIndex = 6;
-            button3.UseVisualStyleBackColor = false;
+            cmdOverride.BackColor = Color.FromArgb(18, 18, 18);
+            cmdOverride.Cursor = Cursors.Hand;
+            cmdOverride.FlatAppearance.BorderColor = Color.FromArgb(42, 42, 42);
+            cmdOverride.FlatAppearance.MouseDownBackColor = Color.FromArgb(78, 78, 78);
+            cmdOverride.FlatAppearance.MouseOverBackColor = Color.FromArgb(58, 58, 58);
+            cmdOverride.FlatStyle = FlatStyle.Flat;
+            cmdOverride.Font = new Font("Verdana", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            cmdOverride.ForeColor = Color.Gainsboro;
+            cmdOverride.Image = Properties.Resources.save;
+            cmdOverride.Location = new Point(632, 9);
+            cmdOverride.Name = "cmdOverride";
+            cmdOverride.Size = new Size(52, 52);
+            cmdOverride.TabIndex = 6;
+            cmdOverride.UseVisualStyleBackColor = false;
             // 
             // label1
             // 
@@ -60,30 +60,30 @@
             label1.TabIndex = 5;
             label1.Text = "New Save";
             // 
-            // button1
+            // cmdDelete
             // 
-            button1.BackColor = Color.FromArgb(18, 18, 18);
-            button1.Cursor = Cursors.Hand;
-            button1.FlatAppearance.BorderColor = Color.FromArgb(42, 42, 42);
-            button1.FlatAppearance.MouseDownBackColor = Color.FromArgb(78, 78, 78);
-            button1.FlatAppearance.MouseOverBackColor = Color.FromArgb(58, 58, 58);
-            button1.FlatStyle = FlatStyle.Flat;
-            button1.Font = new Font("Verdana", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            button1.ForeColor = Color.Gainsboro;
-            button1.Image = Properties.Resources.trash;
-            button1.Location = new Point(690, 9);
-            button1.Name = "button1";
-            button1.Size = new Size(52, 52);
-            button1.TabIndex = 7;
-            button1.UseVisualStyleBackColor = false;
+            cmdDelete.BackColor = Color.FromArgb(18, 18, 18);
+            cmdDelete.Cursor = Cursors.Hand;
+            cmdDelete.FlatAppearance.BorderColor = Color.FromArgb(42, 42, 42);
+            cmdDelete.FlatAppearance.MouseDownBackColor = Color.FromArgb(78, 78, 78);
+            cmdDelete.FlatAppearance.MouseOverBackColor = Color.FromArgb(58, 58, 58);
+            cmdDelete.FlatStyle = FlatStyle.Flat;
+            cmdDelete.Font = new Font("Verdana", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            cmdDelete.ForeColor = Color.Gainsboro;
+            cmdDelete.Image = Properties.Resources.trash;
+            cmdDelete.Location = new Point(690, 9);
+            cmdDelete.Name = "cmdDelete";
+            cmdDelete.Size = new Size(52, 52);
+            cmdDelete.TabIndex = 7;
+            cmdDelete.UseVisualStyleBackColor = false;
             // 
             // GameLabelRow
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.Black;
-            Controls.Add(button1);
-            Controls.Add(button3);
+            Controls.Add(cmdDelete);
+            Controls.Add(cmdOverride);
             Controls.Add(label1);
             DoubleBuffered = true;
             Name = "GameLabelRow";
@@ -93,8 +93,8 @@
 
         #endregion
 
-        private Button button3;
+        private Button cmdOverride;
         private Label label1;
-        private Button button1;
+        private Button cmdDelete;
     }
 }

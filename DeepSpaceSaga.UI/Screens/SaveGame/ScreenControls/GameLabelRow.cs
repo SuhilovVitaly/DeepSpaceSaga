@@ -8,9 +8,17 @@ public partial class GameLabelRow : UserControl
         set => label1.Text = value; // Set the text of label1
     }
     
+    // Define events
+    public event EventHandler<string>? OnOverrideClicked;
+    public event EventHandler<string>? OnDeleteClicked;
+
     public GameLabelRow()
     {
         InitializeComponent();
+
+        // Add click handlers
+        cmdOverride.Click += (s, e) => OnOverrideClicked?.Invoke(this, label1.Text);
+        cmdDelete.Click += (s, e) => OnDeleteClicked?.Invoke(this, label1.Text);
     }
 
     protected override void OnPaint(PaintEventArgs e)
