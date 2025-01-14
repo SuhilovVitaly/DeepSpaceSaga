@@ -32,3 +32,4 @@ global using DeepSpaceSaga.UI.Screens.CommonControls;
 global using DeepSpaceSaga.UI.Screens.SaveGame;
 global using DeepSpaceSaga.Server.SaveLoadSystem;
 global using DeepSpaceSaga.UI.Screens.SaveGame.ScreenControls;
+global using DeepSpaceSaga.UI.Screens.LoadGame.ScreenControls;

@@ -1,12 +1,20 @@
-﻿namespace DeepSpaceSaga.UI.Screens.SaveGame;
+﻿namespace DeepSpaceSaga.UI.Screens.LoadGame;
 
-public partial class SaveGameScreen : Form
+public partial class LoadGameScreen : Form
 {
-    public SaveGameScreen()
+    public LoadGameScreen()
     {
         InitializeComponent();
 
-        VisibleChanged += SaveGameScreen_VisibleChanged;
+        VisibleChanged += Event_ScreenVisibleChanged;
+    }
+
+    private void Event_ScreenVisibleChanged(object? sender, EventArgs e)
+    {
+        if (Visible)
+        {
+            ReDrawSaves();
+        }
     }
 
     protected override void OnPaint(PaintEventArgs e)
@@ -24,23 +32,15 @@ public partial class SaveGameScreen : Form
         e.Graphics.DrawRectangle(borderPen, borderRect);
     }
 
-    private void button1_Click(object sender, EventArgs e)
+    private void Event_CloseScreen(object sender, EventArgs e)
     {
         Global.GameManager.ShowGameMenuScreen();
-    }
-
-    private void SaveGameScreen_VisibleChanged(object sender, EventArgs e)
-    {
-        if (Visible)
-        {
-            ReDrawSaves();
-        }
     }
 
     private void ReDrawSaves()
     {
         // Clear existing save controls
-        Controls.OfType<GameLabelRow>().ToList().ForEach(x => Controls.Remove(x));
+        Controls.OfType<GameLoadRow>().ToList().ForEach(x => Controls.Remove(x));
 
         int currentSave = 0;
 
@@ -48,14 +48,14 @@ public partial class SaveGameScreen : Form
         {
             if (currentSave >= 5) break;
 
-            var saveControl = new GameLabelRow
+            var saveControl = new GameLoadRow
             {
                 LabelText = item,
                 Location = new Point(25, 70 * currentSave + 25),
                 Visible = true,
             };
 
-            saveControl.OnOverrideClicked += Event_Override;
+            saveControl.OnLoadClicked += Event_Load;
             saveControl.OnDeleteClicked += Event_Delete;
 
             Controls.Add(saveControl);
@@ -71,9 +71,10 @@ public partial class SaveGameScreen : Form
         ReDrawSaves();
     }
 
-    private void Event_Override(object? sender, string saveName)
+    private void Event_Load(object? sender, string saveName)
     {
         Global.GameManager.Load(saveName);
-        Visible = false;
+
+        Global.GameManager.ShowTacticalGameScreen();
     }
 }

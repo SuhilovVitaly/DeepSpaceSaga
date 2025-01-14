@@ -10,6 +10,7 @@ public interface IWorker
     void SetGameSpeed(int speed);
     void Save();
     void Load();
+    void Load(string saveName);
 }
 
 public class Worker : IWorker
@@ -118,5 +119,10 @@ public class Worker : IWorker
     public void Load()
     {
         _gameServer.QuickLoad();
+    }
+
+    public void Load(string saveName)
+    {
+        _gameServer.Load(saveName);
     }
 }

@@ -1,4 +1,5 @@
-﻿using DeepSpaceSaga.UI.Screens.SaveGame;
+﻿using DeepSpaceSaga.UI.Screens.LoadGame;
+using DeepSpaceSaga.UI.Screens.SaveGame;
 
 namespace DeepSpaceSaga.UI;
 
@@ -33,6 +34,7 @@ internal static class Program
         Global.GameManager.SetMenuScreen(new MainMenuScreen());
         Global.GameManager.SetGameMenuScreen(new GameMenuScreen());
         Global.GameManager.SetSaveGameScreen(new SaveGameScreen());
+        Global.GameManager.SetLoadGameScreen(new LoadGameScreen());
         Global.GameManager.SetTacticalGameScreen(new TacticGameScreen());
 
         Application.Run(backgroundScreen);

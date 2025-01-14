@@ -105,11 +105,13 @@
             button4.TabIndex = 0;
             button4.Text = "LOAD";
             button4.UseVisualStyleBackColor = false;
+            button4.Click += Event_LoadGame;
             // 
             // button5
             // 
             button5.BackColor = Color.FromArgb(18, 18, 18);
             button5.Cursor = Cursors.Hand;
+            button5.Enabled = false;
             button5.FlatAppearance.BorderColor = Color.FromArgb(42, 42, 42);
             button5.FlatAppearance.MouseDownBackColor = Color.FromArgb(78, 78, 78);
             button5.FlatAppearance.MouseOverBackColor = Color.FromArgb(58, 58, 58);

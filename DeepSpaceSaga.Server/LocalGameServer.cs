@@ -210,4 +210,13 @@ public class LocalGameServer : IGameServer
             return SessionContext;
         }, "Execution");
     }
+
+    public void Load(string saveName)
+    {
+        _executor.ExecuteWithLock(() =>
+        {
+            SessionContext = new SaveLoadManager().Load(saveName + ".json");
+            return SessionContext;
+        }, "Execution");
+    }
 }

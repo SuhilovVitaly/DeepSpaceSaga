@@ -12,4 +12,5 @@ public interface IGameServer
     void SetGameSpeed(int speed);
     void QuickSave();
     void QuickLoad();
+    void Load(string saveName);
 }

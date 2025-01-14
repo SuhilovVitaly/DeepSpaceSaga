@@ -1,4 +1,6 @@
-﻿namespace DeepSpaceSaga.UI;
+﻿using DeepSpaceSaga.UI.Screens.LoadGame;
+
+namespace DeepSpaceSaga.UI;
 
 public class GameManager : IDisposable
 {
@@ -10,6 +12,7 @@ public class GameManager : IDisposable
     private MainMenuScreen _screenMenu;
     private GameMenuScreen _screenGameMenu;
     private SaveGameScreen _saveGameScreen;
+    private LoadGameScreen _loadGameScreen;
     private TacticGameScreen _screenTacticalGame;
 
 
@@ -75,6 +78,16 @@ public class GameManager : IDisposable
         _screenBackground.ShowChildForm(_saveGameScreen, true);
     }
 
+    public void SetLoadGameScreen(LoadGameScreen loadGameScreen)
+    {
+        _loadGameScreen = loadGameScreen;
+    }
+
+    public void ShowLoadGameScreen()
+    {
+        _screenBackground.ShowChildForm(_loadGameScreen, true);
+    }
+
     private void StartGameProcess()
     {
         _screenBackground.ShowChildForm(_screenMenu);
@@ -131,6 +144,12 @@ public class GameManager : IDisposable
     public void QuickLoad()
     {
         EventController.GameServer.QuickLoad();
+        _screenBackground.ShowChildForm(_screenTacticalGame);
+    }
+
+    public void Load(string saveName)
+    {
+        EventController.GameServer.Load(saveName);
         _screenBackground.ShowChildForm(_screenTacticalGame);
     }
 

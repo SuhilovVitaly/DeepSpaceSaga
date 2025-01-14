@@ -41,4 +41,9 @@ public partial class GameMenuScreen : Form
     {
         Global.GameManager.ShowSaveGameScreen();
     }
+
+    private void Event_LoadGame(object sender, EventArgs e)
+    {
+        Global.GameManager.ShowLoadGameScreen();
+    }
 }

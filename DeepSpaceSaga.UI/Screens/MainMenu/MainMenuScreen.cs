@@ -33,8 +33,8 @@ public partial class MainMenuScreen : Form
         Global.GameManager.ShowTacticalGameScreen();
     }
 
-    private void button3_Click(object sender, EventArgs e)
+    private void Event_LoadGame(object sender, EventArgs e)
     {
-        Global.GameManager.QuickLoad();
+        
     }
 }
