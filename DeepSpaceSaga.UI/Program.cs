@@ -48,8 +48,12 @@ internal static class Program
     {
         return Host.CreateDefaultBuilder()
             .ConfigureServices((context, services) => {
+                services.AddScoped<ILocalGameServerOptions, LocalGameServerOptions>();
+                services.AddScoped<IServerMetrics, ServerMetrics>();
                 services.AddTransient<ISaveLoadService, SaveLoadService>();
                 services.AddScoped<IGenerationTool, GenerationTool>();
+                services.AddScoped<IGameEngine, GameEngine>();
+                services.AddTransient<IGameServerService, GameServerService>();
             });
     }
 }

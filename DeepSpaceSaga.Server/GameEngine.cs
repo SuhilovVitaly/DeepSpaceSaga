@@ -5,14 +5,14 @@ public class GameEngine: IGameEngine
     public event Action? OnTickExecute;
     public event Action? OnTurnExecute;
 
-    private readonly LocalGameServerOptions _options;
+    private readonly ILocalGameServerOptions _options;
     private readonly IServerMetrics _metrics;
     private readonly int _ticksInTurn;
     private int _currentTick;
 
     private static readonly ILog _logger = LogManager.GetLogger(typeof(GameEngine));
 
-    public GameEngine(LocalGameServerOptions options, IServerMetrics metrics)
+    public GameEngine(ILocalGameServerOptions options, IServerMetrics metrics)
     {
         ArgumentNullException.ThrowIfNull(options);
         ArgumentNullException.ThrowIfNull(metrics);

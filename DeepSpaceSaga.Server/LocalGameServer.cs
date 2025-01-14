@@ -8,7 +8,7 @@ public class LocalGameServer : IGameServer
     public event Action<GameSession>? OnTurnExecute;
 
     private readonly IGameEngine _engine;      
-    private readonly LocalGameServerOptions _options;
+    private readonly ILocalGameServerOptions _options;
     private readonly ThreadSafeExecutor _executor = new();
     private readonly IServerMetrics _metrics;
     private IFlowContext _sessionContext;
@@ -31,10 +31,10 @@ public class LocalGameServer : IGameServer
     
     public LocalGameServer(
         IServerMetrics metrics,
-        LocalGameServerOptions options,
+        ILocalGameServerOptions options,
         IGameActionEvents actions,
         IGameEngine gameEngine,
-        GenerationTool randomizer,
+        IGenerationTool randomizer,
         GameEventsSystem? eventsSystem = null)
     {
         ArgumentNullException.ThrowIfNull(metrics);

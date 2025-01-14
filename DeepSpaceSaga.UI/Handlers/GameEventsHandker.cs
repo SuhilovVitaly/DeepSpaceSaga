@@ -9,7 +9,7 @@ public static class GameEventsHandker
             switch (gameEvent.TriggerCommand?.Type)
             {                
                 case CommandTypes.MiningOperationsResult:
-                    tacticalScreen.OpenCargoUI(gameEvent.Copy());
+                    tacticalScreen.OpenCargoUI((GameActionEvent)gameEvent.Copy());
                     break;
             }
         }

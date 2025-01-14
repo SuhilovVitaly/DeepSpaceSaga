@@ -8,7 +8,7 @@ public interface IFlowContext
 
     IServerMetrics Metrics { get; set; }
 
-    IGenerationTool Randomizer { get; set; } 
+    IGenerationTool Randomizer { get; set; }
 
-    LocalGameServerOptions Settings { get; set; } 
+    ILocalGameServerOptions Settings { get; set; } 
 }
