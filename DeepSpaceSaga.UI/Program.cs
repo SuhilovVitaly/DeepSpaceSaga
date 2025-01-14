@@ -30,16 +30,7 @@ internal static class Program
 
         Global.GameInitialization();
 
-        var backgroundScreen = new BackgroundScreen();
-
-        Global.GameManager.SetBackgroundScreenReference(backgroundScreen);
-        Global.GameManager.SetMenuScreen(new MainMenuScreen());
-        Global.GameManager.SetGameMenuScreen(new GameMenuScreen());
-        Global.GameManager.SetSaveGameScreen(new SaveGameScreen());
-        Global.GameManager.SetLoadGameScreen(new LoadGameScreen());
-        Global.GameManager.SetTacticalGameScreen(new TacticGameScreen());
-
-        Application.Run(backgroundScreen);
+        Application.Run(ServiceProvider.GetService<BackgroundScreen>());
 
         Logger.Info("Finished 'Deep Space Saga' game desktop client.");
     }
@@ -57,12 +48,12 @@ internal static class Program
     static void CreateScreensBuilder(IServiceCollection services)
     {
         // Screen services registration
-        services.AddTransient<BackgroundScreen>();
+        services.AddScoped<BackgroundScreen>();
         services.AddTransient<MainMenuScreen>();
         services.AddTransient<GameMenuScreen>();
         services.AddTransient<SaveGameScreen>();
         services.AddTransient<LoadGameScreen>();
-        services.AddTransient<TacticGameScreen>();
+        services.AddScoped<TacticGameScreen>();
     }
 
     static void RegisterCoreServices(IServiceCollection services)

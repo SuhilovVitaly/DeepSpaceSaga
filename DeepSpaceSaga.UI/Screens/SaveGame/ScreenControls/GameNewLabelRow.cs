@@ -25,6 +25,6 @@ public partial class GameNewLabelRow : UserControl
     private void Event_SaveGame(object sender, EventArgs e)
     {        
         Global.GameManager.SaveLoadSystem.Save(Global.GameManager.GetSession().SpaceMap, txtSaveName.Text + ".json");
-        Global.GameManager.ShowGameMenuScreen();
+        Global.GameManager.Screens.ShowGameMenuScreen();
     }
 }

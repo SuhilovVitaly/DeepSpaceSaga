@@ -26,7 +26,7 @@ public partial class SaveGameScreen : Form
 
     private void button1_Click(object sender, EventArgs e)
     {
-        Global.GameManager.ShowGameMenuScreen();
+        Global.GameManager.Screens.ShowGameMenuScreen();
     }
 
     private void SaveGameScreen_VisibleChanged(object sender, EventArgs e)

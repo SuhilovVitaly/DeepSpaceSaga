@@ -30,7 +30,8 @@ public partial class MainMenuScreen : Form
 
     private void button2_Click(object sender, EventArgs e)
     {
-        Global.GameManager.ShowTacticalGameScreen();
+        Global.GameManager.Initialization();
+        Global.GameManager.Screens.ShowTacticalGameScreen();
     }
 
     private void Event_LoadGame(object sender, EventArgs e)

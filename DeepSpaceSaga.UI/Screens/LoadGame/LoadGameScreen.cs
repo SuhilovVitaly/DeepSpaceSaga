@@ -34,7 +34,7 @@ public partial class LoadGameScreen : Form
 
     private void Event_CloseScreen(object sender, EventArgs e)
     {
-        Global.GameManager.ShowGameMenuScreen();
+        Global.GameManager.Screens.ShowGameMenuScreen();
     }
 
     private void ReDrawSaves()
@@ -75,6 +75,6 @@ public partial class LoadGameScreen : Form
     {
         Global.GameManager.Load(saveName);
 
-        Global.GameManager.ShowTacticalGameScreen();
+        Global.GameManager.Screens.ShowTacticalGameScreen();
     }
 }

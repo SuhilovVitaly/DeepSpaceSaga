@@ -6,19 +6,13 @@ public partial class TacticGameScreen : Form
 
     private readonly ItemsContainer controlItemsContainer = new();
     private readonly ScreenItemsTransfer controlItemsTransfer = new();
+    IGameManager _gameManager;
 
-    public TacticGameScreen()
+    public void Initialization()
     {
-        InitializeComponent();
+        _gameManager = Program.ServiceProvider.GetService<IGameManager>();
 
-        ActiveControl = null;
-
-        crlTacticalMap.Dock = DockStyle.Fill;
-
-        KeyPreview = true;
-        KeyDown += Window_KeyDown;
-
-        if (Global.GameManager == null) return;
+        crlTacticalMap.Initialization(_gameManager);
 
         panel1.Controls.Add(controlItemsContainer);
         panel1.Controls.Add(controlItemsTransfer);
@@ -32,12 +26,24 @@ public partial class TacticGameScreen : Form
 
         crlCommands.Location = new Point((Width / 2) - crlCommands.Width / 2, crlCommands.Location.Y);
 
-        Global.GameManager.EventController.OnShowCelestialObject += Event_ShowCelestialObject;
-        Global.GameManager.EventController.OnHideCelestialObject += Event_HideCelestialObject;
-        Global.GameManager.EventController.OnSelectCelestialObject += Event_SelectCelestialObject;
-        Global.GameManager.EventController.OnUnselectCelestialObject += Event_UnselectCelestialObject;
+        _gameManager.EventController.OnShowCelestialObject += Event_ShowCelestialObject;
+        _gameManager.EventController.OnHideCelestialObject += Event_HideCelestialObject;
+        _gameManager.EventController.OnSelectCelestialObject += Event_SelectCelestialObject;
+        _gameManager.EventController.OnUnselectCelestialObject += Event_UnselectCelestialObject;
 
-        Global.GameManager.EventController.SetMainGameScreenReference(this);
+        _gameManager.EventController.SetMainGameScreenReference(this);
+    }
+
+    public TacticGameScreen()
+    {
+        InitializeComponent();
+
+        ActiveControl = null;
+
+        crlTacticalMap.Dock = DockStyle.Fill;
+
+        KeyPreview = true;
+        KeyDown += Window_KeyDown;
     }
 
     private void Event_UnselectCelestialObject(ICelestialObject @object)
@@ -62,8 +68,8 @@ public partial class TacticGameScreen : Form
 
     private void button1_Click(object sender, EventArgs e)
     {
-        Global.GameManager.EventController.Pause();
-        Global.GameManager.ShowGameMenuScreen();
+        _gameManager.EventController.Pause();
+        _gameManager.Screens.ShowGameMenuScreen();
     }
 
     private void button2_Click(object sender, EventArgs e)
@@ -93,12 +99,12 @@ public partial class TacticGameScreen : Form
 
     private void crlResumeGame_Click(object sender, EventArgs e)
     {
-        Global.GameManager.EventController.Resume();
+        _gameManager.EventController.Resume();
     }
 
     private void crlGamePause_Click(object sender, EventArgs e)
     {
-        Global.GameManager.EventController.Pause();
+        _gameManager.EventController.Pause();
     }
 
     private void Window_KeyDown(object? sender, KeyEventArgs e)

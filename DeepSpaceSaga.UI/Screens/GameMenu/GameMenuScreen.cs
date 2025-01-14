@@ -24,12 +24,12 @@ public partial class GameMenuScreen : Form
 
     private void button1_Click(object sender, EventArgs e)
     {
-        Global.GameManager.ShowMenuScreen();
+        Global.GameManager.Screens.ShowMenuScreen();
     }
 
     private void button2_Click(object sender, EventArgs e)
     {
-        Global.GameManager.ShowTacticalGameScreen();
+        Global.GameManager.Screens.ShowTacticalGameScreen();
     }
 
     private void button3_Click(object sender, EventArgs e)
@@ -39,11 +39,11 @@ public partial class GameMenuScreen : Form
 
     private void Event_SaveGame(object sender, EventArgs e)
     {
-        Global.GameManager.ShowSaveGameScreen();
+        Global.GameManager.Screens.ShowSaveGameScreen();
     }
 
     private void Event_LoadGame(object sender, EventArgs e)
     {
-        Global.GameManager.ShowLoadGameScreen();
+        Global.GameManager.Screens.ShowLoadGameScreen();
     }
 }
