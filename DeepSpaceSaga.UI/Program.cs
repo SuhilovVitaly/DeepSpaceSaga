@@ -1,6 +1,4 @@
-﻿using DeepSpaceSaga.UI.Manager.Screens;
-
-namespace DeepSpaceSaga.UI;
+﻿namespace DeepSpaceSaga.UI;
 
 internal static class Program
 {

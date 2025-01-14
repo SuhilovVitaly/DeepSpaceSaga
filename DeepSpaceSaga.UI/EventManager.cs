@@ -15,20 +15,16 @@ public class EventManager: IEventManager
 
     private SpaceMapEventHandler MapEventHandler { get; set; }
     private TacticGameScreen _screenTacticalMap;
-    private IGenerationTool _randomizer;
     private Worker Worker;
 
-    public EventManager(IGenerationTool randomizer, IGameServerService game)
+    public EventManager(IGameServerService game)
     {
         GameServer = game.Start();
-        _randomizer = randomizer;
         Initialization().GetAwaiter().GetResult();
     }
 
     private async Task Initialization()
     {
-        //GameServer = Program.ServiceProvider.GetService<IGameServerService>().Start();
-
         Worker = new Worker(GameServer);
         await InitializeAsync();
 

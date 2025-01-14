@@ -1,6 +1,4 @@
-﻿using DeepSpaceSaga.Server.SaveLoadSystem;
-
-namespace DeepSpaceSaga.Server;
+﻿namespace DeepSpaceSaga.Server;
 
 public class LocalGameServer : IGameServer
 {

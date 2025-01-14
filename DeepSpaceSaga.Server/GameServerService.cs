@@ -1,31 +1,19 @@
 ﻿namespace DeepSpaceSaga.Server;
 
 public class GameServerService(
-    IServerMetrics metrics, 
-    IGenerationTool randomizer,
-    ILocalGameServerOptions settings,
-    IGameEngine engine) : IGameServerService
+    IGameEngine _engine, 
+    IServerMetrics _metrics, 
+    IGenerationTool _randomizer, 
+    ILocalGameServerOptions _settings) : IGameServerService
 {
-    public static IServiceProvider? ServiceProvider { get; private set; }
-    
-    public GameServerService(
-        IServerMetrics metrics,
-        IGenerationTool randomizer, 
-        ILocalGameServerOptions settings,
-        IGameEngine engine,
-        IHost host) : this(metrics, randomizer, settings, engine)
-    {
-        ServiceProvider = host.Services;
-    }
-
     public IGameServer Start()
     {
         var server = new LocalGameServer(
-            metrics, 
-            settings, 
+            _metrics, 
+            _settings, 
             new GameActionEvents([]),
-            engine, 
-            randomizer);
+            _engine, 
+            _randomizer);
 
         return server;
     }
