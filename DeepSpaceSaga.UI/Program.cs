@@ -1,13 +1,13 @@
-﻿namespace DeepSpaceSaga.UI;
+﻿using DeepSpaceSaga.UI.Manager.Screens;
+
+namespace DeepSpaceSaga.UI;
 
 internal static class Program
 {
     public static IServiceProvider? ServiceProvider { get; private set; }
 
     private static readonly ILog Logger = LogManager.GetLogger(typeof(Program));
-    /// <summary>
-    ///  The main entry point for the application.
-    /// </summary>
+
     [STAThread]
     static void Main()
     {
@@ -21,8 +21,9 @@ internal static class Program
 
         Logger.Info("Start 'Deep Space Saga' game desktop client.");
 
-
-        var host = CreateHostBuilder().Build();
+        var host = CreateHostBuilder()
+            .ConfigureServices(CreateScreensBuilder)
+            .Build();
         ServiceProvider = host.Services;
 
         ApplicationConfiguration.Initialize();
@@ -48,13 +49,32 @@ internal static class Program
     {
         return Host.CreateDefaultBuilder()
             .ConfigureServices((context, services) => {
-                services.AddScoped<ILocalGameServerOptions, LocalGameServerOptions>();
-                services.AddScoped<IServerMetrics, ServerMetrics>();
-                services.AddTransient<ISaveLoadService, SaveLoadService>();
-                services.AddScoped<IGenerationTool, GenerationTool>();
-                services.AddScoped<IEventManager, EventManager>();
-                services.AddScoped<IGameEngine, GameEngine>();
-                services.AddTransient<IGameServerService, GameServerService>();
+                // Core services registration
+                RegisterCoreServices(services);
             });
+    }
+
+    static void CreateScreensBuilder(IServiceCollection services)
+    {
+        // Screen services registration
+        services.AddTransient<BackgroundScreen>();
+        services.AddTransient<MainMenuScreen>();
+        services.AddTransient<GameMenuScreen>();
+        services.AddTransient<SaveGameScreen>();
+        services.AddTransient<LoadGameScreen>();
+        services.AddTransient<TacticGameScreen>();
+    }
+
+    static void RegisterCoreServices(IServiceCollection services)
+    {
+        services.AddScoped<ILocalGameServerOptions, LocalGameServerOptions>();
+        services.AddScoped<IServerMetrics, ServerMetrics>();
+        services.AddTransient<ISaveLoadService, SaveLoadService>();
+        services.AddScoped<IGenerationTool, GenerationTool>();
+        services.AddScoped<IEventManager, EventManager>();
+        services.AddScoped<IScreenManager, ScreenManager>();
+        services.AddScoped<IGameManager, GameManager>();
+        services.AddScoped<IGameEngine, GameEngine>();
+        services.AddTransient<IGameServerService, GameServerService>();
     }
 }

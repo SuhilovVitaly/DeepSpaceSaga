@@ -4,10 +4,9 @@ public class Global
 {
     private static readonly ILog Logger = LogManager.GetLogger(typeof(Global));
     
-    public static GameManager GameManager { get; private set; }
+    public static IGameManager GameManager { get; private set; }
     public static ScreenParameters ScreenData { get; private set; }
     public static GlobalResources Resources { get; private set; }
-
 
     private Global() { }
 
@@ -15,36 +14,35 @@ public class Global
     {
         try 
         {
-            log4net.Config.XmlConfigurator.Configure();
-            Logger.Info("Начало инициализации игры");
+            Logger.Info("Start game initialization");
 
             InitializeScreen();
             InitializeResources();
             InitializeGameManager();
 
-            Logger.Info("Инициализация игры успешно завершена");
+            Logger.Info("Finish game initialization");
         }
         catch (Exception ex)
         {
-            Logger.Error("Ошибка при инициализации игры", ex);
-            throw new GameInitializationException("Критическая ошибка при инициализации игры", ex);
+            Logger.Error("Error on game initialization", ex);
+            throw new GameInitializationException("Critical error on game initialization", ex);
         }
     }
 
     private static void InitializeScreen()
     {
-        Logger.Debug("Начало инициализации экрана");
+        Logger.Debug("Start screen initialization");
         var monitorId = 0;
         var screens = Screen.AllScreens;
         
         if (screens == null || screens.Length == 0)
         {
-            throw new GameInitializationException("Не найдены доступные мониторы");
+            throw new GameInitializationException("Monitors not found");
         }
 
         if (monitorId >= screens.Length)
         {
-            throw new GameInitializationException($"Недопустимый ID монитора: {monitorId}");
+            throw new GameInitializationException($"Wrong ID of monitor: {monitorId}");
         }
 
         Rectangle resolution = screens[monitorId].Bounds;
@@ -52,36 +50,24 @@ public class Global
         {
             MonitorId = monitorId
         };
-        Logger.Debug($"Экран инициализирован: {resolution.Width}x{resolution.Height}");
+        Logger.Debug($"Finish screen initialization: {resolution.Width}x{resolution.Height}");
     }
 
     private static void InitializeResources()
     {
-        if (ScreenData == null)
-        {
-            throw new InvalidOperationException("ScreenData должен быть инициализирован перед Resources");
-        }
-        
         Resources = new GlobalResources(ScreenData);
     }
 
     private static void InitializeGameManager()
     {
-        var eventManager = Program.ServiceProvider.GetService<IEventManager>();
-        GameManager = new GameManager(eventManager);
+        GameManager = Program.ServiceProvider.GetService<IGameManager>();
     }
 
     public static void Cleanup()
     {
-        Logger.Info("Начало очистки ресурсов");
         Resources?.Dispose();
         GameManager?.Dispose();
-        Logger.Info("Очистка ресурсов завершена");
     }
 }
 
-public class GameInitializationException : Exception
-{
-    public GameInitializationException(string message) : base(message) { }
-    public GameInitializationException(string message, Exception inner) : base(message, inner) { }
-}
+

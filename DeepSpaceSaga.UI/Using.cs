@@ -37,3 +37,4 @@ global using DeepSpaceSaga.Server.Services;
 global using DeepSpaceSaga.UI.Screens.LoadGame;
 global using Microsoft.Extensions.DependencyInjection;
 global using Microsoft.Extensions.Hosting;
+global using DeepSpaceSaga.UI.Exceptions;

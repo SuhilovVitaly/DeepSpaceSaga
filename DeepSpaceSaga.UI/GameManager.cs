@@ -1,6 +1,8 @@
-﻿namespace DeepSpaceSaga.UI;
+﻿using DeepSpaceSaga.UI.Manager.Screens;
 
-public class GameManager : IDisposable
+namespace DeepSpaceSaga.UI;
+
+public class GameManager : IGameManager
 {
     public OuterSpace OuterSpace { get; set; } = new OuterSpace();
     public SaveLoadManager SaveLoadSystem { get; set; } = new SaveLoadManager();
@@ -20,7 +22,7 @@ public class GameManager : IDisposable
         private set => _eventManager = value ?? throw new ArgumentNullException(nameof(value));
     }
 
-    public GameManager(IEventManager eventManager)
+    public GameManager(IEventManager eventManager, IScreenManager screenManager)
     {
         _eventManager = eventManager;
 
