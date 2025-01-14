@@ -2,7 +2,7 @@
 
 internal class CelestialMapGenerator
 {
-    public static CelestialMap GenerateEmptyBase(GenerationTool generationTool)
+    public static CelestialMap GenerateEmptyBase(IGenerationTool generationTool)
     {
         var objects = new List<ICelestialObject>
         {

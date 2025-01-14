@@ -2,7 +2,7 @@
 
 internal class GameSessionGenerator
 {
-    public static GameSession ProduceSession(GenerationTool generationTool, int sessionId = -1)
+    public static GameSession ProduceSession(IGenerationTool generationTool, int sessionId = -1)
     {
         if (sessionId == -1)
         {
@@ -14,7 +14,7 @@ internal class GameSessionGenerator
         throw new NotImplementedException();
     }
 
-    private static GameSession EmptySession(GenerationTool generationTool)
+    private static GameSession EmptySession(IGenerationTool generationTool)
     {
         var result = new GameSession(CelestialMapGenerator.GenerateEmptyBase(generationTool), new GameSessionsSettings())
         {

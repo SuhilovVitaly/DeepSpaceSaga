@@ -2,7 +2,7 @@
 
 public class PropulsionModulesGenerator
 {
-    public static IModule CreateMicroWarpDrive(GenerationTool randomizer, int ownerId, string id)
+    public static IModule CreateMicroWarpDrive(IGenerationTool randomizer, int ownerId, string id)
     {
         IModule resultModule = null;
 

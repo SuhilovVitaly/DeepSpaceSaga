@@ -4,7 +4,7 @@ internal class AsteroidGenerator
 {
     private static readonly ILog _logger = LogManager.GetLogger(typeof(AsteroidGenerator));
 
-    public static ICelestialObject CreateAsteroid(GenerationTool generationTool, double direction, double x, double y, double speed, string name, bool isPreScanned = false)
+    public static ICelestialObject CreateAsteroid(IGenerationTool generationTool, double direction, double x, double y, double speed, string name, bool isPreScanned = false)
     {
         try
         {

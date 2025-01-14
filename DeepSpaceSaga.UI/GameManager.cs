@@ -1,6 +1,4 @@
-﻿using DeepSpaceSaga.UI.Screens.LoadGame;
-
-namespace DeepSpaceSaga.UI;
+﻿namespace DeepSpaceSaga.UI;
 
 public class GameManager : IDisposable
 {

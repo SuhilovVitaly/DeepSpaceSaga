@@ -2,7 +2,7 @@
 
 public class GeneralModuleGenerator
 {
-    public static IModule CreateSpaceScanner(GenerationTool randomizer, int ownerId, string id)
+    public static IModule CreateSpaceScanner(IGenerationTool randomizer, int ownerId, string id)
     {
         IModule resultModule = null;
 

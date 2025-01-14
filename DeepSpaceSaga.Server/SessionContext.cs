@@ -8,7 +8,7 @@ public class SessionContext : IFlowContext
 
     public IServerMetrics Metrics { get; set; }
 
-    public GenerationTool Randomizer { get; set; }
+    public IGenerationTool Randomizer { get; set; }
 
     public LocalGameServerOptions Settings { get; set; }
 
@@ -17,7 +17,7 @@ public class SessionContext : IFlowContext
 
     }
 
-    public SessionContext(GameSession session, GameEventsSystem eventsSystem, IServerMetrics metrics, GenerationTool randomizer, LocalGameServerOptions settings)
+    public SessionContext(GameSession session, GameEventsSystem eventsSystem, IServerMetrics metrics, IGenerationTool randomizer, LocalGameServerOptions settings)
     {
         Settings = settings;
         Randomizer = randomizer;

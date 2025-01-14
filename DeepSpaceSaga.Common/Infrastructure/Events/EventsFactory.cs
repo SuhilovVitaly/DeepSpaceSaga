@@ -2,7 +2,7 @@
 
 public class EventsFactory
 {
-    public static GameActionEvent CreateEvent(GenerationTool generationTool, ICommand command, IModule? module, ICelestialObject? targetObject, ICelestialObject? sourceObject, ICelestialObject? createdObject = null)
+    public static GameActionEvent CreateEvent(IGenerationTool generationTool, ICommand command, IModule? module, ICelestialObject? targetObject, ICelestialObject? sourceObject, ICelestialObject? createdObject = null)
     {
         var commandInternal = command.Copy() as ICommand;
 

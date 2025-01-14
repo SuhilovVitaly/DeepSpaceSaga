@@ -1,11 +1,8 @@
-﻿using DeepSpaceSaga.UI.Screens.LoadGame;
-using DeepSpaceSaga.UI.Screens.SaveGame;
-
-namespace DeepSpaceSaga.UI;
+﻿namespace DeepSpaceSaga.UI;
 
 internal static class Program
 {
-    public static IServiceProvider ServiceProvider { get; private set; }
+    public static IServiceProvider? ServiceProvider { get; private set; }
 
     private static readonly ILog Logger = LogManager.GetLogger(typeof(Program));
     /// <summary>
@@ -24,6 +21,10 @@ internal static class Program
 
         Logger.Info("Start 'Deep Space Saga' game desktop client.");
 
+
+        var host = CreateHostBuilder().Build();
+        ServiceProvider = host.Services;
+
         ApplicationConfiguration.Initialize();
 
         Global.GameInitialization();
@@ -40,5 +41,15 @@ internal static class Program
         Application.Run(backgroundScreen);
 
         Logger.Info("Finished 'Deep Space Saga' game desktop client.");
-    }    
+    }
+
+    
+    static IHostBuilder CreateHostBuilder()
+    {
+        return Host.CreateDefaultBuilder()
+            .ConfigureServices((context, services) => {
+                services.AddTransient<ISaveLoadService, SaveLoadService>();
+                services.AddScoped<IGenerationTool, GenerationTool>();
+            });
+    }
 }

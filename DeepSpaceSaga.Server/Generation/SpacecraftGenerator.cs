@@ -2,7 +2,7 @@
 
 internal class SpacecraftGenerator
 {
-    public static ICelestialObject GetPlayerSpacecraft(GenerationTool randomizer)
+    public static ICelestialObject GetPlayerSpacecraft(IGenerationTool randomizer)
     {
         ISpacecraft spaceship = new BaseSpaceship
         {

@@ -1,17 +1,12 @@
 ﻿namespace DeepSpaceSaga.Common.Tools;
 
-public class GenerationTool
+public class GenerationTool : IGenerationTool
 {
     private Random _randomBase;
 
     public GenerationTool()
     {
         _randomBase = new Random((int)DateTime.UtcNow.Ticks);
-    }
-
-    public GenerationTool(int randomBase)
-    {
-        _randomBase = new Random(randomBase);
     }
 
     public int GetInteger(int min = 0, int max = 0)
@@ -62,6 +57,19 @@ public class GenerationTool
         return new string(Enumerable.Repeat(chars, length)
             .Select(s => s[_randomBase.Next(s.Length)]).ToArray());
     }
+}
+
+public interface IGenerationTool
+{
+    int GetInteger(int min = 0, int max = 0);
+    string GenerateCelestialObjectName();
+    double Direction();
+    double GetDouble(double minimum = 0, double maximum = 0);
+    float GetFloat(double minimum = 0, double maximum = 0);
+    float GetFloat(double maximum = 0);
+    int GetId();
+    string RandomString(int length);
+    string RandomNumber(int length);
 }
 
 public static class IdGenerator

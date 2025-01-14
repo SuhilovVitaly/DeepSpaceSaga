@@ -2,7 +2,7 @@
 
 public class MiningModulesGenerator
 {
-    public static IModule CreateMiningLaser(GenerationTool randomizer, int ownerId, string id)
+    public static IModule CreateMiningLaser(IGenerationTool randomizer, int ownerId, string id)
     {
         IMiningLaser resultModule = new MiningLaser
         {

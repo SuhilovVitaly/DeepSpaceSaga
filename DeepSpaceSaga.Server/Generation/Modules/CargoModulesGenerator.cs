@@ -2,7 +2,7 @@
 
 public class CargoModulesGenerator
 {
-    public static IModule Create(GenerationTool randomizer, int ownerId, string id)
+    public static IModule Create(IGenerationTool randomizer, int ownerId, string id)
     {
         ICargoContainer resultModule = new CargoContainer
         {

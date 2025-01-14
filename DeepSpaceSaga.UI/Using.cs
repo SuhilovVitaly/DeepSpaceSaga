@@ -33,3 +33,7 @@ global using DeepSpaceSaga.UI.Screens.SaveGame;
 global using DeepSpaceSaga.Server.SaveLoadSystem;
 global using DeepSpaceSaga.UI.Screens.SaveGame.ScreenControls;
 global using DeepSpaceSaga.UI.Screens.LoadGame.ScreenControls;
+global using DeepSpaceSaga.Server.Services;
+global using DeepSpaceSaga.UI.Screens.LoadGame;
+global using Microsoft.Extensions.DependencyInjection;
+global using Microsoft.Extensions.Hosting;
