@@ -1,5 +1,4 @@
 ﻿namespace DeepSpaceSaga.UI;
-using log4net;
 
 public class Global
 {
@@ -8,7 +7,6 @@ public class Global
     public static GameManager GameManager { get; private set; }
     public static ScreenParameters ScreenData { get; private set; }
     public static GlobalResources Resources { get; private set; }
-    public static GenerationTool Randomizer { get; private set; }
 
 
     private Global() { }
@@ -69,8 +67,8 @@ public class Global
 
     private static void InitializeGameManager()
     {
-        Randomizer = new GenerationTool();
-        GameManager = new GameManager(new EventManager(Randomizer));
+        var eventManager = Program.ServiceProvider.GetService<IEventManager>();
+        GameManager = new GameManager(eventManager);
     }
 
     public static void Cleanup()

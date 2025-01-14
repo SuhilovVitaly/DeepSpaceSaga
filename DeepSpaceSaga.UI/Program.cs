@@ -52,6 +52,7 @@ internal static class Program
                 services.AddScoped<IServerMetrics, ServerMetrics>();
                 services.AddTransient<ISaveLoadService, SaveLoadService>();
                 services.AddScoped<IGenerationTool, GenerationTool>();
+                services.AddScoped<IEventManager, EventManager>();
                 services.AddScoped<IGameEngine, GameEngine>();
                 services.AddTransient<IGameServerService, GameServerService>();
             });

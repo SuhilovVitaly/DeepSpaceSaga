@@ -4,7 +4,7 @@ public class GameManager : IDisposable
 {
     public OuterSpace OuterSpace { get; set; } = new OuterSpace();
     public SaveLoadManager SaveLoadSystem { get; set; } = new SaveLoadManager();
-    private EventManager _eventManager { get; set; }
+    private IEventManager _eventManager { get; set; }
     private bool disposed;
     private BackgroundScreen _screenBackground;
     private MainMenuScreen _screenMenu;
@@ -14,13 +14,13 @@ public class GameManager : IDisposable
     private TacticGameScreen _screenTacticalGame;
 
 
-    public EventManager EventController
+    public IEventManager EventController
     {
         get => _eventManager;
         private set => _eventManager = value ?? throw new ArgumentNullException(nameof(value));
     }
 
-    public GameManager(EventManager eventManager)
+    public GameManager(IEventManager eventManager)
     {
         _eventManager = eventManager;
 

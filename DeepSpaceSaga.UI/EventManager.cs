@@ -1,6 +1,6 @@
 ﻿namespace DeepSpaceSaga.Controller;
 
-public class EventManager
+public class EventManager: IEventManager
 {
     public event Action<SpaceMapPoint>? OnTacticalMapMouseMove;
     public event Action<GameSession>? OnRefreshData;
@@ -15,17 +15,19 @@ public class EventManager
 
     private SpaceMapEventHandler MapEventHandler { get; set; }
     private TacticGameScreen _screenTacticalMap;
-    
+    private IGenerationTool _randomizer;
     private Worker Worker;
 
-    public EventManager(GenerationTool randomizer)
+    public EventManager(IGenerationTool randomizer, IGameServerService game)
     {
-        Initialization(randomizer).GetAwaiter().GetResult();
+        GameServer = game.Start();
+        _randomizer = randomizer;
+        Initialization().GetAwaiter().GetResult();
     }
 
-    private async Task Initialization(GenerationTool randomizer)
+    private async Task Initialization()
     {
-        GameServer = Program.ServiceProvider.GetService<IGameServerService>().Start();
+        //GameServer = Program.ServiceProvider.GetService<IGameServerService>().Start();
 
         Worker = new Worker(GameServer);
         await InitializeAsync();
@@ -149,7 +151,7 @@ public class EventManager
         await Worker.SendCommandAsync(command);
     }
 
-    internal void TacticalMapLeftMouseClick(SpaceMapPoint mouseLocation)
+    public void TacticalMapLeftMouseClick(SpaceMapPoint mouseLocation)
     {
         OnUnselectCelestialObject?.Invoke(null);
     }
