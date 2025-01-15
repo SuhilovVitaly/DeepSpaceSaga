@@ -1,5 +1,6 @@
 ﻿namespace DeepSpaceSaga.Common.Universe;
 
+[Serializable]
 public class CelestialMap(IEnumerable<ICelestialObject> objects) : List<ICelestialObject>(objects)
 {
     public List<ICelestialObject> GetCelestialObjects()

@@ -1,5 +1,6 @@
 ﻿namespace DeepSpaceSaga.Common.Universe.Equipment;
 
+[Serializable]
 public abstract class AbstractModule : AbstractItem
 {
     public long TargetId { get; set; }

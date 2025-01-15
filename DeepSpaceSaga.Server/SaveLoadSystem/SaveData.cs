@@ -1,6 +1,8 @@
 ﻿namespace DeepSpaceSaga.Server.SaveLoadSystem;
 
+[Serializable]
 internal class SaveData
 {
-        public CelestialMap CelestialMap { get; set; }
+    [JsonProperty]
+    public CelestialMap CelestialMap { get; set; }
 }

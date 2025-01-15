@@ -1,5 +1,6 @@
 ﻿namespace DeepSpaceSaga.Common.Universe.Items.Ore;
 
+[Serializable]
 public class Pombesit: AbstractItem, ICoreItem
 {
     public Pombesit(int volume = 1)

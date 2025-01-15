@@ -17,9 +17,7 @@ internal static class Program
 
         Logger.Info("Start 'Deep Space Saga' game desktop client.");
 
-        var host = CreateHostBuilder().Build();
-
-        ServiceProvider = host.Services;
+        ServiceProvider = CreateHostBuilder().Build().Services;
 
         ApplicationConfiguration.Initialize();
 

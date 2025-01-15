@@ -2,20 +2,26 @@
 
 public class SaveLoadManager : ISaveLoadManager
 {
+    private static readonly ILog Logger = LogManager.GetLogger(typeof(SaveLoadManager));
+
     private readonly string _savesDirectory;
     private static readonly JsonSerializerSettings _jsonSettings = new()
     {
         Formatting = Formatting.Indented,
-        TypeNameHandling = TypeNameHandling.Auto,  // For proper interface serialization
+        TypeNameHandling = TypeNameHandling.Auto,
         ContractResolver = new DefaultContractResolver
         {
             IgnoreSerializableAttribute = true
         },
-        FloatParseHandling = FloatParseHandling.Double,  // Handle floating point numbers correctly
+        FloatParseHandling = FloatParseHandling.Double,
         FloatFormatHandling = FloatFormatHandling.DefaultValue,
         MetadataPropertyHandling = MetadataPropertyHandling.ReadAhead,
         NullValueHandling = NullValueHandling.Include,
-        ObjectCreationHandling = ObjectCreationHandling.Replace
+        ObjectCreationHandling = ObjectCreationHandling.Replace,
+        PreserveReferencesHandling = PreserveReferencesHandling.Objects,
+        ReferenceLoopHandling = ReferenceLoopHandling.Serialize,
+        TypeNameAssemblyFormatHandling = TypeNameAssemblyFormatHandling.Simple,
+        SerializationBinder = new DefaultSerializationBinder()
     };
 
     public SaveLoadManager(string savesDirectory = "Saves")
@@ -46,7 +52,6 @@ public class SaveLoadManager : ISaveLoadManager
         foreach (var celestialObject in saveData.CelestialMap)
         {
             var spacecraft = celestialObject as ISpacecraft;
-
             if (spacecraft != null)
             {
                 foreach (var module in spacecraft.Modules)
@@ -97,11 +102,52 @@ public class SaveLoadManager : ISaveLoadManager
                 throw new InvalidDataException($"Файл сохранения пуст: {savePath}");
             }
 
-            var saveData = JsonConvert.DeserializeObject<SaveData>(json, _jsonSettings);
+            Logger.Info($"Loading save file: {saveFileName}");
+            
+            var saveData = JsonConvert.DeserializeObject<SaveData>(json, new JsonSerializerSettings
+            {
+                TypeNameHandling = TypeNameHandling.Auto,
+                PreserveReferencesHandling = PreserveReferencesHandling.Objects,
+                ObjectCreationHandling = ObjectCreationHandling.Replace,
+                FloatParseHandling = FloatParseHandling.Double,
+                MetadataPropertyHandling = MetadataPropertyHandling.ReadAhead,
+                SerializationBinder = new DefaultSerializationBinder(),
+                Error = (sender, args) =>
+                {
+                    Logger.Error($"Deserialization error: {args.ErrorContext.Error.Message}");
+                    Logger.Error($"Member: {args.ErrorContext.Member}");
+                    Logger.Error($"Path: {args.ErrorContext.Path}");
+                    args.ErrorContext.Handled = true;
+                }
+            });
             
             if (saveData == null)
             {
                 throw new InvalidDataException($"Не удалось десериализовать данные из файла: {savePath}");
+            }
+
+            // Debug logging
+            foreach (var celestialObject in saveData.CelestialMap)
+            {
+                var spacecraft = celestialObject as ISpacecraft;
+                if (spacecraft != null)
+                {
+                    foreach (var module in spacecraft.Modules)
+                    {
+                        if (module is CargoContainer container)
+                        {
+                            Logger.Debug($"Container ID: {container.Id}");
+                            Logger.Debug($"Items count: {container.Items?.Count ?? 0}");
+                            if (container.Items != null)
+                            {
+                                foreach (var item in container.Items)
+                                {
+                                    Logger.Debug($"Item: {item?.GetType()?.FullName}, ID: {item?.Id}");
+                                }
+                            }
+                        }
+                    }
+                }
             }
 
             var metrics = new ServerMetrics();
@@ -109,7 +155,6 @@ public class SaveLoadManager : ISaveLoadManager
             foreach (var celestialObject in saveData.CelestialMap)
             {
                 var spacecraft = celestialObject as ISpacecraft;
-
                 if (spacecraft != null)
                 {
                     foreach (var module in spacecraft.Modules)
@@ -134,9 +179,16 @@ public class SaveLoadManager : ISaveLoadManager
 
             return session;
         }
+        catch (JsonSerializationException ex)
+        {
+            Logger.Error($"JSON deserialization error: {ex.Message}");
+            Logger.Error($"Path: {ex.Path}");
+            throw;
+        }
         catch (Exception ex)
         {
-            throw new Exception($"Ошибка при загрузке сохранения '{savePath}': {ex.Message}", ex);
+            Logger.Error($"Failed to load save file: {ex}");
+            throw;
         }
     }
 }

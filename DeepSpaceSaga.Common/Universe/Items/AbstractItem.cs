@@ -1,5 +1,6 @@
 ﻿namespace DeepSpaceSaga.Common.Universe.Items;
 
+[Serializable]
 public class AbstractItem
 {
     public int Id { get; set; } = new GenerationTool().GetId();

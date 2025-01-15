@@ -1,5 +1,6 @@
 ﻿namespace DeepSpaceSaga.Common.Universe.Equipment.Mining;
 
+[Serializable]
 public class MiningLaser : AbstractModule, IModule, IMiningLaser
 {
     private static readonly ILog _log = LogManager.GetLogger(typeof(MiningLaser));

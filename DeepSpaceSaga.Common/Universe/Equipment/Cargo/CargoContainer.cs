@@ -1,5 +1,6 @@
 ﻿namespace DeepSpaceSaga.Common.Universe.Equipment.Mining;
 
+[Serializable]
 public class CargoContainer : AbstractModule, IModule, ICargoContainer
 {
     private static readonly ILog _log = LogManager.GetLogger(typeof(MiningLaser));
@@ -7,6 +8,7 @@ public class CargoContainer : AbstractModule, IModule, ICargoContainer
     public double Capacity { get; set; } = 0;
     public double MaxCapacity { get; set; } = 0;
     public double ActivationCost { get; set; } = 0;
+    [JsonProperty]
     public List<ICoreItem> Items  { get; private set; } = new List<ICoreItem>();    
 
     public Command Show()
