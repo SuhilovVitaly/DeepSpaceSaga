@@ -26,12 +26,12 @@ public partial class TacticGameScreen : Form
 
         crlCommands.Location = new Point((Width / 2) - crlCommands.Width / 2, crlCommands.Location.Y);
 
-        _gameManager.EventController.OnShowCelestialObject += Event_ShowCelestialObject;
-        _gameManager.EventController.OnHideCelestialObject += Event_HideCelestialObject;
-        _gameManager.EventController.OnSelectCelestialObject += Event_SelectCelestialObject;
-        _gameManager.EventController.OnUnselectCelestialObject += Event_UnselectCelestialObject;
+        _gameManager.Events.OnShowCelestialObject += Event_ShowCelestialObject;
+        _gameManager.Events.OnHideCelestialObject += Event_HideCelestialObject;
+        _gameManager.Events.OnSelectCelestialObject += Event_SelectCelestialObject;
+        _gameManager.Events.OnUnselectCelestialObject += Event_UnselectCelestialObject;
 
-        _gameManager.EventController.SetMainGameScreenReference(this);
+        _gameManager.Events.SetMainGameScreenReference(this);
     }
 
     public TacticGameScreen()
@@ -68,7 +68,7 @@ public partial class TacticGameScreen : Form
 
     private void button1_Click(object sender, EventArgs e)
     {
-        _gameManager.EventController.Pause();
+        _gameManager.Events.Pause();
         _gameManager.Screens.ShowGameMenuScreen();
     }
 
@@ -99,12 +99,12 @@ public partial class TacticGameScreen : Form
 
     private void crlResumeGame_Click(object sender, EventArgs e)
     {
-        _gameManager.EventController.Resume();
+        _gameManager.Events.Resume();
     }
 
     private void crlGamePause_Click(object sender, EventArgs e)
     {
-        _gameManager.EventController.Pause();
+        _gameManager.Events.Pause();
     }
 
     private void Window_KeyDown(object? sender, KeyEventArgs e)
@@ -125,11 +125,11 @@ public partial class TacticGameScreen : Form
             case Keys.Space:
                 if (session.State.IsPaused)
                 {
-                    Global.GameManager.EventController.Resume();
+                    Global.GameManager.Events.Resume();
                 }
                 else
                 {
-                    Global.GameManager.EventController.Pause();
+                    Global.GameManager.Events.Pause();
                 }
                 break;
             case Keys.S:
@@ -217,7 +217,7 @@ public partial class TacticGameScreen : Form
         // TODO: Extract CargoContainer by type
         controlItemsTransfer.ShowTransfer(spacecraft, cargo.Id, spacecraft.Id, session, targetObject, targetObject.CoreContainer);
 
-        Global.GameManager.EventController.Pause();
+        Global.GameManager.Events.Pause();
         controlItemsTransfer.BringToFront();
         controlItemsTransfer.Visible = true;
     }
@@ -247,11 +247,11 @@ public partial class TacticGameScreen : Form
 
     private void crlQuickSave_Click(object sender, EventArgs e)
     {
-        Global.GameManager.EventController.Save();
+        Global.GameManager.Events.Save();
     }
 
     private void crlQuickLoad_Click(object sender, EventArgs e)
     {
-        Global.GameManager.EventController.Load();
+        Global.GameManager.Events.Load();
     }
 }

@@ -8,7 +8,7 @@ public partial class LogbookControl : ControlWindow
 
         if (Global.GameManager is null) return;
 
-        Global.GameManager.EventController.OnRefreshData += Worker_RefreshData;
+        Global.GameManager.Events.OnRefreshData += Worker_RefreshData;
     }
 
     private void Worker_RefreshData(GameSession session)

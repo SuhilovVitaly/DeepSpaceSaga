@@ -8,8 +8,8 @@ public partial class GameSessionInformation : ControlWindow
 
         if (Global.GameManager is null) return;
 
-        Global.GameManager.EventController.OnRefreshData += Worker_RefreshData;
-        Global.GameManager.EventController.OnTacticalMapMouseMove += CrlTacticalMap_OnMouseMove;
+        Global.GameManager.Events.OnRefreshData += Worker_RefreshData;
+        Global.GameManager.Events.OnTacticalMapMouseMove += CrlTacticalMap_OnMouseMove;
     }
 
     private void Worker_RefreshData(GameSession session)

@@ -36,3 +36,5 @@ global using DeepSpaceSaga.Common.Universe.Items;
 global using DeepSpaceSaga.Common.Universe.Items.Ore;
 global using Microsoft.Extensions.Hosting;
 global using DeepSpaceSaga.Server.SaveLoadSystem;
+global using Newtonsoft.Json;
+global using Newtonsoft.Json.Serialization;

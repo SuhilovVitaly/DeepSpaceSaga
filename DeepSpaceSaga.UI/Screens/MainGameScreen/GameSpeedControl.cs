@@ -10,7 +10,7 @@ public partial class GameSpeedControl : UserControl
 
         if (Global.GameManager is null) return;
 
-        Global.GameManager.EventController.OnRefreshData += Worker_RefreshData;
+        Global.GameManager.Events.OnRefreshData += Worker_RefreshData;
     }
 
     private void Worker_RefreshData(GameSession session)
@@ -68,37 +68,37 @@ public partial class GameSpeedControl : UserControl
 
     private void cmdPause_Click(object sender, EventArgs e)
     {
-        Global.GameManager.EventController.Pause();
+        Global.GameManager.Events.Pause();
         crlEmpty.Select();
     }
 
     private void button1_Click(object sender, EventArgs e)
     {
-        Global.GameManager.EventController.SetGameSpeed(1);
+        Global.GameManager.Events.SetGameSpeed(1);
         crlEmpty.Select();
     }
 
     private void button2_Click(object sender, EventArgs e)
     {
-        Global.GameManager.EventController.SetGameSpeed(2);
+        Global.GameManager.Events.SetGameSpeed(2);
         crlEmpty.Select();
     }
 
     private void button3_Click(object sender, EventArgs e)
     {
-        Global.GameManager.EventController.SetGameSpeed(3);
+        Global.GameManager.Events.SetGameSpeed(3);
         crlEmpty.Select();
     }
 
     private void button4_Click(object sender, EventArgs e)
     {
-        Global.GameManager.EventController.SetGameSpeed(4);
+        Global.GameManager.Events.SetGameSpeed(4);
         crlEmpty.Select();
     }
 
     private void button5_Click(object sender, EventArgs e)
     {
-        Global.GameManager.EventController.SetGameSpeed(5);
+        Global.GameManager.Events.SetGameSpeed(5);
         crlEmpty.Select();
     }
 }

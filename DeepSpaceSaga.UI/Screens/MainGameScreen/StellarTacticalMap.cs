@@ -32,10 +32,10 @@ public partial class StellarTacticalMap : UserControl
         _skControl.MouseClick += MapClick;
         _skControl.MouseMove += MapMouseMove;
 
-        _gameManager.EventController.OnRefreshData += Worker_RefreshData;
-        _gameManager.EventController.OnInitializeData += Worker_OnGameInitialize;
-        _gameManager.EventController.OnShowCelestialObject += Event_ShowCelestialObject;
-        _gameManager.EventController.OnSelectCelestialObject += Event_SelectCelestialObject;
+        _gameManager.Events.OnRefreshData += Worker_RefreshData;
+        _gameManager.Events.OnInitializeData += Worker_OnGameInitialize;
+        _gameManager.Events.OnShowCelestialObject += Event_ShowCelestialObject;
+        _gameManager.Events.OnSelectCelestialObject += Event_SelectCelestialObject;
     }
 
     private void Event_SelectCelestialObject(ICelestialObject celestialObject)
@@ -91,7 +91,7 @@ public partial class StellarTacticalMap : UserControl
 
         var mouseLocation = UiTools.ToTacticalMapCoordinates(mouseScreenCoordinates, Global.ScreenData.CenterScreenOnMap);
 
-        _gameManager.EventController.TacticalMapMouseMove(mouseLocation);
+        _gameManager.Events.TacticalMapMouseMove(mouseLocation);
     }
 
     private void MapClick(object sender, MouseEventArgs e)
@@ -104,12 +104,12 @@ public partial class StellarTacticalMap : UserControl
 
         if(e.Button == MouseButtons.Left)
         {
-            _gameManager.EventController.TacticalMapMouseClick(mouseLocation);
+            _gameManager.Events.TacticalMapMouseClick(mouseLocation);
         }
 
         if (e.Button == MouseButtons.Right)
         {
-            _gameManager.EventController.TacticalMapLeftMouseClick(mouseLocation);
+            _gameManager.Events.TacticalMapLeftMouseClick(mouseLocation);
         }
     }
 }

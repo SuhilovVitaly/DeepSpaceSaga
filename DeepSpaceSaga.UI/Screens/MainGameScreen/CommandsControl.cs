@@ -10,7 +10,7 @@ public partial class CommandsControl : UserControl
 
         if (Global.GameManager == null) return;
 
-        Global.GameManager.EventController.OnRefreshData += Worker_RefreshData;
+        Global.GameManager.Events.OnRefreshData += Worker_RefreshData;
 
         button14.Enabled = true;
         button14.BackColor = Color.Black;
@@ -261,7 +261,7 @@ public partial class CommandsControl : UserControl
         };
 
 
-        Global.GameManager.EventController.ItemsTransferScreenShow(eventMessage);
+        Global.GameManager.Events.ItemsTransferScreenShow(eventMessage);
 
         Focus();
     }

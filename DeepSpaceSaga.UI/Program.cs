@@ -13,15 +13,12 @@ internal static class Program
         Application.SetCompatibleTextRenderingDefault(false);
         Application.SetHighDpiMode(HighDpiMode.SystemAware);
 
-        Environment.SetEnvironmentVariable("SKIA_BACKEND", "software");
-
         log4net.Config.XmlConfigurator.Configure();
 
         Logger.Info("Start 'Deep Space Saga' game desktop client.");
 
-        var host = CreateHostBuilder()
-            .ConfigureServices(CreateScreensBuilder)
-            .Build();
+        var host = CreateHostBuilder().Build();
+
         ServiceProvider = host.Services;
 
         ApplicationConfiguration.Initialize();
@@ -32,38 +29,14 @@ internal static class Program
 
         Logger.Info("Finished 'Deep Space Saga' game desktop client.");
     }
-
     
     static IHostBuilder CreateHostBuilder()
     {
         return Host.CreateDefaultBuilder()
             .ConfigureServices((context, services) => {
-                // Core services registration
-                RegisterCoreServices(services);
+                services.AddClientServices();
+                services.AddClientScreens();
+                services.AddServerServices();
             });
-    }
-
-    static void CreateScreensBuilder(IServiceCollection services)
-    {
-        // Screen services registration
-        services.AddScoped<BackgroundScreen>();
-        services.AddTransient<MainMenuScreen>();
-        services.AddTransient<GameMenuScreen>();
-        services.AddTransient<SaveGameScreen>();
-        services.AddTransient<LoadGameScreen>();
-        services.AddScoped<TacticGameScreen>();
-    }
-
-    static void RegisterCoreServices(IServiceCollection services)
-    {
-        services.AddScoped<ILocalGameServerOptions, LocalGameServerOptions>();
-        services.AddScoped<IServerMetrics, ServerMetrics>();
-        services.AddTransient<ISaveLoadService, SaveLoadService>();
-        services.AddScoped<IGenerationTool, GenerationTool>();
-        services.AddScoped<IEventManager, EventManager>();
-        services.AddScoped<IScreenManager, ScreenManager>();
-        services.AddScoped<IGameManager, GameManager>();
-        services.AddScoped<IGameEngine, GameEngine>();
-        services.AddTransient<IGameServerService, GameServerService>();
     }
 }

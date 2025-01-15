@@ -16,7 +16,7 @@ public partial class ItemsContainer : ControlWindow
     {
         if(Global.GameManager.GetSession().State.IsPaused)
         {
-            Global.GameManager.EventController.Resume();
+            Global.GameManager.Events.Resume();
         }
     }
 

@@ -7,6 +7,7 @@ public class LocalGameServer : IGameServer
 
     private readonly IGameEngine _engine;      
     private readonly ILocalGameServerOptions _options;
+    private readonly ISaveLoadManager _saveLoadManager;
     private readonly ThreadSafeExecutor _executor = new();
     private readonly IServerMetrics _metrics;
     private IFlowContext _sessionContext;
@@ -40,8 +41,9 @@ public class LocalGameServer : IGameServer
         
         _options = options;
         Metrics = metrics;
-
         _engine = gameEngine;
+
+        _saveLoadManager = new SaveLoadManager();
 
         SessionContext = new SessionContext(
             new GameSession(_options.InitialMap, _options.SessionSettings), 
@@ -194,7 +196,7 @@ public class LocalGameServer : IGameServer
     {
         _executor.ExecuteWithLock(() =>
         {
-            _ = new SaveLoadManager().Save(SessionContext.Session.SpaceMap, "QuickSave.json");
+            _ = _saveLoadManager.Save(SessionContext.Session.SpaceMap, "QuickSave.json");
 
             return SessionContext;
         }, "Execution");
@@ -204,7 +206,7 @@ public class LocalGameServer : IGameServer
     {
         _executor.ExecuteWithLock(() =>
         {
-            SessionContext = new SaveLoadManager().Load("QuickSave.json");
+            SessionContext = _saveLoadManager.Load("QuickSave.json");
             return SessionContext;
         }, "Execution");
     }
@@ -213,7 +215,7 @@ public class LocalGameServer : IGameServer
     {
         _executor.ExecuteWithLock(() =>
         {
-            SessionContext = new SaveLoadManager().Load(saveName + ".json");
+            SessionContext = _saveLoadManager.Load(saveName + ".json");
             return SessionContext;
         }, "Execution");
     }

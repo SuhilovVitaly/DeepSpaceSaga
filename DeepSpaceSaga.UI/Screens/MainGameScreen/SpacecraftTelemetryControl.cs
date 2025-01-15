@@ -8,7 +8,7 @@ public partial class SpacecraftTelemetryControl : UserControl
 
         if (Global.GameManager == null) return;
 
-        Global.GameManager.EventController.OnRefreshData += Worker_RefreshData;
+        Global.GameManager.Events.OnRefreshData += Worker_RefreshData;
     }
 
     private void Worker_RefreshData(GameSession manager)

@@ -1,9 +1,6 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
+﻿namespace DeepSpaceSaga.Server.SaveLoadSystem;
 
-namespace DeepSpaceSaga.Server.SaveLoadSystem;
-
-public class SaveLoadManager
+public class SaveLoadManager : ISaveLoadManager
 {
     private readonly string _savesDirectory;
     private static readonly JsonSerializerSettings _jsonSettings = new()

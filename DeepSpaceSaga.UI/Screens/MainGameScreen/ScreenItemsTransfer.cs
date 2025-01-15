@@ -71,7 +71,7 @@ public partial class ScreenItemsTransfer : UserControl
 
         if (Global.GameManager.GetSession().State.IsPaused)
         {
-            Global.GameManager.EventController.Resume();
+            Global.GameManager.Events.Resume();
         }
     }
 

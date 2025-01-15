@@ -8,7 +8,7 @@ public class GameManager : IGameManager
     private IScreenManager _screenManager { get; set; }
     private bool disposed;
 
-    public IEventManager EventController
+    public IEventManager Events
     {
         get => _eventManager;
         private set => _eventManager = value ?? throw new ArgumentNullException(nameof(value));
@@ -36,10 +36,10 @@ public class GameManager : IGameManager
 
     private void SubscribeToEvents()
     {
-        EventController.OnSelectCelestialObject += OuterSpace.EventController_OnSelectCelestialObject;
-        EventController.OnUnselectCelestialObject += OuterSpace.EventController_OnUnselectCelestialObject;
-        EventController.OnShowCelestialObject += OuterSpace.EventController_OnShowCelestialObject;
-        EventController.OnHideCelestialObject += OuterSpace.EventController_OnHideCelestialObject;        
+        Events.OnSelectCelestialObject += OuterSpace.EventController_OnSelectCelestialObject;
+        Events.OnUnselectCelestialObject += OuterSpace.EventController_OnUnselectCelestialObject;
+        Events.OnShowCelestialObject += OuterSpace.EventController_OnShowCelestialObject;
+        Events.OnHideCelestialObject += OuterSpace.EventController_OnHideCelestialObject;        
     }
 
     public ISpacecraft GetPlayerSpacecraft()
@@ -59,12 +59,12 @@ public class GameManager : IGameManager
 
     public GameSession GetSession()
     {
-        return EventController.GetSession();
+        return Events.GetSession();
     }
 
     public async Task ExecuteCommandAsync(ICommand command)
     {
-        await EventController.ExecuteCommandAsync(command);
+        await Events.ExecuteCommandAsync(command);
     }
 
     protected virtual void Dispose(bool disposing)
@@ -73,10 +73,10 @@ public class GameManager : IGameManager
         {
             if (disposing)
             {
-                EventController.OnSelectCelestialObject -= OuterSpace.EventController_OnSelectCelestialObject;
-                EventController.OnUnselectCelestialObject -= OuterSpace.EventController_OnUnselectCelestialObject;
-                EventController.OnShowCelestialObject -= OuterSpace.EventController_OnShowCelestialObject;
-                EventController.OnHideCelestialObject -= OuterSpace.EventController_OnHideCelestialObject;
+                Events.OnSelectCelestialObject -= OuterSpace.EventController_OnSelectCelestialObject;
+                Events.OnUnselectCelestialObject -= OuterSpace.EventController_OnUnselectCelestialObject;
+                Events.OnShowCelestialObject -= OuterSpace.EventController_OnShowCelestialObject;
+                Events.OnHideCelestialObject -= OuterSpace.EventController_OnHideCelestialObject;
             }
             disposed = true;
         }
@@ -84,13 +84,13 @@ public class GameManager : IGameManager
 
     public void QuickLoad()
     {
-        EventController.GameServer.QuickLoad();
+        Events.GameServer.QuickLoad();
         Screens.ShowTacticalGameScreen();
     }
 
     public void Load(string saveName)
     {
-        EventController.GameServer.Load(saveName);
+        Events.GameServer.Load(saveName);
         Screens.ShowTacticalGameScreen();
     }
 
