@@ -86,7 +86,8 @@ public partial class ScreenItemsTransfer : UserControl
             CelestialObjectId = spacecraft.Id,
             ModuleId = spacecraft.Module(Common.Universe.Equipment.Category.CargoUnit).Id,
             InputItemId = inputItemId,
-            InputModuleId = inputModuleId
+            InputModuleId = inputModuleId,
+            IsUnique = false
         };
     }
 }

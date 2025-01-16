@@ -200,8 +200,6 @@ public partial class TacticGameScreen : Form
 
     public void EventOpenCargoUI(GameActionEvent gameActionEvent)
     {
-        //if (Global.GameManager.GetSession().State.IsPaused) return;
-
         var session = Global.GameManager.GetSession();
 
         var spacecraft = session.GetPlayerSpaceShip();
@@ -224,25 +222,7 @@ public partial class TacticGameScreen : Form
 
     private void Event_OpenSpacecraftCargo(object sender, EventArgs e)
     {
-        //var session = Global.GameManager.GetSession();
 
-        //var spacecraft = session.GetPlayerSpaceShip();
-
-        //if (spacecraft is null) return;
-
-        //controlItemsTransfer.Visible = false;
-        //if (controlItemsTransfer.Location == new Point(0, 0))
-        //{
-        //    controlItemsTransfer.Location = new Point((Width / 2) - controlItemsTransfer.Width / 2, (Height / 2) - controlItemsTransfer.Height / 2);           
-        //}
-
-        //var cargo = spacecraft.GetModules(Common.Universe.Equipment.Category.CargoUnit).FirstOrDefault();
-
-        //controlItemsTransfer.ShowTransfer(spacecraft, cargo.Id, spacecraft.Id, session);
-
-        //Global.GameManager.EventController.Pause();
-        //controlItemsTransfer.BringToFront();
-        //controlItemsTransfer.Visible = true;
     }
 
     private void crlQuickSave_Click(object sender, EventArgs e)

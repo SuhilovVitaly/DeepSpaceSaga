@@ -126,30 +126,6 @@ public class SaveLoadManager : ISaveLoadManager
                 throw new InvalidDataException($"Не удалось десериализовать данные из файла: {savePath}");
             }
 
-            // Debug logging
-            foreach (var celestialObject in saveData.CelestialMap)
-            {
-                var spacecraft = celestialObject as ISpacecraft;
-                if (spacecraft != null)
-                {
-                    foreach (var module in spacecraft.Modules)
-                    {
-                        if (module is CargoContainer container)
-                        {
-                            Logger.Debug($"Container ID: {container.Id}");
-                            Logger.Debug($"Items count: {container.Items?.Count ?? 0}");
-                            if (container.Items != null)
-                            {
-                                foreach (var item in container.Items)
-                                {
-                                    Logger.Debug($"Item: {item?.GetType()?.FullName}, ID: {item?.Id}");
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-
             var metrics = new ServerMetrics();
 
             foreach (var celestialObject in saveData.CelestialMap)
