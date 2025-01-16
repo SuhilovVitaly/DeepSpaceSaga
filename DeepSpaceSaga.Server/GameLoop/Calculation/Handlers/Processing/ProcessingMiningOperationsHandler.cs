@@ -2,6 +2,8 @@
 
 public class ProcessingMiningOperationsHandler(IFlowContext context) : FlowStepBase<IFlowContext, IFlowContext>(context)
 {
+    private static readonly ILog Logger = LogManager.GetLogger(typeof(ProcessingMiningOperationsHandler));
+
     public override IFlowContext Execute(IFlowContext flowContext)
     {
         flowContext = Handle(flowContext);
@@ -84,17 +86,19 @@ public class ProcessingMiningOperationsHandler(IFlowContext context) : FlowStepB
     private void Harvest(IFlowContext sessionContext, Command command)
     {
         var moduleCelestialObject = sessionContext.Session.GetCelestialObject(command.CelestialObjectId);
-        var targetCelestialObject = sessionContext.Session.GetCelestialObject(command.TargetCelestialObjectId);
+        var asteroid = sessionContext.Session.GetCelestialObject(command.TargetCelestialObjectId);
 
-        if(targetCelestialObject is null) return;
+        if(asteroid is null) return;
 
-        var distance = GeometryTools.Distance(moduleCelestialObject.GetLocation(), targetCelestialObject.GetLocation());
+        var distance = GeometryTools.Distance(moduleCelestialObject.GetLocation(), asteroid.GetLocation());
 
         var module = moduleCelestialObject.ToSpaceship().GetModule(command.ModuleId) as IMiningLaser;
 
+        Logger.Debug($"Harvest asteroid id = {asteroid.Id} in progress [{module.GetWorkProgressPercentage()}]. ");
+
         if (distance > module.MiningRange)
         {
-            AddToJournal(sessionContext, EventType.AsteroidHarvestCancelled, $"Asteroid '{targetCelestialObject.Name}' Harvest Cancelled");
+            AddToJournal(sessionContext, EventType.AsteroidHarvestCancelled, $"Asteroid '{asteroid.Name}' Harvest Cancelled");
             sessionContext.Metrics.Add(Metrics.ProcessingMiningCommandCancelled);
             // Cancel command bacause distance is to big
             command.Status = CommandStatus.PostProcess;
@@ -104,10 +108,10 @@ public class ProcessingMiningOperationsHandler(IFlowContext context) : FlowStepB
         if (module.IsReloaded)
         {
             // Generate mining results
-            AddToJournal(sessionContext, EventType.AsteroidHarvestFinished, $"Asteroid '{targetCelestialObject.Name}' Harvest Finished");
+            AddToJournal(sessionContext, EventType.AsteroidHarvestFinished, $"Asteroid '{asteroid.Name}' Harvest Finished");
             sessionContext.Metrics.Add(Metrics.ProcessingMiningCommandFinished);
             command.Status = CommandStatus.PostProcess;
-            sessionContext.EventsSystem.GenerateCommand(CommandTypes.MiningOperationsResult, module, targetCelestialObject, moduleCelestialObject);
+            sessionContext.EventsSystem.GenerateCommand(CommandTypes.MiningOperationsResult, module, asteroid, moduleCelestialObject);
         }
     }
 
