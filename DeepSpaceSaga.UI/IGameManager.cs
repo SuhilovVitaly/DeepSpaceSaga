@@ -9,7 +9,7 @@ public interface IGameManager : IDisposable
     ISpacecraft GetPlayerSpacecraft();
     ICelestialObject GetCelestialObject(int id);
     CelestialMap GetCelestialMap();
-    GameSession GetSession();
+    GameSessionDTO GetSession();
     Task ExecuteCommandAsync(ICommand command);
     void QuickLoad();
     void Load(string saveName);

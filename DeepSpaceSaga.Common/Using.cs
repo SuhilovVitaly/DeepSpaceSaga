@@ -21,3 +21,4 @@ global using Newtonsoft.Json;
 global using DeepSpaceSaga.Common.Universe.Items; 
 global using DeepSpaceSaga.Common.Infrastructure.Events;
 global using DeepSpaceSaga.Common.Universe.Equipment.Mining;
+global using DeepSpaceSaga.Common.Infrastructure.Session;

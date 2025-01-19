@@ -2,7 +2,7 @@
 
 public class DrawCelestialObjects
 {
-    public static void Execute(IScreenInfo screenInfo, GameSession session)
+    public static void Execute(IScreenInfo screenInfo, GameSessionDTO session)
     {
         foreach (var currentObject in session.SpaceMap.GetCelestialObjects())
         {
@@ -51,7 +51,7 @@ public class DrawCelestialObjects
         DrawTools.DrawEllipse(screenInfo, screenCoordinates.X, screenCoordinates.Y, 8, color);
     }
 
-    private static void DrawCelestialObject(IScreenInfo screenInfo, ICelestialObject celestialObject, GameSession session)
+    private static void DrawCelestialObject(IScreenInfo screenInfo, ICelestialObject celestialObject, GameSessionDTO session)
     {
         var screenCoordinates = UiTools.ToScreenCoordinates(screenInfo, celestialObject.GetLocation());
         var color = celestialObject.GetColor();
@@ -66,7 +66,7 @@ public class DrawCelestialObjects
 
     }
 
-    private static void DrawContainerObject(IScreenInfo screenInfo, ICelestialObject celestialObject, GameSession session)
+    private static void DrawContainerObject(IScreenInfo screenInfo, ICelestialObject celestialObject, GameSessionDTO session)
     {
         var screenCoordinates = UiTools.ToScreenCoordinates(screenInfo, celestialObject.GetLocation());
         var color = celestialObject.GetColor();
@@ -80,7 +80,7 @@ public class DrawCelestialObjects
         }
     }
 
-    private static void DrawCelestialObjectInfo(IScreenInfo screenInfo, ICelestialObject celestialObject, SpaceMapColor color, GameSession session)
+    private static void DrawCelestialObjectInfo(IScreenInfo screenInfo, ICelestialObject celestialObject, SpaceMapColor color, GameSessionDTO session)
     {
         var screenCoordinates = UiTools.ToScreenCoordinates(screenInfo, celestialObject.GetLocation());
 

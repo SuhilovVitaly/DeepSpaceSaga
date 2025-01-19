@@ -11,7 +11,7 @@ public partial class LogbookControl : ControlWindow
         Global.GameManager.Events.OnRefreshData += Worker_RefreshData;
     }
 
-    private void Worker_RefreshData(GameSession session)
+    private void Worker_RefreshData(GameSessionDTO session)
     {
         CrossThreadExtensions.PerformSafely(this, Refresh);
     }

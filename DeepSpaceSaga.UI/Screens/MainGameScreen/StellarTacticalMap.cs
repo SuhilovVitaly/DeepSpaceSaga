@@ -48,12 +48,12 @@ public partial class StellarTacticalMap : UserControl
         
     }
 
-    private void Worker_OnGameInitialize(GameSession manager)
+    private void Worker_OnGameInitialize(GameSessionDTO manager)
     {
         RefreshControls(manager);
     }
 
-    private void Worker_RefreshData(GameSession manager)
+    private void Worker_RefreshData(GameSessionDTO manager)
     {
         if (isDrawInProcess) return;
 
@@ -78,7 +78,7 @@ public partial class StellarTacticalMap : UserControl
         Global.Resources.DrawTool.DrawTacticalMapScreen(session, Global.GameManager.OuterSpace, Global.ScreenData);
     }
 
-    private void RefreshControls(GameSession data)
+    private void RefreshControls(GameSessionDTO data)
     {
         _skControl.Invalidate();
     }

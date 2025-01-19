@@ -3,8 +3,8 @@
 public class EventManager: IEventManager
 {
     public event Action<SpaceMapPoint>? OnTacticalMapMouseMove;
-    public event Action<GameSession>? OnRefreshData;
-    public event Action<GameSession>? OnInitializeData;
+    public event Action<GameSessionDTO>? OnRefreshData;
+    public event Action<GameSessionDTO>? OnInitializeData;
     public event Action<ICelestialObject>? OnSelectCelestialObject;
     public event Action<ICelestialObject>? OnUnselectCelestialObject;
     public event Action<ICelestialObject>? OnShowCelestialObject;
@@ -55,7 +55,7 @@ public class EventManager: IEventManager
         OnHideCelestialObject?.Invoke(celestialObject);
     }
 
-    private void Worker_OnGameInitialize(GameSession gameSession)
+    private void Worker_OnGameInitialize(GameSessionDTO gameSession)
     {
         OnInitializeData?.Invoke(gameSession);
     }
@@ -65,7 +65,7 @@ public class EventManager: IEventManager
         _screenTacticalMap.OpenCargoUI(gameEvent.Copy());
     }
 
-    private void Worker_RefreshData(GameSession gameSession)
+    private void Worker_RefreshData(GameSessionDTO gameSession)
     {
         ArgumentNullException.ThrowIfNull(gameSession);
 
@@ -112,7 +112,7 @@ public class EventManager: IEventManager
         OnShowCelestialObject?.Invoke(celestialObject);
     }
 
-    public GameSession GetSession()
+    public GameSessionDTO GetSession()
     {
         return Worker.GetGameSession();
     }

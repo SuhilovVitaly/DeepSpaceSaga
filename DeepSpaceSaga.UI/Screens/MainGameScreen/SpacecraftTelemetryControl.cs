@@ -11,12 +11,12 @@ public partial class SpacecraftTelemetryControl : UserControl
         Global.GameManager.Events.OnRefreshData += Worker_RefreshData;
     }
 
-    private void Worker_RefreshData(GameSession manager)
+    private void Worker_RefreshData(GameSessionDTO manager)
     {
         CrossThreadExtensions.PerformSafely(this, RefreshControls, manager);        
     }
 
-    private void RefreshControls(GameSession manager)
+    private void RefreshControls(GameSessionDTO manager)
     {
         var spacecraftLocation = Global.GameManager.GetPlayerSpacecraft();
 

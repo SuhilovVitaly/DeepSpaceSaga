@@ -13,12 +13,12 @@ public partial class GameSpeedControl : UserControl
         Global.GameManager.Events.OnRefreshData += Worker_RefreshData;
     }
 
-    private void Worker_RefreshData(GameSession session)
+    private void Worker_RefreshData(GameSessionDTO session)
     {
         CrossThreadExtensions.PerformSafely(this, RereshControls, session);
     }
 
-    private void RereshControls(GameSession session)
+    private void RereshControls(GameSessionDTO session)
     {
         if (session.State.IsPaused)
         {

@@ -1,21 +1,32 @@
-﻿namespace DeepSpaceSaga.Common.Extensions;
+﻿using System.Linq;
+
+namespace DeepSpaceSaga.Common.Extensions;
 
 public static class SessionExtensions
 {
-    public static ISpacecraft GetPlayerSpaceShip(this GameSession session)
+    public static ISpacecraft GetPlayerSpaceShip(CelestialMap? spaceMap)
     {
-        foreach (var celestialObject in session.SpaceMap.GetCelestialObjects())
+        foreach (var celestialObject in from celestialObject in spaceMap?.GetCelestialObjects()
+                                        where celestialObject.Types == CelestialObjectTypes.SpaceshipPlayer
+                                        select celestialObject)
         {
-            if (celestialObject.Types == CelestialObjectTypes.SpaceshipPlayer)
-            {
-                return celestialObject.ToSpaceship();
-            }
+            return celestialObject.ToSpaceship();
         }
 
         throw new InvalidOperationException("Player spaceship not found in the game session");
     }
 
-    public static ICelestialObject GetCelestialObject(this GameSession gameSession, long id, bool isCopy = false)
+    public static ISpacecraft GetPlayerSpaceShip(this GameSessionDTO session)
+    {
+        return GetPlayerSpaceShip(session.SpaceMap);
+    }
+
+    public static ISpacecraft GetPlayerSpaceShip(this GameSession session)
+    {
+        return GetPlayerSpaceShip(session.SpaceMap);
+    }
+
+    public static ICelestialObject GetCelestialObject(this GameSessionDTO gameSession, long id, bool isCopy = false)
     {
         var celestialObjects = gameSession.SpaceMap.GetCelestialObjects();
         var celestialObject = celestialObjects.FirstOrDefault(x => x.Id == id);
@@ -23,7 +34,7 @@ public static class SessionExtensions
         return isCopy ? celestialObject?.Copy() : celestialObject;
     }
 
-    public static List<ICelestialObject> GetCelestialObjectsByDistance(this GameSession gameSession, SpaceMapPoint coordinates, int range)
+    public static List<ICelestialObject> GetCelestialObjectsByDistance(this GameSessionDTO gameSession, SpaceMapPoint coordinates, int range)
     {
         var resultObjects = gameSession.SpaceMap.GetCelestialObjects().Map(celestialObject => (celestialObject,
                     GeometryTools.Distance(

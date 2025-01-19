@@ -2,7 +2,7 @@
 
 internal class DrawModulesActions
 {
-    public static void Execute(IScreenInfo screenInfo, GameSession session)
+    public static void Execute(IScreenInfo screenInfo, GameSessionDTO session)
     {
         var spacecraft = session.GetPlayerSpaceShip();        
 
@@ -31,7 +31,7 @@ internal class DrawModulesActions
             }
         }
     }
-    private static void DrawMiningLaser(IScreenInfo screenInfo, GameSession session, IModule module, ISpacecraft spacecraft)
+    private static void DrawMiningLaser(IScreenInfo screenInfo, GameSessionDTO session, IModule module, ISpacecraft spacecraft)
     {
         if (module.IsActive == false)
         {
@@ -71,7 +71,7 @@ internal class DrawModulesActions
         DrawTools.DrawString(screenInfo, labelValue, Fonts.SpaceMapLabels, Colors.ForePercentColor, new RectangleF(startLabel.X + 15 + DrawTools.MeasureString(label, Fonts.SpaceMapLabels).Width, startLabel.Y + 12, 190, 50));
     }
 
-    private static void DrawSpaceScanner(IScreenInfo screenInfo, GameSession session, IModule module, ISpacecraft spacecraft)
+    private static void DrawSpaceScanner(IScreenInfo screenInfo, GameSessionDTO session, IModule module, ISpacecraft spacecraft)
     {
         var spacecraftLocation = UiTools.ToScreenCoordinates(screenInfo, spacecraft.GetLocation());
         var target = session.GetCelestialObject(module.TargetId);

@@ -2,7 +2,7 @@
 
 public class DrawInteraction
 {
-    public static void Execute(IScreenInfo screenInfo, OuterSpace outerSpace, GameSession session)
+    public static void Execute(IScreenInfo screenInfo, OuterSpace outerSpace, GameSessionDTO session)
     {
         if (session.GetCelestialObject(outerSpace.SelectedObjectId) is null)
         {

@@ -57,7 +57,7 @@ public class GameManager : IGameManager
         return GetSession().SpaceMap;
     }
 
-    public GameSession GetSession()
+    public GameSessionDTO GetSession()
     {
         return Events.GetSession();
     }

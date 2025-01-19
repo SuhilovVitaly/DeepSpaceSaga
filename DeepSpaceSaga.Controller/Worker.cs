@@ -5,7 +5,7 @@ public interface IWorker
     Task Initialize();
     void Resume();
     void Pause();
-    GameSession GetGameSession();
+    GameSessionDTO GetGameSession();
     Task SendCommandAsync(ICommand command, CancellationToken cancellationToken = default);
     void SetGameSpeed(int speed);
     void Save();
@@ -18,8 +18,8 @@ public class Worker : IWorker
     private readonly ILog _logger = LogManager.GetLogger(typeof(Worker));
     private readonly IGameServer _gameServer;
 
-    public event Action<GameSession>? OnGetDataFromServer;
-    public event Action<GameSession>? OnGameInitialize;
+    public event Action<GameSessionDTO>? OnGetDataFromServer;
+    public event Action<GameSessionDTO>? OnGameInitialize;
 
     public Worker(IGameServer gameServer)
     {
@@ -34,14 +34,14 @@ public class Worker : IWorker
 
         if (session.State.IsPaused == false)
         {
-            OnGetDataFromServer?.Invoke(session);
+            OnGetDataFromServer?.Invoke(session.ToSessionDto());
             //_logger.Info($"Turn: {session.Metrics.TurnsTicks}");
         }
     }
 
     private void Server_OnTurnExecute(GameSession session)
     {
-        OnGetDataFromServer?.Invoke(session);
+        OnGetDataFromServer?.Invoke(session.ToSessionDto());
 
         if (session.State.IsPaused == false)
         {
@@ -56,7 +56,7 @@ public class Worker : IWorker
             await _gameServer.SessionInitialization();
             
             var session = _gameServer.GetSession();
-            OnGameInitialize?.Invoke(session);
+            OnGameInitialize?.Invoke(session.ToSessionDto());
             _logger.Info("Game initialized successfully");
 
             //Scheduler.Instance.ScheduleTask(1, 100, GetDataFromServer);
@@ -96,9 +96,9 @@ public class Worker : IWorker
         _gameServer.PauseSession();
     }
 
-    public GameSession GetGameSession()
+    public GameSessionDTO GetGameSession()
     {
-        return _gameServer.GetSession();
+        return _gameServer.GetSession().ToSessionDto();
     }
 
     public void SetGameSpeed(int speed)

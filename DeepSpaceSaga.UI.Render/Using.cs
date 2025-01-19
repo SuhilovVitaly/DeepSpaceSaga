@@ -1,6 +1,5 @@
 ﻿global using DeepSpaceSaga.UI.Render.Model;
-global using System.Drawing.Drawing2D;
-global using System.Drawing.Text;
+global using DeepSpaceSaga.Common.Infrastructure.Session;
 global using System.Diagnostics;
 global using System.Collections.Concurrent;
 global using System.Drawing;

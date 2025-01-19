@@ -3,8 +3,8 @@
 public interface IEventManager
 {
     event Action<SpaceMapPoint>? OnTacticalMapMouseMove;
-    event Action<GameSession>? OnRefreshData;
-    event Action<GameSession>? OnInitializeData;
+    event Action<GameSessionDTO>? OnRefreshData;
+    event Action<GameSessionDTO>? OnInitializeData;
     event Action<ICelestialObject>? OnSelectCelestialObject;
     event Action<ICelestialObject>? OnUnselectCelestialObject;
     event Action<ICelestialObject>? OnShowCelestialObject;
@@ -15,7 +15,7 @@ public interface IEventManager
     void ItemsTransferScreenShow(GameActionEvent gameEvent);
     void TacticalMapMouseMove(SpaceMapPoint coordinates);
     void TacticalMapMouseClick(SpaceMapPoint coordinates);
-    GameSession GetSession();
+    GameSessionDTO GetSession();
     void Resume();
     void Pause();
     void SetGameSpeed(int speed);

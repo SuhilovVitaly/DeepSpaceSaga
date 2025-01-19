@@ -7,21 +7,21 @@ public partial class ScreenItemsTransfer : UserControl
     private ISpacecraft _spacecraft;
     private int _cargoId;
     private int _sourceId;
-    private GameSession _gameSession;
+    private GameSessionDTO _gameSession;
     private List<ICommand> _commands;
 
     public ScreenItemsTransfer()
     {
         InitializeComponent();
     }
-    public void ShowTransfer(ISpacecraft spacecraft, int cargoId, int sourceId, GameSession session, ICelestialObject targetObject, ICargoContainer targetContainer)
+    public void ShowTransfer(ISpacecraft spacecraft, int cargoId, int sourceId, GameSessionDTO session, ICelestialObject targetObject, ICargoContainer targetContainer)
     {
         _commands = new List<ICommand>();        
 
         RefreshTransfer(spacecraft, cargoId, sourceId, session, targetObject, targetContainer);
     }
 
-    private void RefreshTransfer(ISpacecraft spacecraft, int cargoId, int sourceId, GameSession session, ICelestialObject targetObject, ICargoContainer targetContainer)
+    private void RefreshTransfer(ISpacecraft spacecraft, int cargoId, int sourceId, GameSessionDTO session, ICelestialObject targetObject, ICargoContainer targetContainer)
     {
         cargoContainerSource.OnItemClick -= Event_SelectItem;
 

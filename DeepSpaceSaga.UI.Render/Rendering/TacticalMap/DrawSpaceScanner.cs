@@ -2,7 +2,7 @@
 
 internal class DrawSpaceScanner
 {
-    public static void Execute(IScreenInfo screenInfo, GameSession session)
+    public static void Execute(IScreenInfo screenInfo, GameSessionDTO session)
     {
         var spacecraft = session.GetPlayerSpaceShip();
         var location = UiTools.ToScreenCoordinates(screenInfo, spacecraft.GetLocation());

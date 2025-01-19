@@ -39,3 +39,4 @@ global using Microsoft.Extensions.DependencyInjection;
 global using Microsoft.Extensions.Hosting;
 global using DeepSpaceSaga.UI.Exceptions;
 global using DeepSpaceSaga.UI.Manager.Screens;
+global using DeepSpaceSaga.Common.Infrastructure.Session;

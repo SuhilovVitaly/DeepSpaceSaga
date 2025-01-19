@@ -2,11 +2,13 @@
 
 public class GameSessionDTO
 {
-    public CelestialMap? CelestialMap { get; set;}
+    public CelestialMap? SpaceMap { get; set;}
 
     public Journal? Logbook { get; set; }
 
     public GameState? State { get; set; } 
 
     public GameActionEvents? Events { get; set; }
+
+    public SessionMetrics Metrics { get; set; }
 }

@@ -12,12 +12,12 @@ public partial class GameSessionInformation : ControlWindow
         Global.GameManager.Events.OnTacticalMapMouseMove += CrlTacticalMap_OnMouseMove;
     }
 
-    private void Worker_RefreshData(GameSession session)
+    private void Worker_RefreshData(GameSessionDTO session)
     {
         CrossThreadExtensions.PerformSafely(this, RereshControls, session);
     }
 
-    private void RereshControls(GameSession session)
+    private void RereshControls(GameSessionDTO session)
     {
         txtTurn.Text = $"{session.Metrics.Turn}.{session.Metrics.TurnTick} ({session.Metrics.TurnsTicks})";
         txtSpeed.Text = session.State.IsPaused ? "Pause" : session.State.Speed + "";

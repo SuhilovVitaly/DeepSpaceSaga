@@ -29,7 +29,7 @@ public partial class CommandsControl : UserControl
         }
     }
 
-    private void Worker_RefreshData(GameSession session)
+    private void Worker_RefreshData(GameSessionDTO session)
     {
         CrossThreadExtensions.PerformSafely(this, RefreshControls, session);
     }
@@ -93,7 +93,7 @@ public partial class CommandsControl : UserControl
         }
     }
 
-    private void RefreshControls(GameSession manager)
+    private void RefreshControls(GameSessionDTO manager)
     {
 
         if (Global.GameManager.OuterSpace.SelectedObjectId == 0)

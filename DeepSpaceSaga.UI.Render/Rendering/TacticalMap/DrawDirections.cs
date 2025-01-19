@@ -2,7 +2,7 @@
 
 internal class DrawDirections
 {
-    public static void Execute(IScreenInfo screenInfo, GameSession session)
+    public static void Execute(IScreenInfo screenInfo, GameSessionDTO session)
     {
         foreach (var currentObject in session.SpaceMap.GetCelestialObjects())
         {
