@@ -4,18 +4,17 @@ public partial class CommandsControl : UserControl
 {
     private int _selectedCelestialObjectId = 0;
 
-    public CommandsControl(IEventManager events)
-    {
-
-    }
+    IEventManager _events;
 
     public CommandsControl()
     {
         InitializeComponent();
 
-        if (Global.GameManager == null) return;
+        _events = Program.ServiceProvider.GetService<IEventManager>();
 
-        Global.GameManager.Events.OnRefreshData += Worker_RefreshData;
+        if (_events == null) return;
+
+        _events.OnRefreshData += Worker_RefreshData;
 
         button14.Enabled = true;
         button14.BackColor = Color.Black;

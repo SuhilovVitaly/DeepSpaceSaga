@@ -33,6 +33,7 @@ internal static class Program
         return Host.CreateDefaultBuilder()
             .ConfigureServices((context, services) => {
                 services.AddClientServices();
+                services.AddClientControls();
                 services.AddClientScreens();
                 services.AddServerServices();
             });

@@ -1,7 +1,7 @@
 ﻿namespace DeepSpaceSaga.UI;
 
 public static class ClientStartupExtensions
-{
+{   
     public static IServiceCollection AddClientServices(this IServiceCollection services)
     {
         services.AddScoped<IScreenInfo, ScreenParameters>();
@@ -14,6 +14,12 @@ public static class ClientStartupExtensions
         services.AddScoped<IScreenManager, ScreenManager>();
         services.AddScoped<IGameManager, GameManager>();        
 
+        return services;
+    }
+
+    public static IServiceCollection AddClientControls(this IServiceCollection services)
+    {
+        services.AddTransient<CommandsControl>();
         return services;
     }
 
