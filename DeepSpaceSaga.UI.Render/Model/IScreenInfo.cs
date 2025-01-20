@@ -10,4 +10,5 @@ public interface IScreenInfo
     SpaceMapPoint CenterScreenOnMap { get; set; }
     Zoom Zoom { get; }
     SKCanvas GraphicSurface { get; set; }
+    int MonitorId { get; set; }
 }

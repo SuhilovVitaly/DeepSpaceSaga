@@ -22,7 +22,7 @@ public class GameManager : IGameManager
         private set => _screenManager = value ?? throw new ArgumentNullException(nameof(value));
     }
 
-    public IScreenInfo ScreenInfo
+    public IScreenInfo ScreenData
     {
         get => _screenInfo;
         private set => _screenInfo = value ?? throw new ArgumentNullException(nameof(value));

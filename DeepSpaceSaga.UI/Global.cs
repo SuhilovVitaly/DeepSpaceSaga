@@ -2,10 +2,8 @@
 
 public class Global
 {
-    private static readonly ILog Logger = LogManager.GetLogger(typeof(Global));
-    
+    private static readonly ILog Logger = LogManager.GetLogger(typeof(Global));    
     public static IGameManager GameManager { get; private set; }
-    public static ScreenParameters ScreenData { get; private set; }
     public static GlobalResources Resources { get; private set; }
 
     private Global() { }
@@ -16,7 +14,6 @@ public class Global
         {
             Logger.Info("Start game initialization");
 
-            InitializeScreen();
             InitializeResources();
             InitializeGameManager();
 
@@ -29,33 +26,9 @@ public class Global
         }
     }
 
-    private static void InitializeScreen()
-    {
-        Logger.Debug("Start screen initialization");
-        var monitorId = 0;
-        var screens = Screen.AllScreens;
-        
-        if (screens == null || screens.Length == 0)
-        {
-            throw new GameInitializationException("Monitors not found");
-        }
-
-        if (monitorId >= screens.Length)
-        {
-            throw new GameInitializationException($"Wrong ID of monitor: {monitorId}");
-        }
-
-        Rectangle resolution = screens[monitorId].Bounds;
-        ScreenData = new ScreenParameters(resolution.Width, resolution.Height)
-        {
-            MonitorId = monitorId
-        };
-        Logger.Debug($"Finish screen initialization: {resolution.Width}x{resolution.Height}");
-    }
-
     private static void InitializeResources()
     {
-        Resources = new GlobalResources(ScreenData);
+        Resources = new GlobalResources();
     }
 
     private static void InitializeGameManager()

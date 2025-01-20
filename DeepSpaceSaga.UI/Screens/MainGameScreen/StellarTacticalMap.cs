@@ -72,10 +72,10 @@ public partial class StellarTacticalMap : UserControl
 
         var session = Global.GameManager.GetSession();
 
-        Global.ScreenData.GraphicSurface = canvas;
-        Global.ScreenData.CenterScreenOnMap = session.GetPlayerSpaceShip().GetLocation();
+        Global.GameManager.ScreenData.GraphicSurface = canvas;
+        Global.GameManager.ScreenData.CenterScreenOnMap = session.GetPlayerSpaceShip().GetLocation();
 
-        Global.Resources.DrawTool.DrawTacticalMapScreen(session, Global.GameManager.OuterSpace, Global.ScreenData);
+        Global.Resources.DrawTool.DrawTacticalMapScreen(session, Global.GameManager.OuterSpace, Global.GameManager.ScreenData);
     }
 
     private void RefreshControls(GameSessionDTO data)
@@ -87,9 +87,9 @@ public partial class StellarTacticalMap : UserControl
     {
         var location = e.Location.ToSpaceMapCoordinates();
 
-        var mouseScreenCoordinates = UiTools.ToRelativeCoordinates(location, Global.ScreenData.Center);
+        var mouseScreenCoordinates = UiTools.ToRelativeCoordinates(location, Global.GameManager.ScreenData.Center);
 
-        var mouseLocation = UiTools.ToTacticalMapCoordinates(mouseScreenCoordinates, Global.ScreenData.CenterScreenOnMap);
+        var mouseLocation = UiTools.ToTacticalMapCoordinates(mouseScreenCoordinates, Global.GameManager.ScreenData.CenterScreenOnMap);
 
         _gameManager.Events.TacticalMapMouseMove(mouseLocation);
     }
@@ -98,9 +98,9 @@ public partial class StellarTacticalMap : UserControl
     {
         var location = e.Location.ToSpaceMapCoordinates();
 
-        var mouseScreenCoordinates = UiTools.ToRelativeCoordinates(location, Global.ScreenData.Center);
+        var mouseScreenCoordinates = UiTools.ToRelativeCoordinates(location, Global.GameManager.ScreenData.Center);
 
-        var mouseLocation = UiTools.ToTacticalMapCoordinates(mouseScreenCoordinates, Global.ScreenData.CenterScreenOnMap);
+        var mouseLocation = UiTools.ToTacticalMapCoordinates(mouseScreenCoordinates, Global.GameManager.ScreenData.CenterScreenOnMap);
 
         if(e.Button == MouseButtons.Left)
         {

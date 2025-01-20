@@ -17,12 +17,12 @@ public partial class TacticGameScreen : Form
         panel1.Controls.Add(controlItemsContainer);
         panel1.Controls.Add(controlItemsTransfer);
 
-        var selectedScreen = Screen.AllScreens[Global.ScreenData.MonitorId];
+        var selectedScreen = Screen.AllScreens[Global.GameManager.ScreenData.MonitorId];
 
         Location = selectedScreen.WorkingArea.Location;
 
-        Width = (int)Global.ScreenData.Width;
-        Height = (int)Global.ScreenData.Height;
+        Width = (int)Global.GameManager.ScreenData.Width;
+        Height = (int)Global.GameManager.ScreenData.Height;
 
         crlCommands.Location = new Point((Width / 2) - crlCommands.Width / 2, crlCommands.Location.Y);
 
@@ -74,27 +74,27 @@ public partial class TacticGameScreen : Form
 
     private void button2_Click(object sender, EventArgs e)
     {
-        Global.ScreenData.CenterScreenOnMap = new SpaceMapPoint(Global.ScreenData.CenterScreenOnMap.X + 100, Global.ScreenData.CenterScreenOnMap.Y);
+        Global.GameManager.ScreenData.CenterScreenOnMap = new SpaceMapPoint(Global.GameManager.ScreenData.CenterScreenOnMap.X + 100, Global.GameManager.ScreenData.CenterScreenOnMap.Y);
     }
 
     private void button3_Click(object sender, EventArgs e)
     {
-        Global.ScreenData.CenterScreenOnMap = new SpaceMapPoint(Global.ScreenData.CenterScreenOnMap.X, Global.ScreenData.CenterScreenOnMap.Y + 100);
+        Global.GameManager.ScreenData.CenterScreenOnMap = new SpaceMapPoint(Global.GameManager.ScreenData.CenterScreenOnMap.X, Global.GameManager.ScreenData.CenterScreenOnMap.Y + 100);
     }
 
     private void button4_Click(object sender, EventArgs e)
     {
-        Global.ScreenData.CenterScreenOnMap = new SpaceMapPoint(Global.ScreenData.CenterScreenOnMap.X + 1000, Global.ScreenData.CenterScreenOnMap.Y);
+        Global.GameManager.ScreenData.CenterScreenOnMap = new SpaceMapPoint(Global.GameManager.ScreenData.CenterScreenOnMap.X + 1000, Global.GameManager.ScreenData.CenterScreenOnMap.Y);
     }
 
     private void CrlZoomIn_Click(object sender, EventArgs e)
     {
-        Global.ScreenData.Zoom.In();
+        Global.GameManager.ScreenData.Zoom.In();
     }
 
     private void CrlZoomOut_Click(object sender, EventArgs e)
     {
-        Global.ScreenData.Zoom.Out();
+        Global.GameManager.ScreenData.Zoom.Out();
     }
 
     private void crlResumeGame_Click(object sender, EventArgs e)
