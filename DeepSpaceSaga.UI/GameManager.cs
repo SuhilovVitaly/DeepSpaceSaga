@@ -3,38 +3,17 @@
 public class GameManager : IGameManager
 {
     public OuterSpace OuterSpace { get; set; } = new OuterSpace();
-    public SaveLoadManager SaveLoadSystem { get; set; } = new SaveLoadManager();
-    private IEventManager _eventManager { get; set; }
-    private IScreenManager _screenManager { get; set; }
-    private IScreenInfo _screenInfo { get; set; }
+    public ISaveLoadManager SaveLoadSystem { get; set; }
+    public IEventManager Events { get; set; }
+    public IScreenManager Screens { get; set; }    
 
     private bool disposed;
 
-    public IEventManager Events
+    public GameManager(IEventManager eventManager, IScreenManager screenManager, ISaveLoadManager saveLoadManager)
     {
-        get => _eventManager;
-        private set => _eventManager = value ?? throw new ArgumentNullException(nameof(value));
-    }
-
-    public IScreenManager Screens
-    {
-        get => _screenManager;
-        private set => _screenManager = value ?? throw new ArgumentNullException(nameof(value));
-    }
-
-    public IScreenInfo ScreenData
-    {
-        get => _screenInfo;
-        private set => _screenInfo = value ?? throw new ArgumentNullException(nameof(value));
-    }
-
-    public GameManager(IEventManager eventManager, IScreenManager screenManager, IScreenInfo screenInfo)
-    {
-        _eventManager = eventManager;
-
-        _screenManager = screenManager;
-
-        _screenInfo = screenInfo;
+        Events = eventManager;
+        Screens = screenManager;
+        SaveLoadSystem = saveLoadManager;
 
         SubscribeToEvents();
     }

@@ -3,10 +3,9 @@
 public interface IGameManager : IDisposable
 {
     OuterSpace OuterSpace { get; set; }
-    SaveLoadManager SaveLoadSystem { get; set; }
+    ISaveLoadManager SaveLoadSystem { get; set; }
     IEventManager Events { get; }
     IScreenManager Screens { get; }
-    IScreenInfo ScreenData { get; }
     ISpacecraft GetPlayerSpacecraft();
     ICelestialObject GetCelestialObject(int id);
     CelestialMap GetCelestialMap();

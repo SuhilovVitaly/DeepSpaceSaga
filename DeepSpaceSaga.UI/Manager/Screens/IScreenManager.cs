@@ -2,6 +2,7 @@
 
 public interface IScreenManager
 {
+    IScreenInfo Settings { get; }
     void ShowMenuScreen();
     void ShowGameMenuScreen();
     void ShowTacticalGameScreen();

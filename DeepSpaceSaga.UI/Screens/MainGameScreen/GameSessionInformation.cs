@@ -26,7 +26,7 @@ public partial class GameSessionInformation : ControlWindow
 
     private void CrlTacticalMap_OnMouseMove(SpaceMapPoint e)
     {
-        var screenCoordinates = UiTools.ToScreenCoordinates(Global.GameManager.ScreenData, e);
+        var screenCoordinates = UiTools.ToScreenCoordinates(Global.GameManager.Screens.Settings, e);
         crlGameCoordinates.Text = $"{(int)e.X} : {(int)e.Y}";
         crlScreenCoordinates.Text = $"{(int)screenCoordinates.X} : {(int)screenCoordinates.Y}";
     }

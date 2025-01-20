@@ -5,10 +5,19 @@ public class ScreenManager: IScreenManager
     Dictionary<ScreenType, Form> _screens = [];
     private BackgroundScreen _screenBackground;
     private TacticGameScreen _tacticGameScreen;
+    private IScreenInfo _screenSettings { get; set; }
 
-    public ScreenManager()
+    public IScreenInfo Settings
     {
-        _screenBackground = Program.ServiceProvider.GetService<BackgroundScreen>();        
+        get => _screenSettings;
+        private set => _screenSettings = value ?? throw new ArgumentNullException(nameof(value));
+    }
+
+    public ScreenManager(IScreenInfo screenInfo, BackgroundScreen screenBackground)
+    {
+        _screenSettings = screenInfo;
+
+        _screenBackground = screenBackground;       
 
         _screenBackground.FirstShown += (sender, e) =>
         {
