@@ -8,7 +8,7 @@ public interface IScreenInfo
     float Height { get; }
     int DrawInterval { get; set; }
     SpaceMapPoint CenterScreenOnMap { get; set; }
-    Zoom Zoom { get; }
+    IZoom Zoom { get; }
     SKCanvas GraphicSurface { get; set; }
     int MonitorId { get; set; }
 }

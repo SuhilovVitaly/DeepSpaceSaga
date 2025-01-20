@@ -13,4 +13,6 @@ public interface IGameManager : IDisposable
     Task ExecuteCommandAsync(ICommand command);
     void QuickLoad();
     void Load(string saveName);
+    void ZoomIn();
+    void ZoomOut();
 }

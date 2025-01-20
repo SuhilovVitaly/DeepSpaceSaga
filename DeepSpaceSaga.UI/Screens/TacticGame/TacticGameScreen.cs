@@ -122,6 +122,19 @@ public partial class TacticGameScreen : Form
 
         switch (e.KeyCode)
         {
+            case Keys.Escape:
+                _gameManager.Events.Pause();
+                _gameManager.Screens.ShowGameMenuScreen();
+                break;
+
+            case Keys.Subtract:
+                _gameManager.Screens.Settings.Zoom.Out();
+                break;
+
+            case Keys.Add:
+                _gameManager.Screens.Settings.Zoom.In();
+                break;
+
             case Keys.Space:
                 if (session.State.IsPaused)
                 {

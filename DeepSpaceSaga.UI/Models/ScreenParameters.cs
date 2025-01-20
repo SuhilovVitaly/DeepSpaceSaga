@@ -10,12 +10,11 @@ public class ScreenParameters : IScreenInfo
     public int DrawInterval { get; set; }
     public SpaceMapPoint CenterScreenOnMap { get; set; }
     public SKCanvas GraphicSurface { get; set; }
-    public Zoom Zoom { get; private set; }
+    public IZoom Zoom { get; private set; }
     public int MonitorId { get; set; }
-
     public bool IsPlayerSpacecraftCenterScreen { get; set; } = true;
 
-    public ScreenParameters()
+    public ScreenParameters(IEventManager events)
     {
         Logger.Debug("Start screen initialization");
 

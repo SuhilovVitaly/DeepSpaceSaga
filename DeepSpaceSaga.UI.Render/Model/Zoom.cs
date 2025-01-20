@@ -1,13 +1,16 @@
 ﻿namespace DeepSpaceSaga.UI.Render.Model;
 
-public class Zoom
+public class Zoom : IZoom
 {
+    public int Size { get; private set; } = 20;
+
+    public event Action? OnZoomIn;
+    public event Action? OnZoomOut;
+
     public Zoom(int size)
     {
         Size = size;
-    }
-
-    public int Size { get; private set; } = 20;
+    }    
 
     public void In()
     {
@@ -36,6 +39,8 @@ public class Zoom
             default:
                 break;
         }
+
+        OnZoomIn?.Invoke();
     }
 
     public void Out()
@@ -65,5 +70,7 @@ public class Zoom
             default:
                 break;
         }
+
+        OnZoomOut?.Invoke();
     }
 }

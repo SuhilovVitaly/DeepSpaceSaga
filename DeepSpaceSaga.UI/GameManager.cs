@@ -85,6 +85,16 @@ public class GameManager : IGameManager
         GC.SuppressFinalize(this);
     }
 
+    public void ZoomIn()
+    {
+        Screens.Settings.Zoom.In();
+    }
+
+    public void ZoomOut()
+    {
+        Screens.Settings.Zoom.Out();
+    }
+
     ~GameManager()
     {
         Dispose(false);

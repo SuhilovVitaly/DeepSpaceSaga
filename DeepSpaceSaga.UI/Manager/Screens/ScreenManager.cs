@@ -24,9 +24,7 @@ public class ScreenManager: IScreenManager
             ShowMenuScreen();
             _tacticGameScreen = Program.ServiceProvider.GetService<TacticGameScreen>();
             _tacticGameScreen.Initialization();
-        };
-
-        
+        };        
 
         _screens.Add(ScreenType.Background, _screenBackground);
     }
