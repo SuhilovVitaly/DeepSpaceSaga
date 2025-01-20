@@ -4,6 +4,7 @@ public static class ClientStartupExtensions
 {
     public static IServiceCollection AddClientServices(this IServiceCollection services)
     {
+        services.AddScoped<IScreenInfo, ScreenParameters>();
         services.AddScoped<ILocalGameServerOptions, LocalGameServerOptions>();
         services.AddScoped<IServerMetrics, ServerMetrics>();
         services.AddTransient<ISaveLoadService, SaveLoadService>();
@@ -11,6 +12,8 @@ public static class ClientStartupExtensions
         services.AddScoped<IEventManager, EventManager>();
         services.AddScoped<IScreenManager, ScreenManager>();
         services.AddScoped<IGameManager, GameManager>();
+
+        
 
         return services;
     }

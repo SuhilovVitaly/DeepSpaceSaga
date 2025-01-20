@@ -1,9 +1,8 @@
 ﻿global using DeepSpaceSaga.UI.Render.Model;
 global using DeepSpaceSaga.Common.Infrastructure.Session;
 global using System.Diagnostics;
-global using System.Collections.Concurrent;
 global using System.Drawing;
-global using DeepSpaceSaga.Universe;
+global using log4net;
 global using DeepSpaceSaga.UI.Render.Tools;
 global using DeepSpaceSaga.Common.Universe.Entities.CelestialObjects;
 global using DeepSpaceSaga.Common.Tools;
@@ -15,3 +14,4 @@ global using DeepSpaceSaga.Common.Universe.Entities.CelestialObjects.Spacecrafts
 global using SkiaSharp;
 global using DeepSpaceSaga.UI.Render.Extensions;
 global using DeepSpaceSaga.Common.Layers.Tactical; 
+global using System.Windows.Forms;

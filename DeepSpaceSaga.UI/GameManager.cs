@@ -6,6 +6,8 @@ public class GameManager : IGameManager
     public SaveLoadManager SaveLoadSystem { get; set; } = new SaveLoadManager();
     private IEventManager _eventManager { get; set; }
     private IScreenManager _screenManager { get; set; }
+    private IScreenInfo _screenInfo { get; set; }
+
     private bool disposed;
 
     public IEventManager Events
@@ -20,11 +22,19 @@ public class GameManager : IGameManager
         private set => _screenManager = value ?? throw new ArgumentNullException(nameof(value));
     }
 
-    public GameManager(IEventManager eventManager, IScreenManager screenManager)
+    public IScreenInfo ScreenInfo
+    {
+        get => _screenInfo;
+        private set => _screenInfo = value ?? throw new ArgumentNullException(nameof(value));
+    }
+
+    public GameManager(IEventManager eventManager, IScreenManager screenManager, IScreenInfo screenInfo)
     {
         _eventManager = eventManager;
 
         _screenManager = screenManager;
+
+        _screenInfo = screenInfo;
 
         SubscribeToEvents();
     }
