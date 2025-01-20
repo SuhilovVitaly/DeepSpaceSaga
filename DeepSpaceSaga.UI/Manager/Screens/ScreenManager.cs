@@ -17,20 +17,18 @@ public class ScreenManager: IScreenManager
     {
         _screenSettings = screenInfo;
 
-        _screenBackground = screenBackground;       
+        _screenBackground = screenBackground;
 
         _screenBackground.FirstShown += (sender, e) =>
         {
             ShowMenuScreen();
+            _tacticGameScreen = Program.ServiceProvider.GetService<TacticGameScreen>();
+            _tacticGameScreen.Initialization();
         };
 
-        _screens.Add(ScreenType.Background, _screenBackground);
-    }
+        
 
-    public void GameInitialization()
-    {
-        _tacticGameScreen = Program.ServiceProvider.GetService<TacticGameScreen>();
-        _tacticGameScreen.Initialization();
+        _screens.Add(ScreenType.Background, _screenBackground);
     }
 
     public void ShowMenuScreen()

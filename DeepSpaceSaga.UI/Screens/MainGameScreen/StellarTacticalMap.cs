@@ -75,7 +75,7 @@ public partial class StellarTacticalMap : UserControl
         Global.GameManager.Screens.Settings.GraphicSurface = canvas;
         Global.GameManager.Screens.Settings.CenterScreenOnMap = session.GetPlayerSpaceShip().GetLocation();
 
-        Global.Resources.DrawTool.DrawTacticalMapScreen(session, Global.GameManager.OuterSpace, Global.GameManager.Screens.Settings);
+        Global.Resources.DrawTool.DrawTacticalMapScreen(session, Global.GameManager.SpaceEnvironment, Global.GameManager.Screens.Settings);
     }
 
     private void RefreshControls(GameSessionDTO data)

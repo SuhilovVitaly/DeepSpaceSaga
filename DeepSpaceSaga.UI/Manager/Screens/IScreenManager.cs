@@ -8,5 +8,4 @@ public interface IScreenManager
     void ShowTacticalGameScreen();
     void ShowSaveGameScreen();
     void ShowLoadGameScreen();
-    void GameInitialization();
 }

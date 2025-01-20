@@ -2,7 +2,7 @@
 
 public interface IGameManager : IDisposable
 {
-    OuterSpace OuterSpace { get; set; }
+    IOuterSpace SpaceEnvironment { get; set; }
     ISaveLoadManager SaveLoadSystem { get; set; }
     IEventManager Events { get; }
     IScreenManager Screens { get; }
@@ -13,5 +13,4 @@ public interface IGameManager : IDisposable
     Task ExecuteCommandAsync(ICommand command);
     void QuickLoad();
     void Load(string saveName);
-    void Initialization();
 }

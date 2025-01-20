@@ -1,6 +1,6 @@
 ﻿namespace DeepSpaceSaga.Common.Layers.Tactical;
 
-public class OuterSpace
+public class OuterSpace: IOuterSpace
 {
     public int ActiveObjectId { get; private set; }
     public int SelectedObjectId { get; private set; }

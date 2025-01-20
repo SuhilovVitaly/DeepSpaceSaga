@@ -2,33 +2,29 @@
 
 public class GameManager : IGameManager
 {
-    public OuterSpace OuterSpace { get; set; } = new OuterSpace();
+    public IOuterSpace SpaceEnvironment { get; set; }
     public ISaveLoadManager SaveLoadSystem { get; set; }
     public IEventManager Events { get; set; }
     public IScreenManager Screens { get; set; }    
 
     private bool disposed;
 
-    public GameManager(IEventManager eventManager, IScreenManager screenManager, ISaveLoadManager saveLoadManager)
+    public GameManager(IEventManager eventManager, IScreenManager screenManager, ISaveLoadManager saveLoadManager, IOuterSpace outerSpace)
     {
         Events = eventManager;
         Screens = screenManager;
         SaveLoadSystem = saveLoadManager;
+        SpaceEnvironment = outerSpace;
 
         SubscribeToEvents();
     }
 
-    public void Initialization()
-    {
-        Screens.GameInitialization();
-    }
-
     private void SubscribeToEvents()
     {
-        Events.OnSelectCelestialObject += OuterSpace.EventController_OnSelectCelestialObject;
-        Events.OnUnselectCelestialObject += OuterSpace.EventController_OnUnselectCelestialObject;
-        Events.OnShowCelestialObject += OuterSpace.EventController_OnShowCelestialObject;
-        Events.OnHideCelestialObject += OuterSpace.EventController_OnHideCelestialObject;        
+        Events.OnSelectCelestialObject += SpaceEnvironment.EventController_OnSelectCelestialObject;
+        Events.OnUnselectCelestialObject += SpaceEnvironment.EventController_OnUnselectCelestialObject;
+        Events.OnShowCelestialObject += SpaceEnvironment.EventController_OnShowCelestialObject;
+        Events.OnHideCelestialObject += SpaceEnvironment.EventController_OnHideCelestialObject;        
     }
 
     public ISpacecraft GetPlayerSpacecraft()
@@ -62,10 +58,10 @@ public class GameManager : IGameManager
         {
             if (disposing)
             {
-                Events.OnSelectCelestialObject -= OuterSpace.EventController_OnSelectCelestialObject;
-                Events.OnUnselectCelestialObject -= OuterSpace.EventController_OnUnselectCelestialObject;
-                Events.OnShowCelestialObject -= OuterSpace.EventController_OnShowCelestialObject;
-                Events.OnHideCelestialObject -= OuterSpace.EventController_OnHideCelestialObject;
+                Events.OnSelectCelestialObject -= SpaceEnvironment.EventController_OnSelectCelestialObject;
+                Events.OnUnselectCelestialObject -= SpaceEnvironment.EventController_OnUnselectCelestialObject;
+                Events.OnShowCelestialObject -= SpaceEnvironment.EventController_OnShowCelestialObject;
+                Events.OnHideCelestialObject -= SpaceEnvironment.EventController_OnHideCelestialObject;
             }
             disposed = true;
         }

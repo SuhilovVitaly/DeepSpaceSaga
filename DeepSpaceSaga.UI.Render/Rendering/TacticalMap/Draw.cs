@@ -2,7 +2,7 @@
 
 public class Draw
 {
-    public void DrawTacticalMapScreen(GameSessionDTO session, OuterSpace outerSpace, IScreenInfo screenParameters)
+    public void DrawTacticalMapScreen(GameSessionDTO session, IOuterSpace outerSpace, IScreenInfo screenParameters)
     {
         DrawGrid.Execute(screenParameters);
 

@@ -4,6 +4,11 @@ public partial class CommandsControl : UserControl
 {
     private int _selectedCelestialObjectId = 0;
 
+    public CommandsControl(IEventManager events)
+    {
+
+    }
+
     public CommandsControl()
     {
         InitializeComponent();
@@ -96,20 +101,20 @@ public partial class CommandsControl : UserControl
     private void RefreshControls(GameSessionDTO manager)
     {
 
-        if (Global.GameManager.OuterSpace.SelectedObjectId == 0)
+        if (Global.GameManager.SpaceEnvironment.SelectedObjectId == 0)
         {
             DisableCommands();
             return;
         }
 
-        if (Global.GameManager.OuterSpace.SelectedObjectId == _selectedCelestialObjectId)
+        if (Global.GameManager.SpaceEnvironment.SelectedObjectId == _selectedCelestialObjectId)
         {
             // No need update commands status (Enabled/Disabled)
             ModulesByRangeEnable(_selectedCelestialObjectId);
             return;
         }
 
-        _selectedCelestialObjectId = Global.GameManager.OuterSpace.SelectedObjectId;
+        _selectedCelestialObjectId = Global.GameManager.SpaceEnvironment.SelectedObjectId;
 
         EnableCommand(commandRotateToTarget);
         EnableCommand(commandSyncSpeedWithTarget);
@@ -257,7 +262,7 @@ public partial class CommandsControl : UserControl
         {
             Id = IdGenerator.GetNextId(),
             CelestialObjectId =Global.GameManager.GetPlayerSpacecraft().Id,
-            TargetObjectId = Global.GameManager.OuterSpace.SelectedObjectId
+            TargetObjectId = Global.GameManager.SpaceEnvironment.SelectedObjectId
         };
 
 
